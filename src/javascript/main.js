@@ -3,13 +3,11 @@
  * Description:
  *
  **/
-import * as Util from "Util.js";
+import {Board} from "../classes/Board.js";
 ;
+
+window.board = new Board();
+
 (function ($, d) {
-
-	Util.init();
-
-	$.flow = {
-
-	}
-})(jQuery,document)
+	$.flow = {}
+})(jQuery, document)

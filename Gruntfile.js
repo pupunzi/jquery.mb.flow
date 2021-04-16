@@ -184,7 +184,7 @@ module.exports = function (grunt) {
 			options: {
 				field: 'buildnum'
 			},
-			files  : ['package.json', 'bower.json']
+			files  : ['package.json']
 		},
 
 		bump: {

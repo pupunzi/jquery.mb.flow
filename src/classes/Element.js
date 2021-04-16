@@ -1,4 +1,4 @@
-import {Util} from "./Util";
+import {Util} from "./Util.js";
 
 /**
  *
@@ -6,6 +6,21 @@ import {Util} from "./Util";
  *
  **/
 class Element {
+	get connectedElements() {
+		return this._connectedElements;
+	}
+
+	set connectedElements(value) {
+		this._connectedElements.push(value);
+	}
+
+	get nodeId() {
+		return this._nodeId;
+	}
+
+	set nodeId(value) {
+		this._nodeId = value;
+	}
 
 	get selected() {
 		return this._selected;
@@ -26,13 +41,19 @@ class Element {
 		return this._id;
 	}
 
-	constructor(type) {
+	constructor(type = Type.text) {
 		this._id = Util.setUID;
 		this._type = type;
-		this._card = null;
-		this._connectedElement = null;
+		this._nodeId = null;
+		this._connectedElements = [];
 		this._selected = false;
 	}
+
+	connect(cardId){
+		let card = window.board.getNodeById(cardId);
+		card.connections = this.nodeId;
+	}
+
 }
 
 export {Element};
