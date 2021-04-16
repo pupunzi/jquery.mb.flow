@@ -6,7 +6,7 @@
     "jquery-plugin",
     "flkow"
   ],
-  "version": "0.1.0 alpha",
+  "version": "0.1.1",
   "author": "Pupunzi <matbicoc@gmail.com> (Matteo Bicocchi)",
   "maintainers": [
     "Pupunzi <matbicoc@gmail.com> (Matteo Bicocchi)"
@@ -43,5 +43,5 @@
   "directories": {
     "example": "examples"
   },
-  "buildnum": "9"
+  "buildnum": "10"
 }
