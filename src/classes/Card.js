@@ -44,34 +44,12 @@ class Card {
 		this._count = function () {
 			return this.elements.length;
 		};
-		this._connectedElement
 	}
 
 	deleteElement(el) {
 		this.elements.Delete(el);
 	}
-
-
 }
 
-class element {
-	get type() {
-		return this._type;
-	}
-
-	set type(value) {
-		this._type = value;
-	}
-
-	get id() {
-		return this._id;
-	}
-
-	constructor(type, count) {
-		this._id = Util.setUID;
-		this._type = type;
-	}
-
-}
 
 export {Card};
