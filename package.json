@@ -1,0 +1,47 @@
+{
+  "name": "jquery.mb.flow",
+  "title": "jquery.mb.flow",
+  "description": "",
+  "keywords": [
+    "jquery-plugin",
+    "flkow"
+  ],
+  "version": "0.1.0 alpha",
+  "author": "Pupunzi <matbicoc@gmail.com> (Matteo Bicocchi)",
+  "maintainers": [
+    "Pupunzi <matbicoc@gmail.com> (Matteo Bicocchi)"
+  ],
+  "license": "",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "demo": "",
+  "docs": "",
+  "download": "",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pupunzi/jquery.mb.YTPlayer.git"
+  },
+  "devDependencies": {
+    "grunt-build-number": "^1.0.0",
+    "grunt-bump": "^0.8.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^4.0.0",
+    "grunt-contrib-uglify": "^5.0.1",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-include-replace": "^5.0.0",
+    "grunt-jsbeautifier": "^0.2.13",
+    "grunt-replace": "^2.0.1",
+    "grunt-strip-code": "^1.0.6"
+  },
+  "directories": {
+    "example": "examples"
+  },
+  "buildnum": "9"
+}
