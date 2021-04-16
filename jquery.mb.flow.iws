@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f4481206-6607-4eef-bcfe-e51b7aa14b67" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/bower.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jquery.mb.flow.iws" beforeDir="false" afterPath="$PROJECT_DIR$/jquery.mb.flow.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/Board.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Board.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/Card.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Node.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/Element.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Element.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/Util.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Util.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/javascript/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/javascript/main.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,8 +30,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="45" column="17" lean-forward="true" selection-start-line="45" selection-start-column="17" selection-end-line="45" selection-end-column="17" />
+            <state relative-caret-position="1305">
+              <caret line="45" column="17" selection-start-line="45" selection-start-column="17" selection-end-line="45" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -53,7 +45,7 @@
         <entry file="file://$PROJECT_DIR$/Gruntfile.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="185">
-              <caret line="226" column="14" lean-forward="true" selection-start-line="226" selection-start-column="10" selection-end-line="226" selection-end-column="22" />
+              <caret line="226" column="14" selection-start-line="226" selection-start-column="10" selection-end-line="226" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -116,10 +108,10 @@
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
     <option name="y" value="25" />
-    <option name="width" value="2048" />
-    <option name="height" value="1127" />
+    <option name="width" value="1792" />
+    <option name="height" value="1095" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -127,8 +119,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -163,7 +155,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="/usr/local/bin/node" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="watcher.settings" />
+    <property name="settings.editor.selected.configurable" value="JavaScript.Libraries" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -264,26 +256,25 @@
       <option name="presentableId" value="Default" />
       <updated>1618576929273</updated>
       <workItem from="1618603308547" duration="722000" />
+      <workItem from="1618608717196" duration="79000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="722000" />
+    <option name="totallyTimeSpent" value="801000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1792" height="1095" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info id="npm" side_tool="true" />
       <window_info id="Capture Tool" order="0" />
       <window_info id="UI Designer" order="1" />
       <window_info id="Image Layers" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="3" sideWeight="0.4969419" visible="true" weight="0.25771427" />
+      <window_info content_ui="combo" id="Project" order="3" sideWeight="0.49541286" visible="true" weight="0.25714287" />
       <window_info id="Structure" order="4" side_tool="true" weight="0.25" />
       <window_info id="Palette&#9;" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info id="Grunt " order="7" sideWeight="0.5030581" side_tool="true" visible="true" weight="0.25771427" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info id="Grunt " order="7" sideWeight="0.5045872" side_tool="true" visible="true" weight="0.25714287" />
+      <window_info id="npm" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32923368" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32854208" />
@@ -295,11 +286,11 @@
       <window_info anchor="bottom" id="Application Servers" order="8" />
       <window_info anchor="bottom" id="Changes" order="9" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.25308058" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.32854208" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.32854208" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3264095" />
       <window_info anchor="bottom" id="SVN Repositories" order="13" weight="0.32985783" />
       <window_info anchor="bottom" id="Database Changes" order="14" />
-      <window_info anchor="right" id="Maven" />
+      <window_info anchor="bottom" id="Docker" order="15" show_stripe_button="false" />
       <window_info anchor="right" id="Maven Projects" order="0" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Theme Preview" order="2" />
@@ -309,6 +300,7 @@
       <window_info anchor="right" id="Palette" order="6" />
       <window_info anchor="right" id="Designer" order="7" />
       <window_info anchor="right" id="Database" order="8" weight="0.32951146" />
+      <window_info anchor="right" id="Maven" order="9" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -337,7 +329,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dist/classes/board.js" />
+    <entry file="file://$PROJECT_DIR$/dist/classes/Board.js" />
     <entry file="file://$PROJECT_DIR$/dist/css/jquery.mb.flow.min.css">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -395,17 +387,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bower.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="11" column="13" lean-forward="true" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/bower.json" />
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="45" column="17" lean-forward="true" selection-start-line="45" selection-start-column="17" selection-end-line="45" selection-end-column="17" />
+        <state relative-caret-position="1305">
+          <caret line="45" column="17" selection-start-line="45" selection-start-column="17" selection-end-line="45" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -415,7 +401,7 @@
     <entry file="file://$PROJECT_DIR$/Gruntfile.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="185">
-          <caret line="226" column="14" lean-forward="true" selection-start-line="226" selection-start-column="10" selection-end-line="226" selection-end-column="22" />
+          <caret line="226" column="14" selection-start-line="226" selection-start-column="10" selection-end-line="226" selection-end-column="22" />
         </state>
       </provider>
     </entry>
