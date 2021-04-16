@@ -5,9 +5,15 @@
  **/
 
 import {Util} from "Util.js";
-import {NodeElement} from "./NodeElement.js";
 
 class Node {
+	get connections() {
+		return this._connections;
+	}
+
+	set connections(value) {
+		this._connections = value;
+	}
 
 	constructor(type = Type.text) {
 		this._id = Util.setUID();
@@ -16,19 +22,15 @@ class Node {
 		this._count = function () {
 			return this.elements.length;
 		};
-		this._connectToNodeID = null;
-	}
-
-	get connection() {
-		return this._connectToNodeID;
-	}
-
-	set connection(value) {
-		this._connectToNodeID = value;
+		this._connections = [];
 	}
 
 	get elements() {
 		return this._elements;
+	}
+
+	set elements(value) {
+		this._elements.push(value);
 	}
 
 	get count() {
@@ -51,11 +53,6 @@ class Node {
 		return this._id;
 	}
 
-	addElement(){
-		let nodeElement = new NodeElement(Type.text);
-		this._elements.push(nodeElement);
-	}
-
 	deleteElement(id) {
 		let el = this.getElementById(id);
 		if (el != null)
@@ -68,11 +65,6 @@ class Node {
 				return element;
 		});
 		return null;
-	}
-
-	let
-	goToNextElement(){
-
 	}
 
 }

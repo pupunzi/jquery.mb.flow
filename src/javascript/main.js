@@ -3,11 +3,11 @@
  * Description:
  *
  **/
-import {Board} from "../classes/Board.js";
+import {Flow} from "../classes/Flow.js";
 ;
 
-window.board = new Board();
+window.flow = new Flow();
 
 (function ($, d) {
-	$.flow = {}
+
 })(jQuery, document)

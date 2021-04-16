@@ -16,7 +16,6 @@ class Util {
 			}
 		}
 
-
 	}
 
 	static setUID() {

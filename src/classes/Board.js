@@ -7,12 +7,20 @@ import {Util} from "./Util.js";
 import {Node} from "./Node.js";
 
 class Board {
-	get selectedCards() {
-		return this._selectedCards;
+
+	constructor(name){
+		this._id = Util.setUID();
+		this._name = name;
+		this._nodes = [];
+		this._selectedNodes = [];
 	}
 
-	set selectedCards(value) {
-		this._selectedCards.push(value);
+	get selectedNodes() {
+		return this._selectedNodes;
+	}
+
+	set selectedNodes(value) {
+		this._selectedNodes.push(value);
 	}
 
 	get id() {
@@ -27,28 +35,22 @@ class Board {
 		this._nodes.push(value);
 	}
 
-	constructor(){
-		this._id = Util.setUID();
-		this._nodes = [];
-		this._selectedCards = [];
-	}
-
 	addNode(type = Type.text){
 		this.nodes = new Node(type);
 	}
 
 	getNodeById(id){
-		this.nodes.forEach((card)=>{
-			if (card.id === id)
-				return card;
+		this.nodes.forEach((node)=>{
+			if (node.id === id)
+				return node;
 		});
 		return null;
 	}
 
-	deleteCardById(id){
-		let el = this.getNodeById(id);
-		if(el != null)
-			this.nodes.Delete(el);
+	deleteNodeById(id){
+		let node = this.getNodeById(id);
+		if(node != null)
+			this.nodes.delete(node);
 	}
 
 }
