@@ -55,4 +55,7 @@
       <envs />
     </TaskOptions>
   </component>
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+  </component>
 </project>
