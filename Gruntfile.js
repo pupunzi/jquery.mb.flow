@@ -33,6 +33,7 @@ module.exports = function (grunt) {
 					{flatten: true, expand: true, cwd: '../jquery.mb.simpleSlider/inc/', src: ['jquery.mb.simpleSlider.min.js'], dest: 'src/dep/'},
 					{flatten: false, expand: true, cwd: 'src/assets/', src: ['**'], dest: 'dist/assets/'},
 					{flatten: false, expand: true, cwd: 'src/classes/', src: ['**'], dest: 'dist/classes/'},
+					{flatten: false, expand: true, cwd: 'src/css/fonts/', src: ['**'], dest: 'dist/css/fonts/'},
 					{flatten: true, expand: true, cwd: 'src/', src: ['*.html'], dest: 'dist/',
 						rename: function (dest, src) {
 							return dest + src.replace('.tmpl', '.html');
@@ -60,12 +61,15 @@ module.exports = function (grunt) {
 		},
 
 		concat: {
-			options: {
+
+			/*options: {
 				separator: ';'
-			},
+			},*/
 			dist   : {
-				src : [ 'src/javascript/*.js', 'src/dep/*.js'],
-				dest: 'dist/<%= pkg.title %>.js'
+                files: {
+                    'dist/<%= pkg.title %>.js': [ 'src/javascript/*.js', 'src/dep/*.js'],
+                    'dist/index.html': ['src/index.html', 'src/templates.html'],
+                },
 			}
 		},
 
@@ -83,7 +87,7 @@ module.exports = function (grunt) {
 
 			dist: {
 				files: {
-					'dist/<%= pkg.title %>.min.js': ['<%= concat.dist.dest %>']
+					'dist/<%= pkg.title %>.min.js': ['dist/<%= pkg.title %>.js']
 				}
 			}
 		},

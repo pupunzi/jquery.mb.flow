@@ -3,21 +3,9 @@
  * Description:
  *
  **/
+import {UI} from "./UI.js";
 
 class Util {
-
-	constructor() {
-		Array.prototype.delete = function (el) {
-			for (var i = 0; i < this.length; i++) {
-				if (this[i] === el) {
-					this.splice(i, 1);
-					i--;
-				}
-			}
-		}
-
-
-	}
 
 	static setUID() {
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -25,6 +13,8 @@ class Util {
 			return v.toString(16);
 		});
 	}
+
+
 
 }
 

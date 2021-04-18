@@ -2,10 +2,10 @@ import {Util} from "./Util.js";
 
 class NodeElement {
 
-	constructor(type = Type.text) {
+	constructor(type = Type.text, nodeId) {
 		this._id = Util.setUID;
 		this._type = type;
-		this._nodeId = null;
+		this._nodeId = nodeId;
 		this._connectedTo = null;
 		this._selected = false;
 	}

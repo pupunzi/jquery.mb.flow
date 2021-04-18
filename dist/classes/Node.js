@@ -4,33 +4,43 @@
  * Node Model
  **/
 
-import {Util} from "Util.js";
+import {Util} from "./Util.js";
+import {NodeElement} from "./NodeElement.js";
 
 class Node {
-	get connections() {
-		return this._connections;
-	}
 
-	set connections(value) {
-		this._connections = value;
-	}
-
-	constructor(type = Type.text) {
+	constructor(type = Type.text, boardId) {
 		this._id = Util.setUID();
+		this._boardId = boardId;
 		this._type = type;
 		this._elements = [];
+		this._x = 0;
+		this._y = 0;
 		this._count = function () {
 			return this.elements.length;
 		};
-		this._connections = [];
+		this._connectToNodeID = null;
+		this._date = new Date().getTime();
+	}
+
+	get boardId() {
+		return this._boardId;
+	}
+
+	set boardId(value) {
+		this._boardId = value;
+	}
+
+	get connection() {
+		return this._connectToNodeID;
+	}
+
+	set connection(value) {
+		this._connectToNodeID = value;
 	}
 
 	get elements() {
 		return this._elements;
-	}
-
-	set elements(value) {
-		this._elements.push(value);
 	}
 
 	get count() {
@@ -53,6 +63,11 @@ class Node {
 		return this._id;
 	}
 
+	addElement(){
+		let nodeElement = new NodeElement(Type.text);
+		this._elements.unshift(nodeElement);
+	}
+
 	deleteElement(id) {
 		let el = this.getElementById(id);
 		if (el != null)
@@ -60,20 +75,27 @@ class Node {
 	}
 
 	getElementById(id) {
+		let ne = null;
 		this.elements.forEach((element) => {
 			if (element.id === id)
-				return element;
+				ne = element;
 		});
-		return null;
+		return ne;
+	}
+
+	goToNextElement(){
+
 	}
 
 }
 
 class Type {
-	static text = "text";
-	static condition = "condition";
-	static random = "random";
-	static choice = "choice";
+	static start = "Start";
+	static text = "Text";
+	static condition = "Condition";
+	static random = "Random";
+	static choice = "Choice";
+	static note = "Note";
 }
 
 export {Node};

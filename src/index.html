@@ -4,10 +4,29 @@
   <meta charset="UTF-8">
   <title>jquery.mb.flow</title>
 
+  <link href='css/jquery.mb.flow.min.css' media="all" rel="stylesheet" type="text/css">
+
 </head>
 <body>
+<header id="top-bar">
+  <h1></h1>
+  <button class="main" id="OpenFlow" onclick="$.flow.openFlow()"><i class="icon icon-folder"></i>Open</button>
+  <button class="main" id="NewFlow" onclick="$.flow.addFlow()"><i class="icon icon-plus"></i>New</button>
+</header>
+<section id="wrapper">
+  <div id="boards-list-column">
+    <div id="boards-list-button-bar">
+      <button id="add-board" class="main small" onclick="$.flow.addBoard()"><i class="icon icon-plus"></i></button>
+    </div>
+    <div id="boards-list">
 
+    </div>
+  </div>
+  <div id="board"></div>
+</section>
 
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script type="module" src="jquery.mb.flow.js"></script>
 </body>
 </html>
+

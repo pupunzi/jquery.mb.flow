@@ -3,15 +3,128 @@
  * Description:
  *
  **/
-import {Board} from "../classes/Board.js";
+import {FlowApp} from "../Classes/FlowApp.js";
+import {UI} from "../Classes/UI.js";
+import {ContextualMenu} from "../Classes/ContextualMenu.js";
+
 ;
 
-window.board = new Board();
+Array.prototype.delete = function (el) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i] === el) {
+            this.splice(i, 1);
+            i--;
+        }
+    }
+};
 
 (function ($, d) {
-	$.flow = {}
-})(jQuery, document)
-;/*___________________________________________________________________________________________________________________________________________________
+    $(function () {
+        window.flowApp = new FlowApp();
+        let lastFlow = $.mbStorage.get("lastFlow");
+        if (lastFlow != null)
+            flowApp.load(lastFlow);
+        else
+            $.flow.addFlow();
+
+        $.flow.init();
+        window.board_list_element_menu = new ContextualMenu(".board-list-element-menu", $.flow.contextualMenu.boardListelement);
+    });
+
+    $.flow = {
+        init: function(){
+            $("body").on("keydown", "[contenteditable]", (e)=>{
+                console.debug(e.target);
+                switch (e.keyCode) {
+                    case 13:
+                        e.preventDefault();
+                        $(e.target).blur();
+                        break;
+                }
+            })
+
+        },
+
+        contextualMenu: {
+            boardListelement: [
+                {
+                    name: 'Rename',
+                    fn: function (target) {
+                        let boardId = $(target).parent().data("board-id");
+                        $.flow.editBoardName(boardId);
+                    }
+                },
+                {
+                    name: 'Duplicate', fn: function (target) {
+                        console.log('Duplicate', target);
+                    }
+                },
+                {},
+                {
+                    name: 'Delete', fn: function (target) {
+                        let boardId = $(target).parent().data("board-id");
+                        UI.dialogue("Delete Board", "Are you sure you want to delete<br><b>"+$(target).text()+"</b>?",null,null,null,"Yes","Cancel",()=>{
+                            $.flow.deleteBoard(boardId);
+                            flowApp.save()
+                        });
+                    }
+                },
+            ]
+        },
+
+        addFlow: function () {
+            let title = "Add a new Flow";
+            let text = null;
+            let action = function (name) {
+                flowApp.addFlow(name);
+                $.mbStorage.set("lastFlow", flowApp.flow.id);
+                flowApp.save(flowApp.flow.id);
+            };
+            UI.dialogue(title, text, "flowName", "Flow Name", null, "Add", "Cancel", action);
+        },
+
+        openFlow: function () {
+
+        },
+
+        addBoard: function () {
+            let title = "Add a new Board";
+            let text = null;
+            let action = function (name) {
+                flowApp.flow.addBoard(name);
+            };
+            UI.dialogue(title, text, "boardName", "Board Name", null, "Add", "Cancel", action);
+        },
+
+        updateFlowName: function (name) {
+            flowApp.flow.updateName(name);
+        },
+
+        editBoardName: function (boardId) {
+            let editEl = $(flowApp.ui.placeholders.boardList).find("#board_" + boardId + " .name");
+            editEl.attr({contentEditable: true});
+            editEl.focus();
+            editEl.one("blur", () => {
+                let board = flowApp.flow.getBoardById(boardId);
+                board._name = editEl.text();
+                flowApp.save(flowApp.flow.id);
+                flowApp.drawer.drawBoardList();
+            });
+        },
+        deleteBoard: function(boardId){
+            flowApp.flow.deleteBoard(boardId);
+            flowApp.drawer.drawBoardList();
+            flowApp.save(flowApp.flow.id);
+        }
+
+    };
+
+})(jQuery, document);
+
+/*Contextual menu*/
+!function(e,t){"object"==typeof exports&&"undefined"!=typeof module?module.exports=t():"function"==typeof define&&define.amd?define(t):(e=e||self).ContextMenu=t()}(this,function(){"use strict";!function(e,t){void 0===t&&(t={});var n=t.insertAt;if(e&&"undefined"!=typeof document){var i=document.head||document.getElementsByTagName("head")[0],o=document.createElement("style");o.type="text/css","top"===n&&i.firstChild?i.insertBefore(o,i.firstChild):i.appendChild(o),o.styleSheet?o.styleSheet.cssText=e:o.appendChild(document.createTextNode(e))}}(".ContextMenu{display:none;list-style:none;margin:0;max-width:250px;min-width:125px;padding:0;position:absolute;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ContextMenu--theme-default{background-color:#fff;border:1px solid rgba(0,0,0,.2);-webkit-box-shadow:0 2px 5px rgba(0,0,0,.15);box-shadow:0 2px 5px rgba(0,0,0,.15);font-size:13px;outline:0;padding:2px 0}.ContextMenu--theme-default .ContextMenu-item{padding:6px 12px}.ContextMenu--theme-default .ContextMenu-item:focus,.ContextMenu--theme-default .ContextMenu-item:hover{background-color:rgba(0,0,0,.05)}.ContextMenu--theme-default .ContextMenu-item:focus{outline:0}.ContextMenu--theme-default .ContextMenu-divider{background-color:rgba(0,0,0,.15)}.ContextMenu.is-open{display:block}.ContextMenu-item{cursor:pointer;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ContextMenu-divider{height:1px;margin:4px 0}");var i=[],o=0;function n(e,t,n){void 0===n&&(n={});var i=document.createEvent("Event");Object.keys(n).forEach(function(e){i[e]=n[e]}),i.initEvent(t,!0,!0),e.dispatchEvent(i)}Element.prototype.matches||(Element.prototype.matches=Element.prototype.msMatchesSelector);function e(e,t,n){void 0===n&&(n={className:"",minimalStyling:!1}),this.selector=e,this.items=t,this.options=n,this.id=o++,this.target=null,this.create(),i.push(this)}return e.prototype.create=function(){var i=this;this.menu=document.createElement("ul"),this.menu.className="ContextMenu",this.menu.setAttribute("data-contextmenu",this.id),this.menu.setAttribute("tabindex",-1),this.menu.addEventListener("keyup",function(e){switch(e.which){case 38:i.moveFocus(-1);break;case 40:i.moveFocus(1);break;case 27:i.hide()}}),this.options.minimalStyling||this.menu.classList.add("ContextMenu--theme-default"),this.options.className&&this.options.className.split(" ").forEach(function(e){return i.menu.classList.add(e)}),this.items.forEach(function(e,t){var n=document.createElement("li");"name"in e?(n.className="ContextMenu-item",n.textContent=e.name,n.setAttribute("data-contextmenuitem",t),n.setAttribute("tabindex",0),n.addEventListener("click",i.select.bind(i,n)),n.addEventListener("keyup",function(e){13===e.which&&i.select(n)})):n.className="ContextMenu-divider",i.menu.appendChild(n)}),document.body.appendChild(this.menu),n(this.menu,"created")},e.prototype.show=function(e){this.menu.style.left=e.pageX+"px",this.menu.style.top=e.pageY+"px",this.menu.classList.add("is-open"),this.target=e.target,this.menu.focus(),e.preventDefault(),n(this.menu,"shown")},e.prototype.hide=function(){this.menu.classList.remove("is-open"),this.target=null,n(this.menu,"hidden")},e.prototype.select=function(e){var t=e.getAttribute("data-contextmenuitem");this.items[t]&&this.items[t].fn(this.target),this.hide(),n(this.menu,"itemselected")},e.prototype.moveFocus=function(e){void 0===e&&(e=1);var t,n=this.menu.querySelector("[data-contextmenuitem]:focus");n&&(t=function e(t,n,i){void 0===i&&(i=1);var o=0<i?t.nextElementSibling:t.previousElementSibling;return!o||o.matches(n)?o:e(o,n,i)}(n,"[data-contextmenuitem]",e)),(t=t||(0<e?this.menu.querySelector("[data-contextmenuitem]:first-child"):this.menu.querySelector("[data-contextmenuitem]:last-child")))&&t.focus()},e.prototype.on=function(e,t){this.menu.addEventListener(e,t)},e.prototype.off=function(e,t){this.menu.removeEventListener(e,t)},e.prototype.destroy=function(){this.menu.parentElement.removeChild(this.menu),this.menu=null,i.splice(i.indexOf(this),1)},document.addEventListener("contextmenu",function(t){i.forEach(function(e){t.target.matches(e.selector)&&e.show(t)})}),document.addEventListener("click",function(t){i.forEach(function(e){t.target.matches('[data-contextmenu="'+e.id+'"], [data-contextmenu="'+e.id+'"] *')||e.hide()})}),e});
+
+/*___________________________________________________________________________________________________________________________________________________
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _
  _ file: jquery.mb.mbBrowser.min.js                                                                                                                   _
@@ -44,7 +157,8 @@ if(-1!=(verOffset=nAgt.indexOf("Opera")))jQuery.mbBrowser.opera=!0,jQuery.mbBrow
 jQuery.mbBrowser.version=jQuery.mbBrowser.majorVersion;jQuery.mbBrowser.android=/Android/i.test(nAgt);jQuery.mbBrowser.blackberry=/BlackBerry|BB|PlayBook/i.test(nAgt);jQuery.mbBrowser.ios=/iPhone|iPad|iPod|webOS/i.test(nAgt);jQuery.mbBrowser.operaMobile=/Opera Mini/i.test(nAgt);jQuery.mbBrowser.windowsMobile=/IEMobile|Windows Phone/i.test(nAgt);jQuery.mbBrowser.kindle=/Kindle|Silk/i.test(nAgt);
 jQuery.mbBrowser.mobile=jQuery.mbBrowser.android||jQuery.mbBrowser.blackberry||jQuery.mbBrowser.ios||jQuery.mbBrowser.windowsMobile||jQuery.mbBrowser.operaMobile||jQuery.mbBrowser.kindle;jQuery.isMobile=jQuery.mbBrowser.mobile;jQuery.isTablet=jQuery.mbBrowser.mobile&&765<jQuery(window).width();jQuery.isAndroidDefault=jQuery.mbBrowser.android&&!/chrome/i.test(nAgt);jQuery.mbBrowser=jQuery.mbBrowser;
 jQuery.mbBrowser.versionCompare=function(a,e){if("stringstring"!=typeof a+typeof e)return!1;for(var c=a.split("."),d=e.split("."),b=0,f=Math.max(c.length,d.length);b<f;b++){if(c[b]&&!d[b]&&0<parseInt(c[b])||parseInt(c[b])>parseInt(d[b]))return 1;if(d[b]&&!c[b]&&0<parseInt(d[b])||parseInt(c[b])<parseInt(d[b]))return-1}return 0};
-;
+
+
 /*
  * ******************************************************************************
  *  jquery.mb.components
@@ -80,7 +194,8 @@ jQuery.CSS={name:"mb.CSSAnimate",author:"Matteo Bicocchi",version:"2.0.0",transi
 				easeInOutBack:"cubic-bezier(.68,-.55,.265,1.55)"};f[c]&&(c=f[c]);h.off(jQuery.CSS.transitionEnd+"."+e.id);f=jQuery.CSS.getProp(d);var m={};jQuery.extend(m,d);m[jQuery.CSS.sfx+"transition-property"]=f;m[jQuery.CSS.sfx+"transition-duration"]=a+"ms";m[jQuery.CSS.sfx+"transition-delay"]=b+"ms";m[jQuery.CSS.sfx+"transition-timing-function"]=c;setTimeout(function(){h.one(jQuery.CSS.transitionEnd+"."+e.id,n);h.css(m)},1);e.timeout=setTimeout(function(){e.called||!g?(e.called=!1,e.CSSAIsRunning=!1):(h.css(jQuery.CSS.sfx+
 			"transition",""),g.apply(e),e.CSSAIsRunning=!1,"function"==typeof e.CSSqueue&&(e.CSSqueue(),e.CSSqueue=null))},a+b+10)}else{for(f in d)"transform"===f&&delete d[f],"filter"===f&&delete d[f],"transform-origin"===f&&delete d[f],"auto"===d[f]&&delete d[f],"x"===f&&(k=d[f],l="left",d[l]=k,delete d[f]),"y"===f&&(k=d[f],l="top",d[l]=k,delete d[f]),"-ms-transform"!==f&&"-ms-filter"!==f||delete d[f];h.delay(b).animate(d,a,g)}}})}};jQuery.fn.CSSAnimate=jQuery.CSS.animate;jQuery.normalizeCss=jQuery.CSS.normalizeCss;
 jQuery.fn.css3=function(d){return this.each(function(){var a=jQuery(this),b=jQuery.normalizeCss(d);a.css(b)})};
-;/*___________________________________________________________________________________________________________________________________________________
+
+/*___________________________________________________________________________________________________________________________________________________
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _
  _ file: jquery.mb.simpleSlider.min.js                                                                                                              _
@@ -106,7 +221,8 @@ jQuery.fn.css3=function(d){return this.each(function(){var a=jQuery(this),b=jQue
 			"number"==typeof d?d*c/a.opt.maxval:a.opt.initialval*c/a.opt.maxval;a.y="object"==typeof d?d.clientY+document.body.scrollTop-this.offset().top:"number"==typeof d?(a.opt.maxval-a.opt.initialval-d)*f/a.opt.maxval:a.opt.initialval*f/a.opt.maxval;a.y=this.outerHeight()-a.y;a.scaleX=a.x*a.opt.maxval/c;a.scaleY=a.y*a.opt.maxval/f;a.outOfRangeX=a.scaleX>a.opt.maxval?a.scaleX-a.opt.maxval:0>a.scaleX?a.scaleX:0;a.outOfRangeY=a.scaleY>a.opt.maxval?a.scaleY-a.opt.maxval:0>a.scaleY?a.scaleY:0;a.outOfRange="h"===
 	a.opt.orientation?a.outOfRangeX:a.outOfRangeY;a.value="undefined"!=typeof d?"h"===a.opt.orientation?a.x>=this.outerWidth()?a.opt.maxval:0>=a.x?0:a.scaleX:a.y>=this.outerHeight()?a.opt.maxval:0>=a.y?0:a.scaleY:"h"===a.opt.orientation?a.scaleX:a.scaleY;"h"===a.opt.orientation?a.level.width(Math.floor(100*a.x/c)+"%"):a.level.height(Math.floor(100*a.y/f));a.lastVal===a.value&&("h"===a.opt.orientation&&(a.x>=this.outerWidth()||0>=a.x)||"h"!==a.opt.orientation&&(a.y>=this.outerHeight()||0>=a.y))||("function"===
 	typeof a.opt.callback&&a.opt.callback(a),a.lastVal=a.value)}}};b.fn.simpleSlider=b.simpleSlider.init;b.fn.updateSliderVal=b.simpleSlider.updateSliderVal})(jQuery);
-;/*___________________________________________________________________________________________________________________________________________________
+
+/*___________________________________________________________________________________________________________________________________________________
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _
  _ file: jquery.mb.storage.min.js                                                                                                                   _
