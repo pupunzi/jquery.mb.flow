@@ -356,6 +356,7 @@
   color: rgba(255, 255, 255, 0.2);
 }
 [contenteditable] {
+  position: relative;
   border: 1px solid rgba(255, 255, 255, 0);
   padding: 0 10px;
 }
@@ -428,12 +429,18 @@ html body #top-bar {
 html body #top-bar h1 {
   position: absolute;
   margin: 0;
+  min-width: 20vw;
   left: 0;
   top: 0;
   padding: 10px 10px;
   color: #ffffff;
   font-weight: 100;
   font-size: 160%;
+}
+html body #top-bar h1 span {
+  display: block;
+  text-align: left;
+  width: 100%;
 }
 html body #wrapper {
   position: fixed;

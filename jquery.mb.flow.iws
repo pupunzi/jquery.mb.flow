@@ -2,40 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f4481206-6607-4eef-bcfe-e51b7aa14b67" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Classes/ContextualMenu.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Classes/Drawer.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Classes/Events.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Classes/FlowApp.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Classes/UI.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/css/colors.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/css/contextMenu/styles.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/dep/context-menu.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/templates.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gruntfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/Gruntfile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/classes/Board.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/Board.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/classes/Flow.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/Flow.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/classes/Node.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/Node.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/classes/Util.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/Util.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/css/jquery.mb.flow.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/dist/css/jquery.mb.flow.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/index.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/jquery.mb.flow.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/jquery.mb.flow.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/jquery.mb.flow.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/jquery.mb.flow.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jquery.mb.flow.iws" beforeDir="false" afterPath="$PROJECT_DIR$/jquery.mb.flow.iws" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CSS/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CSS/style.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/style.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CSS/style.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/style.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/Board.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Board.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/Flow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Flow.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/Node.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Node.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/NodeElement.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/NodeElement.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/Util.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Util.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dep/jquery.mb.CSSAnimate.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dep/jquery.mb.browser.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dep/jquery.mb.simpleSlider.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dep/jquery.mb.storage.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/javascript/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/javascript/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/style.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/style.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/style.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/style.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dep/jquery.mb.CSSAnimate.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/dep/jquery.mb.CSSAnimate.min.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -61,100 +36,19 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/javascript/main.js">
+        <entry file="file://$PROJECT_DIR$/src/css/style.less">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="50" column="35" lean-forward="true" selection-start-line="50" selection-start-column="35" selection-end-line="50" selection-end-column="35" />
-              <folding>
-                <element signature="e#31#77#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="283">
+              <caret line="112" column="32" lean-forward="true" selection-start-line="112" selection-start-column="32" selection-end-line="112" selection-end-column="32" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Classes/ContextualMenu.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="310">
-              <caret line="27" selection-start-line="27" selection-end-line="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Classes/Drawer.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="444">
-              <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Classes/Flow.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="43" column="14" selection-start-line="43" selection-start-column="4" selection-end-line="43" selection-end-column="14" />
-              <folding>
-                <element signature="e#42#73#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Classes/Util.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="151">
-              <caret line="8" selection-start-line="8" selection-end-line="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Classes/Events.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="376">
-              <caret line="24" selection-start-line="24" selection-end-line="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Classes/FlowApp.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="227">
-              <caret line="23" column="7" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
-              <folding>
-                <element signature="e#31#62#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/templates.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
-              <caret line="9" column="99" selection-start-line="9" selection-start-column="76" selection-end-line="9" selection-end-column="99" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/css/style.less">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
-              <caret line="288" column="20" lean-forward="true" selection-start-line="288" selection-start-column="20" selection-end-line="288" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/css/colors.less">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="5" column="28" selection-start-line="5" selection-end-line="5" selection-end-column="28" />
+            <state relative-caret-position="208">
+              <caret line="8" column="44" selection-start-line="8" selection-end-line="9" />
             </state>
           </provider>
         </entry>
@@ -230,9 +124,9 @@
         <option value="$PROJECT_DIR$/src/Classes/Drawer.js" />
         <option value="$PROJECT_DIR$/src/templates.html" />
         <option value="$PROJECT_DIR$/src/css/colors.less" />
-        <option value="$PROJECT_DIR$/src/css/style.less" />
         <option value="$PROJECT_DIR$/src/javascript/main.js" />
         <option value="$PROJECT_DIR$/src/Classes/ContextualMenu.js" />
+        <option value="$PROJECT_DIR$/src/css/style.less" />
       </list>
     </option>
   </component>
@@ -261,8 +155,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -274,12 +168,6 @@
               <item name="jquery.mb.flow" type="b2602c69:ProjectViewProjectNode" />
               <item name="jquery.mb.flow" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="jquery.mb.flow" type="b2602c69:ProjectViewProjectNode" />
-              <item name="jquery.mb.flow" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Classes" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="jquery.mb.flow" type="b2602c69:ProjectViewProjectNode" />
@@ -315,7 +203,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1618784160179" />
     <property name="editor.config.ad.shown" value="true" />
-    <property name="js.buildTools.grunt.grunt-cli.package" value="/usr/local/lib/node_modules/grunt" />
+    <property name="js.buildTools.grunt.grunt-cli.package" value="$PROJECT_DIR$/node_modules/grunt-cli" />
     <property name="js.last.introduce.type" value="LET" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="/usr/local/bin/node" />
@@ -350,6 +238,18 @@
     </option>
   </component>
   <component name="RunManager" selected="Grunt.js.default">
+    <configuration default="true" type="TestNG">
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
       <Port>5050</Port>
@@ -372,18 +272,6 @@
       <option name="TEST_SEARCH_SCOPE">
         <value defaultName="moduleWithDependencies" />
       </option>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="TestNG">
-      <option name="TEST_OBJECT" value="CLASS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <properties />
-      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -456,21 +344,21 @@
     <option name="totallyTimeSpent" value="72379000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="25" width="1792" height="1095" extended-state="6" />
+    <frame x="0" y="25" width="1792" height="1095" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Capture Tool" order="0" />
       <window_info id="UI Designer" order="1" />
       <window_info id="Image Layers" order="2" />
-      <window_info content_ui="combo" id="Project" order="3" sideWeight="0.72619045" visible="true" weight="0.25714287" />
+      <window_info active="true" content_ui="combo" id="Project" order="3" sideWeight="0.7227891" visible="true" weight="0.25714287" />
       <window_info id="Structure" order="4" side_tool="true" weight="0.25" />
       <window_info id="Palette&#9;" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info id="Grunt " order="7" sideWeight="0.27380952" side_tool="true" visible="true" weight="0.25714287" />
+      <window_info id="Grunt " order="7" sideWeight="0.2772109" side_tool="true" visible="true" weight="0.25714287" />
       <window_info id="npm" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32854208" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3963039" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3963039" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.6293635" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -478,7 +366,7 @@
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.32902583" />
       <window_info anchor="bottom" id="Application Servers" order="8" />
       <window_info anchor="bottom" id="Changes" order="9" />
-      <window_info anchor="bottom" id="Version Control" order="10" weight="0.25308058" />
+      <window_info anchor="bottom" id="Version Control" order="10" weight="0.25154004" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.32854208" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3264095" />
       <window_info anchor="bottom" id="SVN Repositories" order="13" weight="0.32985783" />
@@ -516,7 +404,7 @@
     <entry file="file://$PROJECT_DIR$/dist/css/style.less.css" />
     <entry file="file://$PROJECT_DIR$/dist/css/style.css" />
     <entry file="file://$PROJECT_DIR$/dist/classes/Board.js" />
-    <entry file="file://$PROJECT_DIR$/src/classes/Card.js" />
+    <entry file="file://$PROJECT_DIR$/src/Classes/Card.js" />
     <entry file="file://$PROJECT_DIR$/bower.json" />
     <entry file="file://$PROJECT_DIR$/jquery.mb.flow.iml">
       <provider selected="true" editor-type-id="text-editor" />
@@ -580,13 +468,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="248" column="16" selection-start-line="248" selection-start-column="16" selection-end-line="248" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dist/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-587">
-          <caret line="6" column="26" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
         </state>
       </provider>
     </entry>
@@ -667,33 +548,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/javascript/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3120">
+          <caret line="122" selection-start-line="122" selection-end-line="122" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Classes/Drawer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="910">
+          <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Classes/Flow.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2184">
+          <caret line="86" selection-start-line="86" selection-end-line="86" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Classes/Util.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
+        <state relative-caret-position="208">
           <caret line="8" selection-start-line="8" selection-end-line="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Classes/Events.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="376">
+        <state relative-caret-position="624">
           <caret line="24" selection-start-line="24" selection-end-line="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Classes/Flow.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="43" column="14" selection-start-line="43" selection-start-column="4" selection-end-line="43" selection-end-column="14" />
-          <folding>
-            <element signature="e#42#73#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Classes/FlowApp.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
+        <state relative-caret-position="598">
           <caret line="23" column="7" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
           <folding>
             <element signature="e#31#62#0" expanded="true" />
@@ -701,41 +593,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Classes/Drawer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/templates.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="9" column="99" selection-start-line="9" selection-start-column="76" selection-end-line="9" selection-end-column="99" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/css/colors.less">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
+        <state relative-caret-position="130">
           <caret line="5" column="28" selection-start-line="5" selection-end-line="5" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/css/style.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="288" column="20" lean-forward="true" selection-start-line="288" selection-start-column="20" selection-end-line="288" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/javascript/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="50" column="35" lean-forward="true" selection-start-line="50" selection-start-column="35" selection-end-line="50" selection-end-column="35" />
-          <folding>
-            <element signature="e#31#77#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -743,6 +604,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="310">
           <caret line="27" selection-start-line="27" selection-end-line="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="6" column="26" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/css/style.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="112" column="32" lean-forward="true" selection-start-line="112" selection-start-column="32" selection-end-line="112" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/templates.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="8" column="44" selection-start-line="8" selection-end-line="9" />
         </state>
       </provider>
     </entry>
