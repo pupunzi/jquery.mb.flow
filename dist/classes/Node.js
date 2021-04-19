@@ -6,10 +6,11 @@
 
 import {Util} from "./Util.js";
 import {NodeElement} from "./NodeElement.js";
+import {Actor} from "./Actor.js";
 
 class Node {
 
-	constructor(type = Type.text, boardId) {
+	constructor(boardId, type = Type.text) {
 		this._id = Util.setUID();
 		this._boardId = boardId;
 		this._type = type;
@@ -20,7 +21,36 @@ class Node {
 			return this.elements.length;
 		};
 		this._connectToNodeID = null;
+		this._actor = new Actor();
 		this._date = new Date().getTime();
+	}
+
+	get date() {
+		return this._date;
+	}
+
+	get x() {
+		return this._x;
+	}
+
+	set x(value) {
+		this._x = value;
+	}
+
+	get y() {
+		return this._y;
+	}
+
+	set y(value) {
+		this._y = value;
+	}
+
+	get actor() {
+		return this._actor;
+	}
+
+	set actor(value) {
+		this._actor = value;
 	}
 
 	get boardId() {
