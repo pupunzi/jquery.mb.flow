@@ -12,7 +12,11 @@ export class Events {
     }
 
     on (eventName, action){
-        document.addEventListener(eventName, (e)=>{action(e)}, false);
+
+        document.addEventListener(eventName, (e)=>{
+            console.debug("event", eventName);
+            action(e)
+        }, false);
     }
 }
 

@@ -6,7 +6,7 @@
 import {FlowApp} from "../Classes/FlowApp.js";
 import {UI} from "../Classes/UI.js";
 import {ContextualMenu} from "../Classes/ContextualMenu.js";
-
+import {Util} from "../Classes/Util.js";
 ;
 
 Array.prototype.delete = function (el) {
@@ -63,7 +63,7 @@ Array.prototype.delete = function (el) {
                 {
                     name: 'Delete', fn: function (target) {
                         let boardId = $(target).parent().data("board-id");
-                        UI.dialogue("Delete Board", "Are you sure you want to delete<br><b>"+$(target).text()+"</b>?",null,null,null,"Yes","Cancel",()=>{
+                        UI.dialogue("Delete Board", "Are you sure you want to delete<br><b>"+$(target).parent().find(".name").text()+"</b>?",null,null,null,"Yes","Cancel",()=>{
                             $.flow.deleteBoard(boardId);
                             flowApp.save()
                         });
@@ -104,6 +104,7 @@ Array.prototype.delete = function (el) {
             let editEl = $(flowApp.ui.placeholders.boardList).find("#board_" + boardId + " .name");
             editEl.attr({contentEditable: true});
             editEl.focus();
+            Util.selectElementContents(editEl.get(0));
             editEl.one("blur", () => {
                 let board = flowApp.flow.getBoardById(boardId);
                 board._name = editEl.text();

@@ -21,11 +21,12 @@ class FlowApp {
         this.events.on(EventType.addFlow, (e) => {
             this.drawer.updateFlowName();
             this.drawer.drawBoardList();
+
         });
 
         //Update Flow name
         this.events.on(EventType.updateFlowName, (e) => {
-            this.drawer.updateFlowName();
+            this.drawer.drawBoardList();
             this.save(this.flow.id);
         });
 
@@ -37,17 +38,15 @@ class FlowApp {
 
         //Add Board
         this.events.on(EventType.addBoard, (e) => {
-            this.drawer.drawBoardList();
             this.save(this.flow.id);
+            this.drawer.drawBoardList();
         });
 
-        //Add Board
+        //Delete Board
         this.events.on(EventType.deleteBoard, (e) => {
-            this.drawer.drawBoardList();
             this.save(this.flow.id);
+            this.drawer.drawBoardList();
         });
-
-
 
     }
 
@@ -78,6 +77,8 @@ class FlowApp {
     addFlow(name = "New Flow") {
         this.flow = new Flow(name);
         this._flowsIds.unshift({id: this.flow.id, name: this.flow.name});
+        let board = this.flow.addBoard("My Board");
+        this.flow.selectBoard(board);
         this.save(this.flow.id);
         Events.register(EventType.addFlow, this.flow);
         return this.flow;
