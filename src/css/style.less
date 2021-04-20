@@ -190,6 +190,11 @@ html {
             font-size: 120%;
             font-weight: 400;
             color: #757575;
+
+            i.icon {
+              font-size: 60%;
+              margin-left: 10px;
+            }
           }
 
         }
@@ -367,13 +372,21 @@ html {
             background-color: transparent;
           }
         }
+
+        &.alert {
+          color: @alert-font-color;
+        }
+
+        &.highlight {
+          color: @highlight-font-color;
+        }
+
       }
     }
   }
 }
 
 //Sortable
-
 body.dragging, body.dragging * {
   cursor: move !important;
 }

@@ -13,7 +13,8 @@ class UI {
         this._placeholders = {
             flowName: "#top-bar #flow-name-placeholder",
             boardListButtonBar: "#boards-list-button-bar",
-            boardList: "#boards-list"
+            boardList: "#boards-list",
+            boardGroupName:".group-label .name"
         };
     }
 

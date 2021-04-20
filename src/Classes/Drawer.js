@@ -51,14 +51,15 @@ export class Drawer {
 					let boardId = $(this).data("board-id");
 					let board = flowApp.flow.getBoardById(boardId);
 					boards.push(board);
-				})
+				});
 
 				flowApp.flow._boards = boards;
 				flowApp.save(flowApp.flow.id);
-
-				console.debug(boards);
 			}
 		});
+
+		console.debug("selectedBoardGroup", flowApp.flow.selectedBoardGroup);
+		$.flow.showBoardsByGroup(flowApp.flow.selectedBoardGroup);
 	}
 
 

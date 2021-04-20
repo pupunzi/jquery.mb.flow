@@ -7,14 +7,14 @@ import {Util} from "./Util.js";
 import {Node} from "./Node.js";
 
 class Board {
-        constructor(name, flowId) {
+        constructor(name, groupName, flowId) {
         this._id = Util.setUID();
         this._flowId = flowId;
         this._name = name;
         this._date = new Date().getTime();
         this._nodes = [];
         this._selectedNodes = [];
-        this._group = "default";
+        this._group = groupName == "all" ? "Main" : groupName;
     }
 
     get group() {

@@ -51,6 +51,10 @@ export class ContextualMenu {
 
 		i.forEach((item) => {
 			let line = $("<li>").addClass("contextual-menu-item");
+
+			if (item.className)
+				line.addClass(item.className);
+
 			if (!item.name) {
 				line.addClass("separator");
 			} else {
@@ -61,8 +65,8 @@ export class ContextualMenu {
 				});
 			}
 			itemsContsiner.append(line);
-
 		});
+
 		menu.append(itemsContsiner);
 		menu.fadeOut(0);
 		$("body").after(menu);

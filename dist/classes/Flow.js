@@ -15,6 +15,20 @@ class Flow {
 		this._name = name;
 		this._boards = [];
 		this._selectedBoard = null;
+		this._boardGroups = [];
+		this._selectedBoardGroup = null;
+	}
+
+	get selectedBoardGroup() {
+		return this._selectedBoardGroup;
+	}
+
+	set selectedBoardGroup(value) {
+		this._selectedBoardGroup = value;
+	}
+
+	get boardGroups() {
+		return this._boardGroups;
 	}
 
 	get selectedBoard() {
@@ -57,8 +71,9 @@ class Flow {
 		return b;
 	}
 
-	addBoard(name) {
-		let board = new Board(name, this.id);
+	addBoard(name, groupName = "Main") {
+		let board = new Board(name, groupName, this.id);
+		this.selectedBoardGroup = groupName;
 		this.boards.unshift(board);
 		this.selectBoard(board._id);
 		Events.register(EventType.addBoard, board);
@@ -86,14 +101,11 @@ class Flow {
 
 	getBoardsGroupsList(){
 		let list = [];
-
 		this.boards.forEach((board)=>{
-
-			console.debug(board._group);
-
+			//console.debug(board._group);
 			if( list.indexOf(board._group) < 0)
 				list.push(board._group);
-		})
+		});
 		return list;
 	}
 

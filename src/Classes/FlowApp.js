@@ -33,6 +33,7 @@ class FlowApp {
 
         //Load Flow
         this.events.on(EventType.loadFlow, (e) => {
+            this.flow.selectedBoardGroup = "all";
             this.drawer.updateFlowName();
             this.drawer.drawBoardList();
         });

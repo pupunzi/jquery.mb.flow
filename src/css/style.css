@@ -468,6 +468,10 @@ html body #wrapper #boards-list-column #boards-list-button-bar .group-label {
   font-weight: 400;
   color: #757575;
 }
+html body #wrapper #boards-list-column #boards-list-button-bar .group-label i.icon {
+  font-size: 60%;
+  margin-left: 10px;
+}
 html body #wrapper #boards-list-column #boards-list .board-list-element {
   padding: 5px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
@@ -612,6 +616,12 @@ html .contextual-menu ul li.separator {
 }
 html .contextual-menu ul li.separator:hover {
   background-color: transparent;
+}
+html .contextual-menu ul li.alert {
+  color: #a73a3a;
+}
+html .contextual-menu ul li.highlight {
+  color: #9ad19a;
 }
 body.dragging,
 body.dragging * {
