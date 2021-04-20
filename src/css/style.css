@@ -71,7 +71,7 @@
 }
 @font-face {
   font-family: 'flowIcons';
-  src: url('fonts/flowIcons.ttf?nwwua6') format('truetype'), url('fonts/flowIcons.woff?nwwua6') format('woff'), url('fonts/flowIcons.svg?nwwua6#flowIcons') format('svg');
+  src: url('fonts/flowIcons.ttf?9pf2mi') format('truetype'), url('fonts/flowIcons.woff?9pf2mi') format('woff'), url('fonts/flowIcons.svg?9pf2mi#flowIcons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -88,6 +88,12 @@
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.icon-drag_handle:before {
+  content: "\e900";
+}
+.icon-drag_indicator:before {
+  content: "\e901";
 }
 .icon-plus:before {
   content: "\f067";
@@ -327,6 +333,9 @@ html i.icon {
   padding: 0 10px 0 0;
   color: #ffffff;
 }
+html i.icon.menu {
+  color: rgba(255, 255, 255, 0.3);
+}
 html button {
   text-transform: uppercase;
   font-size: 80%;
@@ -334,7 +343,7 @@ html button {
   padding: 5px;
   margin: 5px 10px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 5px;
+  border-radius: 0;
   box-shadow: 2px 2px 10px rgba(12, 12, 12, 0);
   background-color: #252525;
   color: #ffffff;
@@ -351,8 +360,10 @@ html button.main:hover {
 }
 html button.small {
   height: 25px;
+  width: 25px;
   min-width: 0;
-  padding: 5px 5px;
+  padding: 5px;
+  border-radius: 100%;
 }
 html button.small i.icon {
   padding: 0;
@@ -374,28 +385,59 @@ html body #top-bar {
   top: 0;
   width: 100vw;
   min-height: 50px;
-  padding: 5px;
-  background-color: rgba(50, 50, 50, 0.9);
-  text-align: right;
+  padding: 0 10px;
+  background-color: rgba(50, 50, 50, 0.7);
+  text-align: left;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 2px 2px 10px rgba(12, 12, 12, 0.4);
   z-index: 1;
 }
-html body #top-bar h1 {
+html body #top-bar #logo {
   position: absolute;
+  top: 0;
+  left: 30px;
+  height: 70px;
+}
+html body #top-bar #logo img {
+  height: 100%;
+}
+html body #top-bar h1 {
+  position: relative;
   margin: 0;
-  min-width: 20vw;
+  margin-left: 250px;
+  display: inline-block;
+  min-width: 10vw;
+  max-width: 30vw;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
   left: 0;
   top: 0;
-  padding: 10px 10px;
-  color: #ffffff;
+  padding: 5px;
+  color: #fff;
   font-weight: 100;
-  font-size: 160%;
+  font-size: 170%;
+  height: 50px;
+  text-align: left;
 }
 html body #top-bar h1 span {
   display: block;
   text-align: left;
   width: 100%;
+}
+html body #top-bar .flows-menu {
+  position: relative;
+  top: -10px;
+  display: inline-block;
+  vertical-align: center;
+  font-size: 140%;
+  font-weight: 100;
+  padding: 10px 10px;
+}
+html body #top-bar #flows-button-bar {
+  position: absolute;
+  right: 0;
+  top: 20px;
 }
 html body #wrapper {
   position: fixed;
@@ -409,11 +451,10 @@ html body #wrapper #boards-list-column {
   vertical-align: top;
   background-color: #444444;
   width: 250px;
-  height: calc(100vh - 50px);
-  margin-top: 50px;
+  height: calc(100vh - 0px);
+  padding: 60px 0 0 0;
   overflow: auto;
   box-shadow: 2px 2px 10px rgba(12, 12, 12, 0.4);
-  padding: 10px;
 }
 html body #wrapper #boards-list-column #boards-list-button-bar {
   margin-top: 10px;
@@ -421,15 +462,30 @@ html body #wrapper #boards-list-column #boards-list-button-bar {
   padding-bottom: 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.4);
 }
+html body #wrapper #boards-list-column #boards-list-button-bar .label {
+  position: absolute;
+  padding: 5px 10px;
+  font-size: 120%;
+  font-weight: 400;
+  color: #757575;
+}
 html body #wrapper #boards-list-column #boards-list .board-list-element {
   padding: 5px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  width: 100%;
+  background-color: #393939;
+}
+html body #wrapper #boards-list-column #boards-list .board-list-element:hover {
+  background-color: #323232;
+}
+html body #wrapper #boards-list-column #boards-list .board-list-element.selected {
+  background-color: #323232;
 }
 html body #wrapper #boards-list-column #boards-list .board-list-element .name {
   display: inline-block;
   padding: 5px;
   color: #ffffff;
-  width: calc(100% - 30px);
+  width: calc(100% - 60px);
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -443,6 +499,10 @@ html body #wrapper #boards-list-column #boards-list .board-list-element i {
   width: 20px;
   margin: 0;
   cursor: pointer;
+}
+html body #wrapper #boards-list-column #boards-list .board-list-element i.icon-drag_indicator {
+  color: rgba(255, 255, 255, 0.33);
+  cursor: move;
 }
 html body #wrapper #board {
   position: relative;
@@ -521,10 +581,11 @@ html .flow-overlay .flow-dialogue .flow-button-bar button {
 }
 html .contextual-menu {
   width: 150px;
-  background-color: #ffffff;
+  background-color: #222222;
   box-shadow: 2px 2px 10px rgba(12, 12, 12, 0.4);
   padding: 0;
   margin: 0;
+  border-radius: 5px;
 }
 html .contextual-menu ul {
   padding: 0;
@@ -534,16 +595,17 @@ html .contextual-menu ul {
 html .contextual-menu ul li {
   display: block;
   padding: 5px 15px;
-  color: #333333;
+  color: #ffffff;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.3s;
+  border-top: 1px solid rgba(50, 50, 50, 0.4);
 }
 html .contextual-menu ul li:hover {
-  background-color: rgba(31, 75, 96, 0.25);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 html .contextual-menu ul li.separator {
-  border-top: 1px solid rgba(31, 75, 96, 0.2);
+  border-top: 1px solid rgba(0, 0, 0, 0.4);
   cursor: default;
   height: 1px;
   line-height: 0;
@@ -551,5 +613,19 @@ html .contextual-menu ul li.separator {
 }
 html .contextual-menu ul li.separator:hover {
   background-color: transparent;
+}
+body.dragging,
+body.dragging * {
+  cursor: move !important;
+}
+.dragged {
+  position: absolute;
+  opacity: 0.5;
+  z-index: 2000;
+}
+ol {
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 /*# sourceMappingURL=style.css.map */

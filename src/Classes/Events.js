@@ -30,6 +30,7 @@ export class EventType {
 	static addBoard = "addBoard";
 	static selectBoard = "selectBoard";
 	static deleteBoard = "deleteBoard";
+	static duplicatedBoard = "duplicatedBoard";
 	static updateBoard = "updateBoard";
 
 	static addNode = "addNode";

@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'flowIcons';
-  src: url('fonts/flowIcons.ttf?nwwua6') format('truetype'), url('fonts/flowIcons.woff?nwwua6') format('woff'), url('fonts/flowIcons.svg?nwwua6#flowIcons') format('svg');
+  src: url('fonts/flowIcons.ttf?9pf2mi') format('truetype'), url('fonts/flowIcons.woff?9pf2mi') format('woff'), url('fonts/flowIcons.svg?9pf2mi#flowIcons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -17,6 +17,12 @@
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.icon-drag_handle:before {
+  content: "\e900";
+}
+.icon-drag_indicator:before {
+  content: "\e901";
 }
 .icon-plus:before {
   content: "\f067";

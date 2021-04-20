@@ -73,6 +73,14 @@ class Board {
             this.nodes.delete(node);
     }
 
+
+    drawNodes(){
+        let nodes = this._nodes;
+
+
+    }
+
+
 }
 
 

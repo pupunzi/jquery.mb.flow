@@ -11,7 +11,7 @@ class UI {
 
     constructor() {
         this._placeholders = {
-            flowName: "#top-bar h1",
+            flowName: "#top-bar #flow-name-placeholder",
             boardListButtonBar: "#boards-list-button-bar",
             boardList: "#boards-list"
         };

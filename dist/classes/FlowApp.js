@@ -9,6 +9,7 @@ import {Events,EventType} from "./Events.js";
 import {Drawer} from "./Drawer.js";
 
 class FlowApp {
+
     constructor() {
         this._date = new Date().getTime();
         this._ui = new UI();
@@ -46,6 +47,22 @@ class FlowApp {
         this.events.on(EventType.deleteBoard, (e) => {
             this.save(this.flow.id);
             this.drawer.drawBoardList();
+            if(this.flow.boards.length > 0) {
+	            let board = this.flow.boards[0];
+	            this.flow.selectBoard(board._id);
+            }
+        });
+
+        //Duplicated Board
+        this.events.on(EventType.duplicatedBoard, (e) => {
+            this.save(this.flow.id);
+            this.drawer.drawBoardList();
+        });
+
+        //Select Board
+        this.events.on(EventType.selectBoard, (e) => {
+	        this.drawer.drawBoardList();
+	        this.flow.selectedBoard.drawNodes();
         });
 
     }
@@ -78,7 +95,7 @@ class FlowApp {
         this.flow = new Flow(name);
         this._flowsIds.unshift({id: this.flow.id, name: this.flow.name});
         let board = this.flow.addBoard("My Board");
-        this.flow.selectBoard(board);
+        this.flow.selectBoard(board._id);
         this.save(this.flow.id);
         Events.register(EventType.addFlow, this.flow);
         return this.flow;

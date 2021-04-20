@@ -1,12 +1,16 @@
 <!-- Templates -->
 
 <template id="flow-name">
-    <span onblur="$.flow.updateFlowName($(this).text())" contenteditable="true" id="{{id}}" class="flow-name">{{flowName}}</span>
+  <div data-flow-id="{{id}}">
+    <h1 id="flow_{{id}}" class="name">{{flowName}}</h1>
+    <i class="icon icon-ellipsis-v flows-menu menu" ></i>
+  </div>
 </template>
 
 <template id="board-list-element">
-    <div id="board_{{id}}" class="board-list-element" data-board-id="{{id}}">
-        <!--onclick="$.flow.editBoardName('{{id}}'); event.stopPropagation()"-->
-        <div class="name">{{boardName}}</div><i class="icon icon-ellipsis-v board-list-element-menu"></i>
-    </div>
+  <li id="board_{{id}}" class="board-list-element {{className}}" data-board-id="{{id}}" >
+    <i class="icon icon-drag_indicator"></i>
+    <div class="name" onclick="flowApp.flow.selectBoard('{{id}}')">{{boardName}}</div>
+    <i class="icon icon-ellipsis-v board-list-element-menu menu"></i>
+  </li>
 </template>
