@@ -8,7 +8,7 @@
 </template>
 
 <template id="board-list-element">
-  <li id="board_{{id}}" class="board-list-element {{className}}" data-board-id="{{id}}" >
+  <li id="board_{{id}}" class="board-list-element {{className}}" data-board-id="{{id}}" data-board-group = "{{boardGroup}}">
     <i class="icon icon-drag_indicator"></i>
     <div class="name" onclick="flowApp.flow.selectBoard('{{id}}')">{{boardName}}</div>
     <i class="icon icon-ellipsis-v board-list-element-menu menu"></i>

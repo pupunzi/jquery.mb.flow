@@ -25,13 +25,11 @@ export class Drawer {
 		let flowApp = this.flowApp;
 		$(flowApp.ui.placeholders.boardList).empty();
 
-		console.debug(flowApp.flow._boards.length);
-
 		flowApp.flow._boards.forEach((board) => {
 			let selected = "";
 			if (board._id == flowApp.flow.selectedBoard._id)
 				selected = "selected";
-			let content = UI.fillTemplate("board-list-element", {boardName: board._name, id: board._id, className: selected});
+			let content = UI.fillTemplate("board-list-element", {boardName: board._name, id: board._id, className: selected, boardGroup: board._group});
 
 			$(content).on("click", ()=>{
 				console.debug(board._id);

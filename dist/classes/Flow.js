@@ -62,6 +62,7 @@ class Flow {
 		this.boards.unshift(board);
 		this.selectBoard(board._id);
 		Events.register(EventType.addBoard, board);
+		return board;
 	}
 
 	duplicateBoard(boardId) {
@@ -80,9 +81,35 @@ class Flow {
 		for (const property in board) {
 			this.selectedBoard[property] = board[property];
 		}
-
 		Events.register(EventType.selectBoard, this.selectedBoard);
+	}
 
+	getBoardsGroupsList(){
+		let list = [];
+
+		this.boards.forEach((board)=>{
+
+			console.debug(board._group);
+
+			if( list.indexOf(board._group) < 0)
+				list.push(board._group);
+		})
+		return list;
+	}
+
+	filterBoardsByGroup(group){
+		let boards = [];
+		if(name === "all"){
+			boards = flowApp.flow.boards;
+		} else {
+			flowApp.flow.boards.forEach((board)=>{
+				if (board.group == name){
+					boards.push(board);
+				}
+			})
+		}
+
+		return boards;
 	}
 
 	deleteBoard(boardId) {

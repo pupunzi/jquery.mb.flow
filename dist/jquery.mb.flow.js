@@ -23,6 +23,7 @@ import {Util} from "../Classes/Util.js";
 
 		window.board_list_element_menu = new ContextualMenu(".board-list-element-menu", $.flow.contextualMenu.boardListelement);
 		window.flows_menu = new ContextualMenu(".flows-menu", $.flow.contextualMenu.flows, true);
+		window.boards_groups = new ContextualMenu(".boards-group-menu", $.flow.contextualMenu.BoardsGroups, true);
 	});
 
 	$.flow = {
@@ -108,6 +109,40 @@ import {Util} from "../Classes/Util.js";
 					}
 				}
 			],
+			BoardsGroups    : function(){
+
+				let items = [];
+				let groups = flowApp.flow.getBoardsGroupsList();
+				groups.forEach((groupName)=>{
+
+					let group = {
+						name: groupName,
+						fn  : function (target) {
+							console.debug("filter by group:" + groupName)
+						}
+					}
+					items.push(group);
+				});
+
+				items.push({});
+				let showAll = {
+					name: "Show All",
+					fn: function(target){
+						console.debug("filter by group: Show All");
+						$.flow.showBoardsByGroup("all");
+					}
+				}
+				items.push(showAll);
+
+				let newGroup = {
+					name: "Add Group",
+					fn: function(target){
+						console.debug("Add Group")
+					}
+				}
+				items.push(newGroup);
+				return items;
+			}
 		},
 
 		addFlow: function () {
@@ -134,6 +169,14 @@ import {Util} from "../Classes/Util.js";
 
 		duplicateBoard: function (boardId) {
 			flowApp.flow.duplicateBoard(boardId);
+		},
+
+		showBoardsByGroup: function(groupName){
+			$(flowApp.ui.placeholders.boardList).find("li").hide();
+			if(groupName != "all")
+				$(flowApp.ui.placeholders.boardList).find("[data-board-group=\"" + groupName + "\"]").show();
+			else
+				$(flowApp.ui.placeholders.boardList).find("li").show();
 		},
 
 		updateFlowName: function (name) {
@@ -169,9 +212,7 @@ import {Util} from "../Classes/Util.js";
 			flowApp.drawer.drawBoardList();
 			flowApp.save(flowApp.flow.id);
 		}
-
 	};
-
 
 	Array.prototype.delete = function (el) {
 		for (var i = 0; i < this.length; i++) {

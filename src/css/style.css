@@ -403,10 +403,9 @@ html body #top-bar #logo img {
 }
 html body #top-bar h1 {
   position: relative;
-  margin: 0;
-  margin-left: 250px;
+  margin: 10px 0 0 250px;
   display: inline-block;
-  min-width: 10vw;
+  width: 30vw;
   max-width: 30vw;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -452,7 +451,7 @@ html body #wrapper #boards-list-column {
   background-color: #444444;
   width: 250px;
   height: calc(100vh - 0px);
-  padding: 60px 0 0 0;
+  padding: 70px 0 0 0;
   overflow: auto;
   box-shadow: 2px 2px 10px rgba(12, 12, 12, 0.4);
 }
@@ -462,7 +461,7 @@ html body #wrapper #boards-list-column #boards-list-button-bar {
   padding-bottom: 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.4);
 }
-html body #wrapper #boards-list-column #boards-list-button-bar .label {
+html body #wrapper #boards-list-column #boards-list-button-bar .group-label {
   position: absolute;
   padding: 5px 10px;
   font-size: 120%;

@@ -19,7 +19,7 @@
 <section id="wrapper">
   <div id="boards-list-column">
     <div id="boards-list-button-bar">
-      <div class="label">Boards</div>
+      <div class="group-label"><span class="name">All Boards</span> <i class="icon icon-chevron-down boards-group-menu"></i> </div>
       <button id="add-board" class="main small" onclick="$.flow.addBoard()"><i class="icon icon-plus"></i></button>
     </div>
     <ol id="boards-list">
@@ -44,7 +44,7 @@
 </template>
 
 <template id="board-list-element">
-  <li id="board_{{id}}" class="board-list-element {{className}}" data-board-id="{{id}}" >
+  <li id="board_{{id}}" class="board-list-element {{className}}" data-board-id="{{id}}" data-board-group = "{{boardGroup}}">
     <i class="icon icon-drag_indicator"></i>
     <div class="name" onclick="flowApp.flow.selectBoard('{{id}}')">{{boardName}}</div>
     <i class="icon icon-ellipsis-v board-list-element-menu menu"></i>

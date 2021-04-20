@@ -14,12 +14,12 @@ export class ContextualMenu {
 		this.init();
 	}
 
-	get alignLeft() {
-		return this._alignLeft;
+	set items(value) {
+		this._items = value;
 	}
 
-	set alignLeft(value) {
-		this._alignLeft = value;
+	get alignLeft() {
+		return this._alignLeft;
 	}
 
 	init() {
@@ -46,7 +46,10 @@ export class ContextualMenu {
 		this.hide(false);
 		let menu = $("<menu>").addClass("contextual-menu").attr("data-target", this._target);
 		let itemsContsiner = $("<ul>");
-		this._items.forEach((item) => {
+
+		let i = typeof this._items == "function" ? this._items() : this._items;
+
+		i.forEach((item) => {
 			let line = $("<li>").addClass("contextual-menu-item");
 			if (!item.name) {
 				line.addClass("separator");
@@ -64,7 +67,7 @@ export class ContextualMenu {
 		menu.fadeOut(0);
 		$("body").after(menu);
 
-		let left = this._alignLeft ? $(e.target).offset().left : $(e.target).offset().left - menu.width() + 30;
+		let left = this.alignLeft ? $(e.target).offset().left : $(e.target).offset().left - menu.width() + 30;
 		menu.css({
 			position: "absolute",
 			top     : $(e.target).offset().top,
