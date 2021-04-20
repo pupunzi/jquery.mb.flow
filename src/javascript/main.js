@@ -119,6 +119,7 @@ import {Util} from "../Classes/Util.js";
 						name: groupName,
 						fn  : function (target) {
 							console.debug("filter by group:" + groupName)
+							S.flow.filterBoardsByGroup(groupName);
 						}
 					}
 					items.push(group);
@@ -137,6 +138,12 @@ import {Util} from "../Classes/Util.js";
 				let newGroup = {
 					name: "Add Group",
 					fn: function(target){
+						UI.dialogue("Add new Group",null,"groupName","Group name",null,"Add","Cancel",(name)=>{
+							let board = flowApp.flow.addBoard();
+							board._group = name;
+							S.flow.filterBoardsByGroup(name);
+						})
+
 						console.debug("Add Group")
 					}
 				}
