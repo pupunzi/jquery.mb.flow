@@ -12,7 +12,6 @@ export class Events {
 	}
 
 	on(eventName, action) {
-
 		document.addEventListener(eventName, (e) => {
 			console.debug("event", eventName);
 			action(e)
@@ -26,6 +25,8 @@ export class EventType {
 	static loadFlow = "loadFlow";
 	static removeFlow = "removeFlow";
 	static saveFlow = "saveFlow";
+	static addGroup = "addGroup";
+	static updateGroupName = "updateGroupName";
 
 	static addBoard = "addBoard";
 	static selectBoard = "selectBoard";

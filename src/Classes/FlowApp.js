@@ -22,7 +22,16 @@ class FlowApp {
         this.events.on(EventType.addFlow, (e) => {
             this.drawer.updateFlowName();
             this.drawer.drawBoardList();
+        });
 
+        //Remove Flow
+        this.events.on(EventType.removeFlow, (e) => {
+            let flow = this.flows[0];
+            if(flow != null) {
+                this.load(flow.id);
+                $.mbStorage.set("lastFlow", flow.id);
+            } else
+                this.addFlow();
         });
 
         //Update Flow name
@@ -35,6 +44,20 @@ class FlowApp {
         this.events.on(EventType.loadFlow, (e) => {
             this.flow.selectedBoardGroup = "all";
             this.drawer.updateFlowName();
+            this.drawer.drawBoardList();
+        });
+
+        //Add Group
+        this.events.on(EventType.addGroup, (e) => {
+            this.flow.selectedBoardGroup = e.detail.groupName;
+            this.save(this.flow.id);
+            this.drawer.drawBoardList();
+        });
+
+        //Edit Group Name
+        this.events.on(EventType.updateGroupName, (e) => {
+            this.flow.selectedBoardGroup = e.detail.newName;
+            this.save(this.flow.id);
             this.drawer.drawBoardList();
         });
 
@@ -95,6 +118,7 @@ class FlowApp {
     addFlow(name = "New Flow") {
         this.flow = new Flow(name);
         this._flowsIds.unshift({id: this.flow.id, name: this.flow.name});
+        $.mbStorage.set("lastFlow", this.flow.id);
         let board = this.flow.addBoard("My Board");
         this.flow.selectBoard(board._id);
         this.save(this.flow.id);
@@ -103,8 +127,12 @@ class FlowApp {
     }
 
     removeFlow(flowId) {
-        this._flowsIds.delete(flowId);
-        $.mbStorage.remove(flowId);
+        this._flowsIds.forEach((f)=>{
+            if(f.id === flowId) {
+                this._flowsIds.delete(f);
+                $.mbStorage.remove("flow_" + flowId);
+            }
+        });
         this.save(null);
         Events.register(EventType.removeFlow, this.flow);
     }
@@ -120,10 +148,10 @@ class FlowApp {
         let flow = $.mbStorage.get("flow_" + id);
         this.flow = new Flow(flow.name);
         for (const property in flow) {
-            //console.log(`${property}: ${object[property]}`);
             this.flow[property] = flow[property];
         }
         this.drawer.updateFlowName();
+
         Events.register(EventType.loadFlow, this.flow);
         return this.flow;
     }

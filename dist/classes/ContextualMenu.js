@@ -42,6 +42,7 @@ export class ContextualMenu {
 	}
 
 	show(e) {
+		$(".contextual-menu").remove();
 		this._isOpening = true;
 		this.hide(false);
 		let menu = $("<menu>").addClass("contextual-menu").attr("data-target", this._target);

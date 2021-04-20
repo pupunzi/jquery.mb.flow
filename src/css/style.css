@@ -394,19 +394,19 @@ html body #top-bar {
 }
 html body #top-bar #logo {
   position: absolute;
-  top: 0;
-  left: 30px;
-  height: 70px;
+  top: 15px;
+  left: 10px;
+  height: 60px;
+  filter: drop-shadow(10px 10px 4px rgba(12, 12, 12, 0.4));
 }
 html body #top-bar #logo img {
   height: 100%;
 }
 html body #top-bar h1 {
   position: relative;
-  margin: 10px 0 0 250px;
   display: inline-block;
-  width: 30vw;
-  max-width: 30vw;
+  margin: 10px 20px 0 250px;
+  max-width: 40vw;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -608,7 +608,7 @@ html .contextual-menu ul li:hover {
   background-color: rgba(0, 0, 0, 0.3);
 }
 html .contextual-menu ul li.separator {
-  border-top: 1px solid rgba(0, 0, 0, 0.4);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
   cursor: default;
   height: 1px;
   line-height: 0;

@@ -56,16 +56,15 @@ import {Util} from "../Classes/Util.js";
                 {},
                 {
                     name: 'Export',
-                    className:"highlight",
+                    className: "highlight",
                     fn: function (target) {
                         let boardId = $(target).parent().data("board-id");
                         let boardName = $(target).parent().find(".name").text();
                     }
                 },
-                {},
                 {
                     name: 'Delete',
-                    className:"alert",
+                    className: "alert",
                     fn: function (target) {
                         let boardId = $(target).parent().data("board-id");
                         UI.dialogue("Delete Board", "Are you sure you want to delete<br><b>" + $(target).parent().find(".name").text() + "</b>?", null, null, null, "Yes", "Cancel", () => {
@@ -79,7 +78,6 @@ import {Util} from "../Classes/Util.js";
                 {
                     name: 'Rename',
                     fn: function (target) {
-
                         let flowId = $(target).parent().data("flow-id");
                         console.debug(target, flowId);
                         $.flow.editFlowName(flowId);
@@ -93,7 +91,7 @@ import {Util} from "../Classes/Util.js";
                 {},
                 {
                     name: 'Export',
-                    className:"highlight",
+                    className: "highlight",
                     fn: function (target) {
                         let flowId = $(target).parent().data("flow-id");
                         let flowName = $(target).parent().find(".name").text();
@@ -103,11 +101,11 @@ import {Util} from "../Classes/Util.js";
                 {},
                 {
                     name: 'Delete',
-                    className:"alert",
+                    className: "alert",
                     fn: function (target) {
                         let flowId = $(target).parent().data("flow-id");
-                        UI.dialogue("Delete Board", "Are you sure you want to delete<br><b>" + $(target).parent().find(".name").text() + "</b>?", null, null, null, "Yes", "Cancel", () => {
-                            $.flow.deleteBoard(boardId);
+                        UI.dialogue("Delete Flow", "Are you sure you want to delete<br><b>" + $(target).parent().find(".name").text() + "</b>?", null, null, null, "Yes", "Cancel", () => {
+                            flowApp.removeFlow(flowId);
                             flowApp.save()
                         });
                     }
@@ -116,6 +114,18 @@ import {Util} from "../Classes/Util.js";
             BoardsGroups: function () {
                 let items = [];
                 let groups = flowApp.flow.getBoardsGroupsList();
+
+                let showAll = {
+                    name: "Show All",
+                    fn: function (target) {
+                        flowApp.flow.selectedBoardGroup = "all";
+                        $.flow.showBoardsByGroup("all");
+                    }
+                };
+                items.push(showAll);
+
+                items.push({});
+
                 groups.forEach((groupName) => {
                     let group = {
                         name: groupName,
@@ -130,29 +140,36 @@ import {Util} from "../Classes/Util.js";
 
                 items.push({});
 
-                let showAll = {
-                    name: "Show All",
+                let renameGroup = {
+                    name: "Rename Group",
                     fn: function (target) {
-                        console.debug("filter by group: Show All");
-                        flowApp.flow.selectedBoardGroup = "all";
-                        $.flow.showBoardsByGroup("all");
+                        let editEl = $(target).parent().find(".name");
+
+                        editEl.attr({contentEditable: true});
+                        editEl.focus();
+                        let oldName = editEl.text();
+                        Util.selectElementContents(editEl.get(0));
+                        editEl.one("blur", () => {
+                            flowApp.flow.updateGroupName(oldName, editEl.text());
+                            editEl.attr({contentEditable: false});
+                        });
                     }
                 };
-                items.push(showAll);
+                if(flowApp.flow.selectedBoardGroup != "all")
+                    items.push(renameGroup);
 
                 let newGroup = {
-                    name: "Add Group",
-                    className:"highlight",
+                    name: "New Group",
+                    className: "highlight",
                     fn: function (target) {
                         UI.dialogue("Add a new Group for", null, "groupName", "Group name", null, "Add", "Cancel", (name) => {
-                            flowApp.flow.addBoard("New Board",name);
-                            flowApp.flow._boardGroups.push(name);
-                            flowApp.flow.selectedBoardGroup = name;
+                            flowApp.flow.addGroup(name);
                             $.flow.showBoardsByGroup(name);
                         });
                     }
                 };
                 items.push(newGroup);
+
                 return items;
             }
         },
@@ -188,7 +205,7 @@ import {Util} from "../Classes/Util.js";
             $(flowApp.ui.placeholders.boardList).find("li").hide();
             if (groupName != "all") {
                 $(flowApp.ui.placeholders.boardList).find("[data-board-group=\"" + groupName + "\"]").show();
-            }else {
+            } else {
                 $(flowApp.ui.placeholders.boardList).find("li").show();
             }
             $(flowApp.ui.placeholders.boardGroupName).html((groupName != "all" ? groupName : "All Boards"));
@@ -198,13 +215,13 @@ import {Util} from "../Classes/Util.js";
             flowApp.flow.updateName(name);
         },
 
-        editFlowName: function (FlowId) {
+        editFlowName: function () {
             let editEl = $(flowApp.ui.placeholders.flowName).find("h1");
             editEl.attr({contentEditable: true});
             editEl.focus();
             Util.selectElementContents(editEl.get(0));
             editEl.one("blur", () => {
-                $.flow.updateFlowName(editEl.text());
+                flowApp.flow.updateName(editEl.text());
                 editEl.attr({contentEditable: false});
             });
         },

@@ -14,7 +14,7 @@ class Board {
         this._date = new Date().getTime();
         this._nodes = [];
         this._selectedNodes = [];
-        this._group = groupName == "all" ? "Main" : groupName;
+        this._group = groupName == "all" ? "Main Group" : groupName;
     }
 
     get group() {
