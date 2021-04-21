@@ -108,14 +108,14 @@ html {
       box-shadow: 2px 2px 10px rgba(12, 12, 12, 0.4);
       z-index: 1;
 
-      #logo{
+      #logo {
         position: absolute;
         top: 15px;
         left: 10px;
         height: 60px;
         filter: drop-shadow(10px 10px 4px rgba(12, 12, 12, 0.4));
 
-        img{
+        img {
           height: 100%;
         }
       }
@@ -236,11 +236,10 @@ html {
               cursor: pointer;
 
               &.icon-drag_indicator {
-                color: rgba(255, 255, 255, 0.33);
+                color: rgba(255, 255, 255, 0.2);
                 cursor: move;
               }
             }
-
           }
         }
       }
@@ -249,12 +248,54 @@ html {
         position: relative;
         display: inline-block;
         vertical-align: top;
-        margin-top: 50px;
+        margin-top: 70px;
+        //background-color: rgba(224, 98, 110, 0.13);
+
+
         width: calc(100vw - 255px);
-        height: calc(100vh - 50px);
+        height: calc(100vh - 70px);
+
+        //Nodes
+
+        .node {
+
+          position: absolute;
+
+          .anchorOut{
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #222222;
+            right: -5px;
+            top: calc(50% - 5px);
+          }
+
+          &[data-type="start"] {
+            width: 60px;
+            height: 60px;
+            background-color: orange;
+            border-radius: 100%;
+            top: 40px;
+            left: 40px;
+
+            i {
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              margin: auto;
+              font-size: 60px;
+              text-align: center;
+              padding: 0;
+            }
+          }
+
+        }
+
+
       }
     }
-
   }
 
   .flow-overlay {
@@ -285,6 +326,17 @@ html {
       padding: 40px;
       text-align: center;
       border: 1px solid rgba(255, 255, 255, 0.2);
+
+      &.alert {
+        background-color: @dialogue-alert;
+
+        button {
+          &.main {
+            background-color: @alert-button-main;
+            color: @alert-button-main-font;
+          }
+        }
+      }
 
       .flow-dialogue-title {
         font-weight: 100;
@@ -334,6 +386,11 @@ html {
     }
   }
 
+
+  /**
+  Contextual Menu
+  */
+
   .contextual-menu {
     width: 150px;
     background-color: @contextual-menu-color;
@@ -375,6 +432,10 @@ html {
 
         &.alert {
           color: @alert-font-color;
+        }
+
+        &.listElement {
+          color: #d5c8a6;
         }
 
         &.highlight {

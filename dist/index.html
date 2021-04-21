@@ -21,11 +21,12 @@
       <div class="group-label"><span class="name">All Boards</span> <i class="icon small icon-chevron-down boards-group-menu"></i> </div>
       <button id="add-board" class="main small" onclick="$.flow.addBoard()"><i class="icon icon-plus"></i></button>
     </div>
-    <ol id="boards-list">
 
-    </ol>
+    <ol id="boards-list"></ol>
   </div>
+
   <div id="board"></div>
+
 </section>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
@@ -48,4 +49,19 @@
     <div class="name" onclick="flowApp.flow.selectBoard('{{id}}')">{{boardName}}</div>
     <i class="icon icon-ellipsis-v board-list-element-menu menu"></i>
   </li>
+</template>
+
+<template id="node-text">
+  <div id="node_{{nodeId}}" class="node" data-type="text" data-flow-id="{{flowId}}" data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-x="0" data-y="0">
+    <menu><i class="icon icon-ellipsis-v node-menu menu" ></i></menu>
+    <div id="node-content"></div>
+    <div class="anchorIn"></div>
+    <div class="anchorOut"></div>
+  </div>
+</template>
+<template id="node-start">
+  <div id="node_{{nodeId}}" class="node" data-type="start" data-flow-id="{{flowId}}" data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-x="0" data-y="0">
+    <i class="icon icon-caret-right"></i>
+    <div class="anchorOut"></div>
+  </div>
 </template>

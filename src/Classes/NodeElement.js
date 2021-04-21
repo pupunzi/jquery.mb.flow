@@ -45,9 +45,9 @@ class NodeElement {
 		return this._id;
 	}
 
-	connect(cardId){
-		let card = window.board.getNodeById(cardId);
-		card.connections = this.nodeId;
+	connect(nodeId){
+		let node = $.flow.getNodeById(nodeId);
+		node.connections = this.nodeId;
 	}
 
 }
