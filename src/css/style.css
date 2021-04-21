@@ -507,16 +507,46 @@ html body #wrapper #boards-list-column #boards-list .board-list-element i {
   cursor: pointer;
 }
 html body #wrapper #boards-list-column #boards-list .board-list-element i.icon-drag_indicator {
-  color: rgba(255, 255, 255, 0.33);
+  color: rgba(255, 255, 255, 0.2);
   cursor: move;
 }
 html body #wrapper #board {
   position: relative;
   display: inline-block;
   vertical-align: top;
-  margin-top: 50px;
+  margin-top: 70px;
   width: calc(100vw - 255px);
-  height: calc(100vh - 50px);
+  height: calc(100vh - 70px);
+}
+html body #wrapper #board .node {
+  position: absolute;
+}
+html body #wrapper #board .node .anchorOut {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #222222;
+  right: -5px;
+  top: calc(50% - 5px);
+}
+html body #wrapper #board .node[data-type="start"] {
+  width: 60px;
+  height: 60px;
+  background-color: orange;
+  border-radius: 100%;
+  top: 40px;
+  left: 40px;
+}
+html body #wrapper #board .node[data-type="start"] i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  font-size: 60px;
+  text-align: center;
+  padding: 0;
 }
 html .flow-overlay {
   position: fixed;
@@ -547,7 +577,11 @@ html .flow-overlay .flow-dialogue {
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 html .flow-overlay .flow-dialogue.alert {
-  background-color: #602729;
+  background-color: #91181a;
+}
+html .flow-overlay .flow-dialogue.alert button.main {
+  background-color: #ffffff;
+  color: #4b0001;
 }
 html .flow-overlay .flow-dialogue .flow-dialogue-title {
   font-weight: 100;

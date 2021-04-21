@@ -14,6 +14,7 @@ class UI {
             flowName: "#top-bar #flow-name-placeholder",
             boardListButtonBar: "#boards-list-button-bar",
             boardList: "#boards-list",
+            board: "#board",
             boardGroupName:".group-label .name"
         };
     }

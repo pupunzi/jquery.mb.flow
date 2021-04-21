@@ -34,9 +34,11 @@ import {Util} from "../Classes/Util.js";
 	 * ---------------------------------------------------- */
 	$.flow = {
 
-		selectedFlow: null,
-		selectedBoard : null,
-		selectedNode: null,
+		selectedFlow : null,
+		selectedBoard: null,
+		selectedNode : null,
+
+		draggable: [],
 
 		init: function () {
 			$("body").on("keydown", "[contenteditable]", (e) => {
@@ -164,13 +166,14 @@ import {Util} from "../Classes/Util.js";
 						editEl.focus();
 						let oldName = editEl.text();
 						Util.selectElementContents(editEl.get(0));
+
 						editEl.one("blur", () => {
 							flowApp.flow.updateGroupName(oldName, editEl.text());
 							editEl.attr({contentEditable: false});
 						});
 					}
 				};
-				if (flowApp.flow.selectedBoardGroup != "all")
+				if (flowApp.flow.selectedBoardGroup !== "all")
 					items.push(renameGroup);
 
 				let newGroup = {
@@ -255,7 +258,7 @@ import {Util} from "../Classes/Util.js";
 			});
 		},
 
-		moveToGroup: function(boardId, target){
+		moveToGroup: function (boardId, target) {
 			console.log("Mover to Group");
 		},
 
@@ -275,6 +278,56 @@ import {Util} from "../Classes/Util.js";
 				$(flowApp.ui.placeholders.boardList).find("li").show();
 			}
 			$(flowApp.ui.placeholders.boardGroupName).html((groupName !== "all" ? groupName : "All Boards"));
+		},
+
+		makeDraggable: function (nodeId) {
+			$.flow.draggable["node_" + nodeId] = new PlainDraggable(document.getElementById("node_" + nodeId));
+			$.flow.draggable["node_" + nodeId].handle = $("node_" + nodeId).find(".anchorOut").get(0);
+			$.flow.draggable["node_" + nodeId].snap = {step: 30};
+			$.flow.draggable["node_" + nodeId].autoScroll = true;
+
+			let startX = $(flowApp.ui.placeholders.board).offset().left;
+			let startY = $(flowApp.ui.placeholders.board).offset().top;
+
+			let anchorOut = $("#node_" + nodeId).find(".anchorOut");
+			anchorOut.on("mousedown", (e) => {
+
+				if(anchorOut.get(0).line)
+					anchorOut.get(0).line.remove();
+
+				$.flow.draggable["node_" + nodeId].disabled = true;
+				e.preventDefault();
+				e.stopPropagation();
+				let startEl = $("#node_" + nodeId).find(".anchorOut");
+				let fakeEl = $("<div id='fakeEl'>").css({position: "absolute", width: 20, height: 20, zIndex: 100});
+				fakeEl.appendTo(flowApp.ui.placeholders.board);
+
+				anchorOut.get(0).line = new LeaderLine(startEl.get(0), fakeEl.get(0));
+
+				$(document).on("mousemove.line", (e) => {
+					console.debug(e.clientX, e.clientY);
+					fakeEl.css({
+						left           : e.clientX - startX,
+						top            : e.clientY - startY,
+						backgroundColor: "red"
+					});
+					anchorOut.get(0).line.position();
+
+				}).one("mouseup", (e) => {
+
+					anchorOut.get(0).line.remove();
+					anchorOut.get(0).line = new LeaderLine(startEl.get(0), fakeEl.get(0));
+					fakeEl.remove();
+					$(document).off("mousemove.line");
+					$.flow.draggable["node_" + nodeId].disabled = false;
+
+				});
+			}).on("mouseup",()=>{
+
+				if(anchorOut.get(0).line)
+					anchorOut.get(0).line.remove();
+				
+			});
 		},
 
 		/**
