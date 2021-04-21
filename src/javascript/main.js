@@ -317,7 +317,8 @@ import {Events, EventType} from "../Classes/Events.js";
                 let startEl = $("#node_" + nodeId);
                 let fakeEl = $("<div id='fakeEl'>").css({
                         position: "absolute",
-                        width: 20,
+                        width: 1,
+                        height: 1,
                         zIndex: -100,
                         left: e.clientX - startX,
                         top: e.clientY - startY,
