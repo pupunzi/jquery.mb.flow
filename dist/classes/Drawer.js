@@ -76,6 +76,7 @@ export class Drawer {
 	drawBoard() {
 
 		let selectedBoard = this.flowApp.flow.selectedBoard;
+
 		if (selectedBoard.length === 0)
 			return;
 
@@ -93,8 +94,7 @@ export class Drawer {
 		$(this.flowApp.ui.placeholders.board).empty();
 		selectedBoard._nodes.forEach((node) => {
 			node = JSON.parse(node);
-			console.debug(node);
-			let nodeElement = UI.fillTemplate("node-start", {
+			let nodeElement = UI.fillTemplate("node-" + node._type.toLowerCase(), {
 				nodeId    : node._id,
 				flowId    : this.flowApp.flow.id,
 				boardId   : selectedBoard._id,

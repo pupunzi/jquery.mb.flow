@@ -62,7 +62,7 @@ class Board {
     }
 
     addNode(type = Type.text) {
-        let n = new Node(type);
+        let n = new Node(this.id,type);
         this._nodes.push(JSON.stringify(n));
     }
 
