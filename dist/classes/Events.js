@@ -39,6 +39,7 @@ export class EventType {
 	static deletetNode = "deletetNode";
 	static updateNode = "updateNode";
 
+
 	static addNodeElement = "addNodeElement";
 	static selectNodeElement = "selectNodeElement";
 	static deletetNodeElement = "deletetNodeElement";

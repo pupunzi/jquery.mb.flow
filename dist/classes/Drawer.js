@@ -1,6 +1,5 @@
 import {UI} from "./UI.js";
 import {Type} from "./Node.js";
-import {Board} from "./Board.js";
 
 /**
  *
@@ -21,7 +20,7 @@ export class Drawer {
 		let flow = this.flowApp.flow;
 		let content = UI.fillTemplate("flow-name", {
 			flowName: flow._name,
-			id      : flow._id
+			id: flow._id
 		});
 		$(this.flowApp.ui.placeholders.flowName).html(content);
 	}
@@ -32,12 +31,12 @@ export class Drawer {
 
 		flowApp.flow._boards.forEach((board) => {
 			let selected = "";
-			if (board._id === flowApp.flow.selectedBoard._id)
+			if (board._id === flowApp.flow.selectedBoardId)
 				selected = "selected";
 			let content = UI.fillTemplate("board-list-element", {
-				boardName : board._name,
-				id        : board._id,
-				className : selected,
+				boardName: board._name,
+				id: board._id,
+				className: selected,
 				boardGroup: board._group
 			});
 
@@ -74,37 +73,37 @@ export class Drawer {
 	}
 
 	drawBoard() {
+		let selectedBoardId = this.flowApp.flow.selectedBoardId;
 
-		let selectedBoard = this.flowApp.flow.selectedBoard;
-
-		if (selectedBoard.length === 0)
+		if (selectedBoardId === null)
 			return;
 
-		let board = new Board();
-		let selB = selectedBoard;
-		for (const property in selB) {
-			board[property] = selB[property];
-		}
-		selectedBoard = board;
-
-		if (selectedBoard._nodes.length === 0) {
-			selectedBoard.addNode(Type.start);
+		let SelectedBoard = this.flowApp.flow.getBoardById(selectedBoardId);
+		if (SelectedBoard._nodes.length === 0) {
+			SelectedBoard.addNode(Type.start);
 		}
 
 		$(this.flowApp.ui.placeholders.board).empty();
-		selectedBoard._nodes.forEach((node) => {
-			node = JSON.parse(node);
-			let nodeElement = UI.fillTemplate("node-" + node._type.toLowerCase(), {
-				nodeId    : node._id,
-				flowId    : this.flowApp.flow.id,
-				boardId   : selectedBoard._id,
+
+		SelectedBoard._nodes.forEach((node) => {
+			let nodeEl = UI.fillTemplate("node-" + node._type.toLowerCase(), {
+				nodeId: node._id,
+				flowId: this.flowApp.flow.id,
+				boardId: selectedBoardId._id,
 				boardGroup: board._group
 			});
+			//console.debug(nodeEl, this.flowApp.ui.placeholders.board);
+			$(this.flowApp.ui.placeholders.board).append(nodeEl);
+			let n = $(this.flowApp.ui.placeholders.board).find("#node_" + node._id);
+			n.css({
+				left: node._x + "px",
+				top: node._y + "px"
+			});
+			//console.debug({left: node._x + "px", top: node._y + "px"})
 
-			//console.debug(nodeElement, this.flowApp.ui.placeholders.board);
-			$(this.flowApp.ui.placeholders.board).append(nodeElement);
-			$.flow.makeDraggable(node._id);
-		})
+			$.flow.makeDraggable(node._id, {leftTop:true});
+		});
+		this.flowApp.save(this.flowApp.id);
 	}
 
 }

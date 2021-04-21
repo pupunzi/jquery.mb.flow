@@ -7,6 +7,7 @@ import {UI} from "../Classes/UI.js";
 import {ContextualMenu} from "../Classes/ContextualMenu.js";
 import {Util} from "../Classes/Util.js";
 import {KeyboardListener} from "../Classes/KeyboardListener.js";
+import {Events, EventType} from "../Classes/Events.js";
 
 (function ($, d) {
     $(function () {
@@ -35,7 +36,6 @@ import {KeyboardListener} from "../Classes/KeyboardListener.js";
      * Flow methods
      * ---------------------------------------------------- */
     $.flow = {
-
         selectedFlow: null,
         selectedBoard: null,
         selectedNode: null,
@@ -284,10 +284,21 @@ import {KeyboardListener} from "../Classes/KeyboardListener.js";
         },
 
         makeDraggable: function (nodeId) {
-            $.flow.draggable["node_" + nodeId] = new PlainDraggable(document.getElementById("node_" + nodeId));
+
+            let nodeEl = $("#node_" + nodeId).get(0);
+
+            $.flow.draggable["node_" + nodeId] = new PlainDraggable(nodeEl);
             $.flow.draggable["node_" + nodeId].handle = $("node_" + nodeId).find(".anchorOut").get(0);
-            $.flow.draggable["node_" + nodeId].snap = {step: 30};
+            $.flow.draggable["node_" + nodeId].snap = {step: 0};
             $.flow.draggable["node_" + nodeId].autoScroll = true;
+            $.flow.draggable["node_" + nodeId].onDragEnd = ()=>{
+                let board = flowApp.flow.getBoardById(flowApp.flow.selectedBoardId);
+                let node = board.getNodeById(nodeId);
+                node._x = $(nodeEl).position().left;
+                node._y = $(nodeEl).position().top;
+
+                Events.register(EventType.updateNode, node);
+            };
 
             let startX = $(flowApp.ui.placeholders.board).offset().left;
             let startY = $(flowApp.ui.placeholders.board).offset().top;
@@ -304,11 +315,9 @@ import {KeyboardListener} from "../Classes/KeyboardListener.js";
                 let startEl = $("#node_" + nodeId).find(".anchorOut");
                 let fakeEl = $("<div id='fakeEl'>").css({position: "absolute", width: 20, height: 20, zIndex: -100});
                 fakeEl.appendTo(flowApp.ui.placeholders.board);
-
                 anchorOut.get(0).line = new LeaderLine(startEl.get(0), fakeEl.get(0));
 
                 $(document).on("mousemove.line", (e) => {
-                    console.debug(e.clientX, e.clientY);
                     fakeEl.css({
                         left: e.clientX - startX,
                         top: e.clientY - startY,
@@ -319,15 +328,14 @@ import {KeyboardListener} from "../Classes/KeyboardListener.js";
 
                 }).one("mouseup", (e) => {
                     $(document).off("mousemove.line");
-                    console.debug(e.target);
                     // if(anchorOut.get(0).line)
                     // 	anchorOut.get(0).line.remove();
                     anchorOut.get(0).line = new LeaderLine(startEl.get(0), fakeEl.get(0));
                     fakeEl.remove();
                     $.flow.draggable["node_" + nodeId].disabled = false;
-
                 });
             }).on("mouseup", (e) => {
+
             });
         },
 

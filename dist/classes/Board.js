@@ -63,14 +63,15 @@ class Board {
 
     addNode(type = Type.text) {
         let n = new Node(this.id,type);
-        this._nodes.push(JSON.stringify(n));
+        this._nodes.push(n);
     }
 
     getNodeById(id) {
         let n = null;
         this.nodes.forEach((node) => {
-            if (node.id === id)
+            if (node._id === id) {
                 n = node;
+            }
         });
         return n;
     }
@@ -81,13 +82,9 @@ class Board {
             this.nodes.delete(node);
     }
 
-
     drawNodes(){
         let nodes = this._nodes;
         }
-
-
 }
-
 
 export {Board};

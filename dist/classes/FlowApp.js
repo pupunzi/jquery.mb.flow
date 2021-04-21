@@ -69,12 +69,12 @@ class FlowApp {
 
         //Delete Board
         this.events.on(EventType.deleteBoard, (e) => {
-            this.save(this.flow.id);
-            this.drawer.drawBoardList();
             if(this.flow.boards.length > 0) {
 	            let board = this.flow.boards[0];
 	            this.flow.selectBoard(board._id);
             }
+            this.save(this.flow.id);
+            this.drawer.drawBoardList();
         });
 
         //Duplicated Board
@@ -86,7 +86,12 @@ class FlowApp {
         //Select Board
         this.events.on(EventType.selectBoard, (e) => {
 	        this.drawer.drawBoardList();
-	        this.flow.selectedBoard.drawNodes();
+            this.save(this.flow.id);
+        });
+
+        //Update Node
+        this.events.on(EventType.updateNode, (e) => {
+            this.save(this.flow.id);
         });
 
     }
@@ -141,6 +146,8 @@ class FlowApp {
         $.mbStorage.set("flows", this._flowsIds);
         if (id != null)
             $.mbStorage.set("flow_" + id, this.flow);
+
+        //console.debug("FLOW", this.flow);
         Events.register(EventType.saveFlow, this.flow);
     }
 

@@ -9,13 +9,13 @@ import {Events, EventType} from "./Events.js";
 
 class Flow {
     constructor(name) {
-        this._date = new Date().getTime();
         this._id = Util.setUID();
         this._name = name;
         this._boards = [];
-        this._selectedBoard = null;
+        this._selectedBoardId = null;
         this._boardGroups = [];
         this._selectedBoardGroup = null;
+        this._date = new Date().getTime();
     }
 
     get selectedBoardGroup() {
@@ -30,12 +30,12 @@ class Flow {
         return this._boardGroups;
     }
 
-    get selectedBoard() {
-        return this._selectedBoard;
+    get selectedBoardId() {
+        return this._selectedBoardId;
     }
 
-    set selectedBoard(value) {
-        this._selectedBoard = value;
+    set selectedBoardId(value) {
+        this._selectedBoardId = value;
     }
 
     get boards() {
@@ -72,6 +72,13 @@ class Flow {
     getBoardById(id) {
         let b = null;
         this._boards.forEach((board) => {
+
+            let tempBoard = new Board();
+            for (const property in board) {
+                tempBoard[property] = board[property];
+            }
+            board = tempBoard;
+
             if (id === board._id) {
                 b = board;
             }
@@ -107,12 +114,8 @@ class Flow {
     }
 
     selectBoard(boardId) {
-        this.selectedBoard = new Board();
-        let board = this.getBoardById(boardId);
-        for (const property in board) {
-            this.selectedBoard[property] = board[property];
-        }
-        Events.register(EventType.selectBoard, this.selectedBoard);
+        this.selectedBoardId = boardId;
+        Events.register(EventType.selectBoard, this.selectedBoardId);
     }
 
     getBoardsGroupsList() {
@@ -128,8 +131,16 @@ class Flow {
     deleteBoard(boardId) {
         let board = this.getBoardById(boardId);
         if (board != null) {
-            this.boards.delete(board);
+
+            for (let i = 0; i < this.boards.length; i++) {
+                if (this.boards[i]._id === board._id) {
+                    this.boards.splice(i, 1);
+                    i--;
+                }
+            }
             Events.register(EventType.deleteBoard, {});
+        } else {
+            alert("No Board found")
         }
     }
 }
