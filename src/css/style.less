@@ -240,7 +240,6 @@ html {
                 cursor: move;
               }
             }
-
           }
         }
       }
@@ -254,7 +253,6 @@ html {
         height: calc(100vh - 50px);
       }
     }
-
   }
 
   .flow-overlay {
@@ -285,6 +283,10 @@ html {
       padding: 40px;
       text-align: center;
       border: 1px solid rgba(255, 255, 255, 0.2);
+
+      &.alert {
+        background-color: #602729;
+      }
 
       .flow-dialogue-title {
         font-weight: 100;
@@ -334,6 +336,10 @@ html {
     }
   }
 
+
+  /**
+  Contextual Menu
+  */
   .contextual-menu {
     width: 150px;
     background-color: @contextual-menu-color;
@@ -375,6 +381,10 @@ html {
 
         &.alert {
           color: @alert-font-color;
+        }
+
+        &.listElement{
+          color: #d5c8a6;
         }
 
         &.highlight {

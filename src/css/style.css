@@ -328,6 +328,9 @@
 html {
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
+  /**
+  Contextual Menu
+  */
 }
 html i.icon {
   padding: 0 10px 0 0;
@@ -543,6 +546,9 @@ html .flow-overlay .flow-dialogue {
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
+html .flow-overlay .flow-dialogue.alert {
+  background-color: #602729;
+}
 html .flow-overlay .flow-dialogue .flow-dialogue-title {
   font-weight: 100;
   font-size: 200%;
@@ -619,6 +625,9 @@ html .contextual-menu ul li.separator:hover {
 }
 html .contextual-menu ul li.alert {
   color: #a73a3a;
+}
+html .contextual-menu ul li.listElement {
+  color: #d5c8a6;
 }
 html .contextual-menu ul li.highlight {
   color: #9ad19a;

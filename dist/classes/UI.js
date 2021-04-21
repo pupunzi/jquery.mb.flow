@@ -18,10 +18,14 @@ class UI {
         };
     }
 
-    static dialogue(title, text = null, inputName = null, inputPlaceholder = null, inputValue = null, okLabel = "Ok", cancelLabel = "Cancel", action = null) {
+    static dialogue(title, text = null, inputName = null, inputPlaceholder = null, inputValue = null, okLabel = "Ok", cancelLabel = "Cancel", action = null, className = null) {
         let time = 100;
         let overlay = $("<div>").addClass("flow-overlay");
         let dialogue = $("<div>").addClass("flow-dialogue");
+
+        if(className != null)
+            dialogue.addClass(className);
+
         let dialogueTitle = $("<h2>").addClass("flow-dialogue-title").html(title);
         let dialogueText = $("<p>").addClass("flow-dialogue-text").html(text);
         let buttonBar = $("<div>").addClass("flow-button-bar");

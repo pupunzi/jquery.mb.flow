@@ -93,7 +93,7 @@ class Node {
 		return this._id;
 	}
 
-	addElement(){
+	addElement() {
 		let nodeElement = new NodeElement(Type.text);
 		this._elements.unshift(nodeElement);
 	}
@@ -113,7 +113,7 @@ class Node {
 		return ne;
 	}
 
-	goToNextElement(){
+	goToNextElement() {
 
 	}
 
@@ -122,10 +122,13 @@ class Node {
 class Type {
 	static start = "Start";
 	static text = "Text";
+	static note = "Note";
+
+	static choices = "Choices";
+
 	static condition = "Condition";
 	static random = "Random";
-	static choice = "Choice";
-	static note = "Note";
+	static jumpToNode = "JumpToNode";
 }
 
 export {Node};
