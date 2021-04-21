@@ -32,12 +32,15 @@ export class ContextualMenu {
 			$("body").on("click.contextual", (e) => {
 				if ($(e.target).parents(".contextual-menu").length || this._isOpening)
 					return;
-
 				let menu = $(".contextual-menu");
 				menu.fadeOut(0, () => {
 					menu.remove();
 				});
 			});
+		});
+
+		$("body").on("contextmenu", this._target, (e) =>{
+			console.debug(e);
 		});
 	}
 
@@ -67,6 +70,7 @@ export class ContextualMenu {
 			}
 			itemsContsiner.append(line);
 		});
+
 
 		menu.append(itemsContsiner);
 		menu.fadeOut(0);

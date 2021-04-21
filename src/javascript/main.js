@@ -223,7 +223,7 @@ import {Util} from "../Classes/Util.js";
 				flowApp.removeFlow(flowId);
 				flowApp.save()
 			};
-			UI.dialogue(title, text, null, null, null, "Yes", "Cancel", action);
+			UI.dialogue(title, text, null, null, null, "Yes", "Cancel", action, "alert");
 		},
 
 		/**
@@ -275,7 +275,7 @@ import {Util} from "../Classes/Util.js";
 				$(flowApp.ui.placeholders.boardList).find("li").show();
 			}
 			$(flowApp.ui.placeholders.boardGroupName).html((groupName !== "all" ? groupName : "All Boards"));
-		}
+		},
 
 		/**
 		 * Node

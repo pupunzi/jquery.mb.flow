@@ -58,8 +58,20 @@ export class Drawer {
 			}
 		});
 
-		console.debug("selectedBoardGroup", flowApp.flow.selectedBoardGroup);
+		//console.debug("selectedBoardGroup", flowApp.flow.selectedBoardGroup);
 		$.flow.showBoardsByGroup(flowApp.flow.selectedBoardGroup);
+	}
+
+	drawBoard () {
+		let board = flowApp.flow.selectBoard;
+
+		if(!board)
+			return;
+
+		board.nodes.forEach((node)=>{
+
+		})
+
 	}
 
 

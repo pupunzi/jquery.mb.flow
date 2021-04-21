@@ -212,14 +212,13 @@ module.exports = function (grunt) {
 
 		watch: {
 			scripts: {
-				files: 'src/**',
+				files: ['src/**/*.js', 'src/**/*.css', 'src/*.html'],
 				tasks: ['default'],
 				options: {
-					debounceDelay: 250,
+					debounceDelay: 500,
 				},
 			},
 		}
-
 	});
 
 	grunt.loadNpmTasks('grunt-include-replace');

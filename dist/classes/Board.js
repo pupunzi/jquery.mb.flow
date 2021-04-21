@@ -84,9 +84,7 @@ class Board {
 
     drawNodes(){
         let nodes = this._nodes;
-
-
-    }
+        }
 
 
 }
