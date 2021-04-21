@@ -10,9 +10,11 @@ export class KeyboardListener {
 
     init() {
         $(document).on("keydown", (e) => {
-            $.flow.metaKey = e.key;
+            $.flow.metaKeys.push(e.key);
+            console.debug($.flow.metaKeys)
+
         }).on("keyup", () => {
-            $.flow.metaKey = null;
+            $.flow.metaKeys = [];
         })
     }
 }

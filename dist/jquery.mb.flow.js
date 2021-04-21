@@ -39,7 +39,7 @@ import {Events, EventType} from "../Classes/Events.js";
         selectedFlow: null,
         selectedBoard: null,
         selectedNode: null,
-        metaKey: null,
+        metaKeys: [],
 
         draggable: [],
 
@@ -291,7 +291,7 @@ import {Events, EventType} from "../Classes/Events.js";
             $.flow.draggable["node_" + nodeId].handle = $("node_" + nodeId).find(".anchorOut").get(0);
             $.flow.draggable["node_" + nodeId].snap = {step: 0};
             $.flow.draggable["node_" + nodeId].autoScroll = true;
-            $.flow.draggable["node_" + nodeId].onDragEnd = ()=>{
+            $.flow.draggable["node_" + nodeId].onDragEnd = () => {
                 let board = flowApp.flow.getBoardById(flowApp.flow.selectedBoardId);
                 let node = board.getNodeById(nodeId);
                 node._x = $(nodeEl).position().left;
@@ -303,17 +303,26 @@ import {Events, EventType} from "../Classes/Events.js";
             let startX = $(flowApp.ui.placeholders.board).offset().left;
             let startY = $(flowApp.ui.placeholders.board).offset().top;
 
-            let anchorOut = $("#node_" + nodeId).find(".anchorOut");
+            let anchorOut = $("#node_" + nodeId);
+            // let anchorOut = $("#node_" + nodeId).find(".anchorOut");
             anchorOut.on("mousedown", (e) => {
-
-                if (anchorOut.get(0).line)
-                    anchorOut.get(0).line.remove();
+                if ($.flow.metaKeys.indexOf("Meta") >= 0)
+                    $.flow.draggable["node_" + nodeId].disabled = true;
+                else
+                    return;
 
                 $.flow.draggable["node_" + nodeId].disabled = true;
                 e.preventDefault();
                 e.stopPropagation();
-                let startEl = $("#node_" + nodeId).find(".anchorOut");
-                let fakeEl = $("<div id='fakeEl'>").css({position: "absolute", width: 20, height: 20, zIndex: -100});
+                let startEl = $("#node_" + nodeId);
+                let fakeEl = $("<div id='fakeEl'>").css({
+                        position: "absolute",
+                        width: 20,
+                        zIndex: -100,
+                        left: e.clientX - startX,
+                        top: e.clientY - startY,
+                    }
+                );
                 fakeEl.appendTo(flowApp.ui.placeholders.board);
                 anchorOut.get(0).line = new LeaderLine(startEl.get(0), fakeEl.get(0));
 
@@ -328,14 +337,13 @@ import {Events, EventType} from "../Classes/Events.js";
 
                 }).one("mouseup", (e) => {
                     $(document).off("mousemove.line");
-                    // if(anchorOut.get(0).line)
-                    // 	anchorOut.get(0).line.remove();
-                    anchorOut.get(0).line = new LeaderLine(startEl.get(0), fakeEl.get(0));
+
+                    if (anchorOut.get(0).line)
+                        anchorOut.get(0).line.remove();
+
                     fakeEl.remove();
                     $.flow.draggable["node_" + nodeId].disabled = false;
                 });
-            }).on("mouseup", (e) => {
-
             });
         },
 

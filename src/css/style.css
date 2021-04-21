@@ -530,8 +530,8 @@ html body #wrapper #board .node .anchorOut {
   top: calc(50% - 5px);
 }
 html body #wrapper #board .node[data-type="start"] {
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   background-color: orange;
   border-radius: 100%;
   top: 40px;
@@ -544,8 +544,9 @@ html body #wrapper #board .node[data-type="start"] i {
   left: 0;
   right: 0;
   margin: auto;
-  font-size: 60px;
+  font-size: 40px;
   text-align: center;
+  line-height: 100%;
   padding: 0;
 }
 html .flow-overlay {
