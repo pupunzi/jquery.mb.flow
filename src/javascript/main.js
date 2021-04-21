@@ -299,7 +299,7 @@ import {Util} from "../Classes/Util.js";
 				e.preventDefault();
 				e.stopPropagation();
 				let startEl = $("#node_" + nodeId).find(".anchorOut");
-				let fakeEl = $("<div id='fakeEl'>").css({position: "absolute", width: 20, height: 20, zIndex: 100});
+				let fakeEl = $("<div id='fakeEl'>").css({position: "absolute", width: 20, height: 20, zIndex: -100});
 				fakeEl.appendTo(flowApp.ui.placeholders.board);
 
 				anchorOut.get(0).line = new LeaderLine(startEl.get(0), fakeEl.get(0));
@@ -311,23 +311,20 @@ import {Util} from "../Classes/Util.js";
 						top            : e.clientY - startY,
 						backgroundColor: "red"
 					});
+
 					anchorOut.get(0).line.position();
 
 				}).one("mouseup", (e) => {
-
-					anchorOut.get(0).line.remove();
+					$(document).off("mousemove.line");
+					console.debug(e.target);
+					// if(anchorOut.get(0).line)
+					// 	anchorOut.get(0).line.remove();
 					anchorOut.get(0).line = new LeaderLine(startEl.get(0), fakeEl.get(0));
 					fakeEl.remove();
-					$(document).off("mousemove.line");
 					$.flow.draggable["node_" + nodeId].disabled = false;
 
 				});
-			}).on("mouseup",()=>{
-
-				if(anchorOut.get(0).line)
-					anchorOut.get(0).line.remove();
-				
-			});
+			}).on("mouseup",(e)=>{});
 		},
 
 		/**
