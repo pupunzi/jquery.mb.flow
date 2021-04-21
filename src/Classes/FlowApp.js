@@ -126,7 +126,7 @@ class FlowApp {
         return this.flow;
     }
 
-    removeFlow(flowId) {
+    deleteFlow(flowId) {
         this._flowsIds.forEach((f)=>{
             if(f.id === flowId) {
                 this._flowsIds.delete(f);

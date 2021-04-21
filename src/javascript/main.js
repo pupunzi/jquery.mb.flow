@@ -105,7 +105,7 @@ import {Util} from "../Classes/Util.js";
                     fn: function (target) {
                         let flowId = $(target).parent().data("flow-id");
                         UI.dialogue("Delete Flow", "Are you sure you want to delete<br><b>" + $(target).parent().find(".name").text() + "</b>?", null, null, null, "Yes", "Cancel", () => {
-                            flowApp.removeFlow(flowId);
+                            flowApp.deleteFlow(flowId);
                             flowApp.save()
                         });
                     }
