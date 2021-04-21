@@ -8,8 +8,7 @@ import {Util} from "./Util.js";
 import {NodeElement} from "./NodeElement.js";
 import {Actor} from "./Actor.js";
 
-class Node {
-
+export class Node {
 	constructor(boardId, type = Type.text) {
 		this._id = Util.setUID();
 		this._boardId = boardId;
@@ -94,7 +93,7 @@ class Node {
 	}
 
 	addElement() {
-		let nodeElement = new NodeElement(Type.text);
+		let nodeElement = new NodeElement(Type.text, this.id);
 		this._elements.unshift(nodeElement);
 	}
 
@@ -113,13 +112,21 @@ class Node {
 		return ne;
 	}
 
-	goToNextElement() {
+	getNextNodeElement() {
 
 	}
-
 }
 
-class Type {
+export class TextNode extends Node{
+		constructor(properties){
+			super(properties);
+			this._type = Type.text;
+		}
+}
+
+
+
+export class Type {
 	static start = "Start";
 	static text = "Text";
 	static note = "Note";
@@ -130,5 +137,3 @@ class Type {
 	static random = "Random";
 	static jumpToNode = "JumpToNode";
 }
-
-export {Node};

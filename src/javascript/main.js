@@ -34,6 +34,10 @@ import {Util} from "../Classes/Util.js";
 	 * ---------------------------------------------------- */
 	$.flow = {
 
+		selectedFlow: null,
+		selectedBoard : null,
+		selectedNode: null,
+
 		init: function () {
 			$("body").on("keydown", "[contenteditable]", (e) => {
 				switch (e.keyCode) {
@@ -271,7 +275,14 @@ import {Util} from "../Classes/Util.js";
 				$(flowApp.ui.placeholders.boardList).find("li").show();
 			}
 			$(flowApp.ui.placeholders.boardGroupName).html((groupName !== "all" ? groupName : "All Boards"));
-		},
+		}
+
+		/**
+		 * Node
+		 */
+		getNodeById: function (nodeId) {
+			return flowApp.flow.getBoardById(nodeId);
+		}
 	};
 
 
