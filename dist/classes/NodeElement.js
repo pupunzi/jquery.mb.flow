@@ -1,4 +1,5 @@
 import {Util} from "./Util.js";
+import {Type} from "./Node.js";
 
 class NodeElement {
 

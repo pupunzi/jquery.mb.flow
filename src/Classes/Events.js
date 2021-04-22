@@ -23,7 +23,7 @@ export class EventType {
 	static addFlow = "addFlow";
 	static updateFlowName = "updateFlowName";
 	static loadFlow = "loadFlow";
-	static removeFlow = "removeFlow";
+	static deleteFlow = "deleteFlow";
 	static saveFlow = "saveFlow";
 	static addGroup = "addGroup";
 	static updateGroupName = "updateGroupName";
@@ -36,7 +36,7 @@ export class EventType {
 
 	static addNode = "addNode";
 	static selectNode = "selectNode";
-	static deletetNode = "deletetNode";
+	static deleteNode = "deleteNode";
 	static updateNode = "updateNode";
 
 

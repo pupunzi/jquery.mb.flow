@@ -72,7 +72,6 @@ export class Drawer {
 	}
 
 	drawBoard() {
-
 		let selectedBoardId = this.flowApp.flow.selectedBoardId;
 		if (selectedBoardId === null)
 			return;

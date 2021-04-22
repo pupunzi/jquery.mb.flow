@@ -16,6 +16,11 @@ class Board {
         this._nodes = [];
         this._selectedNodes = [];
         this._group = groupName == "all" ? "Main Group" : groupName;
+        this._connections = [];
+    }
+
+    get connections() {
+        return this._connections;
     }
 
     get group() {
@@ -91,6 +96,17 @@ class Board {
         let node = this.getNodeById(id);
         if (node != null)
             this.nodes.delete(node);
+
+        Events.register(EventType.deleteNode, null);
+    }
+    
+    getConnectionsByNodeId(nodeId){
+            let connections = [];
+            this.connections.forEach((connection)=>{
+                if(connection._from === nodeId || connection._to === nodeId)
+                    connections.push(connection);
+            });
+        return connections;
     }
 }
 

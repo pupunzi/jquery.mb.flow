@@ -25,7 +25,7 @@ class FlowApp {
         });
 
         //Remove Flow
-        this.events.on(EventType.removeFlow, (e) => {
+        this.events.on(EventType.deleteFlow, (e) => {
             let flow = this.flows[0];
             if(flow != null) {
                 this.load(flow.id);
@@ -99,6 +99,11 @@ class FlowApp {
             this.save(this.flow.id);
         });
 
+        this.events.on(EventType.deleteNode, (e) => {
+            this.drawer.drawBoard();
+            this.save(this.flow.id);
+        });
+
     }
 
     get flow() {
@@ -144,7 +149,7 @@ class FlowApp {
             }
         });
         this.save(null);
-        Events.register(EventType.removeFlow, this.flow);
+        Events.register(EventType.deleteFlow, this.flow);
     }
 
     save(id) {

@@ -36,6 +36,8 @@ export class Menu {
 				menu.fadeOut(0, () => {
 					menu.remove();
 				});
+				e.preventDefault();
+				e.stopPropagation();
 			});
 		});
 	}

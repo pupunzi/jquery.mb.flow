@@ -28,6 +28,7 @@
   <div id="board"></div>
 
 </section>
+<section id="node-editor"></section>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
 <script type="module" src="jquery.mb.flow.js"></script>
@@ -54,6 +55,9 @@
     <i class="icon icon-ellipsis-v board-list-element-menu menu"></i>
   </li>
 </template>
+
+
+
 
 <!-- START NODE                  ----------------------->
 <template id="node-start">
@@ -82,34 +86,67 @@
   <div class="node-text-line line">{{content}}</div>
 </template>
 
-<!-- CHOICE NODE                   ----------------------->
+<!-- CHOICE NODE                ----------------------->
 <template id="node-choice">
   <div id="node_{{nodeId}}" class="node" data-type="choice" data-flow-id="{{flowId}}" data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-x="0" data-y="0">
     <div class="menu"><i class="icon icon-ellipsis-v node-menu"></i></div>
     <!--if more lines how it choose the text -> type: sequential / random -->
     <div class="node-content" data-type="sequential">
-
       <div class="node-content-line line">
-        <div class="anchorIn"></div>
         <div class="anchorOut"></div>
-        <div class="choice-text" contenteditable="true"></div>
+        <div class="node-text" contenteditable="true"></div>
       </div>
       <div class="node-content-line line">
-        <div class="anchorIn"></div>
         <div class="anchorOut"></div>
-        <div class="choice-text" contenteditable="true"></div>
+        <div class="node-text" contenteditable="true"></div>
       </div>
-
     </div>
+    <div class="anchorIn"></div>
     <div class="End-dialogue"></div>
   </div>
 </template>
 
 <!-- CHOICE NODE LINE             ----------------------->
 <template id="node-choice-line">
-  <div class="node-content-line line">
-    <div class="anchorIn"></div>
+  <div class="node-content-line line" data-node-element-id="{{nodeElementId}}" contenteditable="true">
     <div class="anchorOut"></div>
-    <div class="choice-text" contenteditable="true"></div>
+    <div class="node-text" contenteditable="true"></div>
   </div>
 </template>
+
+<!-- CONDITIONAL NODE                   ----------------------->
+<template id="node-condition">
+  <div id="node_{{nodeId}}" class="node" data-type="condition" data-flow-id="{{flowId}}" data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-x="0" data-y="0">
+    <div class="menu"><i class="icon icon-ellipsis-v node-menu"></i></div>
+    <!--if more lines how it choose the text -> type: sequential / random -->
+    <div class="node-content" data-type="sequential">
+      <div class="node-content-line line">
+        <div class="anchorOut"></div>
+        <div class="node-text" contenteditable="true"></div>
+      </div>
+    </div>
+    <div class="anchorIn"></div>
+    <div class="End-dialogue"></div>
+  </div>
+</template>
+
+<!-- CONDITIONAL NODE LINE             ----------------------->
+<template id="node-condition-line">
+  <div class="node-content-line line" data-node-element-id="{{nodeElementId}}" contenteditable="true">
+    <div class="anchorIn"></div>
+    <div class="anchorOut"></div>
+  </div>
+</template>
+
+
+
+
+<!-- START NODE                  ----------------------->
+<template id="node-random">
+  <div id="node_{{nodeId}}" class="node" data-type="random" data-flow-id="{{flowId}}" data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-x="0" data-y="0">
+    <i class="icon icon-random"></i>
+    <div class="anchorIn"></div>
+    <div class="anchorOut"></div>
+  </div>
+</template>
+

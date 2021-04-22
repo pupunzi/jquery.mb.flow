@@ -22,6 +22,12 @@ export class Node {
 		this._connectToNodeID = null;
 		this._actor = new Actor();
 		this._date = new Date().getTime();
+
+		this.init();
+	}
+
+	init(){
+		this.elements.push(new NodeElement())
 	}
 
 	get date() {
@@ -115,13 +121,6 @@ export class Node {
 	getNextNodeElement() {
 
 	}
-}
-
-export class TextNode extends Node{
-		constructor(properties){
-			super(properties);
-			this._type = Type.text;
-		}
 }
 
 

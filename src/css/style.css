@@ -302,42 +302,48 @@
 .icon-ellipsis-v:before {
   content: "\f142";
 }
-* {
-  box-sizing: border-box;
-  user-select: none;
-}
-*:focus {
-  outline: none !important;
-}
-::selection {
-  color: #0c0c0c;
-  background: #bcbcbc;
-}
-::placeholder {
-  color: rgba(255, 255, 255, 0.2);
-}
-[contenteditable] {
-  position: relative;
-  border: 1px solid rgba(255, 255, 255, 0);
-  padding: 0 10px;
-}
-[contenteditable]:focus {
-  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.57);
-  border: 1px solid rgba(255, 255, 255, 0.4) !important;
-}
 html {
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
   /**
   Contextual flowMenu
   */
+  /**
+  Node Editor
+   */
+}
+html * {
+  box-sizing: border-box;
+  user-select: none;
+}
+html *:focus {
+  outline: none !important;
+}
+html ::selection {
+  color: #0c0c0c;
+  background: #bcbcbc;
+}
+html ::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+html [contenteditable] {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0);
+  padding: 0 10px;
+}
+html [contenteditable]:focus {
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.57);
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
 }
 html i.icon {
-  padding: 0 10px 0 0;
+  padding: 0 10px;
   color: #ffffff;
 }
 html i.icon.menu {
   color: rgba(255, 255, 255, 0.3);
+}
+html i.icon:hover {
+  cursor: pointer!important;
 }
 html button {
   text-transform: uppercase;
@@ -382,6 +388,11 @@ html body {
   background-color: #323232;
   margin: 0;
   padding: 0;
+}
+html body ol {
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 html body #top-bar {
   position: fixed;
@@ -567,13 +578,22 @@ html body #wrapper #board .node .menu i.icon {
   font-size: 100%;
   text-align: right;
   line-height: 100%;
-  padding: 0;
 }
 html body #wrapper #board .node.selected {
   border: 4px solid #FFA500;
 }
 html body #wrapper #board .node .node-content {
   margin-bottom: 5px;
+}
+html body #wrapper #board .node .node-content .node-content-line {
+  position: relative;
+}
+html body #wrapper #board .node .node-content .node-content-line .node-text {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
 }
 html body #wrapper #board .node[data-type="start"] {
   width: 40px;
@@ -610,17 +630,55 @@ html body #wrapper #board .node[data-type="text"] .node-content-line {
 }
 html body #wrapper #board .node[data-type="choice"] {
   width: 250px;
-  background-color: #e74c3c;
+  background-color: #739f73;
   border-radius: 10px;
   top: 40px;
   left: 40px;
 }
 html body #wrapper #board .node[data-type="choice"] .node-content .node-content-line {
+  position: relative;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   padding: 5px;
 }
-html body #wrapper #board .node[data-type="choice"] .node-content .node-content-line .choice-text {
+html body #wrapper #board .node[data-type="choice"] .node-content .node-content-line .node-text {
   background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
+}
+html body #wrapper #board .node[data-type="random"] {
+  width: 60px;
+  height: 60px;
+  background-color: #6e0d3f;
+  border-radius: 0%;
+  top: 40px;
+  left: 40px;
+}
+html body #wrapper #board .node[data-type="random"] i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  font-size: 32px;
+  text-align: center;
+  line-height: 150%;
+  padding: 0;
+}
+html body #wrapper #board .node[data-type="condition"] {
+  width: 250px;
+  background-color: #a690d8;
+  border-radius: 0;
+  top: 40px;
+  left: 40px;
+}
+html body #wrapper #board .node[data-type="condition"] .menu {
+  background-color: transparent;
+}
+html body #wrapper #board .node[data-type="condition"] .node-content-line {
+  font-family: monospace;
+  height: 100%;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.1);
   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
 }
 html .flow-overlay {
@@ -741,6 +799,14 @@ html .contextual-menu ul li.listElement {
 html .contextual-menu ul li.highlight {
   color: #9ad19a;
 }
+html #node-editor {
+  position: fixed;
+  width: 250px;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  background-color: rgba(50, 50, 50, 0.1);
+}
 body.dragging,
 body.dragging * {
   cursor: move !important;
@@ -749,10 +815,5 @@ body.dragging * {
   position: absolute;
   opacity: 0.5;
   z-index: 2000;
-}
-ol {
-  padding: 0;
-  margin: 0;
-  list-style: none;
 }
 /*# sourceMappingURL=style.css.map */
