@@ -67,43 +67,58 @@ export class Drawer {
 			}
 		});
 
-		//console.debug("selectedBoardGroup", flowApp.flow.selectedBoardGroup);
 		$.flow.showBoardsByGroup(flowApp.flow.selectedBoardGroup);
 		this.drawBoard();
 	}
 
 	drawBoard() {
-		let selectedBoardId = this.flowApp.flow.selectedBoardId;
 
+		let selectedBoardId = this.flowApp.flow.selectedBoardId;
 		if (selectedBoardId === null)
 			return;
 
 		let SelectedBoard = this.flowApp.flow.getBoardById(selectedBoardId);
+
+		//If there are no nodes in this board create one
 		if (SelectedBoard._nodes.length === 0) {
 			SelectedBoard.addNode(Type.start);
 		}
 
+		//Empty the board from previous nodes
 		$(this.flowApp.ui.placeholders.board).empty();
 
+		//draw each node
 		SelectedBoard._nodes.forEach((node) => {
-			let nodeEl = UI.fillTemplate("node-" + node._type.toLowerCase(), {
-				nodeId: node._id,
-				flowId: this.flowApp.flow.id,
-				boardId: selectedBoardId._id,
-				boardGroup: board._group
-			});
-			//console.debug(nodeEl, this.flowApp.ui.placeholders.board);
-			$(this.flowApp.ui.placeholders.board).append(nodeEl);
-			let n = $(this.flowApp.ui.placeholders.board).find("#node_" + node._id);
-			n.css({
-				left: node._x + "px",
-				top: node._y + "px"
-			});
-			//console.debug({left: node._x + "px", top: node._y + "px"})
-
-			$.flow.makeDraggable(node._id, {leftTop:true});
+			this.drawNode(node);
 		});
+
+		//Save the flow
 		this.flowApp.save(this.flowApp.id);
 	}
 
+	drawNode(node){
+		let nodeEl = UI.fillTemplate("node-" + node._type.toLowerCase(), {
+			nodeId: node._id,
+			flowId: this.flowApp.flow.id,
+			boardId: this.flowApp.flow.selectedBoardId,
+			boardGroup: board._group
+		});
+		$(this.flowApp.ui.placeholders.board).append(nodeEl);
+		let $node = $(this.flowApp.ui.placeholders.board).find("#node_" + node._id);
+		$node.css({
+			left: node._x + "px",
+			top: node._y + "px"
+		});
+
+		$.flow.makeDraggable(node._id, {leftTop:true});
+
+		$node.on("mouseup", (e)=>{
+			$(this.flowApp.ui.placeholders.board).find(".node").removeClass("selected");
+			$node.addClass("selected");
+		});
+
+		$(this.flowApp.ui.placeholders.board).on("mousedown", ()=>{
+			$(this.flowApp.ui.placeholders.board).find(".node").removeClass("selected");
+		})
+	}
 }

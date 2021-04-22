@@ -89,7 +89,12 @@ class FlowApp {
             this.save(this.flow.id);
         });
 
-        //Update Node
+        //Add Node
+        this.events.on(EventType.addNode, (e) => {
+	        this.drawer.drawBoard();
+	        this.save(this.flow.id);
+        });
+
         this.events.on(EventType.updateNode, (e) => {
             this.save(this.flow.id);
         });

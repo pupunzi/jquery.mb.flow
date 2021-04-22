@@ -5,6 +5,7 @@
  **/
 import {Util} from "./Util.js";
 import {Node} from "./Node.js";
+import {Events, EventType} from "./Events.js";
 
 class Board {
         constructor(name, groupName, flowId) {
@@ -61,9 +62,19 @@ class Board {
         this._nodes.unshift(value);
     }
 
-    addNode(type = Type.text) {
+    addNode(type = Type.text, position = null) {
         let n = new Node(this.id,type);
+
+        if (position != null) {
+	        let startX = $(flowApp.ui.placeholders.board).offset().left;
+	        let startY = $(flowApp.ui.placeholders.board).offset().top;
+	        n._x = position._x - startX;
+	        n._y = position._y - startY;
+        }
+
         this._nodes.push(n);
+        Events.register(EventType.addNode, n);
+        return n;
     }
 
     getNodeById(id) {
@@ -81,10 +92,6 @@ class Board {
         if (node != null)
             this.nodes.delete(node);
     }
-
-    drawNodes(){
-        let nodes = this._nodes;
-        }
 }
 
 export {Board};

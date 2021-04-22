@@ -71,19 +71,18 @@ class Flow {
 
     getBoardById(id) {
         let b = null;
+        let idx = 0;
         this._boards.forEach((board) => {
-
             let tempBoard = new Board();
             for (const property in board) {
                 tempBoard[property] = board[property];
             }
-            board = tempBoard;
-
-            if (id === board._id) {
-                b = board;
+            this._boards[idx] = tempBoard;
+            if (id === this._boards[idx]._id) {
+                b = this._boards[idx];
             }
+            idx++;
         });
-
         return b;
     }
 

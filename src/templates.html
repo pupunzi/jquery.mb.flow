@@ -1,5 +1,8 @@
-<!-- Templates -->
+<!-------------------------------------------------------
+----------------------- TEMPLATES -----------------------
+-------------------------------------------------------->
 
+<!-- FLOW NAME                   ----------------------->
 <template id="flow-name">
   <div data-flow-id="{{id}}">
     <h1 id="flow_{{id}}" class="name">{{flowName}}</h1>
@@ -7,6 +10,7 @@
   </div>
 </template>
 
+<!-- BOARD LIST ELEMENT          ----------------------->
 <template id="board-list-element">
   <li id="board_{{id}}" class="board-list-element {{className}}" data-board-id="{{id}}" data-board-group = "{{boardGroup}}">
     <i class="icon icon-drag_indicator"></i>
@@ -15,17 +19,29 @@
   </li>
 </template>
 
-<template id="node-text">
-  <div id="node_{{nodeId}}" class="node" data-type="text" data-flow-id="{{flowId}}" data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-x="0" data-y="0">
-    <menu><i class="icon icon-ellipsis-v node-menu menu" ></i></menu>
-    <div id="node-content"></div>
-    <div class="anchorIn"></div>
-    <div class="anchorOut"></div>
-  </div>
-</template>
+<!-- START NODE                  ----------------------->
 <template id="node-start">
   <div id="node_{{nodeId}}" class="node" data-type="start" data-flow-id="{{flowId}}" data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-x="0" data-y="0">
     <i class="icon icon-caret-right"></i>
     <div class="anchorOut"></div>
   </div>
+</template>
+
+<!-- TEXT NODE                   ----------------------->
+<template id="node-text">
+  <div id="node_{{nodeId}}" class="node" data-type="text" data-flow-id="{{flowId}}" data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-x="0" data-y="0">
+    <div class="menu"><i class="icon icon-ellipsis-v node-menu"></i></div>
+    <!--if more lines how it choose the text -> type: sequential / random -->
+    <div id="node-content" data-type="sequential">
+      <div class="node-content-line line" contenteditable="true"></div>
+    </div>
+    <div class="anchorIn"></div>
+    <div class="anchorOut"></div>
+    <div class="End-dialogue"></div>
+  </div>
+</template>
+
+<!-- TEXT NODE LINE             ----------------------->
+<template id="node-text-line">
+  <div class="node-text-line line">{{content}}</div>
 </template>
