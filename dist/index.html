@@ -68,7 +68,7 @@
   <div id="node_{{nodeId}}" class="node" data-type="text" data-flow-id="{{flowId}}" data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-x="0" data-y="0">
     <div class="menu"><i class="icon icon-ellipsis-v node-menu"></i></div>
     <!--if more lines how it choose the text -> type: sequential / random -->
-    <div id="node-content" data-type="sequential">
+    <div class="node-content" data-type="sequential">
       <div class="node-content-line line" contenteditable="true"></div>
     </div>
     <div class="anchorIn"></div>
@@ -80,4 +80,36 @@
 <!-- TEXT NODE LINE             ----------------------->
 <template id="node-text-line">
   <div class="node-text-line line">{{content}}</div>
+</template>
+
+<!-- CHOICE NODE                   ----------------------->
+<template id="node-choice">
+  <div id="node_{{nodeId}}" class="node" data-type="choice" data-flow-id="{{flowId}}" data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-x="0" data-y="0">
+    <div class="menu"><i class="icon icon-ellipsis-v node-menu"></i></div>
+    <!--if more lines how it choose the text -> type: sequential / random -->
+    <div class="node-content" data-type="sequential">
+
+      <div class="node-content-line line">
+        <div class="anchorIn"></div>
+        <div class="anchorOut"></div>
+        <div class="choice-text" contenteditable="true"></div>
+      </div>
+      <div class="node-content-line line">
+        <div class="anchorIn"></div>
+        <div class="anchorOut"></div>
+        <div class="choice-text" contenteditable="true"></div>
+      </div>
+
+    </div>
+    <div class="End-dialogue"></div>
+  </div>
+</template>
+
+<!-- CHOICE NODE LINE             ----------------------->
+<template id="node-choice-line">
+  <div class="node-content-line line">
+    <div class="anchorIn"></div>
+    <div class="anchorOut"></div>
+    <div class="choice-text" contenteditable="true"></div>
+  </div>
 </template>

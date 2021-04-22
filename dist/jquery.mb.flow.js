@@ -223,9 +223,9 @@ import {Type} from "../Classes/Node.js";
 				},
 				{
 					name: 'New Choice Node',
-					fn  : function (target) {
+					fn  : function (target, e) {
 						let board = $.flow.selectedBoard();
-						board.addNode(Type.choices);
+						board.addNode(Type.choices, {_x: e.clientX, _y: e.clientY});
 					}
 				},
 				{
@@ -245,14 +245,14 @@ import {Type} from "../Classes/Node.js";
 				{
 					name: 'Clone',
 					fn  : function (target) {
-						console.debug("New Text Node")
+						console.debug("Clone")
 					}
 				},
 				{
 					name     : 'Delete',
 					className: "alert",
 					fn       : function (target) {
-						console.debug("New Text Node")
+						console.debug("Delete")
 					}
 				},
 			]

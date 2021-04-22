@@ -263,7 +263,7 @@ html {
           border: 4px solid transparent;
 
 
-          .anchorIn{
+          .anchorIn {
             position: absolute;
             width: 10px;
             height: 10px;
@@ -272,7 +272,7 @@ html {
             top: calc(50% - 5px);
           }
 
-          .anchorOut{
+          .anchorOut {
             position: absolute;
             width: 10px;
             height: 10px;
@@ -281,11 +281,12 @@ html {
             top: calc(50% - 5px);
           }
 
-          .End-dialogue{
+          .End-dialogue {
             position: absolute;
             width: 20px;
             height: 20px;
-            background-color: @alert-button-main;
+            border: 5px solid @dialogue-alert;
+            background-color: #ffffff;
             border-radius: 100%;
             bottom: -10px;
             right: -10px;
@@ -317,6 +318,10 @@ html {
             border: 4px solid @selected-node;
           }
 
+          .node-content {
+            margin-bottom: 5px;
+          }
+
           &[data-type="start"] {
             width: 40px;
             height: 40px;
@@ -341,16 +346,38 @@ html {
 
           &[data-type="text"] {
             width: 250px;
-            min-height: 100px;
+            // min-height: 100px;
             background-color: @main-icon-color;
             border-radius: 10px;
             top: 40px;
             left: 40px;
 
-            .node-content-line{
+            .node-content-line {
               height: 100%;
+              padding: 5px;
+              background-color: fade(#000, 10%);
               box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
+            }
+          }
 
+          &[data-type="choice"] {
+            width: 250px;
+            // min-height: 100px;
+            background-color: #e74c3c;
+            border-radius: 10px;
+            top: 40px;
+            left: 40px;
+
+            .node-content {
+              .node-content-line {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                padding: 5px;
+
+                .choice-text {
+                  background-color: fade(#ffffff, 10%);
+                  box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
+                }
+              }
             }
           }
         }

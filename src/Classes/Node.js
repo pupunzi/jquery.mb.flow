@@ -131,7 +131,7 @@ export class Type {
 	static text = "Text";
 	static note = "Note";
 
-	static choices = "Choices";
+	static choices = "Choice";
 
 	static condition = "Condition";
 	static random = "Random";
