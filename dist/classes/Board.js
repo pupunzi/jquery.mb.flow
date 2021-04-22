@@ -99,7 +99,7 @@ class Board {
 
         Events.register(EventType.deleteNode, null);
     }
-    
+
     getConnectionsByNodeId(nodeId){
             let connections = [];
             this.connections.forEach((connection)=>{

@@ -5,18 +5,18 @@
  **/
 
 class UI {
-    get placeholders() {
-        return this._placeholders;
-    }
-
     constructor() {
         this._placeholders = {
             flowName: "#top-bar #flow-name-placeholder",
             boardListButtonBar: "#boards-list-button-bar",
             boardList: "#boards-list",
             board: "#board",
-            boardGroupName:".group-label .name"
+            boardGroupName: ".group-label .name"
         };
+    }
+
+    get placeholders() {
+        return this._placeholders;
     }
 
     static dialogue(title, text = null, inputName = null, inputPlaceholder = null, inputValue = null, okLabel = "Ok", cancelLabel = "Cancel", action = null, className = null) {
@@ -24,7 +24,7 @@ class UI {
         let overlay = $("<div>").addClass("flow-overlay");
         let dialogue = $("<div>").addClass("flow-dialogue");
 
-        if(className != null)
+        if (className != null)
             dialogue.addClass(className);
 
         let dialogueTitle = $("<h2>").addClass("flow-dialogue-title").html(title);
@@ -61,10 +61,8 @@ class UI {
         if (typeof action === "function") {
             dialogueOkButton.on("click", () => {
                 let v = dialogueInput != null ? dialogueInput.val() : null;
-
                 if (v && v.length === 0)
                     return;
-
                 action(v);
                 closeDialogue();
             });
@@ -83,9 +81,19 @@ class UI {
             if (inputName != null) {
                 dialogueInput.focus();
             }
+            $(document).on("keydown.dialogue", (e) => {
+                if (e.key === "Enter") {
+                    let v = dialogueInput != null ? dialogueInput.val() : null;
+                    if (v == null || (v && v.length > 0))
+                        dialogueOkButton.click();
+                } else if (e.key === "Escape") {
+                    closeDialogue();
+                }
+            })
         });
 
         let closeDialogue = function () {
+            $(document).off("keydown.dialogue");
             overlay.fadeOut(time, () => {
                 overlay.remove();
             });
@@ -94,10 +102,10 @@ class UI {
 
     static fillTemplate(templateId, data) {
         return $("#" + templateId).get(0).innerHTML.replace(/{{(\w*)}}/g, function (m, key) {
-            // console.debug(data, key, data.hasOwnProperty(key));
             return data.hasOwnProperty(key) ? data[key] : "";
         });
     }
+
 }
 
 
