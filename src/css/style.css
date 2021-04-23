@@ -532,6 +532,7 @@ html body #wrapper #board .node {
   border: 4px solid transparent;
 }
 html body #wrapper #board .node .anchorIn {
+  display: none;
   position: absolute;
   width: 10px;
   height: 10px;

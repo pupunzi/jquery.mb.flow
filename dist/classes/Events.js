@@ -20,6 +20,8 @@ export class Events {
 }
 
 export class EventType {
+
+	// Flow
 	static addFlow = "addFlow";
 	static updateFlowName = "updateFlowName";
 	static loadFlow = "loadFlow";
@@ -28,21 +30,28 @@ export class EventType {
 	static addGroup = "addGroup";
 	static updateGroupName = "updateGroupName";
 
+	//Board
 	static addBoard = "addBoard";
 	static selectBoard = "selectBoard";
 	static deleteBoard = "deleteBoard";
 	static duplicatedBoard = "duplicatedBoard";
 	static updateBoard = "updateBoard";
 
+	//Node
 	static addNode = "addNode";
 	static selectNode = "selectNode";
 	static deleteNode = "deleteNode";
 	static updateNode = "updateNode";
 
-
+	//NodeElement
 	static addNodeElement = "addNodeElement";
 	static selectNodeElement = "selectNodeElement";
 	static deletetNodeElement = "deletetNodeElement";
 	static updateNodeElement = "updateNodeElement";
+
+	//Connection
+	static addConnection = "addConnection";
+	static deleteConnection = "deleteConnection";
+
 }
 

@@ -95,13 +95,38 @@ class FlowApp {
 	        this.save(this.flow.id);
         });
 
+        // Update Node
         this.events.on(EventType.updateNode, (e) => {
             this.save(this.flow.id);
         });
 
+        //Delete Node
         this.events.on(EventType.deleteNode, (e) => {
             this.drawer.drawBoard();
             this.save(this.flow.id);
+        });
+
+        //Select Node
+        this.events.on(EventType.selectNode, (e) => {
+            console.debug("selectNode", e.detail);
+        });
+
+        //Add Connection
+        this.events.on(EventType.addConnection, (e) => {
+            let connection = e.detail;
+            let board = this.flow.getBoardById(this.flow._selectedBoardId);
+
+            console.debug("board", board);
+            board._connections.push(connection)
+            let node = board.getNodeById( connection._from);
+            node._connections.push(connection);
+            console.debug("board._connections", board._connections);
+            this.save(this.flow.id);
+        });
+
+        //Delete Connection
+        this.events.on(EventType.deleteConnection, (e) => {
+            console.debug("deleteConnection", connection);
         });
 
     }

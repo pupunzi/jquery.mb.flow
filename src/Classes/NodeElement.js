@@ -34,6 +34,7 @@ class NodeElement {
 	set selected(value) {
 		this._selected = value;
 	}
+
 	get type() {
 		return this._type;
 	}
@@ -45,12 +46,6 @@ class NodeElement {
 	get id() {
 		return this._id;
 	}
-
-	connect(nodeId){
-		let node = $.flow.getNodeById(nodeId);
-		node.connections = this.nodeId;
-	}
-
 }
 
 export {NodeElement};

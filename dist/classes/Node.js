@@ -19,7 +19,7 @@ export class Node {
 		this._count = function () {
 			return this.elements.length;
 		};
-		this._connectToNodeID = null;
+		this._connections = [];
 		this._actor = new Actor();
 		this._date = new Date().getTime();
 
@@ -62,17 +62,10 @@ export class Node {
 		return this._boardId;
 	}
 
-	set boardId(value) {
-		this._boardId = value;
+	get connections() {
+		return this._connections;
 	}
 
-	get connection() {
-		return this._connectToNodeID;
-	}
-
-	set connection(value) {
-		this._connectToNodeID = value;
-	}
 
 	get elements() {
 		return this._elements;

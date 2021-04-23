@@ -91,6 +91,15 @@ export class Drawer {
 			this.drawNode(node);
 		});
 
+		//Connect Nodes
+		SelectedBoard._nodes.forEach((node) =>{
+			node._connections.forEach(()=>{
+			//	let from = $(this.flowApp.ui.placeholders.board).find("#node    " + )
+
+			})
+		});
+
+
 		//Save the flow
 		this.flowApp.save(this.flowApp.id);
 	}
@@ -109,15 +118,21 @@ export class Drawer {
 			top: node._y + "px"
 		});
 
-		$.flow.makeDraggable(node._id, {leftTop:true});
+		$.flow.makeDraggableAndLinkable(node._id, {leftTop:true});
 
 		$node.on("mouseup", (e)=>{
 			$(this.flowApp.ui.placeholders.board).find(".node").removeClass("selected");
 			$node.addClass("selected");
+			let board = this.flowApp.flow.getBoardById(this.flowApp.flow._selectedBoardId);
+			let nodeId = $node.data("node-id");
+			board.addToSelectedNodes(nodeId);
 		});
 
-		$(this.flowApp.ui.placeholders.board).on("mousedown", ()=>{
+		$(this.flowApp.ui.placeholders.board).off("mousedown.nodes").on("mousedown.nodes", ()=>{
 			$(this.flowApp.ui.placeholders.board).find(".node").removeClass("selected");
+			let nodeId = $node.data("node-id");
+			let board = this.flowApp.flow.getBoardById(this.flowApp.flow._selectedBoardId);
+			board.removeFromSelectedNodes();
 		})
 	}
 }
