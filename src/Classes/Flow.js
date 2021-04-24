@@ -15,6 +15,7 @@ class Flow {
 		this._selectedBoardId = null;
 		this._boardGroups = [];
 		this._selectedBoardGroup = null;
+		this._variables = [];
 		this._date = new Date().getTime();
 	}
 

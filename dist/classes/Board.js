@@ -19,50 +19,6 @@ class Board {
 		this._connections = [];
 	}
 
-	get connections() {
-		return this._connections;
-	}
-
-	get group() {
-		return this._group;
-	}
-
-	set group(value) {
-		this._group = value;
-	}
-
-	get flowId() {
-		return this._flowId;
-	}
-
-	set flowId(value) {
-		this._flowId = value;
-	}
-
-	get name() {
-		return this._name;
-	}
-
-	set name(value) {
-		this._name = value;
-	}
-
-	get selectedNodes() {
-		return this._selectedNodes;
-	}
-
-	get id() {
-		return this._id;
-	}
-
-	get nodes() {
-		return this._nodes;
-	}
-
-	set nodes(value) {
-		this._nodes.unshift(value);
-	}
-
 	addNode(type = Type.text, position = null) {
 		let n = new Node(this.id, type);
 
@@ -112,8 +68,6 @@ class Board {
 			this._selectedNodes.delete(nodeId);
 		else
 			this._selectedNodes = [];
-
-		console.debug(this._selectedNodes);
 	}
 
 	getConnectionsByNodeId(nodeId) {
@@ -124,6 +78,52 @@ class Board {
 		});
 		return connections;
 	}
+
+
+    get connections() {
+        return this._connections;
+    }
+
+    get group() {
+        return this._group;
+    }
+
+    set group(value) {
+        this._group = value;
+    }
+
+    get flowId() {
+        return this._flowId;
+    }
+
+    set flowId(value) {
+        this._flowId = value;
+    }
+
+    get name() {
+        return this._name;
+    }
+
+    set name(value) {
+        this._name = value;
+    }
+
+    get selectedNodes() {
+        return this._selectedNodes;
+    }
+
+    get id() {
+        return this._id;
+    }
+
+    get nodes() {
+        return this._nodes;
+    }
+
+    set nodes(value) {
+        this._nodes.unshift(value);
+    }
+
 }
 
 export {Board};

@@ -3,20 +3,25 @@ import {Type} from "./Node.js";
 
 class NodeElement {
 
+	/*
+	* Possible types:
+	* text
+	* condition
+	* */
 	constructor(type = Type.text, nodeId) {
-		this._id = Util.setUID;
+		this._id = Util.setUID();
 		this._type = type;
 		this._nodeId = nodeId;
-		this._connectedTo = null;
+		this._content = "";
 		this._selected = false;
 	}
 
-	get connectedElement() {
-		return this._connectedTo;
+	get content() {
+		return this._content;
 	}
 
-	set connectedElement(nodeId) {
-		this._connectedTo = nodeId;
+	set content(value) {
+		this._content = value;
 	}
 
 	get nodeId() {

@@ -5,7 +5,7 @@
  **/
 import {Flow} from "./Flow.js";
 import {UI} from "./UI.js";
-import {Events,EventType} from "./Events.js";
+import {Events, EventType} from "./Events.js";
 import {Drawer} from "./Drawer.js";
 
 class FlowApp {
@@ -27,7 +27,7 @@ class FlowApp {
         //Remove Flow
         this.events.on(EventType.deleteFlow, (e) => {
             let flow = this.flows[0];
-            if(flow != null) {
+            if (flow != null) {
                 this.load(flow.id);
                 $.mbStorage.set("lastFlow", flow.id);
             } else
@@ -69,9 +69,9 @@ class FlowApp {
 
         //Delete Board
         this.events.on(EventType.deleteBoard, (e) => {
-            if(this.flow.boards.length > 0) {
-	            let board = this.flow.boards[0];
-	            this.flow.selectBoard(board._id);
+            if (this.flow.boards.length > 0) {
+                let board = this.flow.boards[0];
+                this.flow.selectBoard(board._id);
             }
             this.save(this.flow.id);
             this.drawer.drawBoardList();
@@ -85,14 +85,14 @@ class FlowApp {
 
         //Select Board
         this.events.on(EventType.selectBoard, (e) => {
-	        this.drawer.drawBoardList();
+            this.drawer.drawBoardList();
             this.save(this.flow.id);
         });
 
         //Add Node
         this.events.on(EventType.addNode, (e) => {
-	        this.drawer.drawBoard();
-	        this.save(this.flow.id);
+            this.drawer.drawBoard();
+            this.save(this.flow.id);
         });
 
         // Update Node
@@ -108,25 +108,50 @@ class FlowApp {
 
         //Select Node
         this.events.on(EventType.selectNode, (e) => {
-            console.debug("selectNode", e.detail);
+            //console.debug("selectNode", e.detail);
         });
 
         //Add Connection
         this.events.on(EventType.addConnection, (e) => {
             let connection = e.detail;
             let board = this.flow.getBoardById(this.flow._selectedBoardId);
+            let node = board.getNodeById(connection._from);
 
-            console.debug("board", board);
-            board._connections.push(connection)
-            let node = board.getNodeById( connection._from);
+            board._connections.push(connection);
             node._connections.push(connection);
-            console.debug("board._connections", board._connections);
+
+            node._connections.forEach((c) => {
+                if (c === connection)
+                    return;
+
+                if (c._from === connection._from && c._nodeElementId === connection._nodeElementId) {
+                    if (c._connectionLine != null)
+                        c._connectionLine.remove();
+                    node._connections.delete(c);
+                    board._connections.delete(c);
+                }
+            });
+
+            if (!connection._to) {
+                node._connections.delete(connection);
+                board._connections.delete(connection);
+            }
+
+            let nodeElement = this.ui.placeholders.board;
+            if (node._connections.length === 0) {
+                $(nodeElement).find("#node_" + connection._from).attr("data-connections-count", 0);
+            } else {
+                $(nodeElement).find("#node_" + connection._from).attr("data-connections-count", node._connections.length);
+                flowApp.drawer.drawConnection(connection);
+            }
+
+
             this.save(this.flow.id);
         });
 
         //Delete Connection
         this.events.on(EventType.deleteConnection, (e) => {
-            console.debug("deleteConnection", connection);
+            console.debug("deleteConnection", e.detail);
         });
 
     }
@@ -167,8 +192,8 @@ class FlowApp {
     }
 
     deleteFlow(flowId) {
-        this._flowsIds.forEach((f)=>{
-            if(f.id === flowId) {
+        this._flowsIds.forEach((f) => {
+            if (f.id === flowId) {
                 this._flowsIds.delete(f);
                 $.mbStorage.remove("flow_" + flowId);
             }

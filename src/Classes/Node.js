@@ -14,8 +14,8 @@ export class Node {
 		this._boardId = boardId;
 		this._type = type;
 		this._elements = [];
-		this._x = 50;
-		this._y = 50;
+		this._x = 280;
+		this._y = 100;
 		this._count = function () {
 			return this.elements.length;
 		};
@@ -27,7 +27,16 @@ export class Node {
 	}
 
 	init(){
-		this.elements.push(new NodeElement())
+		switch (this._type) {
+			case Type.text:
+			case Type.note:
+			case Type.choices:
+			case Type.condition:
+				let line = new NodeElement(this._type, this._id);
+				this.elements.push(line);
+				console.debug("line", line);
+				break;
+		}
 	}
 
 	get date() {
@@ -66,7 +75,6 @@ export class Node {
 		return this._connections;
 	}
 
-
 	get elements() {
 		return this._elements;
 	}
@@ -92,7 +100,7 @@ export class Node {
 	}
 
 	addElement() {
-		let nodeElement = new NodeElement(Type.text, this.id);
+		let nodeElement = new NodeElement(this._type, this.id);
 		this._elements.unshift(nodeElement);
 	}
 
@@ -109,10 +117,6 @@ export class Node {
 				ne = element;
 		});
 		return ne;
-	}
-
-	getNextNodeElement() {
-
 	}
 }
 

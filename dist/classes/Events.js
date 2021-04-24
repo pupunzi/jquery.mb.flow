@@ -13,7 +13,7 @@ export class Events {
 
 	on(eventName, action) {
 		document.addEventListener(eventName, (e) => {
-			console.debug("event", eventName);
+			// console.debug("event", eventName);
 			action(e)
 		}, false);
 	}

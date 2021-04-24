@@ -78,8 +78,7 @@ export class Menu {
 		menu.css({
 			position: "absolute",
 			top     : $(e.target).offset().top,
-			left    : left,
-			zIndex  : 100
+			left    : left
 		});
 
 		menu.fadeIn(200, () => {
@@ -161,8 +160,7 @@ export class ContextualMenu {
 		menu.css({
 			position: "absolute",
 			left: left,
-			top: e.clientY,
-			zIndex  : 100
+			top: e.clientY
 		});
 
 		menu.fadeIn(200, () => {
