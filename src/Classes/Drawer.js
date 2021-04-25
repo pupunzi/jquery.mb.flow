@@ -76,11 +76,15 @@ export class Drawer {
         if (selectedBoardId === null)
             return;
 
-        let SelectedBoard = this.flowApp.flow.getBoardById(selectedBoardId);
+        let selectedBoard = this.flowApp.flow.getBoardById(selectedBoardId);
+
+        console.debug({left: selectedBoard._x, top: selectedBoard._y})
+
+        $("#board").css({left:selectedBoard._x, top: selectedBoard._y})
 
         //If there are no nodes in this board create one
-        if (SelectedBoard._nodes.length === 0) {
-            SelectedBoard.addNode(Type.start);
+        if (selectedBoard._nodes.length === 0) {
+            selectedBoard.addNode(Type.start);
         }
 
         //Empty the board from previous nodes
@@ -88,13 +92,13 @@ export class Drawer {
         $("body svg").remove();
 
         //draw each node
-        SelectedBoard._connections = [];
-        SelectedBoard._nodes.forEach((node) => {
+        selectedBoard._connections = [];
+        selectedBoard._nodes.forEach((node) => {
             this.drawNode(node);
         });
 
         //Connect Nodes
-        SelectedBoard._connections.forEach((connection) => {
+        selectedBoard._connections.forEach((connection) => {
             this.drawConnection(connection)
         });
 
@@ -104,6 +108,7 @@ export class Drawer {
 
     drawNode(node) {
         let board = $.flow.getSelectedBoard();
+        let flowApp = this.flowApp;
 
         let lines = "";
         //Draw Node content
@@ -129,16 +134,32 @@ export class Drawer {
             boardGroup: board._group,
             connectionsCount: node._connections.length
         });
+        $(this.flowApp.ui.placeholders.board).append(nodeEl);
 
         node._connections.forEach((connection) => {
             board._connections.push(connection);
         });
 
-        $(this.flowApp.ui.placeholders.board).append(nodeEl);
         let $node = $(this.flowApp.ui.placeholders.board).find("#node_" + node._id);
         $node.css({
             left: node._x + "px",
             top: node._y + "px"
+        });
+
+        //Update nodeElement content
+        $node.find(".node-text").on("blur", function(){
+            let sanitized = $(this).html().replace(/<div>/g, '<br>').replace(/<\/div>/g, '');
+            $(this).html(sanitized);
+
+            UI.getVariables(sanitized);
+
+            let nodeElementId = $(this).parents(".node-content-line").data("node-element-id");
+            node._elements.forEach((element) => {
+                if(element._id === nodeElementId)
+                    element._content = sanitized;
+            });
+
+            flowApp.save(flowApp.flow.id);
         });
 
         $.flow.makeNodeDraggableAndLinkable(node._id, {leftTop: true});
@@ -150,11 +171,12 @@ export class Drawer {
             board.addToSelectedNodes(nodeId);
         });
 
-        $(this.flowApp.ui.placeholders.board).off("mousedown.nodes").on("mousedown.nodes", () => {
+        $(this.flowApp.ui.placeholders.board).off("mousedown.nodes").on("mousedown.nodes", (e) => {
             $(this.flowApp.ui.placeholders.board).find(".node").removeClass("selected");
             let nodeId = $node.data("node-id");
             let board = this.flowApp.flow.getBoardById(this.flowApp.flow._selectedBoardId);
             board.removeFromSelectedNodes();
+            //e.stopPropagation();
         });
     }
 
@@ -187,7 +209,9 @@ export class Drawer {
             line = $.flow.LeaderLine(fromNode, toNode, opt);
         }
         connection._connectionLine = line;
-        $("svg").appendTo(this.flowApp.ui.placeholders.connections);
+
+        //$("svg").appendTo(this.flowApp.ui.placeholders.connections);
+
         return line;
     }
 

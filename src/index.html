@@ -11,11 +11,14 @@
   <div id="logo"><img src="assets/images/logo.png"></div>
   <div id="flow-name-placeholder"><h1>Flow Name</h1></div>
   <div id="flows-button-bar">
-    <button class="main" id="OpenFlow" onclick="$.flow.openFlow()"><i class="icon icon-folder"></i>Open</button>
-    <button class="main" id="NewFlow" onclick="$.flow.addFlow()"><i class="icon icon-plus"></i>New</button>
+    <button class="" id="openActors" onclick=""><i class="icon icon-meh-o"></i>Actors</button>
+    <button class="" id="openVariables" onclick=""><i class="icon icon-code"></i>Variables</button>
+    <button class="main" id="openFlow" onclick="$.flow.openFlow()"><i class="icon icon-folder"></i>Open</button>
+    <button class="main" id="newFlow" onclick="$.flow.addFlow()"><i class="icon icon-plus"></i>New</button>
   </div>
 </header>
 <section id="wrapper">
+
   <div id="boards-list-column">
     <div id="boards-list-button-bar">
       <div class="group-label"><span class="name">All Boards</span> <i class="icon small icon-chevron-down boards-group-menu"></i> </div>
@@ -30,7 +33,6 @@
   </div>
 
 </section>
-<section id="node-editor"></section>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
 <script type="module" src="jquery.mb.flow.js"></script>

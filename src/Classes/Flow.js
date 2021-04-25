@@ -8,15 +8,29 @@ import {Board} from "./Board.js";
 import {Events, EventType} from "./Events.js";
 
 class Flow {
+
 	constructor(name) {
 		this._id = Util.setUID();
+		this._date = new Date().getTime();
 		this._name = name;
 		this._boards = [];
 		this._selectedBoardId = null;
 		this._boardGroups = [];
 		this._selectedBoardGroup = null;
-		this._variables = [];
-		this._date = new Date().getTime();
+		this._variables = {};
+		this._actors = {};
+	}
+
+	get variables() {
+		return this._variables;
+	}
+
+	get actors() {
+		return this._actors;
+	}
+
+	get date() {
+		return this._date;
 	}
 
 	get selectedBoardGroup() {

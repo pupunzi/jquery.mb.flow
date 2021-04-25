@@ -18,6 +18,12 @@ class FlowApp {
         this._flow = null;
         this._drawer = new Drawer(this);
 
+        this.initEvents();
+
+    }
+
+    initEvents(){
+
         //Add Flow
         this.events.on(EventType.addFlow, (e) => {
             this.drawer.updateFlowName();
@@ -44,6 +50,11 @@ class FlowApp {
         this.events.on(EventType.loadFlow, (e) => {
             this.flow.selectedBoardGroup = "all";
             this.drawer.updateFlowName();
+            for (const property in this.flow._variables) {
+                this.flow._variables[property] = null;
+                console.log(`${property}: ${this.flow._variables[property]}`);
+            }
+
             this.drawer.drawBoardList();
         });
 
@@ -86,6 +97,11 @@ class FlowApp {
         //Select Board
         this.events.on(EventType.selectBoard, (e) => {
             this.drawer.drawBoardList();
+            this.save(this.flow.id);
+        });
+
+        //Update Board
+        this.events.on(EventType.updateBoard, (e) => {
             this.save(this.flow.id);
         });
 
@@ -153,7 +169,6 @@ class FlowApp {
         this.events.on(EventType.deleteConnection, (e) => {
             console.debug("deleteConnection", e.detail);
         });
-
     }
 
     get flow() {
@@ -217,8 +232,6 @@ class FlowApp {
         for (const property in flow) {
             this.flow[property] = flow[property];
         }
-        this.drawer.updateFlowName();
-
         Events.register(EventType.loadFlow, this.flow);
         return this.flow;
     }

@@ -20,8 +20,18 @@
     </li>
 </template>
 
+<!-- ACTORS LIST                 ----------------------->
+<template id="actors">
+    <div id="actors-window">
+        <button class="" id="addActors" onclick=""><i class="icon icon-plus"></i>Add Actor</button>
+        <h1>Actors list</h1>
+        <hr>
+        <div id="actors-list"></div>
+    </div>
+</template>
 
 
+<!-- NODES    ------------------------------------------>
 
 
 <!-- START NODE                  ----------------------->
@@ -45,6 +55,7 @@
 <template id="node-text-line">
     <div class="node-content-line line" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
         <div class="node-text" contenteditable="true">{{content}}</div>
+        <div class="variables" contenteditable="true"></div>
     </div>
 </template>
 
@@ -61,6 +72,7 @@
 <template id="node-choice-line">
     <div class="node-content-line line anchorOut" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
         <div class="node-text" contenteditable="true">{{content}}</div>
+        <div class="variables" contenteditable="true"></div>
         <div class="anchor"></div>
     </div>
 </template>

@@ -13,6 +13,8 @@ class Board {
 		this._flowId = flowId;
 		this._name = name;
 		this._date = new Date().getTime();
+		this._x = 0;
+		this._y = 0;
 		this._nodes = [];
 		this._selectedNodes = [];
 		this._group = groupName == "all" ? "Main Group" : groupName;

@@ -21,7 +21,6 @@ class Util {
 		sel.removeAllRanges();
 		sel.addRange(range);
 	}
-
 }
 
 

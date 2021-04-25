@@ -12,7 +12,7 @@ import {Type} from "../Classes/Node.js";
 import {Connection} from "../Classes/Connection.js";
 
 (function ($, d) {
-    $(function () {
+    $(() => {
 
         window.flowApp = new FlowApp();
 
@@ -39,40 +39,96 @@ import {Connection} from "../Classes/Connection.js";
             return flowApp.flow.getBoardById(flowApp.flow._selectedBoardId)
         },
 
+        global:{},
+
         metaKeys: [],
         draggable: [],
+        areaSize: {},
 
-        init: function () {
-            $("body").on("keydown", "[contenteditable]", (e) => {
-                switch (e.keyCode) {
-                    case 13:
+        init: () => {
+
+            $("body").on("keypress", "[contenteditable]", (e) => {
+
+                switch (e.key) {
+                    case "Enter":
+                        if ($(e.target).parents(".node").length > 0) {
+                            $.flow.updateConnections();
+                            if ($.flow.metaKeys.indexOf("Shift") < 0) {
+                                e.preventDefault();
+                                $(e.target).blur();
+                            }
+
+                            return;
+                        }
+
                         e.preventDefault();
                         $(e.target).blur();
+                        break;
+                    case "Backspace":
+                        if ($(e.target).parents(".node").length > 0) {
+                            $.flow.updateConnections();
+                            return;
+                        }
                         break;
                 }
             });
 
 
             let pos = {};
-            let drawingArea = $("#board").get(0);
-            $(drawingArea).on("scroll", () => {
-                $.flow.updateConnections();
-            }).on("mousedown", (e) => {
-                drawingArea.style.cursor = 'grab';
+            let drawingArea = $("#board");
+            drawingArea[0].style.zoom = 1;
+
+            $(document).on("keydown", (e) => {
                 if ($.flow.metaKeys.indexOf("Meta") >= 0) {
-                    pos = {left: drawingArea.scrollLeft, top: drawingArea.scrollTop, x: e.clientX, y: e.clientY,};
-                    $("body").addClass("move-board");
+                    switch (e.key) {
+                        case "0":
+                            e.preventDefault();
+                            // drawingArea[0].style.zoom = 1;
+                            //$("svg").appendTo("body");
+                            break;
+                        case "-":
+                            e.preventDefault();
+                            //drawingArea[0].style.zoom -= .1;
+                            //$("svg").appendTo(flowApp.ui.placeholders.connections);
+                            break;
+                        case "+":
+                            e.preventDefault();
+                            //drawingArea[0].style.zoom = 1;
+                            //$("svg").appendTo("body");
+                            break;
+                    }
                 }
+
+            });
+
+            $(document).on("mousedown", (e) => {
+                if ($.flow.metaKeys.indexOf("Meta") >= 0) {
+                    drawingArea[0].style.cursor = 'grab';
+                    pos = {
+                        left: drawingArea.position().left,
+                        top: drawingArea.position().top,
+                        x: e.clientX,
+                        y: e.clientY,
+                    };
+                }
+
                 $(drawingArea).on("mousemove", (e) => {
-                    drawingArea.style.cursor = 'grabbing';
                     if ($.flow.metaKeys.indexOf("Meta") >= 0) {
+                        drawingArea[0].style.cursor = 'grabbing';
                         const dx = e.clientX - pos.x;
                         const dy = e.clientY - pos.y;
-                        drawingArea.scrollTop = pos.top - dy;
-                        drawingArea.scrollLeft = pos.left - dx;
+                        $(drawingArea).css({left: pos.left + dx, top: pos.top + dy});
+                        $.flow.updateConnections();
                     }
-                }).one("mouseup",()=>{
-                    drawingArea.style.cursor = 'default';
+                }).one("mouseup", () => {
+                    drawingArea[0].style.cursor = 'default';
+                    let board = $.flow.getSelectedBoard();
+                    board._x = parseFloat($(drawingArea).css("left"));
+                    board._y = parseFloat($(drawingArea).css("top"));
+
+                    Events.register(EventType.updateBoard, board);
+                    console.debug(flowApp);
+
                     $("#board").off("mousemove");
                 });
             });
@@ -87,9 +143,12 @@ import {Connection} from "../Classes/Connection.js";
             window.board = new ContextualMenu(flowApp.ui.placeholders.board, $.flow.contextualMenu.board, true);
             window.board = new ContextualMenu(".node", $.flow.contextualMenu.node, true);
 
-
             //Init keys listener
             window.KeyListener = new KeyboardListener();
+        },
+
+        setAreaSize: () => {
+
         },
 
         contextualMenu: {
@@ -330,7 +389,7 @@ import {Connection} from "../Classes/Connection.js";
         /**
          * Flows Manager
          * */
-        addFlow: function () {
+        addFlow: () => {
             let title = "Add a new Flow";
             let text = null;
             let action = function (name) {
@@ -341,10 +400,10 @@ import {Connection} from "../Classes/Connection.js";
             UI.dialogue(title, text, "flowName", "Flow Name", null, "Add", "Cancel", action);
         },
 
-        openFlow: function () {
+        openFlow: () => {
         },
 
-        editFlowName: function () {
+        editFlowName: () => {
             let editEl = $(flowApp.ui.placeholders.flowName).find("h1");
             editEl.attr({contentEditable: true});
             editEl.focus();
@@ -355,7 +414,7 @@ import {Connection} from "../Classes/Connection.js";
             });
         },
 
-        deleteFlow: function (flowId, target) {
+        deleteFlow: (flowId, target) => {
             let title = "Delete Flow";
             let text = "Are you sure you want to delete<br><b>" + $(target).parent().find(".name").text() + "</b>?";
             let action = () => {
@@ -368,11 +427,11 @@ import {Connection} from "../Classes/Connection.js";
         /**
          * Boards Manager
          * */
-        getSelectedBoard: function () {
+        getSelectedBoard: () => {
             return flowApp.flow.getBoardById(flowApp.flow.selectedBoardId);
         },
 
-        addBoard: function () {
+        addBoard: () => {
             let title = "Add a new Board";
             let text = null;
             let action = function (name) {
@@ -381,11 +440,11 @@ import {Connection} from "../Classes/Connection.js";
             UI.dialogue(title, text, "boardName", "Board Name", null, "Add", "Cancel", action);
         },
 
-        duplicateBoard: function (boardId) {
+        duplicateBoard: (boardId) => {
             flowApp.flow.duplicateBoard(boardId);
         },
 
-        editBoardName: function (boardId) {
+        editBoardName: (boardId) => {
             let editEl = $(flowApp.ui.placeholders.boardList).find("#board_" + boardId + " .name");
             editEl.attr({contentEditable: true});
             editEl.focus();
@@ -398,11 +457,11 @@ import {Connection} from "../Classes/Connection.js";
             });
         },
 
-        moveToGroup: function (boardId, target) {
+        moveToGroup: (boardId, target) => {
             console.log("Mover to Group");
         },
 
-        deleteBoard: function (boardId, target) {
+        deleteBoard: (boardId, target) => {
             UI.dialogue("Delete Board", "Are you sure you want to delete<br><b>" + $(target).parent().find(".name").text() + "</b>?", null, null, null, "Yes", "Cancel", () => {
                 flowApp.flow.deleteBoard(boardId);
                 flowApp.drawer.drawBoardList();
@@ -410,7 +469,7 @@ import {Connection} from "../Classes/Connection.js";
             }, "alert");
         },
 
-        showBoardsByGroup: function (groupName) {
+        showBoardsByGroup: (groupName) => {
             $(flowApp.ui.placeholders.boardList).find("li").hide();
             if (groupName !== "all") {
                 $(flowApp.ui.placeholders.boardList).find("[data-board-group=\"" + groupName + "\"]").show();
@@ -420,7 +479,7 @@ import {Connection} from "../Classes/Connection.js";
             $(flowApp.ui.placeholders.boardGroupName).html((groupName !== "all" ? groupName : "All Boards"));
         },
 
-        makeNodeDraggableAndLinkable: function (nodeId) {
+        makeNodeDraggableAndLinkable: (nodeId) => {
 
             let $node = $("#node_" + nodeId);
             let nodeEl = $node.get(0);
@@ -442,7 +501,6 @@ import {Connection} from "../Classes/Connection.js";
                 Events.register(EventType.updateNode, node);
             };
 
-
             let anchorOut = $node.is(".anchorOut") ? $node : $node.find(".anchorOut");
             anchorOut.on("mousedown", (e) => {
 
@@ -453,14 +511,17 @@ import {Connection} from "../Classes/Connection.js";
                     let startEl = $node.is(".anchorOut") ? anchorOut : anchorOut.find(".anchor");
                     let scrollX = $("#board").scrollLeft();
                     let scrollY = $("#board").scrollTop();
-                    console.debug(e.clientX + scrollX, e.clientY + scrollY)
+
+                    let drawingArea = $("#board");
+
                     let fakeEl = $("<div id='fakeEl'>").css({
                             position: "absolute",
-                            width: 1,
-                            height: 1,
+                            width: 10,
+                            height: 10,
+                            background: "red",
                             zIndex: -100,
-                            left: e.clientX + scrollX,
-                            top: e.clientY + scrollY,
+                            left: e.clientX - drawingArea.position().left,
+                            top: e.clientY - drawingArea.position().top,
                         }
                     );
 
@@ -469,8 +530,8 @@ import {Connection} from "../Classes/Connection.js";
 
                     $(document).on("mousemove.line", (e) => {
                         fakeEl.css({
-                            left: e.clientX + scrollX,
-                            top: e.clientY + scrollY
+                            left: e.clientX - drawingArea.position().left,
+                            top: e.clientY - drawingArea.position().top
                         });
                         anchorOut.get(0).line.position();
 
@@ -496,11 +557,11 @@ import {Connection} from "../Classes/Connection.js";
             });
         },
 
-        LeaderLine: function (from, to, opt) {
+        LeaderLine: (from, to, opt) => {
             return new LeaderLine(from.get(0), to.get(0), opt);
         },
 
-        updateConnections: function () {
+        updateConnections: () => {
             let board = $.flow.getSelectedBoard();
             let connections = board._connections;
 
@@ -519,7 +580,7 @@ import {Connection} from "../Classes/Connection.js";
         /**
          * Node
          */
-        getNodeById: function (nodeId) {
+        getNodeById: (nodeId) => {
             let board = $.flow.getSelectedBoard();
             return board.getNodeById(nodeId);
         }
