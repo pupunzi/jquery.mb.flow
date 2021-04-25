@@ -6,6 +6,7 @@
 import {Util} from "./Util.js";
 import {Board} from "./Board.js";
 import {Events, EventType} from "./Events.js";
+import {Variable} from "./Variable.js";
 
 class Flow {
 
@@ -17,7 +18,7 @@ class Flow {
 		this._selectedBoardId = null;
 		this._boardGroups = [];
 		this._selectedBoardGroup = null;
-		this._variables = {};
+		this._variables = [];
 		this._actors = {};
 	}
 
@@ -152,10 +153,27 @@ class Flow {
 					i--;
 				}
 			}
+
 			Events.register(EventType.deleteBoard, {});
+
 		} else {
 			alert("No Board found")
 		}
+	}
+
+	addVariable(key, value = null){
+		let variable = new Variable();
+		variable._key = key;
+		variable._value = value;
+
+		this._variables.push(variable);
+	}
+
+	deleteVariable(key){
+		this._variables.forEach((variable)=>{
+			if(variable.key === key)
+				this._variables.delete(variable);
+		})
 	}
 }
 

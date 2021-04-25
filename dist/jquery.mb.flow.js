@@ -142,6 +142,7 @@ import {Connection} from "../Classes/Connection.js";
             //Init Contextual menu
             window.board = new ContextualMenu(flowApp.ui.placeholders.board, $.flow.contextualMenu.board, true);
             window.board = new ContextualMenu(".node", $.flow.contextualMenu.node, true);
+            window.variables_menu = new ContextualMenu(".variables", $.flow.contextualMenu.variables, true);
 
             //Init keys listener
             window.KeyListener = new KeyboardListener();
@@ -215,6 +216,14 @@ import {Connection} from "../Classes/Connection.js";
                         let flowId = $(target).parent().data("flow-id");
                         let flowName = $(target).parent().find(".name").text();
                         console.debug("Export " + flowId + "  -  " + flowName);
+                    }
+                },
+                {},
+                {
+                    name: 'New',
+                    className: "highlight",
+                    fn: function (target) {
+                        $.flow.addFlow();
                     }
                 },
                 {},
@@ -322,6 +331,34 @@ import {Connection} from "../Classes/Connection.js";
                     }
                 },
             ],
+
+            variables: () => {
+                let items = [];
+                let variables = flowApp.flow.getBoardsGroupsList();
+
+                variables.forEach((variable) => {
+                    let v = {
+                        name: variable._key,
+                        className: "listElement",
+                        fn: function (target) {
+
+                        }
+                    };
+                    items.push(v);
+                });
+
+                items.push({});
+
+                let editVariables = {
+                    name: "Edit Variables",
+                    fn: function (target) {
+                        let editEl = $(target).parent().find(".name");
+                    }
+                };
+                items.push(editVariables);
+
+                return items;
+            },
 
             //Contextual Menu
             board: [

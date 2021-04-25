@@ -568,7 +568,7 @@ html body #wrapper #board .node .anchor {
 html body #wrapper #board .node .menu {
   position: relative;
   display: inline-block;
-  background-color: #282828;
+  background-color: rgba(50, 50, 50, 0.2);
   border-radius: 5px 5px 0 0;
   width: 100%;
   left: 0;
@@ -577,7 +577,7 @@ html body #wrapper #board .node .menu {
 }
 html body #wrapper #board .node .menu i.icon {
   position: absolute;
-  color: #ffffff;
+  color: #282828;
   top: 5px;
   right: 10px;
   font-size: 100%;
@@ -687,7 +687,7 @@ html body #wrapper #board .node[data-type="random"] i {
 }
 html body #wrapper #board .node[data-type="condition"] {
   width: 250px;
-  background-color: #a690d8;
+  background-color: #7f0000;
   border-radius: 0;
   top: 40px;
   left: 40px;
@@ -695,11 +695,11 @@ html body #wrapper #board .node[data-type="condition"] {
 html body #wrapper #board .node[data-type="condition"] .menu {
   background-color: transparent;
 }
-html body #wrapper #board .node[data-type="condition"] .node-content-line {
+html body #wrapper #board .node[data-type="condition"] .variables {
   font-family: monospace;
   height: 100%;
   padding: 5px;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: #ffffff !important;
   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
 }
 html .flow-overlay {

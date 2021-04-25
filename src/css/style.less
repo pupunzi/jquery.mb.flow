@@ -311,7 +311,7 @@ html {
           .menu {
             position: relative;
             display: inline-block;
-            background-color: darken(@main-color, 4%);
+            background-color: fade(@main-color, 20%);
             border-radius: 5px 5px 0 0;
             width: 100%;
             left: 0;
@@ -320,7 +320,7 @@ html {
 
             i.icon {
               position: absolute;
-              color: #ffffff;
+              color: darken(@main-color, 4%);
               top: 5px;
               right: 10px;
               font-size: 100%;
@@ -452,7 +452,7 @@ html {
 
           &[data-type="condition"] {
             width: 250px;
-            background-color: #a690d8;
+            background-color: #7f0000;
             border-radius: 0;
             top: 40px;
             left: 40px;
@@ -461,11 +461,11 @@ html {
               background-color: transparent;
             }
 
-            .node-content-line {
+            .variables {
               font-family: monospace;
               height: 100%;
               padding: 5px;
-              background-color: fade(#000, 10%);
+              background-color: fade(#fff, 100%) !important;
               box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
             }
           }
