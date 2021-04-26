@@ -78,8 +78,6 @@ export class Drawer {
 
         let selectedBoard = this.flowApp.flow.getBoardById(selectedBoardId);
 
-        console.debug({left: selectedBoard._x, top: selectedBoard._y})
-
         $("#board").css({left:selectedBoard._x, top: selectedBoard._y})
 
         //If there are no nodes in this board create one

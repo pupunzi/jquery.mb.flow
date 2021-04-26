@@ -98,7 +98,6 @@ import {Connection} from "../Classes/Connection.js";
                             break;
                     }
                 }
-
             });
 
             $(document).on("mousedown", (e) => {
@@ -127,7 +126,6 @@ import {Connection} from "../Classes/Connection.js";
                     board._y = parseFloat($(drawingArea).css("top"));
 
                     Events.register(EventType.updateBoard, board);
-                    console.debug(flowApp);
 
                     $("#board").off("mousemove");
                 });
