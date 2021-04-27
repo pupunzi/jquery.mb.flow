@@ -10,7 +10,8 @@ class UI {
             flowName: "#top-bar #flow-name-placeholder",
             boardListButtonBar: "#boards-list-button-bar",
             boardList: "#boards-list",
-            board: "#draw-area",
+            board: "#board",
+            drawingArea: "#drawing-area",
             connections: "#connections",
             boardGroupName: ".group-label .name"
         };

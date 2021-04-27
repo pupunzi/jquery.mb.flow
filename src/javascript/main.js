@@ -75,7 +75,7 @@ import {Connection} from "../Classes/Connection.js";
 
 
             let pos = {};
-            let drawingArea = $("#board");
+            let drawingArea = $("#draw-area");
             drawingArea[0].style.zoom = 1;
 
             $(document).on("keydown", (e) => {
@@ -127,7 +127,7 @@ import {Connection} from "../Classes/Connection.js";
 
                     Events.register(EventType.updateBoard, board);
 
-                    $("#board").off("mousemove");
+                    $("#draw-area").off("mousemove");
                 });
             });
 
@@ -544,10 +544,8 @@ import {Connection} from "../Classes/Connection.js";
                     e.preventDefault();
                     e.stopPropagation();
                     let startEl = $node.is(".anchorOut") ? anchorOut : anchorOut.find(".anchor");
-                    let scrollX = $("#board").scrollLeft();
-                    let scrollY = $("#board").scrollTop();
 
-                    let drawingArea = $("#board");
+                    let drawingArea = $("#draw-area");
 
                     let fakeEl = $("<div id='fakeEl'>").css({
                             position: "absolute",
