@@ -255,7 +255,7 @@ html {
         }
       }
 
-      #board {
+      #draw-area {
         position: absolute;
         //overflow: hidden;
         width: calc(100vw);
@@ -272,7 +272,7 @@ html {
           right: 0;
         }
 
-        #draw-area {
+        #board {
           position: absolute;
           top: 0;
           left: 0;
@@ -312,7 +312,7 @@ html {
             position: relative;
             display: inline-block;
             background-color: fade(@main-color, 20%);
-            //border-radius: 5px 5px 0 0;
+            border-radius: 5px 5px 0 0;
             width: 100%;
             left: 0;
             top: 0;
@@ -352,6 +352,7 @@ html {
                 background-color: fade(#ffffff, 10%);
                 box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
                 font-size: 13px;
+                min-height: 40px;
               }
 
               .variables {
@@ -359,6 +360,7 @@ html {
                 width: 100%;
                 height: 100%;
                 background-color: fade(#ffffff, 40%);
+                border-top: 1px solid fade(@main-color,30%);
                 font-family: monospace;
                 margin-top: 3px;
                 padding: 3px;
@@ -384,7 +386,7 @@ html {
               left: 0;
               right: 0;
               margin: auto;
-              font-size: 32px;
+              font-size: 36px;
               text-align: center;
               line-height: 100%;
               padding: 0;
@@ -395,7 +397,7 @@ html {
             width: 250px;
             // min-height: 100px;
             background-color: @main-icon-color;
-            //border-radius: 10px;
+           // border-radius: 10px;
             top: 40px;
             left: 40px;
 
@@ -432,7 +434,7 @@ html {
             width: 60px;
             height: 60px;
             background-color: #6e0d3f;
-            //border-radius: 0%;
+            //border-radius: 0;
             top: 40px;
             left: 40px;
 
@@ -469,7 +471,6 @@ html {
               box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
             }
           }
-
         }
       }
 
@@ -568,6 +569,7 @@ html {
   /**
   Contextual flowMenu
   */
+
   .contextual-menu {
     min-width: 150px;
     background-color: @contextual-menu-color;
@@ -577,6 +579,7 @@ html {
     margin: 0;
     border-radius: 5px;
     z-index: calc(@base-z-index + 100);
+
 
     ul {
       padding: 0;
