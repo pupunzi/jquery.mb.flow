@@ -78,7 +78,7 @@ export class Drawer {
 
         let selectedBoard = this.flowApp.flow.getBoardById(selectedBoardId);
 
-        $("#draw-area").css({left:selectedBoard._x, top: selectedBoard._y})
+        $("#draw-area").css({left: selectedBoard._x, top: selectedBoard._y})
 
         //If there are no nodes in this board create one
         if (selectedBoard._nodes.length === 0) {
@@ -145,7 +145,7 @@ export class Drawer {
         });
 
         //Update nodeElement content
-        $node.find(".node-text").on("blur", function(){
+        $node.find(".node-text").on("blur", function () {
             let sanitized = $(this).html().replace(/<div>/g, '<br>').replace(/<\/div>/g, '');
             $(this).html(sanitized);
 
@@ -153,7 +153,7 @@ export class Drawer {
 
             let nodeElementId = $(this).parents(".node-content-line").data("node-element-id");
             node._elements.forEach((element) => {
-                if(element._id === nodeElementId)
+                if (element._id === nodeElementId)
                     element._content = sanitized;
             });
 
@@ -185,7 +185,7 @@ export class Drawer {
                 element: $(this.flowApp.ui.placeholders.board).get(0),
                 color: 'gray',
                 size: 3,
-                path:"fluid",
+                path: "fluid",
                 startPlug: 'square',
                 dash: {animation: true}
             };
@@ -211,6 +211,57 @@ export class Drawer {
         //$("svg").appendTo(this.flowApp.ui.placeholders.connections);
 
         return line;
+    }
+
+    drawSelection(e) {
+
+        if (e.type === "mousedown") {
+            $("#selection").remove();
+
+            let selection = $("<div>").attr({id: "selection"});
+
+            this.startX = e.clientX;
+            this.startY = e.clientY;
+            selection.css({
+                left: this.startX,
+                top: this.startY
+            });
+
+            $("body").append(selection);
+        }
+
+        if (e.type === "mousemove") {
+            let x = e.clientX;
+            let y = e.clientY;
+            let width = x - this.startX;
+            let height = y - this.startY;
+
+            $("#selection").css({
+                width: width,
+                height: height
+            });
+
+            let topLeft = {x: this.startX, y: this.startY};
+            let bottomRight = {x: this.startX + width, y: this.startY + height};
+
+            this.checkForSelectedNode(topLeft, bottomRight);
+
+        }
+
+        if (e.type === "mouseup") {
+            $("#selection").remove();
+
+        }
+    }
+
+    //todo: check which nodes are selected
+    checkForSelectedNode(topLeft, bottomRight) {
+        let board = $.flow.selectedBoard();
+        let nodes = board._nodes;
+        nodes.forEach((node)=>{
+            let x = topLeft + parseFloat($(this.flowApp.ui.placeholders.drawingArea).css("left"));
+        })
+
     }
 
 }

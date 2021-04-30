@@ -75,7 +75,7 @@ import {Connection} from "../Classes/Connection.js";
 
 
             let pos = {};
-            let drawingArea = $("#draw-area");
+            let drawingArea = $(flowApp.ui.placeholders.drawingArea);
             drawingArea[0].style.zoom = 1;
 
             $(document).on("keydown", (e) => {
@@ -109,6 +109,8 @@ import {Connection} from "../Classes/Connection.js";
                         x: e.clientX,
                         y: e.clientY,
                     };
+                } else {
+                    flowApp.drawer.drawSelection(e)
                 }
 
                 $(drawingArea).on("mousemove", (e) => {
@@ -118,8 +120,13 @@ import {Connection} from "../Classes/Connection.js";
                         const dy = e.clientY - pos.y;
                         $(drawingArea).css({left: pos.left + dx, top: pos.top + dy});
                         $.flow.updateConnections();
+                    }else {
+                        flowApp.drawer.drawSelection(e)
                     }
-                }).one("mouseup", () => {
+
+                }).one("mouseup", (e) => {
+                    flowApp.drawer.drawSelection(e);
+
                     drawingArea[0].style.cursor = 'default';
                     let board = $.flow.getSelectedBoard();
                     board._x = parseFloat($(drawingArea).css("left"));

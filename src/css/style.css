@@ -391,6 +391,10 @@ html body ol {
   margin: 0;
   list-style: none;
 }
+html body #selection {
+  position: absolute;
+  border: 3px dotted rgba(255, 255, 255, 0.3);
+}
 html body #top-bar {
   position: fixed;
   top: 0;
