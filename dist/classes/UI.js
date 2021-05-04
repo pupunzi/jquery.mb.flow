@@ -11,7 +11,7 @@ class UI {
             boardListButtonBar: "#boards-list-button-bar",
             boardList: "#boards-list",
             board: "#board",
-            drawingArea: "#drawing-area",
+            drawingArea: "#draw-area",
             connections: "#connections",
             boardGroupName: ".group-label .name"
         };

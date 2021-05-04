@@ -110,6 +110,7 @@ import {Connection} from "../Classes/Connection.js";
                         y: e.clientY,
                     };
                 } else {
+                    //make selection
                     flowApp.drawer.drawSelection(e)
                 }
 

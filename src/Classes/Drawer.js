@@ -78,7 +78,7 @@ export class Drawer {
 
         let selectedBoard = this.flowApp.flow.getBoardById(selectedBoardId);
 
-        $("#draw-area").css({left: selectedBoard._x, top: selectedBoard._y})
+        $("#draw-area").css({left: selectedBoard._x, top: selectedBoard._y});
 
         //If there are no nodes in this board create one
         if (selectedBoard._nodes.length === 0) {
@@ -258,8 +258,33 @@ export class Drawer {
     checkForSelectedNode(topLeft, bottomRight) {
         let board = $.flow.selectedBoard();
         let nodes = board._nodes;
-        nodes.forEach((node)=>{
-            let x = topLeft + parseFloat($(this.flowApp.ui.placeholders.drawingArea).css("left"));
+        let drawingAreaX = parseFloat($(this.flowApp.ui.placeholders.drawingArea).css("left"));
+        let drawingAreaY = parseFloat($(this.flowApp.ui.placeholders.drawingArea).css("top"));
+        let selectionTopX = topLeft.x + drawingAreaX;
+        let selectionTopY = topLeft.y + drawingAreaY;
+        let selectionBottomX = bottomRight.x + drawingAreaX;
+        let selectionBottomY = bottomRight.y + drawingAreaY;
+
+        nodes.forEach((node) => {
+            let $node = $(this.flowApp.ui.placeholders.drawingArea).find("#node_" + node._id);
+            let nodeTopX = $node.offset().left + drawingAreaX;
+            let nodeTopY = $node.offset().top + drawingAreaY;
+            let nodeBottomX = nodeTopX + $node.width();
+            let nodeBottomY = nodeTopY + $node.height();
+
+            // console.debug("X", nodeTopX, selectionTopX, drawingAreaX);
+            // console.debug("Y", nodeTopY, selectionTopY, drawingAreaY);
+            if ((nodeTopX > selectionTopX && nodeTopY > selectionTopY)
+                && (nodeBottomX < selectionBottomX && nodeBottomY < selectionBottomY)){
+                // console.debug("#node_" + node._id, $node.width(), $node.height());
+                $node.addClass("selected");
+                let nodeId = $node.data("node-id");
+                board.addToSelectedNodes(nodeId);
+            } else {
+                $node.removeClass("selected");
+                let nodeId = $node.data("node-id");
+                board.removeFromSelectedNodes(nodeId);
+            }
         })
 
     }
