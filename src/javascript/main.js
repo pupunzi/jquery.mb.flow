@@ -39,11 +39,12 @@ import {Connection} from "../Classes/Connection.js";
             return flowApp.flow.getBoardById(flowApp.flow._selectedBoardId)
         },
 
-        global:{},
+        global: {},
 
         metaKeys: [],
         draggable: [],
         areaSize: {},
+        selectedNodes: [],
 
         init: () => {
 
@@ -121,7 +122,7 @@ import {Connection} from "../Classes/Connection.js";
                         const dy = e.clientY - pos.y;
                         $(drawingArea).css({left: pos.left + dx, top: pos.top + dy});
                         $.flow.updateConnections();
-                    }else {
+                    } else {
                         flowApp.drawer.drawSelection(e)
                     }
 
@@ -422,7 +423,7 @@ import {Connection} from "../Classes/Connection.js";
                         let nodeId = $(target).parents(".node").data("node-id");
                         if (nodeId != null) {
                             let board = $.flow.selectedBoard();
-                            let node = board.deleteNodeById(nodeId);
+                            board.deleteNodeById(nodeId);
                         }
 
                     }
@@ -522,6 +523,7 @@ import {Connection} from "../Classes/Connection.js";
             $(flowApp.ui.placeholders.boardGroupName).html((groupName !== "all" ? groupName : "All Boards"));
         },
 
+        //todo: manage multiple drag
         makeNodeDraggableAndLinkable: (nodeId) => {
 
             let $node = $("#node_" + nodeId);
@@ -534,13 +536,54 @@ import {Connection} from "../Classes/Connection.js";
             $.flow.draggable["node_" + nodeId].handle = $node.find(".menu").get(0);
             $.flow.draggable["node_" + nodeId].snap = {step: 20};
             $.flow.draggable["node_" + nodeId].autoScroll = true;
+
+            $.flow.draggable["node_" + nodeId].onDragStart = () => {
+                nodeEl.startX = $node.position().left;
+                nodeEl.startY = $node.position().top;
+
+                if ($.flow.selectedNodes.length > 1) {
+                    $.flow.selectedNodes.forEach((id) => {
+                        if (id === nodeId)
+                            return;
+                        let $selectedNode = $("#node_" + id);
+                        let selectedNodeEl = $selectedNode.get(0);
+                        selectedNodeEl.startX = $selectedNode.position().left;
+                        selectedNodeEl.startY = $selectedNode.position().top;
+                    })
+                }
+            };
+
             $.flow.draggable["node_" + nodeId].onDrag = () => {
+                nodeEl.distanceX = $node.position().left - nodeEl.startX;
+                nodeEl.distanceY = $node.position().top - nodeEl.startY;
+                if ($.flow.selectedNodes.length > 1) {
+                    $.flow.selectedNodes.forEach((id) => {
+                        if (id === nodeId)
+                            return;
+                        let $selectedNode = $("#node_" + id);
+                        $selectedNode[0].style.left = $selectedNode[0].startX + nodeEl.distanceX + "px";
+                        $selectedNode[0].style.top = $selectedNode[0].startY + nodeEl.distanceY + "px";
+                    })
+                }
                 $.flow.updateConnections();
             };
 
             $.flow.draggable["node_" + nodeId].onDragEnd = () => {
                 node._x = $(nodeEl).position().left;
                 node._y = $(nodeEl).position().top;
+
+                if ($.flow.selectedNodes.length > 1) {
+                    $.flow.selectedNodes.forEach((id) => {
+                        if (id === nodeId)
+                            return;
+                        let selectedNode = board.getNodeById(id);
+
+                        let $selectedNode = $("#node_" + id);
+                        selectedNode._x = $selectedNode.position().left;
+                        selectedNode._y = $selectedNode.position().top;
+                    })
+                }
+
                 Events.register(EventType.updateNode, node);
             };
 
@@ -624,7 +667,30 @@ import {Connection} from "../Classes/Connection.js";
         getNodeById: (nodeId) => {
             let board = $.flow.getSelectedBoard();
             return board.getNodeById(nodeId);
+        },
+
+
+        addToSelectedNodes: function (nodeId, multi = false) {
+            if (multi) {
+                if ($.flow.selectedNodes.indexOf(nodeId) < 0) {
+                    $.flow.selectedNodes.unshift(nodeId);
+                }
+
+            } else {
+                $.flow.selectedNodes = [];
+                $.flow.selectedNodes.unshift(nodeId);
+            }
+
+            Events.register(EventType.selectNode, {selectedNodeId: nodeId});
+        },
+
+        removeFromSelectedNodes: function (nodeId = null) {
+            if (nodeId)
+                $.flow.selectedNodes.delete(nodeId);
+            else
+                $.flow.selectedNodes = [];
         }
+
     };
 
 

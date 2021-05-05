@@ -40,9 +40,10 @@ export class Drawer {
                 boardGroup: board._group
             });
 
-            $(content).on("click", () => {
+            $(content).on("click", (e) => {
                 console.debug(board._id);
                 flowApp.flow.selectBoard(board._id);
+                e.stopPropagation();
             });
 
             $(flowApp.ui.placeholders.boardList).append(content);
@@ -163,18 +164,23 @@ export class Drawer {
         $.flow.makeNodeDraggableAndLinkable(node._id, {leftTop: true});
 
         $node.on("mouseup", (e) => {
-            $(this.flowApp.ui.placeholders.board).find(".node").removeClass("selected");
+            let isMulti = $.flow.metaKeys.indexOf("Shift") >= 0;
+            if (!isMulti)
+                $(this.flowApp.ui.placeholders.board).find(".node").removeClass("selected");
             $node.addClass("selected");
             let nodeId = $node.data("node-id");
-            board.addToSelectedNodes(nodeId);
+            $.flow.addToSelectedNodes(nodeId, isMulti);
         });
 
         $(this.flowApp.ui.placeholders.board).off("mousedown.nodes").on("mousedown.nodes", (e) => {
+
+            if($(e.target).parents(".node").length)
+                return;
+
             $(this.flowApp.ui.placeholders.board).find(".node").removeClass("selected");
-            let nodeId = $node.data("node-id");
-            let board = this.flowApp.flow.getBoardById(this.flowApp.flow._selectedBoardId);
-            board.removeFromSelectedNodes();
-            //e.stopPropagation();
+            // let nodeId = $node.data("node-id");
+            // let board = this.flowApp.flow.getBoardById(this.flowApp.flow._selectedBoardId);
+            $.flow.removeFromSelectedNodes();
         });
     }
 
@@ -216,6 +222,10 @@ export class Drawer {
     drawSelection(e) {
 
         if (e.type === "mousedown") {
+
+            if ($(e.target).parents(".node").length)
+                return;
+
             $("#selection").remove();
 
             let selection = $("<div>").attr({id: "selection"});
@@ -272,18 +282,15 @@ export class Drawer {
             let nodeBottomX = nodeTopX + $node.width();
             let nodeBottomY = nodeTopY + $node.height();
 
-            // console.debug("X", nodeTopX, selectionTopX, drawingAreaX);
-            // console.debug("Y", nodeTopY, selectionTopY, drawingAreaY);
             if ((nodeTopX > selectionTopX && nodeTopY > selectionTopY)
-                && (nodeBottomX < selectionBottomX && nodeBottomY < selectionBottomY)){
-                // console.debug("#node_" + node._id, $node.width(), $node.height());
+                && (nodeBottomX < selectionBottomX && nodeBottomY < selectionBottomY)) {
                 $node.addClass("selected");
                 let nodeId = $node.data("node-id");
-                board.addToSelectedNodes(nodeId);
+                $.flow.addToSelectedNodes(nodeId, true);
             } else {
                 $node.removeClass("selected");
                 let nodeId = $node.data("node-id");
-                board.removeFromSelectedNodes(nodeId);
+                $.flow.removeFromSelectedNodes(nodeId);
             }
         })
 

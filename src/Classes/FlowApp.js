@@ -124,6 +124,7 @@ class FlowApp {
 
         //Select Node
         this.events.on(EventType.selectNode, (e) => {
+           // this.save(this.flow.id);
             //console.debug("selectNode", e.detail);
         });
 

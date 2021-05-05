@@ -8,79 +8,18 @@ import {Node} from "./Node.js";
 import {Events, EventType} from "./Events.js";
 
 class Board {
-	constructor(name, groupName, flowId) {
-		this._id = Util.setUID();
-		this._flowId = flowId;
-		this._name = name;
-		this._date = new Date().getTime();
-		this._x = 0;
-		this._y = 0;
-		this._nodes = [];
-		this._selectedNodes = [];
-		this._group = groupName == "all" ? "Main Group" : groupName;
-		this._connections = [];
-	}
-
-	addNode(type = Type.text, position = null) {
-		let n = new Node(this.id, type);
-
-		if (position != null) {
-			let startX = $(flowApp.ui.placeholders.board).offset().left;
-			let startY = $(flowApp.ui.placeholders.board).offset().top;
-			n._x = position._x - startX;
-			n._y = position._y - startY;
-		}
-
-		this._nodes.push(n);
-		Events.register(EventType.addNode, n);
-		return n;
-	}
-
-	getNodeById(id) {
-		let n = null;
-		this.nodes.forEach((node) => {
-			if (node._id === id) {
-				n = node;
-			}
-		});
-		return n;
-	}
-
-	deleteNodeById(id) {
-		let node = this.getNodeById(id);
-		if (node != null)
-			this.nodes.delete(node);
-
-		Events.register(EventType.deleteNode, null);
-	}
-
-	addToSelectedNodes(nodeId, multi = false) {
-		if (multi)
-			this._selectedNodes.unshift(nodeId);
-		else {
-			this._selectedNodes = [];
-			this._selectedNodes[0] = nodeId;
-		}
-
-		Events.register(EventType.selectNode, {selectedNodeId: nodeId});
-	}
-
-	removeFromSelectedNodes(nodeId = null) {
-		if (nodeId)
-			this._selectedNodes.delete(nodeId);
-		else
-			this._selectedNodes = [];
-	}
-
-	getConnectionsByNodeId(nodeId) {
-		let connections = [];
-		this.connections.forEach((connection) => {
-			if (connection._from === nodeId || connection._to === nodeId)
-				connections.push(connection);
-		});
-		return connections;
-	}
-
+    constructor(name, groupName, flowId) {
+        this._id = Util.setUID();
+        this._flowId = flowId;
+        this._name = name;
+        this._date = new Date().getTime();
+        this._x = 0;
+        this._y = 0;
+        this._nodes = [];
+        this._selectedNodes = [];
+        this._group = groupName == "all" ? "Main Group" : groupName;
+        this._connections = [];
+    }
 
     get connections() {
         return this._connections;
@@ -124,6 +63,48 @@ class Board {
 
     set nodes(value) {
         this._nodes.unshift(value);
+    }
+
+    addNode(type = Type.text, position = null) {
+        let n = new Node(this.id, type);
+
+        if (position != null) {
+            let startX = $(flowApp.ui.placeholders.board).offset().left;
+            let startY = $(flowApp.ui.placeholders.board).offset().top;
+            n._x = position._x - startX;
+            n._y = position._y - startY;
+        }
+
+        this._nodes.push(n);
+        Events.register(EventType.addNode, n);
+        return n;
+    }
+
+    getNodeById(id) {
+        let n = null;
+        this.nodes.forEach((node) => {
+            if (node._id === id) {
+                n = node;
+            }
+        });
+        return n;
+    }
+
+    deleteNodeById(id) {
+        let node = this.getNodeById(id);
+        if (node != null)
+            this.nodes.delete(node);
+
+        Events.register(EventType.deleteNode, null);
+    }
+
+    getConnectionsByNodeId(nodeId) {
+        let connections = [];
+        this.connections.forEach((connection) => {
+            if (connection._from === nodeId || connection._to === nodeId)
+                connections.push(connection);
+        });
+        return connections;
     }
 
 }
