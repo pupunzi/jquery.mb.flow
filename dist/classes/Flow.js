@@ -146,16 +146,13 @@ class Flow {
 	deleteBoard(boardId) {
 		let board = this.getBoardById(boardId);
 		if (board != null) {
-
 			for (let i = 0; i < this.boards.length; i++) {
 				if (this.boards[i]._id === board._id) {
 					this.boards.splice(i, 1);
 					i--;
 				}
 			}
-
 			Events.register(EventType.deleteBoard, {});
-
 		} else {
 			alert("No Board found")
 		}

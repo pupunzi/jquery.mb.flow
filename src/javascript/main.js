@@ -110,7 +110,7 @@ import {Connection} from "../Classes/Connection.js";
                         x: e.clientX,
                         y: e.clientY,
                     };
-                } else {
+                } else if ($.flow.metaKeys.indexOf("Shift") >= 0){
                     //make selection
                     flowApp.drawer.drawSelection(e)
                 }
@@ -122,20 +122,20 @@ import {Connection} from "../Classes/Connection.js";
                         const dy = e.clientY - pos.y;
                         $(drawingArea).css({left: pos.left + dx, top: pos.top + dy});
                         $.flow.updateConnections();
-                    } else {
+                    } else if ($.flow.metaKeys.indexOf("Shift") >= 0){
                         flowApp.drawer.drawSelection(e)
                     }
 
                 }).one("mouseup", (e) => {
-                    flowApp.drawer.drawSelection(e);
+                    if ($.flow.metaKeys.indexOf("Shift") >= 0) {
+                        flowApp.drawer.drawSelection(e);
+                        drawingArea[0].style.cursor = 'default';
+                        let board = $.flow.getSelectedBoard();
+                        board._x = parseFloat($(drawingArea).css("left"));
+                        board._y = parseFloat($(drawingArea).css("top"));
 
-                    drawingArea[0].style.cursor = 'default';
-                    let board = $.flow.getSelectedBoard();
-                    board._x = parseFloat($(drawingArea).css("left"));
-                    board._y = parseFloat($(drawingArea).css("top"));
-
-                    Events.register(EventType.updateBoard, board);
-
+                        Events.register(EventType.updateBoard, board);
+                    }
                     $("#draw-area").off("mousemove");
                 });
             });
