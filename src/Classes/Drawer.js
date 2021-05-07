@@ -74,12 +74,13 @@ export class Drawer {
 
     drawBoard() {
         let selectedBoardId = this.flowApp.flow.selectedBoardId;
+
         if (selectedBoardId === null)
             return;
 
         let selectedBoard = this.flowApp.flow.getBoardById(selectedBoardId);
 
-        $("#draw-area").css({left: selectedBoard._x, top: selectedBoard._y});
+        $(this.flowApp.ui.placeholders.board).css({left: selectedBoard._x, top: selectedBoard._y});
 
         //If there are no nodes in this board create one
         if (selectedBoard._nodes.length === 0) {
@@ -164,9 +165,10 @@ export class Drawer {
         $.flow.makeNodeDraggableAndLinkable(node._id, {leftTop: true});
 
         $node.on("mouseup", (e) => {
-            let isMulti = $.flow.metaKeys.indexOf("Shift") >= 0;
-            if (!isMulti)
+            let isMulti = $.flow.metaKeys.indexOf("Shift") >= 0 || $.flow.selectedNodes.length > 1;
+            if (!isMulti) {
                 $(this.flowApp.ui.placeholders.board).find(".node").removeClass("selected");
+            }
             $node.addClass("selected");
             let nodeId = $node.data("node-id");
             $.flow.addToSelectedNodes(nodeId, isMulti);
@@ -174,7 +176,7 @@ export class Drawer {
 
         $(this.flowApp.ui.placeholders.board).off("mousedown.nodes").on("mousedown.nodes", (e) => {
 
-            if($(e.target).parents(".node").length)
+            if ($(e.target).parents(".node").length)
                 return;
 
             $(this.flowApp.ui.placeholders.board).find(".node").removeClass("selected");
@@ -268,15 +270,15 @@ export class Drawer {
     checkForSelectedNode(topLeft, bottomRight) {
         let board = $.flow.selectedBoard();
         let nodes = board._nodes;
-        let drawingAreaX = parseFloat($(this.flowApp.ui.placeholders.drawingArea).css("left"));
-        let drawingAreaY = parseFloat($(this.flowApp.ui.placeholders.drawingArea).css("top"));
+        let drawingAreaX = parseFloat($(this.flowApp.ui.placeholders.board).css("left"));
+        let drawingAreaY = parseFloat($(this.flowApp.ui.placeholders.board).css("top"));
         let selectionTopX = topLeft.x + drawingAreaX;
         let selectionTopY = topLeft.y + drawingAreaY;
         let selectionBottomX = bottomRight.x + drawingAreaX;
         let selectionBottomY = bottomRight.y + drawingAreaY;
 
         nodes.forEach((node) => {
-            let $node = $(this.flowApp.ui.placeholders.drawingArea).find("#node_" + node._id);
+            let $node = $(this.flowApp.ui.placeholders.board).find("#node_" + node._id);
             let nodeTopX = $node.offset().left + drawingAreaX;
             let nodeTopY = $node.offset().top + drawingAreaY;
             let nodeBottomX = nodeTopX + $node.width();

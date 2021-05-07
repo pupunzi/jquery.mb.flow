@@ -525,6 +525,7 @@ html body #wrapper #boards-list-column #boards-list .board-list-element i.icon-d
 }
 html body #wrapper #draw-area {
   position: absolute;
+  overflow: hidden;
   width: calc(100vw);
   height: calc(100vh);
   top: 0;
@@ -542,8 +543,8 @@ html body #wrapper #draw-area #board {
   position: absolute;
   top: 0;
   left: 0;
-  min-width: calc(200vw - 255px);
-  min-height: calc(200vh - 70px);
+  min-width: calc(500vw);
+  min-height: calc(500vh);
 }
 html body #wrapper #draw-area .node {
   position: absolute;
