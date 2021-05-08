@@ -128,6 +128,12 @@ class Flow {
 		Events.register(EventType.duplicatedBoard, board);
 	}
 
+	moveBoardToGroup(boardId, groupName){
+		let board = this.getBoardById(boardId);
+		console.debug("Board", board._name)
+		board._group = groupName;
+	}
+
 	selectBoard(boardId) {
 		this.selectedBoardId = boardId;
 		Events.register(EventType.selectBoard, this.selectedBoardId);

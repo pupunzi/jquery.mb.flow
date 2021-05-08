@@ -343,6 +343,7 @@ html i.icon.menu {
   color: rgba(255, 255, 255, 0.3);
 }
 html button {
+  vertical-align: text-bottom;
   text-transform: uppercase;
   font-size: 80%;
   min-width: 75px;
@@ -532,12 +533,25 @@ html body #wrapper #draw-area {
   left: 0;
   zoom: 1;
 }
-html body #wrapper #draw-area #connections {
+html body #wrapper #draw-area #grid {
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
+  margin: auto;
+}
+html body #wrapper #draw-area #grid .hline {
+  position: absolute;
+  border-top: 1px dotted rgba(115, 159, 115, 0.2);
+  width: 100%;
+  height: 1px;
+}
+html body #wrapper #draw-area #grid .vline {
+  position: absolute;
+  border-left: 1px dotted rgba(115, 159, 115, 0.2);
+  height: 100%;
+  width: 1px;
 }
 html body #wrapper #draw-area #board {
   position: absolute;
@@ -604,6 +618,8 @@ html body #wrapper #draw-area .node .node-content .node-content-line .node-text 
   position: relative;
   width: 100%;
   height: 100%;
+  max-height: 100px;
+  overflow: auto;
   background-color: rgba(255, 255, 255, 0.1);
   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
   font-size: 13px;
@@ -656,16 +672,22 @@ html body #wrapper #draw-area .node[data-type="text"] .node-content-line {
 }
 html body #wrapper #draw-area .node[data-type="choice"] {
   width: 250px;
-  background-color: #739f73;
+  background-color: #6e0d3f;
   top: 40px;
   left: 40px;
+}
+html body #wrapper #draw-area .node[data-type="choice"] i.icon {
+  color: #ffffff;
 }
 html body #wrapper #draw-area .node[data-type="choice"] .node-content .node-content-line {
   position: relative;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   padding: 5px;
+  color: #ffffff;
 }
 html body #wrapper #draw-area .node[data-type="choice"] .node-content .node-content-line .node-text {
+  max-height: 100px;
+  overflow: auto;
   background-color: rgba(255, 255, 255, 0.1);
   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
 }
@@ -696,6 +718,9 @@ html body #wrapper #draw-area .node[data-type="condition"] {
 }
 html body #wrapper #draw-area .node[data-type="condition"] .menu {
   background-color: transparent;
+}
+html body #wrapper #draw-area .node[data-type="condition"] i.icon {
+  color: #ffffff;
 }
 html body #wrapper #draw-area .node[data-type="condition"] .variables {
   font-family: monospace;
@@ -815,6 +840,13 @@ html .contextual-menu ul li.separator:hover {
 }
 html .contextual-menu ul li.alert {
   color: #a73a3a;
+}
+html .contextual-menu ul li.listTitle {
+  color: #656565;
+  cursor: default;
+}
+html .contextual-menu ul li.listTitle:hover {
+  background-color: transparent;
 }
 html .contextual-menu ul li.listElement {
   color: #d5c8a6;

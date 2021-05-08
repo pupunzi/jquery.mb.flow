@@ -70,6 +70,23 @@ export class Drawer {
 
         $.flow.showBoardsByGroup(flowApp.flow.selectedBoardGroup);
         this.drawBoard();
+        this.drawGrid();
+    }
+
+    drawGrid() {
+        let grid = 70;
+        let gridN = $(window).width() / grid;
+        $(this.flowApp.ui.placeholders.grid).empty();
+
+        for (let i = 0; i < gridN; i++) {
+            let vline = $("<div>").addClass("vline");
+            vline.css({left: grid * i});
+            $(this.flowApp.ui.placeholders.grid).append(vline);
+
+            let hline = $("<div>").addClass("hline");
+            hline.css({top: grid * i});
+            $(this.flowApp.ui.placeholders.grid).append(hline);
+        }
     }
 
     drawBoard() {
@@ -134,6 +151,7 @@ export class Drawer {
             boardGroup: board._group,
             connectionsCount: node._connections.length
         });
+
         $(this.flowApp.ui.placeholders.board).append(nodeEl);
 
         node._connections.forEach((connection) => {
@@ -186,37 +204,37 @@ export class Drawer {
         });
     }
 
-    drawConnection(connection, opt = null) {
+    drawConnection(connection, opt = {}) {
+        let option = {
+            element: $(this.flowApp.ui.placeholders.board).get(0),
+            color: 'gray',
+            size: 3,
+            path: "fluid",
+            startPlug: 'square',
+            dash: {animation: true}
+        };
 
-        if (opt == null)
-            opt = {
-                element: $(this.flowApp.ui.placeholders.board).get(0),
-                color: 'gray',
-                size: 3,
-                path: "fluid",
-                startPlug: 'square',
-                dash: {animation: true}
-            };
+        $.extend(option,opt);
 
-        let drawArea = this.flowApp.ui.placeholders.board;
+        let board = this.flowApp.ui.placeholders.board;
         let node = $.flow.getNodeById(connection._from);
-        $(drawArea).find("#node_" + connection._from).attr("data-connections-count", node._connections.length);
+        $(board).find("#node_" + connection._from).attr("data-connections-count", node._connections.length);
 
         let fromNode = null;
-        if (connection._nodeElementId != null && node._type !== Type.text) {
-            fromNode = $(drawArea).find("[data-node-element-id=\"" + connection._nodeElementId + "\"] .anchor");
+
+        if (connection._nodeElementId !== undefined) { //&& node._type !== Type.text && node._type !== Type.note
+            fromNode = $(board).find("[data-node-element-id=\"" + connection._nodeElementId + "\"] .anchor");
         } else {
-            fromNode = $(drawArea).find("#node_" + connection._from);
+            fromNode = $(board).find("#node_" + connection._from);
         }
-        let toNode = $(drawArea).find("#node_" + connection._to);
+        let toNode = $(board).find("#node_" + connection._to);
 
         let line = null;
+
         if (fromNode.get(0) != null && toNode.get(0) != null) {
-            line = $.flow.LeaderLine(fromNode, toNode, opt);
+            line = $.flow.LeaderLine(fromNode, toNode, option);
         }
         connection._connectionLine = line;
-
-        //$("svg").appendTo(this.flowApp.ui.placeholders.connections);
 
         return line;
     }

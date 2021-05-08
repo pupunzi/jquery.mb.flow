@@ -5,175 +5,177 @@
  **/
 
 export class Menu {
-	constructor(target, items, alignLeft = false) {
-		this._target = target;
-		this._items = items;
-		this._isOpening = false;
-		this._alignLeft = alignLeft;
+    constructor(target, items, alignLeft = false) {
+        this._target = target;
+        this._items = items;
+        this._isOpening = false;
+        this._alignLeft = alignLeft;
 
-		this.init();
-	}
+        this.init();
+    }
 
-	set items(value) {
-		this._items = value;
-	}
+    set items(value) {
+        this._items = value;
+    }
 
-	get alignLeft() {
-		return this._alignLeft;
-	}
+    get alignLeft() {
+        return this._alignLeft;
+    }
 
-	init() {
-		$("body").on("click.flow", this._target, (e) => {
-			e.preventDefault();
-			e.stopPropagation();
+    init() {
+        $("body").on("click.flow", this._target, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
 
-			this.show(e);
+            this.show(e);
 
-			$("body").on("click.flow", (e) => {
-				if ($(e.target).parents(".contextual-menu").length || this._isOpening)
-					return;
-				let menu = $(".contextual-menu");
-				menu.fadeOut(0, () => {
-					menu.remove();
-				});
-				e.preventDefault();
-				e.stopPropagation();
-			});
-		});
-	}
+            $("body").on("click.flow", (e) => {
+                if ($(e.target).parents(".contextual-menu").length || this._isOpening)
+                    return;
+                let menu = $(".contextual-menu");
+                menu.fadeOut(0, () => {
+                    menu.remove();
+                });
+                e.preventDefault();
+                e.stopPropagation();
+            });
+        });
+    }
 
-	show(e) {
-		$(".contextual-menu").remove();
-		this._isOpening = true;
-		this.hide(false);
-		let menu = $("<menu>").addClass("contextual-menu").attr("data-target", this._target);
-		let itemsContsiner = $("<ul>");
+    show(e) {
+        $(".contextual-menu").remove();
+        this._isOpening = true;
+        this.hide(false);
+        let menu = $("<menu>").addClass("contextual-menu").attr("data-target", this._target);
+        let itemsContsiner = $("<ul>");
 
-		let i = typeof this._items == "function" ? this._items() : this._items;
+        let i = typeof this._items == "function" ? this._items(e.target) : this._items;
 
-		i.forEach((item) => {
-			let line = $("<li>").addClass("contextual-menu-item");
+        i.forEach((item) => {
+            let line = $("<li>").addClass("contextual-menu-item");
 
-			if (item.className)
-				line.addClass(item.className);
+            if (item.className)
+                line.addClass(item.className);
 
-			if (!item.name) {
-				line.addClass("separator");
-			} else {
-				line.html(item.name);
-				line.on("click", () => {
-					item.fn(e.target, e);
-					this.hide();
-				});
-			}
-			itemsContsiner.append(line);
-		});
+            if (!item.name) {
+                line.addClass("separator");
+            } else {
+                line.html(item.name);
+                if (item.fn)
+                    line.on("click", () => {
+                        item.fn(e.target, e);
+                        this.hide();
+                    });
+            }
+            itemsContsiner.append(line);
+        });
 
 
-		menu.append(itemsContsiner);
-		menu.fadeOut(0);
-		$("body").after(menu);
+        menu.append(itemsContsiner);
+        menu.fadeOut(0);
+        $("body").after(menu);
 
-		let left = this.alignLeft ? $(e.target).offset().left : $(e.target).offset().left - menu.width() + 30;
-		menu.css({
-			position: "absolute",
-			top     : $(e.target).offset().top,
-			left    : left
-		});
+        let left = this.alignLeft ? $(e.target).offset().left : $(e.target).offset().left - menu.width() + 30;
+        menu.css({
+            position: "absolute",
+            top: $(e.target).offset().top,
+            left: left
+        });
 
-		menu.fadeIn(200, () => {
-			this._isOpening = false;
-		});
-	}
+        menu.fadeIn(200, () => {
+            this._isOpening = false;
+        });
+    }
 
-	hide(transition = true) {
-		$("body").off("click.contextual");
-		let menu = $(".contextual-menu[data-target='"+ this._target+ "']");
-		let t = transition ? 200 : 0;
-		menu.fadeOut(t, () => {
-			menu.remove();
-		});
-	}
+    hide(transition = true) {
+        $("body").off("click.contextual");
+        let menu = $(".contextual-menu[data-target='" + this._target + "']");
+        let t = transition ? 200 : 0;
+        menu.fadeOut(t, () => {
+            menu.remove();
+        });
+    }
 }
 
 export class ContextualMenu {
-	constructor(target, items, alignLeft = false) {
-		this._target = target;
-		this._items = items;
-		this._isOpening = false;
-		this._alignLeft = alignLeft;
+    constructor(target, items, alignLeft = false) {
+        this._target = target;
+        this._items = items;
+        this._isOpening = false;
+        this._alignLeft = alignLeft;
 
-		this.init();
-	}
+        this.init();
+    }
 
-	init() {
+    init() {
 
-		$("body").on("contextmenu.flow", this._target, (e) => {
-			e.preventDefault();
-			e.stopPropagation();
-			this.show(e);
+        $("body").on("contextmenu.flow", this._target, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.show(e);
 
-			$("body").on("click.flow, contextmenu.flow", (e) => {
-				if ($(e.target).parents(".contextual-menu").length || this._isOpening)
-					return;
-				let menu = $(".contextual-menu");
-				menu.fadeOut(0, () => {
-					menu.remove();
-				});
-			});
-		});
-	}
+            $("body").on("click.flow, contextmenu.flow", (e) => {
+                if ($(e.target).parents(".contextual-menu").length || this._isOpening)
+                    return;
+                let menu = $(".contextual-menu");
+                menu.fadeOut(0, () => {
+                    menu.remove();
+                });
+            });
+        });
+    }
 
-	show(e) {
-		$(".contextual-menu").remove();
-		this._isOpening = true;
-		this.hide(false);
-		let menu = $("<menu>").addClass("contextual-menu").attr("data-target", this._target);
-		let itemsContsiner = $("<ul>");
+    show(e) {
+        $(".contextual-menu").remove();
+        this._isOpening = true;
+        this.hide(false);
+        let menu = $("<menu>").addClass("contextual-menu").attr("data-target", this._target);
+        let itemsContsiner = $("<ul>");
 
-		let i = typeof this._items == "function" ? this._items() : this._items;
+        let i = typeof this._items == "function" ? this._items(e.target) : this._items;
 
-		i.forEach((item) => {
-			let line = $("<li>").addClass("contextual-menu-item");
+        i.forEach((item) => {
+            let line = $("<li>").addClass("contextual-menu-item");
 
-			if (item.className)
-				line.addClass(item.className);
+            if (item.className)
+                line.addClass(item.className);
 
-			if (!item.name) {
-				line.addClass("separator");
-			} else {
-				line.html(item.name);
-				line.on("click", () => {
-					item.fn(e.target, e);
-					this.hide();
-				});
-			}
-			itemsContsiner.append(line);
-		});
+            if (!item.name) {
+                line.addClass("separator");
+            } else {
+                line.html(item.name);
+                if (item.fn)
+                    line.on("click", (e) => {
+                        item.fn(e.target, e);
+                        this.hide();
+                    });
+            }
+            itemsContsiner.append(line);
+        });
 
-		menu.append(itemsContsiner);
-		menu.fadeOut(0);
-		$("body").after(menu);
+        menu.append(itemsContsiner);
+        menu.fadeOut(0);
+        $("body").after(menu);
 
-		let left = this._alignLeft ? e.clientX : e.clientX - menu.width() + 30;
+        let left = this._alignLeft ? e.clientX : e.clientX - menu.width() + 30;
 
-		menu.css({
-			position: "absolute",
-			left: left,
-			top: e.clientY
-		});
+        menu.css({
+            position: "absolute",
+            left: left,
+            top: e.clientY
+        });
 
-		menu.fadeIn(200, () => {
-			this._isOpening = false;
-		});
-	}
+        menu.fadeIn(200, () => {
+            this._isOpening = false;
+        });
+    }
 
-	hide(transition = true) {
-		$("body").off("click.contextual");
-		let menu = $(".contextual-menu[data-target='"+ this._target+ "']");
-		let t = transition ? 200 : 0;
-		menu.fadeOut(t, () => {
-			menu.remove();
-		});
-	}
+    hide(transition = true) {
+        $("body").off("click.contextual");
+        let menu = $(".contextual-menu[data-target='" + this._target + "']");
+        let t = transition ? 200 : 0;
+        menu.fadeOut(t, () => {
+            menu.remove();
+        });
+    }
 }

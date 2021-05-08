@@ -49,6 +49,7 @@ html {
   }
 
   button {
+    vertical-align: text-bottom;
     text-transform: uppercase;
     font-size: 80%;
     min-width: 75px;
@@ -269,12 +270,27 @@ html {
         left: 0;
         zoom: 1;
 
-        #connections {
+        #grid {
           position: fixed;
           top: 0;
           bottom: 0;
           left: 0;
           right: 0;
+          margin: auto;
+
+          .hline {
+            position: absolute;
+            border-top: 1px dotted rgba(115, 159, 115, 0.2);
+            width: 100%;
+            height: 1px;
+          }
+
+          .vline {
+            position: absolute;
+            border-left: 1px dotted rgba(115, 159, 115, 0.2);
+            height: 100%;
+            width: 1px;
+          }
         }
 
         #board {
@@ -354,6 +370,8 @@ html {
                 position: relative;
                 width: 100%;
                 height: 100%;
+                max-height: 100px;
+                overflow: auto;
                 background-color: fade(#ffffff, 10%);
                 box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
                 font-size: 13px;
@@ -416,18 +434,25 @@ html {
 
           &[data-type="choice"] {
             width: 250px;
-            background-color: #739f73;
+            background-color: #6e0d3f;
             //border-radius: 10px;
             top: 40px;
             left: 40px;
+
+            i.icon {
+              color: #ffffff;
+            }
 
             .node-content {
               .node-content-line {
                 position: relative;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.2);
                 padding: 5px;
+                color: #ffffff;
 
                 .node-text {
+                  max-height: 100px;
+                  overflow: auto;
                   background-color: fade(#ffffff, 10%);
                   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
                 }
@@ -466,6 +491,10 @@ html {
 
             .menu {
               background-color: transparent;
+            }
+
+            i.icon {
+              color: #ffffff;
             }
 
             .variables {
@@ -618,6 +647,15 @@ html {
 
         &.alert {
           color: @alert-font-color;
+        }
+
+        &.listTitle {
+          color: lighten(@main-color, 20%);
+          cursor: default;
+
+          &:hover {
+            background-color: transparent;
+          }
         }
 
         &.listElement {

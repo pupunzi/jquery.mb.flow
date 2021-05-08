@@ -10,8 +10,9 @@ class UI {
             flowName: "#top-bar #flow-name-placeholder",
             boardListButtonBar: "#boards-list-button-bar",
             boardList: "#boards-list",
-            board: "#board",
             drawingArea: "#draw-area",
+            grid:"#grid",
+            board: "#board",
             connections: "#connections",
             boardGroupName: ".group-label .name"
         };
@@ -103,6 +104,8 @@ class UI {
     }
 
     static fillTemplate(templateId, data) {
+        if($("#" + templateId).length===0)
+            return "";
         return $("#" + templateId).get(0).innerHTML.replace(/{{(\w*)}}/g, function (m, key) {
             return data.hasOwnProperty(key) ? data[key] : "";
         });

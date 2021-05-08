@@ -9,14 +9,14 @@ export class KeyboardListener {
     }
 
     init() {
-        $(window).on("keydown", (e) => {
+        $(document).on("keydown.keyboard", (e) => {
             $.flow.metaKeys.push(e.key);
         }).on("keyup", () => {
             $.flow.metaKeys = [];
         });
-
         $(window).on("blur",()=>{
             $.flow.metaKeys = [];
+            $(".node").draggable("enable");
         });
     }
 }

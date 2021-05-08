@@ -11,8 +11,6 @@
   <div id="logo"><img src="assets/images/logo.png"></div>
   <div id="flow-name-placeholder"><h1>Flow Name</h1></div>
   <div id="flows-button-bar">
-    <button class="" id="openActors" onclick=""><i class="icon icon-meh-o"></i>Actors</button>
-    <button class="" id="openVariables" onclick=""><i class="icon icon-code"></i>Variables</button>
     <button class="main" id="openFlow" onclick="$.flow.openFlow()"><i class="icon icon-folder"></i>Open</button>
     <button class="main" id="newFlow" onclick="$.flow.addFlow()"><i class="icon icon-plus"></i>New</button>
   </div>
@@ -28,7 +26,7 @@
   </div>
 
   <div id="draw-area">
-    <div id="connections"></div>
+    <div id="grid"></div>
     <div id="board"></div>
   </div>
 
@@ -49,6 +47,8 @@
     <div data-flow-id="{{id}}">
         <h1 id="flow_{{id}}" class="name">{{flowName}}</h1>
         <i class="icon icon-ellipsis-v flows-menu menu"></i>
+        <button class="" id="openActors" onclick=""><i class="icon icon-meh-o"></i>Actors</button>
+        <button class="" id="openVariables" onclick=""><i class="icon icon-code"></i>Variables</button>
     </div>
 </template>
 

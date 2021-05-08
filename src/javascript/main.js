@@ -14,6 +14,9 @@ import {Connection} from "../Classes/Connection.js";
 (function ($, d) {
     $(() => {
 
+        //Init keys listener
+        window.KeyListener = new KeyboardListener();
+        //Init Flow App
         window.flowApp = new FlowApp();
 
         // get last flow opened on previous session
@@ -32,181 +35,77 @@ import {Connection} from "../Classes/Connection.js";
      * Flow methods
      * ---------------------------------------------------- */
     $.flow = {
-        flowApp: () => {
-            return flowApp;
-        },
-        selectedBoard: () => {
-            return flowApp.flow.getBoardById(flowApp.flow._selectedBoardId)
-        },
-
-        global: {},
-
         metaKeys: [],
         draggable: [],
         areaSize: {},
         selectedNodes: [],
-
-        init: () => {
-
-            $("body").on("keypress", "[contenteditable]", (e) => {
-
-                switch (e.key) {
-                    case "Enter":
-                        if ($(e.target).parents(".node").length > 0) {
-                            $.flow.updateConnections();
-                            if ($.flow.metaKeys.indexOf("Shift") < 0) {
-                                e.preventDefault();
-                                $(e.target).blur();
-                            }
-
-                            return;
-                        }
-
-                        e.preventDefault();
-                        $(e.target).blur();
-                        break;
-                    case "Backspace":
-                        if ($(e.target).parents(".node").length > 0) {
-                            $.flow.updateConnections();
-                            return;
-                        }
-                        break;
-                }
-            });
-
-            $(window).on("keydown", (e) => {
-                if (e.key === "Meta") {
-                    $(".node").draggable("disable");
-
-                    switch (e.key) {
-                        case "0":
-                            e.preventDefault();
-                            // boardArea[0].style.zoom = 1;
-                            //$("svg").appendTo("body");
-                            break;
-                        case "-":
-                            e.preventDefault();
-                            //boardArea[0].style.zoom -= .1;
-                            //$("svg").appendTo(flowApp.ui.placeholders.connections);
-                            break;
-                        case "+":
-                            e.preventDefault();
-                            //boardArea[0].style.zoom = 1;
-                            //$("svg").appendTo("body");
-                            break;
-                    }
-                }
-            }).on("keyup", ()=>{
-                $(".node").draggable("enable");
-            });
-
-            let boardArea = $(flowApp.ui.placeholders.board);
-            boardArea[0].style.zoom = 1;
-            let pos = {};
-            $("body").on("mousedown.drag", (e) => {
-
-                if ($(e.target).parents(".node").length)
-                    return;
-
-                if ($.flow.metaKeys.indexOf("Meta") >= 0) {
-                    $("body").css("cursor", "grab");
-                    pos = {
-                        left: boardArea.position().left,
-                        top: boardArea.position().top,
-                        x: e.clientX,
-                        y: e.clientY,
-                    };
-                } else if ($.flow.metaKeys.indexOf("Shift") >= 0) {
-                    //make selection
-                    flowApp.drawer.drawSelection(e)
-                }
-
-                $("body").on("mousemove.drag", (e) => {
-
-                    if ($(e.target).parents(".node").length)
-                        return;
-
-                    if ($.flow.metaKeys.indexOf("Meta") >= 0) {
-                        $("body").css("cursor", "grabbing");
-                        const dx = e.clientX - pos.x;
-                        const dy = e.clientY - pos.y;
-                        boardArea.css({left: pos.left + dx, top: pos.top + dy});
-                        $.flow.updateConnections();
-                    } else if ($.flow.metaKeys.indexOf("Shift") >= 0) {
-                        flowApp.drawer.drawSelection(e)
-                    }
-                }).one("mouseup.drag", (e) => {
-                    flowApp.drawer.drawSelection(e);
-                    $("body").css("cursor", "default");
-                    let board = $.flow.getSelectedBoard();
-                    board._x = parseFloat(boardArea.css("left"));
-                    board._y = parseFloat(boardArea.css("top"));
-                    Events.register(EventType.updateBoard, board);
-                    $("body").off("mousemove.drag");
-                });
-            });
-
-            //Init Menu
-            window.flows_menu = new Menu(".flows-menu", $.flow.contextualMenu.flows, true);
-            window.board_list_element_menu = new Menu(".board-list-element-menu", $.flow.contextualMenu.boardListElement);
-            window.boards_groups = new Menu(".boards-group-menu", $.flow.contextualMenu.boardsGroups, true);
-            window.node_menu = new Menu(".node-menu", $.flow.contextualMenu.nodeMenu, true);
-
-            //Init Contextual menu
-            window.board_contextual_menu = new ContextualMenu(flowApp.ui.placeholders.board, $.flow.contextualMenu.board, true);
-            window.node_contextual_menu = new ContextualMenu(".node", $.flow.contextualMenu.node, true);
-            window.variables_contextual_menu = new ContextualMenu(".variables", $.flow.contextualMenu.variables, true);
-
-            //Init keys listener
-            window.KeyListener = new KeyboardListener();
-        },
-
-        setAreaSize: () => {
-
-        },
+        latMousePosition: {},
 
         contextualMenu: {
-            boardListElement: [
-                {
-                    name: 'Rename',
-                    fn: function (target) {
-                        let boardId = $(target).parent().data("board-id");
-                        $.flow.editBoardName(boardId);
+            //Menu
+            boardListElement: (target) => {
+
+                let items = [
+                    {
+                        name: 'Rename',
+                        fn: function (target) {
+                            let boardId = $(target).parent().data("board-id");
+                            $.flow.editBoardName(boardId);
+                        }
+                    },
+                    {
+                        name: 'Duplicate',
+                        fn: function (target) {
+                            let boardId = $(target).parent().data("board-id");
+                            $.flow.duplicateBoard(boardId);
+                        }
+                    },
+                    {
+                        name: 'Export',
+                        fn: function (target) {
+                            let boardId = $(target).parent().data("board-id");
+                            let boardName = $(target).parent().find(".name").text();
+                            console.debug("Export board ", boardId);
+                        }
                     }
-                },
-                {
-                    name: 'Change Group',
-                    fn: function (target) {
-                        let boardId = $(target).parent().data("board-id");
-                        $.flow.moveToGroup(boardId);
-                    }
-                },
-                {
-                    name: 'Duplicate',
-                    fn: function (target) {
-                        let boardId = $(target).parent().data("board-id");
-                        $.flow.duplicateBoard(boardId);
-                    }
-                },
-                {},
-                {
-                    name: 'Export',
-                    className: "highlight",
-                    fn: function (target) {
-                        let boardId = $(target).parent().data("board-id");
-                        let boardName = $(target).parent().find(".name").text();
-                        console.debug("Export board ", boardId);
-                    }
-                },
-                {
+                ];
+                items.push({});
+                items.push({
+                    name: "Move to: ",
+                    className: "listTitle"
+                });
+
+                let boardId = $(target).parent().data("board-id");
+                let board = flowApp.flow.getBoardById(boardId);
+                let groups = flowApp.flow.getBoardsGroupsList();
+                groups.forEach((groupName) => {
+                    if (groupName === board._group)
+                        return;
+
+                    let group = {
+                        name: groupName,
+                        className: "listElement",
+                        fn: function (target) {
+                            $.flow.moveBoardToGroup(boardId, groupName);
+                            let selectedGroup = flowApp.flow.selectedBoardGroup;
+                            flowApp.drawer.drawBoardList();
+                            $.flow.showBoardsByGroup(selectedGroup);
+                        }
+                    };
+                    items.push(group);
+                });
+                items.push({});
+                items.push({
                     name: 'Delete',
                     className: "alert",
                     fn: function (target) {
                         let boardId = $(target).parent().data("board-id");
                         $.flow.deleteBoard(boardId, target);
                     }
-                },
-            ],
+                },);
+
+                return items;
+            },
             flows: [
                 {
                     name: 'Rename',
@@ -251,7 +150,6 @@ import {Connection} from "../Classes/Connection.js";
             ],
             boardsGroups: () => {
                 let items = [];
-                let groups = flowApp.flow.getBoardsGroupsList();
 
                 let showAll = {
                     name: "Show All",
@@ -264,6 +162,7 @@ import {Connection} from "../Classes/Connection.js";
 
                 items.push({});
 
+                let groups = flowApp.flow.getBoardsGroupsList();
                 groups.forEach((groupName) => {
                     let group = {
                         name: groupName,
@@ -344,7 +243,6 @@ import {Connection} from "../Classes/Connection.js";
                     }
                 },
             ],
-
             variables: () => {
                 let items = [];
                 let variables = flowApp.flow.getBoardsGroupsList();
@@ -422,10 +320,6 @@ import {Connection} from "../Classes/Connection.js";
                     name: 'Delete',
                     className: "alert",
                     fn: function (target, e) {
-
-                        // console.log('Delete', target);
-                        // console.log('Delete', $(target).parents(".node").data("node-id"));
-
                         let nodeId = $(target).parents(".node").data("node-id");
                         if (nodeId != null) {
                             let board = $.flow.selectedBoard();
@@ -436,6 +330,143 @@ import {Connection} from "../Classes/Connection.js";
                 },
             ]
         },
+
+        flowApp: () => {
+            return flowApp;
+        },
+        selectedBoard: () => {
+            return flowApp.flow.getBoardById(flowApp.flow._selectedBoardId)
+        },
+
+        init: () => {
+
+            //Init Menu
+            window.flows_menu = new Menu(".flows-menu", $.flow.contextualMenu.flows, true);
+            window.board_list_element_menu = new Menu(".board-list-element-menu", $.flow.contextualMenu.boardListElement);
+            window.boards_groups = new Menu(".boards-group-menu", $.flow.contextualMenu.boardsGroups, true);
+            window.node_menu = new Menu(".node-menu", $.flow.contextualMenu.nodeMenu, true);
+
+            //Init Contextual menu
+            window.board_contextual_menu = new ContextualMenu(flowApp.ui.placeholders.board, $.flow.contextualMenu.board, true);
+            window.node_contextual_menu = new ContextualMenu(".node", $.flow.contextualMenu.node, true);
+            window.variables_contextual_menu = new ContextualMenu(".variables", $.flow.contextualMenu.variables, true);
+
+            $("body").on("keypress", "[contenteditable]", (e) => {
+
+                switch (e.key) {
+                    case "Enter":
+                        if ($(e.target).parents(".node").length > 0) {
+                            $.flow.updateConnections();
+                            if ($.flow.metaKeys.indexOf("Shift") < 0) {
+                                e.preventDefault();
+                                $(e.target).blur();
+                            }
+
+                            return;
+                        }
+
+                        e.preventDefault();
+                        $(e.target).blur();
+                        break;
+                    case "Backspace":
+                        if ($(e.target).parents(".node").length > 0) {
+                            $.flow.updateConnections();
+                            return;
+                        }
+                        break;
+                }
+            });
+            $(document).on("keydown", (e) => {
+
+                if ($.flow.metaKeys.indexOf("Meta") >= 0) {
+                    $(".node").draggable("disable");
+                    let board = $.flow.selectedBoard();
+                    e.stopPropagation();
+                    switch (e.key) {
+                        case "0":
+                            e.preventDefault();
+                            break;
+                        case "-":
+                            e.preventDefault();
+                            break;
+                        case "+":
+                            e.preventDefault();
+                            break;
+                        case "Backspace":
+                            e.preventDefault();
+                            $.flow.selectedNodes.forEach((id) => {
+                                board.deleteNodeById(id);
+                            });
+                            $.flow.selectedNodes = [];
+                            break;
+                    }
+                }
+
+                if ($.flow.metaKeys.indexOf("Control") >= 0) {
+                    let board = $.flow.selectedBoard();
+                    e.stopPropagation();
+                    switch (e.key) {
+                        case "n":
+                            e.preventDefault();
+                            board.addNode(Type.text, {_x: $.flow.latMousePosition.x, _y: $.flow.latMousePosition.y});
+                            break;
+                    }
+                }
+
+            }).on("keyup", () => {
+                $(".node").draggable("enable");
+            });
+
+            let boardArea = $(flowApp.ui.placeholders.board);
+            boardArea[0].style.zoom = 1;
+            let pos = {};
+            $("body").on("mousedown.drag", (e) => {
+
+                if ($(e.target).parents(".node").length)
+                    return;
+
+                if ($.flow.metaKeys.indexOf("Meta") >= 0) {
+                    $("body").css("cursor", "grab");
+                    pos = {
+                        left: boardArea.position().left,
+                        top: boardArea.position().top,
+                        x: e.clientX,
+                        y: e.clientY,
+                    };
+                } else if ($.flow.metaKeys.indexOf("Shift") >= 0) {
+                    //make selection
+                    flowApp.drawer.drawSelection(e)
+                }
+
+                $("body").on("mousemove.drag", (e) => {
+
+                    $.flow.latMousePosition = {x: e.clientX, y: e.clientY};
+
+                    if ($(e.target).parents(".node").length)
+                        return;
+
+                    if ($.flow.metaKeys.indexOf("Meta") >= 0) {
+                        $("body").css("cursor", "grabbing");
+                        const dx = e.clientX - pos.x;
+                        const dy = e.clientY - pos.y;
+                        boardArea.css({left: pos.left + dx, top: pos.top + dy});
+                        $.flow.updateConnections();
+                    } else if ($.flow.metaKeys.indexOf("Shift") >= 0) {
+                        flowApp.drawer.drawSelection(e)
+                    }
+                }).one("mouseup.drag", (e) => {
+                    flowApp.drawer.drawSelection(e);
+                    $("body").css("cursor", "default");
+                    let board = $.flow.getSelectedBoard();
+                    board._x = parseFloat(boardArea.css("left"));
+                    board._y = parseFloat(boardArea.css("top"));
+                    Events.register(EventType.updateBoard, board);
+                    $("body").off("mousemove.drag");
+                });
+            });
+
+        },
+
         /**
          * Flows Manager
          * */
@@ -449,10 +480,7 @@ import {Connection} from "../Classes/Connection.js";
             };
             UI.dialogue(title, text, "flowName", "Flow Name", null, "Add", "Cancel", action);
         },
-
-        openFlow: () => {
-        },
-
+        openFlow: () => {},
         editFlowName: () => {
             let editEl = $(flowApp.ui.placeholders.flowName).find("h1");
             editEl.attr({contentEditable: true});
@@ -463,7 +491,6 @@ import {Connection} from "../Classes/Connection.js";
                 editEl.attr({contentEditable: false});
             });
         },
-
         deleteFlow: (flowId, target) => {
             let title = "Delete Flow";
             let text = "Are you sure you want to delete<br><b>" + $(target).parent().find(".name").text() + "</b>?";
@@ -480,7 +507,6 @@ import {Connection} from "../Classes/Connection.js";
         getSelectedBoard: () => {
             return flowApp.flow.getBoardById(flowApp.flow.selectedBoardId);
         },
-
         addBoard: () => {
             let title = "Add a new Board";
             let text = null;
@@ -489,11 +515,13 @@ import {Connection} from "../Classes/Connection.js";
             };
             UI.dialogue(title, text, "boardName", "Board Name", null, "Add", "Cancel", action);
         },
-
         duplicateBoard: (boardId) => {
             flowApp.flow.duplicateBoard(boardId);
         },
-
+        moveBoardToGroup: (boardId, groupName) => {
+            flowApp.flow.moveBoardToGroup(boardId, groupName);
+            flowApp.save(flowApp.flow.id);
+        },
         editBoardName: (boardId) => {
             let editEl = $(flowApp.ui.placeholders.boardList).find("#board_" + boardId + " .name");
             editEl.attr({contentEditable: true});
@@ -506,11 +534,6 @@ import {Connection} from "../Classes/Connection.js";
                 flowApp.drawer.drawBoardList();
             });
         },
-
-        moveToGroup: (boardId, target) => {
-            console.log("Mover to Group");
-        },
-
         deleteBoard: (boardId, target) => {
             UI.dialogue("Delete Board", "Are you sure you want to delete<br><b>" + $(target).parent().find(".name").text() + "</b>?", null, null, null, "Yes", "Cancel", () => {
                 flowApp.flow.deleteBoard(boardId);
@@ -518,7 +541,6 @@ import {Connection} from "../Classes/Connection.js";
                 flowApp.save(flowApp.flow.id);
             }, "alert");
         },
-
         showBoardsByGroup: (groupName) => {
             $(flowApp.ui.placeholders.boardList).find("li").hide();
             if (groupName !== "all") {
@@ -529,7 +551,9 @@ import {Connection} from "../Classes/Connection.js";
             $(flowApp.ui.placeholders.boardGroupName).html((groupName !== "all" ? groupName : "All Boards"));
         },
 
-        //todo: manage multiple drag
+        /**
+         * Connections
+         */
         makeNodeDraggableAndLinkable: (nodeId) => {
 
             let $node = $("#node_" + nodeId);
@@ -539,9 +563,12 @@ import {Connection} from "../Classes/Connection.js";
             let node = board.getNodeById(nodeId);
 
             $node.draggable({
-                handle: $node.find(".menu").length ? ".menu": null,
-                grid: [20, 20],
-                snap: true,
+                handle: $node.find(".menu").length ? ".menu" : null,
+                // distance: 10,
+                cursor: "grabbing",
+                opacity: 0.7,
+                snap: ".vline, .hline",
+                // snapTolerance: 50,
                 zIndex: 100,
                 start: () => {
                     nodeEl.startX = $node.position().left;
@@ -593,7 +620,7 @@ import {Connection} from "../Classes/Connection.js";
             });
 
             let anchorOut = $node.is(".anchorOut") ? $node : $node.find(".anchorOut");
-            anchorOut.on("mousedown", function(e){
+            anchorOut.on("mousedown", function (e) {
                 if ($.flow.metaKeys.indexOf("Meta") >= 0) {
                     e.stopPropagation();
                     let startEl = $node.is(".anchorOut") ? anchorOut : anchorOut.find(".anchor");
@@ -641,11 +668,9 @@ import {Connection} from "../Classes/Connection.js";
                 }
             });
         },
-
         LeaderLine: (from, to, opt) => {
             return new LeaderLine(from.get(0), to.get(0), opt);
         },
-
         updateConnections: () => {
             let board = $.flow.getSelectedBoard();
             let connections = board._connections;
@@ -669,8 +694,6 @@ import {Connection} from "../Classes/Connection.js";
             let board = $.flow.getSelectedBoard();
             return board.getNodeById(nodeId);
         },
-
-
         addToSelectedNodes: function (nodeId, multi = false) {
             if (multi) {
                 if ($.flow.selectedNodes.indexOf(nodeId) < 0) {
@@ -684,7 +707,6 @@ import {Connection} from "../Classes/Connection.js";
 
             Events.register(EventType.selectNode, {selectedNodeId: nodeId});
         },
-
         removeFromSelectedNodes: function (nodeId = null) {
             if (nodeId)
                 $.flow.selectedNodes.delete(nodeId);
@@ -708,5 +730,18 @@ import {Connection} from "../Classes/Connection.js";
         }
     };
 
+    function insertTextAtCaret(text) {
+        var sel, range;
+        if (window.getSelection) {
+            sel = window.getSelection();
+            if (sel.getRangeAt && sel.rangeCount) {
+                range = sel.getRangeAt(0);
+                range.deleteContents();
+                range.insertNode( document.createTextNode(text) );
+            }
+        } else if (document.selection && document.selection.createRange) {
+            document.selection.createRange().text = text;
+        }
+    }
 
 })(jQuery, document);

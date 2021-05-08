@@ -7,6 +7,7 @@ import {Flow} from "./Flow.js";
 import {UI} from "./UI.js";
 import {Events, EventType} from "./Events.js";
 import {Drawer} from "./Drawer.js";
+import {Type} from "./Node.js";
 
 class FlowApp {
 
@@ -22,7 +23,31 @@ class FlowApp {
 
     }
 
-    initEvents(){
+    get flow() {
+        return this._flow;
+    }
+
+    set flow(value) {
+        this._flow = value;
+    }
+
+    get drawer() {
+        return this._drawer;
+    }
+
+    get events() {
+        return this._events;
+    }
+
+    get ui() {
+        return this._ui;
+    }
+
+    get flows() {
+        return this._flowsIds;
+    }
+
+    initEvents() {
 
         //Add Flow
         this.events.on(EventType.addFlow, (e) => {
@@ -124,7 +149,7 @@ class FlowApp {
 
         //Select Node
         this.events.on(EventType.selectNode, (e) => {
-           // this.save(this.flow.id);
+            // this.save(this.flow.id);
             //console.debug("selectNode", e.detail);
         });
 
@@ -132,37 +157,76 @@ class FlowApp {
         this.events.on(EventType.addConnection, (e) => {
             let connection = e.detail;
             let board = this.flow.getBoardById(this.flow._selectedBoardId);
+            let $board = $(this.ui.placeholders.board);
             let node = board.getNodeById(connection._from);
 
-            board._connections.push(connection);
-            node._connections.push(connection);
-
+/*
             node._connections.forEach((c) => {
-                if (c === connection)
-                    return;
-
-                if (c._from === connection._from && c._nodeElementId === connection._nodeElementId) {
+                if (c._from === connection._from && c._to === connection._to) {
                     if (c._connectionLine != null)
                         c._connectionLine.remove();
+
                     node._connections.delete(c);
                     board._connections.delete(c);
                 }
             });
+*/
 
-            if (!connection._to) {
+            board._connections.push(connection);
+            node._connections.push(connection);
+
+            if (!connection._to || connection._to === connection._from) {
+
                 node._connections.delete(connection);
                 board._connections.delete(connection);
+
+                if (node._type === Type.random) {
+                    let firstConnection = node._connections[node._connections.length - 1];
+                    if (firstConnection._connectionLine != null)
+                        firstConnection._connectionLine.remove();
+                    node._connections.delete(firstConnection);
+                    board._connections.delete(firstConnection);
+                }
+
+                $board.find("#node_" + connection._from).attr("data-connections-count", node._connections.length);
+                this.save(this.flow.id);
+                return;
             }
 
-            let nodeElement = this.ui.placeholders.board;
+            node._connections.forEach((c) => {
+
+                if (c === connection)
+                    return;
+
+                if (c._from === connection._from && c._to === connection._to) {
+                    if (c._connectionLine != null)
+                        c._connectionLine.remove();
+
+                    node._connections.delete(c);
+                    board._connections.delete(c);
+
+                    return;
+                }
+
+                if (c._from === connection._from
+                    && c._nodeElementId === connection._nodeElementId
+                    && node._type !== Type.random) {
+
+                    if (c._connectionLine != null)
+                        c._connectionLine.remove();
+
+                    node._connections.delete(c);
+                    board._connections.delete(c);
+
+                }
+            });
+
             if (node._connections.length === 0) {
-                $(nodeElement).find("#node_" + connection._from).attr("data-connections-count", 0);
+                $board.find("#node_" + connection._from).attr("data-connections-count", 0);
             } else {
-                $(nodeElement).find("#node_" + connection._from).attr("data-connections-count", node._connections.length);
+                $board.find("#node_" + connection._from).attr("data-connections-count", node._connections.length);
                 flowApp.drawer.drawConnection(connection);
             }
-
-
             this.save(this.flow.id);
         });
 
@@ -170,30 +234,6 @@ class FlowApp {
         this.events.on(EventType.deleteConnection, (e) => {
             console.debug("deleteConnection", e.detail);
         });
-    }
-
-    get flow() {
-        return this._flow;
-    }
-
-    set flow(value) {
-        this._flow = value;
-    }
-
-    get drawer() {
-        return this._drawer;
-    }
-
-    get events() {
-        return this._events;
-    }
-
-    get ui() {
-        return this._ui;
-    }
-
-    get flows() {
-        return this._flowsIds;
     }
 
     addFlow(name = "New Flow") {
