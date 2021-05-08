@@ -639,8 +639,8 @@ html body #wrapper #draw-area .node .node-content .node-content-line .variables 
   font-size: 13px;
 }
 html body #wrapper #draw-area .node[data-type="start"] {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   background-color: #FFA500;
   border-radius: 100%;
   top: 40px;
@@ -653,13 +653,14 @@ html body #wrapper #draw-area .node[data-type="start"] i {
   left: 0;
   right: 0;
   margin: auto;
+  height: 40px;
   font-size: 36px;
   text-align: center;
   line-height: 100%;
   padding: 0;
 }
 html body #wrapper #draw-area .node[data-type="text"] {
-  width: 250px;
+  width: 240px;
   background-color: #ffffff;
   top: 40px;
   left: 40px;
@@ -671,8 +672,8 @@ html body #wrapper #draw-area .node[data-type="text"] .node-content-line {
   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
 }
 html body #wrapper #draw-area .node[data-type="choice"] {
-  width: 250px;
-  background-color: #6e0d3f;
+  width: 240px;
+  background-color: #739f73;
   top: 40px;
   left: 40px;
 }
@@ -705,13 +706,14 @@ html body #wrapper #draw-area .node[data-type="random"] i {
   left: 0;
   right: 0;
   margin: auto;
+  height: 45px;
   font-size: 32px;
   text-align: center;
   line-height: 150%;
   padding: 0;
 }
 html body #wrapper #draw-area .node[data-type="condition"] {
-  width: 250px;
+  width: 240px;
   background-color: #7f0000;
   top: 40px;
   left: 40px;
