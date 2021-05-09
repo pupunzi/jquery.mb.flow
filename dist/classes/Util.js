@@ -29,7 +29,9 @@ class Util {
         //find anything inside {}
         let regExp = /[^{\{]+(?=})/gi;
         let variables = content.match(regExp);
-        console.debug(variables);
+        content = content.replace(regExp,function(m){ return '<b>'+m+'</b>'})
+
+        console.debug(content);
 
         if (variables)
             variables.forEach((v) => {
