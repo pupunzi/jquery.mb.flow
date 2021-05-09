@@ -111,14 +111,6 @@ class UI {
         });
     }
 
-    static getVariables(content) {
-        let variables = [... content.matchAll(/{([^}]+)}}/gi)];
-        if(variables)
-            variables.forEach( (v) =>{
-                console.debug($.flow.flowApp().flow._variables);
-                eval("$.flow.flowApp().flow._variables." + v[1]);
-            })
-    }
 
 }
 

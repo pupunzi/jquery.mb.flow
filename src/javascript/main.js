@@ -233,7 +233,7 @@ import {Connection} from "../Classes/Connection.js";
                     let connIdx = 0;
                     node._connections.forEach((connection) => {
                         items.push({
-                            name: 'Connection ' + connIdx++,
+                            name: 'Connection ' + ++connIdx,
                             className: "alert",
                             fn: function (target, e) {
                                 console.debug(connection);
@@ -357,7 +357,7 @@ import {Connection} from "../Classes/Connection.js";
                     let connIdx = 0;
                     node._connections.forEach((connection) => {
                         items.push({
-                            name: 'Connection ' + connIdx++,
+                            name: 'Connection ' + ++connIdx,
                             className: "alert",
                             fn: function (target, e) {
                                 console.debug(connection);
@@ -402,13 +402,13 @@ import {Connection} from "../Classes/Connection.js";
                 $.flow.addFlow();
             //Init Menu
             window.flows_menu = new Menu(".flows-menu", $.flow.contextualMenu.flows, true);
-            window.board_list_element_menu = new Menu(".board-list-element-menu", $.flow.contextualMenu.boardListElement);
+            window.board_list_element_menu = new Menu(".board-list-element-menu", $.flow.contextualMenu.boardListElement, true);
             window.boards_groups = new Menu(".boards-group-menu", $.flow.contextualMenu.boardsGroups, true);
             window.node_menu = new Menu(".node-menu", $.flow.contextualMenu.nodeMenu, true);
 
             //Init Contextual menu
             window.board_contextual_menu = new ContextualMenu(flowApp.ui.placeholders.drawingArea, $.flow.contextualMenu.board, true);
-            window.node_contextual_menu = new ContextualMenu(".node", $.flow.contextualMenu.node, true);
+            window.node_contextual_menu = new ContextualMenu(".node", $.flow.contextualMenu.node, false);
             window.variables_contextual_menu = new ContextualMenu(".variables", $.flow.contextualMenu.variables, true);
 
             $("body").on("keypress", "[contenteditable]", (e) => {

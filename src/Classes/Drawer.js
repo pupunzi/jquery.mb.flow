@@ -1,5 +1,6 @@
 import {UI} from "./UI.js";
 import {Type} from "./Node.js";
+import {Util} from "./Util.js";
 
 /**
  *
@@ -204,10 +205,12 @@ export class Drawer {
         //Update nodeElement content
         //todo: move to flowApp events
         $node.find(".node-text").on("blur", function () {
-            let sanitized = $(this).html().replace(/<div>/g, '<br>').replace(/<\/div>/g, '');
+
+            let content = $(this).html();
+            let sanitized = Util.sanitize(content);
             $(this).html(sanitized);
 
-            UI.getVariables(sanitized);
+            Util.evaluateVariablesInText(sanitized);
 
             let nodeElementId = $(this).parents(".node-content-line").data("node-element-id");
             node._elements.forEach((element) => {
