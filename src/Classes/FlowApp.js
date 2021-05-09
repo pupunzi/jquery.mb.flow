@@ -149,6 +149,7 @@ class FlowApp {
 
         //Select Node
         this.events.on(EventType.selectNode, (e) => {
+            //this.drawer.focusOnSelected();
             // this.save(this.flow.id);
             //console.debug("selectNode", e.detail);
         });
@@ -159,18 +160,6 @@ class FlowApp {
             let board = this.flow.getBoardById(this.flow._selectedBoardId);
             let $board = $(this.ui.placeholders.board);
             let node = board.getNodeById(connection._from);
-
-/*
-            node._connections.forEach((c) => {
-                if (c._from === connection._from && c._to === connection._to) {
-                    if (c._connectionLine != null)
-                        c._connectionLine.remove();
-
-                    node._connections.delete(c);
-                    board._connections.delete(c);
-                }
-            });
-*/
 
             board._connections.push(connection);
             node._connections.push(connection);
@@ -190,7 +179,7 @@ class FlowApp {
 
                 $board.find("#node_" + connection._from).attr("data-connections-count", node._connections.length);
                 this.save(this.flow.id);
-                return;
+               // return;
             }
 
             node._connections.forEach((c) => {

@@ -13,22 +13,8 @@ import {Connection} from "../Classes/Connection.js";
 
 (function ($, d) {
     $(() => {
-
-        //Init keys listener
-        window.KeyListener = new KeyboardListener();
-        //Init Flow App
-        window.flowApp = new FlowApp();
-
-        // get last flow opened on previous session
-        let lastFlow = $.mbStorage.get("lastFlow");
-        if (lastFlow != null)
-            flowApp.load(lastFlow);
-        else
-            $.flow.addFlow();
-
         //Init Flow
         $.flow.init();
-
     });
 
     /*
@@ -211,38 +197,64 @@ import {Connection} from "../Classes/Connection.js";
 
                 return items;
             },
-            nodeMenu: [
-                {
-                    name: 'Add Line',
-                    fn: function (target) {
-                        console.debug("Add Line", $(target).parents(".node"));
-                    }
-                },
-                {
-                    name: 'Clone', fn: function (target) {
-                        console.log('Clone', $(target).parents(".node").data("node-id"));
-                        let nodeId = $(target).parents(".node").data("node-id");
-                        if (nodeId != null) {
-                            let board = $.flow.selectedBoard();
-                            //let node = board.deleteNodeById(nodeId);
-                            console.debug(node);
+            nodeMenu: (target) => {
+                let items = [
+                    {
+                        name: 'Clone',
+                        fn: function (target) {
+                            console.debug("Clone")
                         }
-                    }
-                },
-                {
-                    name: 'Delete',
-                    className: "alert",
-                    fn: function (target) {
-                        console.log('Clone', $(target).parents(".node").data("node-id"));
-                        let nodeId = $(target).parents(".node").data("node-id");
-                        if (nodeId != null) {
-                            let board = $.flow.selectedBoard();
-                            let node = board.deleteNodeById(nodeId);
-                            console.debug(node);
+                    },
+                    {
+                        name: 'Delete',
+                        className: "alert",
+                        fn: function (target, e) {
+                            let nodeId = $(target).parents(".node").data("node-id");
+                            if (nodeId != null) {
+                                let board = $.flow.selectedBoard();
+                                board.deleteNodeById(nodeId);
+                            }
                         }
-                    }
-                },
-            ],
+                    },
+                ];
+
+                let board = $.flow.selectedBoard();
+                let nodeId = $(target).parents(".node").data("node-id");
+                let node = board.getNodeById(nodeId);
+
+                if(node._connections.length) {
+                    items.push({});
+                    items.push({
+                        name: 'Remove Connections',
+                        className: "listTitle"
+                    });
+                }
+                if (nodeId != null) {
+                    let connIdx = 0;
+                    node._connections.forEach((connection) => {
+                        items.push({
+                            name: 'Connection ' + connIdx++,
+                            className: "alert",
+                            fn: function (target, e) {
+                                console.debug(connection);
+                                connection._connectionLine.remove();
+                                node._connections.delete(connection);
+                                board._connections.delete(connection);
+                                flowApp.save(flowApp.flow.id);
+                            },
+                            hoverFn: function (target, e) {
+                                connection._connectionLine.setOptions({color:"red"})
+                            },
+                            outFn: function (target, e) {
+                                connection._connectionLine.setOptions({color:"gray"})
+                            }
+                        })
+                    })
+                }
+
+
+                return items;
+            },
             variables: () => {
                 let items = [];
                 let variables = flowApp.flow.getBoardsGroupsList();
@@ -309,26 +321,64 @@ import {Connection} from "../Classes/Connection.js";
                     }
                 },
             ],
-            node: [
-                {
-                    name: 'Clone',
-                    fn: function (target) {
-                        console.debug("Clone")
-                    }
-                },
-                {
-                    name: 'Delete',
-                    className: "alert",
-                    fn: function (target, e) {
-                        let nodeId = $(target).parents(".node").data("node-id");
-                        if (nodeId != null) {
-                            let board = $.flow.selectedBoard();
-                            board.deleteNodeById(nodeId);
+            node: (target) => {
+                let items = [
+                    {
+                        name: 'Clone',
+                        fn: function (target) {
+                            console.debug("Clone")
                         }
+                    },
+                    {
+                        name: 'Delete',
+                        className: "alert",
+                        fn: function (target, e) {
+                            let nodeId = $(target).parents(".node").data("node-id");
+                            if (nodeId != null) {
+                                let board = $.flow.selectedBoard();
+                                board.deleteNodeById(nodeId);
+                            }
+                        }
+                    },
+                ];
+                let nodeId = $(target).parents(".node").data("node-id");
+                let board = $.flow.selectedBoard();
+                let node = board.getNodeById(nodeId);
 
-                    }
-                },
-            ]
+                if(node._connections.length) {
+                    items.push({});
+                    items.push({
+                        name: 'Remove Connections',
+                        className: "listTitle"
+                    });
+                }
+
+                if (nodeId != null) {
+                    let connIdx = 0;
+                    node._connections.forEach((connection) => {
+                        items.push({
+                            name: 'Connection ' + connIdx++,
+                            className: "alert",
+                            fn: function (target, e) {
+                                console.debug(connection);
+                                connection._connectionLine.remove();
+                                node._connections.delete(connection);
+                                board._connections.delete(connection);
+                                flowApp.save(flowApp.flow.id);
+                            },
+                            hoverFn: function (target, e) {
+                                connection._connectionLine.setOptions({color:"red"})
+                            },
+                            outFn: function (target, e) {
+                                connection._connectionLine.setOptions({color:"gray"})
+                            }
+                        })
+                    })
+                }
+
+
+                return items;
+            }
         },
 
         flowApp: () => {
@@ -339,7 +389,17 @@ import {Connection} from "../Classes/Connection.js";
         },
 
         init: () => {
+            //Init keys listener
+            window.KeyListener = new KeyboardListener();
+            //Init Flow App
+            window.flowApp = new FlowApp();
 
+            // get last flow opened on previous session
+            let lastFlow = $.mbStorage.get("lastFlow");
+            if (lastFlow != null)
+                flowApp.load(lastFlow);
+            else
+                $.flow.addFlow();
             //Init Menu
             window.flows_menu = new Menu(".flows-menu", $.flow.contextualMenu.flows, true);
             window.board_list_element_menu = new Menu(".board-list-element-menu", $.flow.contextualMenu.boardListElement);
@@ -347,7 +407,7 @@ import {Connection} from "../Classes/Connection.js";
             window.node_menu = new Menu(".node-menu", $.flow.contextualMenu.nodeMenu, true);
 
             //Init Contextual menu
-            window.board_contextual_menu = new ContextualMenu(flowApp.ui.placeholders.board, $.flow.contextualMenu.board, true);
+            window.board_contextual_menu = new ContextualMenu(flowApp.ui.placeholders.drawingArea, $.flow.contextualMenu.board, true);
             window.node_contextual_menu = new ContextualMenu(".node", $.flow.contextualMenu.node, true);
             window.variables_contextual_menu = new ContextualMenu(".variables", $.flow.contextualMenu.variables, true);
 
@@ -464,7 +524,6 @@ import {Connection} from "../Classes/Connection.js";
                     $("body").off("mousemove.drag");
                 });
             });
-
         },
 
         /**
@@ -480,7 +539,8 @@ import {Connection} from "../Classes/Connection.js";
             };
             UI.dialogue(title, text, "flowName", "Flow Name", null, "Add", "Cancel", action);
         },
-        openFlow: () => {},
+        openFlow: () => {
+        },
         editFlowName: () => {
             let editEl = $(flowApp.ui.placeholders.flowName).find("h1");
             editEl.attr({contentEditable: true});
@@ -737,7 +797,7 @@ import {Connection} from "../Classes/Connection.js";
             if (sel.getRangeAt && sel.rangeCount) {
                 range = sel.getRangeAt(0);
                 range.deleteContents();
-                range.insertNode( document.createTextNode(text) );
+                range.insertNode(document.createTextNode(text));
             }
         } else if (document.selection && document.selection.createRange) {
             document.selection.createRange().text = text;

@@ -19,7 +19,7 @@ class Flow {
 		this._boardGroups = [];
 		this._selectedBoardGroup = null;
 		this._variables = [];
-		this._actors = {};
+		this._actors = [];
 	}
 
 	get variables() {

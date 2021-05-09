@@ -123,6 +123,42 @@ export class Drawer {
         this.flowApp.save(this.flowApp.id);
     }
 
+    focusOnSelected() {
+
+        let $board = $(this.flowApp.ui.placeholders.board);
+        let boardX = parseFloat($board.css("left"));
+        let boardY = parseFloat($board.css("top"));
+
+        let nodesId = $.flow.selectedNodes;
+        let firstX = 0, firstY = 0;
+        let lastX = 0, lastY = 0;
+        nodesId.forEach((nodeId) => {
+            let $node = $("#node_" + nodeId);
+            let x = parseFloat($node.css("left"));
+            let y = parseFloat($node.css("top"));
+
+            if((!firstX && !firstY) || (x < firstX && y < firstY)){
+                firstX = x;
+                firstY = y;
+            }
+            if((!lastX && !lastY) || (x > lastX && y < lastY)){
+                lastX = x;
+                lastY = y;
+            }
+        });
+
+        console.debug("board Left/top", boardX, boardY);
+        console.debug("first Left/top", firstX, firstY);
+        console.debug("last Left/top", lastX, lastY);
+
+        $board.css({
+            left: ($board.width()/2) - (firstX + ((lastX-firstX)/2)),
+            top: ($board.height()/2) - (firstY + ((lastY-firstY)/2)),
+        });
+        $.flow.updateConnections();
+
+    }
+
     drawNode(node) {
         let board = $.flow.getSelectedBoard();
         let flowApp = this.flowApp;
@@ -131,6 +167,7 @@ export class Drawer {
         //Draw Node content
         switch (node._type) {
             case Type.text:
+            case Type.note:
             case Type.choices:
             case Type.condition:
                 node._elements.forEach((element) => {
@@ -160,11 +197,12 @@ export class Drawer {
 
         let $node = $(this.flowApp.ui.placeholders.board).find("#node_" + node._id);
         $node.css({
-            left: node._x + "px",
-            top: node._y + "px"
+            left: node._x,
+            top: node._y
         });
 
         //Update nodeElement content
+        //todo: move to flowApp events
         $node.find(".node-text").on("blur", function () {
             let sanitized = $(this).html().replace(/<div>/g, '<br>').replace(/<\/div>/g, '');
             $(this).html(sanitized);
@@ -192,14 +230,12 @@ export class Drawer {
             $.flow.addToSelectedNodes(nodeId, isMulti);
         });
 
-        $(this.flowApp.ui.placeholders.board).off("mousedown.nodes").on("mousedown.nodes", (e) => {
+        $(this.flowApp.ui.placeholders.drawingArea).off("mousedown.nodes").on("mousedown.nodes", (e) => {
 
             if ($(e.target).parents(".node").length)
                 return;
 
             $(this.flowApp.ui.placeholders.board).find(".node").removeClass("selected");
-            // let nodeId = $node.data("node-id");
-            // let board = this.flowApp.flow.getBoardById(this.flowApp.flow._selectedBoardId);
             $.flow.removeFromSelectedNodes();
         });
     }
@@ -214,7 +250,7 @@ export class Drawer {
             dash: {animation: true}
         };
 
-        $.extend(option,opt);
+        $.extend(option, opt);
 
         let board = this.flowApp.ui.placeholders.board;
         let node = $.flow.getNodeById(connection._from);
@@ -284,7 +320,6 @@ export class Drawer {
         }
     }
 
-    //todo: check which nodes are selected
     checkForSelectedNode(topLeft, bottomRight) {
         let board = $.flow.selectedBoard();
         let nodes = board._nodes;

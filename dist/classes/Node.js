@@ -14,8 +14,8 @@ export class Node {
 		this._boardId = boardId;
 		this._type = type;
 		this._elements = [];
-		this._x = 280;
-		this._y = 100;
+		this._x = 300;
+		this._y = 120;
 		this._count = function () {
 			return this.elements.length;
 		};

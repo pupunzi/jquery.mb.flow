@@ -39,7 +39,7 @@
 <!-- START NODE                  ----------------------->
 <template id="node-start">
     <div id="node_{{nodeId}}" class="node anchorOut" data-type="start" data-flow-id="{{flowId}}"
-         data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-x="0" data-y="0" data-connections-count="{{connectionsCount}}">
+         data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
         <i class="icon icon-caret-right"></i>
     </div>
 </template>
@@ -47,7 +47,8 @@
 <!-- TEXT NODE                   ----------------------->
 <template id="node-text">
     <div id="node_{{nodeId}}" class="node anchorOut" data-type="text" data-flow-id="{{flowId}}"
-         data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-x="0" data-y="0" data-connections-count="{{connectionsCount}}">
+         data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
+        <i class="icon icon-commenting node-icon"></i>
         <div class="menu"><i class="icon icon-ellipsis-v node-menu"></i></div>
         <div class="node-content">{{lines}}</div>
     </div>
@@ -61,10 +62,28 @@
     </div>
 </template>
 
+<!-- NOTE NODE                   ----------------------->
+<template id="node-note">
+    <div id="node_{{nodeId}}" class="node anchorOut" data-type="note" data-flow-id="{{flowId}}"
+         data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
+        <i class="icon icon-thumb-tack node-icon"></i>
+        <div class="menu"></div>
+        <div class="node-content">{{lines}}</div>
+    </div>
+</template>
+<!-- NOTE NODE LINE -->
+<template id="node-note-line">
+    <div class="node-content-line line" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
+        <div class="node-text" contenteditable="true">{{content}}</div>
+        <div class="variables" contenteditable="true"></div>
+    </div>
+</template>
+
 <!-- CHOICE NODE                ----------------------->
 <template id="node-choice">
     <div id="node_{{nodeId}}" class="node" data-type="choice" data-flow-id="{{flowId}}" data-board-id="{{boardId}}"
-         data-node-id="{{nodeId}}" data-x="0" data-y="0" data-connections-count="{{connectionsCount}}">
+         data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
+        <i class="icon icon-th-list node-icon"></i>
         <div class="menu"><i class="icon icon-ellipsis-v node-menu"></i></div>
         <div class="node-content">{{lines}}</div>
     </div>
@@ -82,7 +101,8 @@
 <!-- CONDITIONAL NODE                   ----------------------->
 <template id="node-condition">
     <div id="node_{{nodeId}}" class="node" data-type="condition" data-flow-id="{{flowId}}" data-board-id="{{boardId}}"
-         data-node-id="{{nodeId}}" data-x="0" data-y="0" data-connections-count="{{connectionsCount}}">
+         data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
+        <i class="icon icon-sitemap node-icon"></i>
         <div class="menu"><i class="icon icon-ellipsis-v node-menu"></i></div>
         <div class="node-content">{{lines}}</div>
     </div>
@@ -99,7 +119,7 @@
 <!-- Random NODE                  ----------------------->
 <template id="node-random">
     <div id="node_{{nodeId}}" class="node anchorOut" data-type="random" data-flow-id="{{flowId}}"
-         data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-x="0" data-y="0" data-connections-count="{{connectionsCount}}">
+         data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
         <i class="icon icon-random"></i>
     </div>
 </template>

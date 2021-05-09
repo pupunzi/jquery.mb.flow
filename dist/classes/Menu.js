@@ -66,6 +66,17 @@ export class Menu {
                         item.fn(e.target, e);
                         this.hide();
                     });
+
+                if (item.hoverFn)
+                    line.on("mouseover", (e) => {
+                        item.hoverFn(e.target, e);
+                    });
+
+                if (item.outFn)
+                    line.on("mouseout", (e) => {
+                        item.outFn(e.target, e);
+                    });
+
             }
             itemsContsiner.append(line);
         });
@@ -149,6 +160,17 @@ export class ContextualMenu {
                         item.fn(e.target, e);
                         this.hide();
                     });
+
+                if (item.hoverFn)
+                    line.on("mouseover", (e) => {
+                        item.hoverFn(e.target, e);
+                    });
+
+                if (item.outFn)
+                    line.on("mouseout", (e) => {
+                        item.outFn(e.target, e);
+                    });
+
             }
             itemsContsiner.append(line);
         });

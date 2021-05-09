@@ -71,7 +71,7 @@
 }
 @font-face {
   font-family: 'flowIcons';
-  src: url('fonts/flowIcons.ttf?9pf2mi') format('truetype'), url('fonts/flowIcons.woff?9pf2mi') format('woff'), url('fonts/flowIcons.svg?9pf2mi#flowIcons') format('svg');
+  src: url('fonts/flowIcons.ttf?74nk3m') format('truetype'), url('fonts/flowIcons.woff?74nk3m') format('woff'), url('fonts/flowIcons.svg?74nk3m#flowIcons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -89,12 +89,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.icon-drag_handle:before {
-  content: "\e900";
-}
-.icon-drag_indicator:before {
-  content: "\e901";
-}
 .icon-plus:before {
   content: "\f067";
 }
@@ -103,6 +97,15 @@
 }
 .icon-search:before {
   content: "\f002";
+}
+.icon-star:before {
+  content: "\f005";
+}
+.icon-star-o:before {
+  content: "\f006";
+}
+.icon-user:before {
+  content: "\f007";
 }
 .icon-th-large:before {
   content: "\f009";
@@ -125,11 +128,17 @@
 .icon-times:before {
   content: "\f00d";
 }
+.icon-power-off:before {
+  content: "\f011";
+}
 .icon-cog:before {
   content: "\f013";
 }
 .icon-gear:before {
   content: "\f013";
+}
+.icon-trash-o:before {
+  content: "\f014";
 }
 .icon-clock-o:before {
   content: "\f017";
@@ -146,8 +155,32 @@
 .icon-lock:before {
   content: "\f023";
 }
+.icon-tag:before {
+  content: "\f02b";
+}
+.icon-bookmark:before {
+  content: "\f02e";
+}
+.icon-camera:before {
+  content: "\f030";
+}
+.icon-font:before {
+  content: "\f031";
+}
+.icon-image:before {
+  content: "\f03e";
+}
+.icon-photo:before {
+  content: "\f03e";
+}
+.icon-picture-o:before {
+  content: "\f03e";
+}
 .icon-pencil:before {
   content: "\f040";
+}
+.icon-map-marker:before {
+  content: "\f041";
 }
 .icon-arrows:before {
   content: "\f047";
@@ -169,6 +202,9 @@
 }
 .icon-check-circle:before {
   content: "\f058";
+}
+.icon-times-circle-o:before {
+  content: "\f05c";
 }
 .icon-arrow-left:before {
   content: "\f060";
@@ -215,6 +251,12 @@
 .icon-folder-open:before {
   content: "\f07c";
 }
+.icon-thumb-tack:before {
+  content: "\f08d";
+}
+.icon-bookmark-o:before {
+  content: "\f097";
+}
 .icon-unlock:before {
   content: "\f09c";
 }
@@ -230,11 +272,32 @@
 .icon-arrow-circle-down:before {
   content: "\f0ab";
 }
+.icon-tasks:before {
+  content: "\f0ae";
+}
 .icon-copy:before {
   content: "\f0c5";
 }
 .icon-files-o:before {
   content: "\f0c5";
+}
+.icon-square:before {
+  content: "\f0c8";
+}
+.icon-bars:before {
+  content: "\f0c9";
+}
+.icon-navicon:before {
+  content: "\f0c9";
+}
+.icon-reorder:before {
+  content: "\f0c9";
+}
+.icon-list-ul:before {
+  content: "\f0ca";
+}
+.icon-list-ol:before {
+  content: "\f0cb";
 }
 .icon-caret-down:before {
   content: "\f0d7";
@@ -247,6 +310,12 @@
 }
 .icon-caret-right:before {
   content: "\f0da";
+}
+.icon-comment-o:before {
+  content: "\f0e5";
+}
+.icon-sitemap:before {
+  content: "\f0e8";
 }
 .icon-angle-double-left:before {
   content: "\f100";
@@ -278,6 +347,12 @@
 .icon-circle:before {
   content: "\f111";
 }
+.icon-smile-o:before {
+  content: "\f118";
+}
+.icon-frown-o:before {
+  content: "\f119";
+}
 .icon-meh-o:before {
   content: "\f11a";
 }
@@ -286,6 +361,9 @@
 }
 .icon-eraser:before {
   content: "\f12d";
+}
+.icon-puzzle-piece:before {
+  content: "\f12e";
 }
 .icon-chevron-circle-left:before {
   content: "\f137";
@@ -301,6 +379,27 @@
 }
 .icon-ellipsis-v:before {
   content: "\f142";
+}
+.icon-female:before {
+  content: "\f182";
+}
+.icon-male:before {
+  content: "\f183";
+}
+.icon-child:before {
+  content: "\f1ae";
+}
+.icon-toggle-off:before {
+  content: "\f204";
+}
+.icon-toggle-on:before {
+  content: "\f205";
+}
+.icon-commenting:before {
+  content: "\f27a";
+}
+.icon-user-circle:before {
+  content: "\f2bd";
 }
 html {
   font-family: 'Open Sans', sans-serif;
@@ -343,12 +442,13 @@ html i.icon.menu {
   color: rgba(255, 255, 255, 0.3);
 }
 html button {
+  display: inline-block;
   vertical-align: text-bottom;
   text-transform: uppercase;
   font-size: 80%;
   min-width: 75px;
   padding: 5px;
-  margin: 5px 10px;
+  margin: 12px 10px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 0;
   box-shadow: 2px 2px 10px rgba(12, 12, 12, 0);
@@ -557,8 +657,8 @@ html body #wrapper #draw-area #board {
   position: absolute;
   top: 0;
   left: 0;
-  min-width: calc(500vw);
-  min-height: calc(500vh);
+  min-width: calc(100vw);
+  min-height: calc(100vh);
 }
 html body #wrapper #draw-area .node {
   position: absolute;
@@ -575,6 +675,11 @@ html body #wrapper #draw-area .node[data-connections-count="0"]:after {
   bottom: -10px;
   right: -10px;
 }
+html body #wrapper #draw-area .node .node-icon {
+  position: absolute;
+  padding: 3px;
+  color: #323232;
+}
 html body #wrapper #draw-area .node .anchor {
   position: absolute;
   width: 10px;
@@ -587,7 +692,6 @@ html body #wrapper #draw-area .node .menu {
   position: relative;
   display: inline-block;
   background-color: rgba(50, 50, 50, 0.2);
-  border-radius: 5px 5px 0 0;
   width: 100%;
   left: 0;
   top: 0;
@@ -617,13 +721,12 @@ html body #wrapper #draw-area .node .node-content .node-content-line {
 html body #wrapper #draw-area .node .node-content .node-content-line .node-text {
   position: relative;
   width: 100%;
-  height: 100%;
+  min-height: 30px;
   max-height: 100px;
   overflow: auto;
   background-color: rgba(255, 255, 255, 0.1);
   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
   font-size: 13px;
-  min-height: 40px;
 }
 html body #wrapper #draw-area .node .node-content .node-content-line .variables {
   position: relative;
@@ -643,8 +746,8 @@ html body #wrapper #draw-area .node[data-type="start"] {
   height: 60px;
   background-color: #FFA500;
   border-radius: 100%;
-  top: 40px;
-  left: 40px;
+  left: 300px;
+  top: 120px;
 }
 html body #wrapper #draw-area .node[data-type="start"] i {
   position: absolute;
@@ -666,6 +769,19 @@ html body #wrapper #draw-area .node[data-type="text"] {
   left: 40px;
 }
 html body #wrapper #draw-area .node[data-type="text"] .node-content-line {
+  height: 100%;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.1);
+  box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
+}
+html body #wrapper #draw-area .node[data-type="note"] {
+  width: 240px;
+  background-color: #d0ad52;
+  transform: rotate(-2deg);
+  top: 40px;
+  left: 40px;
+}
+html body #wrapper #draw-area .node[data-type="note"] .node-content-line {
   height: 100%;
   padding: 5px;
   background-color: rgba(0, 0, 0, 0.1);
@@ -737,7 +853,7 @@ html .flow-overlay {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(64, 64, 64, 0.968);
+  background-color: rgba(64, 64, 64, 0.8);
   z-index: calc(1 + 2);
 }
 html .flow-overlay .flow-dialogue {
@@ -752,6 +868,7 @@ html .flow-overlay .flow-dialogue {
   max-width: 40vw;
   min-height: 400px;
   max-height: 40vh;
+  background-color: rgba(31, 75, 96, 0.9);
   color: #ffffff;
   box-shadow: 2px 2px 10px rgba(12, 12, 12, 0.4);
   padding: 40px;
@@ -759,7 +876,7 @@ html .flow-overlay .flow-dialogue {
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 html .flow-overlay .flow-dialogue.alert {
-  background-color: #cc181e;
+  background-color: rgba(204, 24, 30, 0.9);
 }
 html .flow-overlay .flow-dialogue.alert button.main {
   background-color: #ffffff;
@@ -806,7 +923,7 @@ html .flow-overlay .flow-dialogue .flow-button-bar button {
 }
 html .contextual-menu {
   min-width: 150px;
-  background-color: #222222;
+  background-color: rgba(0, 0, 0, 0.85);
   box-shadow: 2px 2px 10px rgba(12, 12, 12, 0.4);
   padding: 0;
   margin: 0;

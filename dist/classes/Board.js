@@ -67,7 +67,6 @@ class Board {
 
     addNode(type = Type.text, position = null) {
         let n = new Node(this.id, type);
-
         if (position != null) {
             let startX = $(flowApp.ui.placeholders.board).offset().left;
             let startY = $(flowApp.ui.placeholders.board).offset().top;
