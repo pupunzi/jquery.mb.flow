@@ -44,12 +44,22 @@
     </div>
 </template>
 
+<!-- Random NODE                  ----------------------->
+<template id="node-random">
+    <div id="node_{{nodeId}}" class="node anchorOut" data-type="random" data-flow-id="{{flowId}}"
+         data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
+        <i class="icon icon-random"></i>
+    </div>
+</template>
+
 <!-- TEXT NODE                   ----------------------->
 <template id="node-text">
     <div id="node_{{nodeId}}" class="node anchorOut" data-type="text" data-flow-id="{{flowId}}"
          data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
-        <i class="icon icon-commenting node-icon"></i>
-        <div class="menu"><i class="icon icon-ellipsis-v node-menu"></i></div>
+        <div class="menu">
+            <div class="node-button-bar"><i class="icon icon-commenting node-icon"></i> <i class="icon icon-list-ol"></i><i class="icon icon-user actor-menu"></i><span class="actor-name">Actor Name</span></div>
+            <i class="icon icon-ellipsis-v node-menu"></i>
+        </div>
         <div class="node-content">{{lines}}</div>
     </div>
 </template>
@@ -66,8 +76,9 @@
 <template id="node-note">
     <div id="node_{{nodeId}}" class="node anchorOut" data-type="note" data-flow-id="{{flowId}}"
          data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
-        <i class="icon icon-thumb-tack node-icon"></i>
-        <div class="menu"></div>
+        <div class="menu">
+            <div class="node-button-bar"><i class="icon icon-thumb-tack node-icon"></i></div>
+        </div>
         <div class="node-content">{{lines}}</div>
     </div>
 </template>
@@ -82,8 +93,10 @@
 <template id="node-choice">
     <div id="node_{{nodeId}}" class="node" data-type="choice" data-flow-id="{{flowId}}" data-board-id="{{boardId}}"
          data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
-        <i class="icon icon-th-list node-icon"></i>
-        <div class="menu"><i class="icon icon-ellipsis-v node-menu"></i></div>
+        <div class="menu">
+            <div class="node-button-bar"><i class="icon icon-th-list node-icon"></i></div>
+            <i class="icon icon-ellipsis-v node-menu"></i>
+        </div>
         <div class="node-content">{{lines}}</div>
     </div>
 </template>
@@ -101,8 +114,10 @@
 <template id="node-condition">
     <div id="node_{{nodeId}}" class="node" data-type="condition" data-flow-id="{{flowId}}" data-board-id="{{boardId}}"
          data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
-        <i class="icon icon-sitemap node-icon"></i>
-        <div class="menu"><i class="icon icon-ellipsis-v node-menu"></i></div>
+        <div class="menu">
+            <div class="node-button-bar"><i class="icon icon-sitemap node-icon"></i></div>
+            <i class="icon icon-ellipsis-v node-menu"></i>
+        </div>
         <div class="node-content">{{lines}}</div>
     </div>
 </template>
@@ -112,14 +127,6 @@
     <div class="node-content-line line anchorOut" data-flow-id="{{flowId}}" data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}" data-connections-count="{{connectionsCount}}">
         <div class="variables" contenteditable="true">{{variables}}</div>
         <div class="anchor"></div>
-    </div>
-</template>
-
-<!-- Random NODE                  ----------------------->
-<template id="node-random">
-    <div id="node_{{nodeId}}" class="node anchorOut" data-type="random" data-flow-id="{{flowId}}"
-         data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
-        <i class="icon icon-random"></i>
     </div>
 </template>
 

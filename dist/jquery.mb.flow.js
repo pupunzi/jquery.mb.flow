@@ -480,6 +480,7 @@ import {Connection} from "../Classes/Connection.js";
             let boardArea = $(flowApp.ui.placeholders.board);
             boardArea[0].style.zoom = 1;
             let pos = {};
+            
             $("body").on("mousedown.drag", (e) => {
 
                 if ($(e.target).parents(".node").length)

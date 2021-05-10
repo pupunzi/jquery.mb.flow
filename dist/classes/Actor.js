@@ -11,6 +11,15 @@ export class Actor {
         this._id = Util.setUID();
         this._name = name;
         this._icon = null;
+        this._color = null;
+    }
+
+    get color() {
+        return this._color;
+    }
+
+    set color(value) {
+        this._color = value;
     }
 
     get name() {

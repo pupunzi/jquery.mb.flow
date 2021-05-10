@@ -675,11 +675,6 @@ html body #wrapper #draw-area .node[data-connections-count="0"]:not([data-type="
   bottom: -10px;
   right: -10px;
 }
-html body #wrapper #draw-area .node .node-icon {
-  position: absolute;
-  padding: 3px;
-  color: #323232;
-}
 html body #wrapper #draw-area .node .anchor {
   position: absolute;
   width: 10px;
@@ -698,16 +693,36 @@ html body #wrapper #draw-area .node .menu {
   height: 25px;
 }
 html body #wrapper #draw-area .node .menu i.icon {
-  position: absolute;
+  position: relative;
   color: #282828;
-  top: 5px;
-  right: 10px;
   font-size: 100%;
-  text-align: right;
   line-height: 100%;
 }
-html body #wrapper #draw-area .node .menu i.icon:hover {
+html body #wrapper #draw-area .node .menu i.icon.node-menu {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  text-align: right;
+}
+html body #wrapper #draw-area .node .menu i.icon.node-menu:hover {
   cursor: pointer !important;
+}
+html body #wrapper #draw-area .node .menu .node-button-bar {
+  position: absolute;
+  padding: 3px;
+}
+html body #wrapper #draw-area .node .menu .node-button-bar .node-icon {
+  color: #323232;
+}
+html body #wrapper #draw-area .node .menu .actor-name {
+  padding: 0;
+  margin: 0;
+  width: 100px;
+  display: inline-block;
+  vertical-align: top;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 html body #wrapper #draw-area .node.selected {
   outline: 4px solid #FFA500;
