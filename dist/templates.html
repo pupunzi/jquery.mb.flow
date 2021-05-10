@@ -68,7 +68,7 @@
 <template id="node-text-line">
     <div class="node-content-line line" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
         <div class="node-text" contenteditable="true">{{content}}</div>
-        <div class="variables" contenteditable="true"></div>
+        <!--<div class="variables" contenteditable="true"></div>-->
     </div>
 </template>
 
@@ -105,7 +105,7 @@
 <template id="node-choice-line">
     <div class="node-content-line line anchorOut" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
         <div class="node-text" contenteditable="true">{{content}}</div>
-        <div class="variables" contenteditable="true">{{variables}}</div>
+        <!--<div class="variables" contenteditable="true">{{variables}}</div>-->
         <div class="anchor"></div>
     </div>
 </template>
@@ -125,7 +125,7 @@
 <!-- CONDITIONAL NODE LINE -->
 <template id="node-condition-line">
     <div class="node-content-line line anchorOut" data-flow-id="{{flowId}}" data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}" data-connections-count="{{connectionsCount}}">
-        <div class="variables" contenteditable="true">{{variables}}</div>
+        <div class="node-text" contenteditable="true">{{content}}</div>
         <div class="anchor"></div>
     </div>
 </template>

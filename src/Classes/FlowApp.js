@@ -252,7 +252,7 @@ class FlowApp {
         if (id != null)
             $.mbStorage.set("flow_" + id, this.flow);
 
-        //console.debug("FLOW", this.flow);
+        console.debug("FLOW", this.flow);
         Events.register(EventType.saveFlow, this.flow);
     }
 

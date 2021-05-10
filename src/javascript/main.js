@@ -108,8 +108,15 @@ import {Connection} from "../Classes/Connection.js";
                 },
                 {},
                 {
+                    name: 'Options', //<i class="icon icon-cog"></i>
+                    fn: function (target) {
+                        let flowId = $(target).parent().data("flow-id");
+                        let flowName = $(target).parent().find(".name").text();
+                        console.debug("Export " + flowId + "  -  " + flowName);
+                    }
+                },
+                {
                     name: 'Export',
-                    className: "highlight",
                     fn: function (target) {
                         let flowId = $(target).parent().data("flow-id");
                         let flowName = $(target).parent().find(".name").text();
@@ -154,7 +161,7 @@ import {Connection} from "../Classes/Connection.js";
                         name: groupName,
                         className: "listElement",
                         fn: function (target) {
-                            console.debug("filter by group:" + groupName);
+                            //console.debug("filter by group:" + groupName);
                             flowApp.flow.selectedBoardGroup = groupName;
                             $.flow.showBoardsByGroup(groupName);
                         }
@@ -187,7 +194,7 @@ import {Connection} from "../Classes/Connection.js";
                     name: "New Group",
                     className: "highlight",
                     fn: function (target) {
-                        UI.dialogue("Add a new Group for", null, "groupName", "Group name", null, "Add", "Cancel", (name) => {
+                        UI.dialogue("Add a new Group for <br><b>" + flowApp.flow._name + "</b>", null, "groupName", "Group name", null, "Add", "Cancel", (name) => {
                             flowApp.flow.addGroup(name);
                             $.flow.showBoardsByGroup(name);
                         });
@@ -222,7 +229,7 @@ import {Connection} from "../Classes/Connection.js";
                 let nodeId = $(target).parents(".node").data("node-id");
                 let node = board.getNodeById(nodeId);
 
-                if(node._connections.length) {
+                if (node._connections.length) {
                     items.push({});
                     items.push({
                         name: 'Remove Connections',
@@ -243,10 +250,10 @@ import {Connection} from "../Classes/Connection.js";
                                 flowApp.save(flowApp.flow.id);
                             },
                             hoverFn: function (target, e) {
-                                connection._connectionLine.setOptions({color:"red"})
+                                connection._connectionLine.setOptions({color: "red"})
                             },
                             outFn: function (target, e) {
-                                connection._connectionLine.setOptions({color:"gray"})
+                                connection._connectionLine.setOptions({color: "gray"})
                             }
                         })
                     })
@@ -345,7 +352,7 @@ import {Connection} from "../Classes/Connection.js";
                 let board = $.flow.selectedBoard();
                 let node = board.getNodeById(nodeId);
 
-                if(node._connections.length) {
+                if (node._connections.length) {
                     items.push({});
                     items.push({
                         name: 'Remove Connections',
@@ -367,10 +374,10 @@ import {Connection} from "../Classes/Connection.js";
                                 flowApp.save(flowApp.flow.id);
                             },
                             hoverFn: function (target, e) {
-                                connection._connectionLine.setOptions({color:"red"})
+                                connection._connectionLine.setOptions({color: "red"})
                             },
                             outFn: function (target, e) {
-                                connection._connectionLine.setOptions({color:"gray"})
+                                connection._connectionLine.setOptions({color: "gray"})
                             }
                         })
                     })
@@ -440,6 +447,7 @@ import {Connection} from "../Classes/Connection.js";
 
                 if ($.flow.metaKeys.indexOf("Meta") >= 0) {
                     $(".node").draggable("disable");
+                    boardArea.draggable("enable");
                     let board = $.flow.selectedBoard();
                     e.stopPropagation();
                     switch (e.key) {
@@ -472,59 +480,58 @@ import {Connection} from "../Classes/Connection.js";
                             break;
                     }
                 }
-
-            }).on("keyup", () => {
-                $(".node").draggable("enable");
             });
-
-            let boardArea = $(flowApp.ui.placeholders.board);
-            boardArea[0].style.zoom = 1;
-            let pos = {};
-            
-            $("body").on("mousedown.drag", (e) => {
+            $(document).on("keyup", () => {
+                $(".node").draggable("enable");
+                boardArea.draggable("disable");
+            });
+            $(document).on("mousedown.drag", (e) => {
 
                 if ($(e.target).parents(".node").length)
                     return;
 
-                if ($.flow.metaKeys.indexOf("Meta") >= 0) {
-                    $("body").css("cursor", "grab");
-                    pos = {
-                        left: boardArea.position().left,
-                        top: boardArea.position().top,
-                        x: e.clientX,
-                        y: e.clientY,
-                    };
-                } else if ($.flow.metaKeys.indexOf("Shift") >= 0) {
+                if ($.flow.metaKeys.indexOf("Shift") >= 0) {
                     //make selection
                     flowApp.drawer.drawSelection(e)
                 }
 
-                $("body").on("mousemove.drag", (e) => {
-
-                    $.flow.latMousePosition = {x: e.clientX, y: e.clientY};
+                $(document).on("mousemove.drag", (e) => {
 
                     if ($(e.target).parents(".node").length)
                         return;
 
-                    if ($.flow.metaKeys.indexOf("Meta") >= 0) {
-                        $("body").css("cursor", "grabbing");
-                        const dx = e.clientX - pos.x;
-                        const dy = e.clientY - pos.y;
-                        boardArea.css({left: pos.left + dx, top: pos.top + dy});
-                        $.flow.updateConnections();
-                    } else if ($.flow.metaKeys.indexOf("Shift") >= 0) {
+                    if ($.flow.metaKeys.indexOf("Shift") >= 0) {
                         flowApp.drawer.drawSelection(e)
                     }
                 }).one("mouseup.drag", (e) => {
                     flowApp.drawer.drawSelection(e);
+                    $(document).off("mousemove.drag");
+                });
+            });
+            $(document).on("mousemove", (e)=>{
+                $.flow.latMousePosition = {x: e.clientX, y: e.clientY};
+            });
+
+            let boardArea = $(flowApp.ui.placeholders.board);
+            //boardArea[0].style.zoom = 1;
+
+            boardArea.draggable({
+                cursor: "grabbing",
+                snap: ".vline, .hline",
+                start: () => {
+                },
+                drag: () => {
+                    $.flow.updateConnections();
+                },
+                stop: () => {
                     $("body").css("cursor", "default");
                     let board = $.flow.getSelectedBoard();
                     board._x = parseFloat(boardArea.css("left"));
                     board._y = parseFloat(boardArea.css("top"));
                     Events.register(EventType.updateBoard, board);
-                    $("body").off("mousemove.drag");
-                });
+                }
             });
+            boardArea.draggable("disable");
         },
 
         /**
@@ -625,7 +632,6 @@ import {Connection} from "../Classes/Connection.js";
 
             $node.draggable({
                 handle: $node.find(".menu").length ? ".menu" : null,
-                // distance: 10,
                 cursor: "grabbing",
                 opacity: 0.7,
                 snap: ".vline, .hline",

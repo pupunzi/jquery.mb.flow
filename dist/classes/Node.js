@@ -13,6 +13,7 @@ export class Node {
 		this._id = Util.setUID();
 		this._boardId = boardId;
 		this._type = type;
+		this._mood = null;
 		this._elements = [];
 		this._x = 300;
 		this._y = 120;
@@ -26,6 +27,14 @@ export class Node {
 		this.init();
 	}
 
+	get mood() {
+		return this._mood;
+	}
+
+	set mood(value) {
+		this._mood = value;
+	}
+
 	init(){
 		switch (this._type) {
 			case Type.text:
@@ -34,7 +43,7 @@ export class Node {
 			case Type.condition:
 				let line = new NodeElement(this._type, this._id);
 				this.elements.push(line);
-				console.debug("line", line);
+				// console.debug("line", line);
 				break;
 		}
 	}

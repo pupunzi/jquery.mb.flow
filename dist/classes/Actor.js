@@ -7,11 +7,11 @@ import {Util} from "./Util.js";
  **/
 export class Actor {
 
-    constructor(name = "Actor") {
+    constructor(name = "System", icon = null, color = null) {
         this._id = Util.setUID();
         this._name = name;
-        this._icon = null;
-        this._color = null;
+        this._icon = icon;
+        this._color = color;
     }
 
     get color() {
@@ -34,9 +34,6 @@ export class Actor {
         return this._id;
     }
 
-    set id(value) {
-        this._id = value;
-    }
 
     get icon() {
         return this._icon;

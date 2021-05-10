@@ -643,13 +643,13 @@ html body #wrapper #draw-area #grid {
 }
 html body #wrapper #draw-area #grid .hline {
   position: absolute;
-  border-top: 1px dotted rgba(115, 159, 115, 0.2);
+  border-top: 1px dashed rgba(168, 182, 192, 0.1);
   width: 100%;
   height: 1px;
 }
 html body #wrapper #draw-area #grid .vline {
   position: absolute;
-  border-left: 1px dotted rgba(115, 159, 115, 0.2);
+  border-left: 1px dashed rgba(168, 182, 192, 0.1);
   height: 100%;
   width: 1px;
 }
@@ -855,12 +855,13 @@ html body #wrapper #draw-area .node[data-type="condition"] {
 html body #wrapper #draw-area .node[data-type="condition"] .menu {
   background-color: transparent;
 }
-html body #wrapper #draw-area .node[data-type="condition"] i.icon {
+html body #wrapper #draw-area .node[data-type="condition"] .menu i.icon {
   color: #ffffff;
 }
-html body #wrapper #draw-area .node[data-type="condition"] .variables {
+html body #wrapper #draw-area .node[data-type="condition"] .node-text {
   font-family: monospace;
   height: 100%;
+  color: #a73a3a;
   padding: 5px;
   background-color: #ffffff !important;
   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
