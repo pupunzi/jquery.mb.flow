@@ -418,7 +418,7 @@ import {Connection} from "../Classes/Connection.js";
             window.node_contextual_menu = new ContextualMenu(".node", $.flow.contextualMenu.node, false);
             window.variables_contextual_menu = new ContextualMenu(".variables", $.flow.contextualMenu.variables, true);
 
-            $("body").on("keypress", "[contenteditable]", (e) => {
+            $(document).on("keypress", "[contenteditable]", (e) => {
 
                 switch (e.key) {
                     case "Enter":
@@ -447,7 +447,7 @@ import {Connection} from "../Classes/Connection.js";
 
                 if ($.flow.metaKeys.indexOf("Meta") >= 0) {
                     $(".node").draggable("disable");
-                    boardArea.draggable("enable");
+                  //  boardArea.draggable("enable");
                     let board = $.flow.selectedBoard();
                     e.stopPropagation();
                     switch (e.key) {
@@ -483,8 +483,66 @@ import {Connection} from "../Classes/Connection.js";
             });
             $(document).on("keyup", () => {
                 $(".node").draggable("enable");
-                boardArea.draggable("disable");
+               // boardArea.draggable("disable");
             });
+
+            let boardArea = $(flowApp.ui.placeholders.board);
+            boardArea[0].style.zoom = 1;
+            let pos = {};
+            $(document).on("mousedown.drag", (e) => {
+
+                if ($(e.target).parents(".node").length)
+                    return;
+
+                if ($.flow.metaKeys.indexOf("Meta") >= 0) {
+                    $("body").css("cursor", "grab");
+                    pos = {
+                        left: boardArea.position().left,
+                        top: boardArea.position().top,
+                        x: e.clientX,
+                        y: e.clientY,
+                    };
+                } else if ($.flow.metaKeys.indexOf("Shift") >= 0) {
+                    //make selection
+                    flowApp.drawer.drawSelection(e)
+                }
+
+                $(document).on("mousemove.drag", (e) => {
+
+                    $.flow.latMousePosition = {x: e.clientX, y: e.clientY};
+
+                    if ($(e.target).parents(".node").length)
+                        return;
+
+                    if ($.flow.metaKeys.indexOf("Meta") >= 0) {
+                        $("body").css("cursor", "grabbing");
+                        const dx = e.clientX - pos.x;
+                        const dy = e.clientY - pos.y;
+                        boardArea.css({left: pos.left + dx, top: pos.top + dy});
+                        $.flow.updateConnections();
+                    } else if ($.flow.metaKeys.indexOf("Shift") >= 0) {
+                        flowApp.drawer.drawSelection(e)
+                    }
+                }).one("mouseup.drag", (e) => {
+                    flowApp.drawer.drawSelection(e);
+                    if ($.flow.metaKeys.indexOf("Meta") >= 0) {
+                        let left = parseFloat(boardArea.css("left"));
+                        let top = parseFloat(boardArea.css("top"));
+
+                        boardArea.css({left: left + (left%30), top: top+ (top%30)});
+                        $.flow.updateConnections();
+
+                    }
+                    $("body").css("cursor", "default");
+                    let board = $.flow.getSelectedBoard();
+                    board._x = parseFloat(boardArea.css("left"));
+                    board._y = parseFloat(boardArea.css("top"));
+                    Events.register(EventType.updateBoard, board);
+                    $(document).off("mousemove.drag");
+                });
+            });
+
+/*
             $(document).on("mousedown.drag", (e) => {
 
                 if ($(e.target).parents(".node").length)
@@ -518,8 +576,7 @@ import {Connection} from "../Classes/Connection.js";
             boardArea.draggable({
                 cursor: "grabbing",
                 snap: ".vline, .hline",
-                start: () => {
-                },
+                start: () => {},
                 drag: () => {
                     $.flow.updateConnections();
                 },
@@ -532,6 +589,7 @@ import {Connection} from "../Classes/Connection.js";
                 }
             });
             boardArea.draggable("disable");
+*/
         },
 
         /**
@@ -564,7 +622,7 @@ import {Connection} from "../Classes/Connection.js";
             let text = "Are you sure you want to delete<br><b>" + $(target).parent().find(".name").text() + "</b>?";
             let action = () => {
                 flowApp.deleteFlow(flowId);
-                flowApp.save()
+                flowApp.save(flowApp.flow.id);
             };
             UI.dialogue(title, text, null, null, null, "Yes", "Cancel", action, "alert");
         },
@@ -598,7 +656,7 @@ import {Connection} from "../Classes/Connection.js";
             editEl.one("blur", () => {
                 let board = flowApp.flow.getBoardById(boardId);
                 board._name = editEl.text();
-                flowApp.save(flowApp.flow.id);
+                //flowApp.save(flowApp.flow.id);
                 flowApp.drawer.drawBoardList();
             });
         },
@@ -606,7 +664,7 @@ import {Connection} from "../Classes/Connection.js";
             UI.dialogue("Delete Board", "Are you sure you want to delete<br><b>" + $(target).parent().find(".name").text() + "</b>?", null, null, null, "Yes", "Cancel", () => {
                 flowApp.flow.deleteBoard(boardId);
                 flowApp.drawer.drawBoardList();
-                flowApp.save(flowApp.flow.id);
+                //flowApp.save(flowApp.flow.id);
             }, "alert");
         },
         showBoardsByGroup: (groupName) => {

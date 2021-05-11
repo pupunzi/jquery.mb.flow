@@ -99,7 +99,7 @@ class FlowApp {
 
         //Add Board
         this.events.on(EventType.addBoard, (e) => {
-            this.save(this.flow.id);
+            //this.save(this.flow.id);
             this.drawer.drawBoardList();
         });
 
