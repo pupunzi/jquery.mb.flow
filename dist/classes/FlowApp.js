@@ -8,6 +8,7 @@ import {UI} from "./UI.js";
 import {Events, EventType} from "./Events.js";
 import {Drawer} from "./Drawer.js";
 import {Type} from "./Node.js";
+import {NodeElement} from "./NodeElement.js";
 
 class FlowApp {
 
@@ -68,16 +69,14 @@ class FlowApp {
         //Update Flow name
         this.events.on(EventType.updateFlowName, (e) => {
             this.drawer.drawBoardList();
-            this.save(this.flow.id);
         });
 
         //Load Flow
         this.events.on(EventType.loadFlow, (e) => {
             this.flow.selectedBoardGroup = "all";
             this.drawer.updateFlowName();
-            for (const property in this.flow._variables) {
-                this.flow._variables[property] = null;
-                console.log(`${property}: ${this.flow._variables[property]}`);
+            for (const variable in this.flow._variables) {
+                this.flow._variables[variable] = null;
             }
 
             this.drawer.drawBoardList();
@@ -86,20 +85,17 @@ class FlowApp {
         //Add Group
         this.events.on(EventType.addGroup, (e) => {
             this.flow.selectedBoardGroup = e.detail.groupName;
-            this.save(this.flow.id);
             this.drawer.drawBoardList();
         });
 
         //Edit Group Name
         this.events.on(EventType.updateGroupName, (e) => {
             this.flow.selectedBoardGroup = e.detail.newName;
-            this.save(this.flow.id);
             this.drawer.drawBoardList();
         });
 
         //Add Board
         this.events.on(EventType.addBoard, (e) => {
-            //this.save(this.flow.id);
             this.drawer.drawBoardList();
         });
 
@@ -109,20 +105,17 @@ class FlowApp {
                 let board = this.flow.boards[0];
                 this.flow.selectBoard(board._id);
             }
-            this.save(this.flow.id);
             this.drawer.drawBoardList();
         });
 
         //Duplicated Board
         this.events.on(EventType.duplicatedBoard, (e) => {
-            this.save(this.flow.id);
             this.drawer.drawBoardList();
         });
 
         //Select Board
         this.events.on(EventType.selectBoard, (e) => {
             this.drawer.drawBoardList();
-            this.save(this.flow.id);
         });
 
         //Update Board
@@ -133,7 +126,6 @@ class FlowApp {
         //Add Node
         this.events.on(EventType.addNode, (e) => {
             this.drawer.drawBoard();
-            this.save(this.flow.id);
         });
 
         // Update Node
@@ -144,14 +136,31 @@ class FlowApp {
         //Delete Node
         this.events.on(EventType.deleteNode, (e) => {
             this.drawer.drawBoard();
-            this.save(this.flow.id);
         });
 
         //Select Node
         this.events.on(EventType.selectNode, (e) => {
             //this.drawer.focusOnSelected();
-            // this.save(this.flow.id);
             //console.debug("selectNode", e.detail);
+        });
+
+        //Add NodeElement
+        this.events.on(EventType.addNodeElement, (e) => {
+            let node = e.detail;
+            this.addNodeElement(node);
+            this.drawer.drawBoard();
+        });
+
+        //Delete NodeElement
+        this.events.on(EventType.deletetNodeElement, (e) => {
+            let nodeId = e.detail.nodeId;
+            let nodeElementId = e.detail.nodeElementId;
+            let board = $.flow.selectedBoard();
+            let node = board.getNodeById(nodeId);
+
+            console.debug(nodeId, nodeElementId);
+            this.deleteNodeElement(node,nodeElementId);
+            this.drawer.drawBoard();
         });
 
         //Add Connection
@@ -178,7 +187,8 @@ class FlowApp {
                 }
 
                 $board.find("#node_" + connection._from).attr("data-connections-count", node._connections.length);
-                this.save(this.flow.id);
+
+                Events.register(EventType.updateBoard, board);
                // return;
             }
 
@@ -216,7 +226,8 @@ class FlowApp {
                 $board.find("#node_" + connection._from).attr("data-connections-count", node._connections.length);
                 flowApp.drawer.drawConnection(connection);
             }
-            this.save(this.flow.id);
+
+            Events.register(EventType.updateBoard, board);
         });
 
         //Delete Connection
@@ -225,14 +236,34 @@ class FlowApp {
         });
     }
 
+    addNodeElement(node) {
+        let nodeElement = new NodeElement(this._type, this.id);
+        node._elements.unshift(nodeElement);
+    }
+
+    deleteNodeElement(node, id) {
+        let el = this.getElementById(node,id);
+        if (el != null)
+            node._elements.delete(el);
+    }
+
+    getElementById(node, id) {
+        let ne = null;
+        node._elements.forEach((element) => {
+            if (element._id === id)
+                ne = element;
+        });
+        return ne;
+    }
+
     addFlow(name = "New Flow") {
         this.flow = new Flow(name);
         this._flowsIds.unshift({id: this.flow.id, name: this.flow.name});
         $.mbStorage.set("lastFlow", this.flow.id);
         let board = this.flow.addBoard("My Board");
         this.flow.selectBoard(board._id);
-        this.save(this.flow.id);
         Events.register(EventType.addFlow, this.flow);
+        Events.register(EventType.updateBoard, board);
         return this.flow;
     }
 

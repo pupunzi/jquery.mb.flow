@@ -13,6 +13,7 @@ export class Node {
 		this._id = Util.setUID();
 		this._boardId = boardId;
 		this._type = type;
+		this._cycleType = CycleType.list;
 		this._mood = null;
 		this._elements = [];
 		this._x = 300;
@@ -27,6 +28,13 @@ export class Node {
 		this.init();
 	}
 
+	get cycleType() {
+		return this._cycleType;
+	}
+
+	set cycleType(value) {
+		this._cycleType = value;
+	}
 	get mood() {
 		return this._mood;
 	}
@@ -107,26 +115,6 @@ export class Node {
 	get id() {
 		return this._id;
 	}
-
-	addElement() {
-		let nodeElement = new NodeElement(this._type, this.id);
-		this._elements.unshift(nodeElement);
-	}
-
-	deleteElement(id) {
-		let el = this.getElementById(id);
-		if (el != null)
-			this.elements.delete(el);
-	}
-
-	getElementById(id) {
-		let ne = null;
-		this.elements.forEach((element) => {
-			if (element.id === id)
-				ne = element;
-		});
-		return ne;
-	}
 }
 
 
@@ -135,6 +123,18 @@ export class Type {
 	static start = "Start";
 	static text = "Text";
 	static note = "Note";
+
+	static choices = "Choice";
+
+	static condition = "Condition";
+	static random = "Random";
+	static jumpToNode = "JumpToNode";
+}
+
+export class CycleType {
+	static list = "List";
+	static repeat = "Repeat";
+	static random = "Random";
 
 	static choices = "Choice";
 

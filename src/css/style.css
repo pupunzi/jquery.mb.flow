@@ -620,7 +620,7 @@ html body #wrapper #boards-list-column #boards-list .board-list-element i {
   margin: 0;
   cursor: pointer;
 }
-html body #wrapper #boards-list-column #boards-list .board-list-element i.icon-drag_indicator {
+html body #wrapper #boards-list-column #boards-list .board-list-element i.icon-reorder {
   color: rgba(255, 255, 255, 0.2);
   cursor: move;
 }
@@ -741,7 +741,7 @@ html body #wrapper #draw-area .node .node-content .node-content-line .node-text 
   overflow: auto;
   background-color: rgba(255, 255, 255, 0.1);
   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
-  font-size: 13px;
+  font-size: 12px;
 }
 html body #wrapper #draw-area .node .node-content .node-content-line .variables {
   position: relative;
@@ -786,8 +786,8 @@ html body #wrapper #draw-area .node[data-type="text"] {
 html body #wrapper #draw-area .node[data-type="text"] .node-content-line {
   height: 100%;
   padding: 5px;
-  background-color: rgba(0, 0, 0, 0.1);
   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
+  border-bottom: 1px solid rgba(31, 75, 96, 0.2);
 }
 html body #wrapper #draw-area .node[data-type="note"] {
   width: 240px;

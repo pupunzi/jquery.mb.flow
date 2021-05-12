@@ -253,7 +253,7 @@ html {
               margin: 0;
               cursor: pointer;
 
-              &.icon-drag_indicator {
+              &.icon-reorder {
                 color: rgba(255, 255, 255, 0.2);
                 cursor: move;
               }
@@ -394,7 +394,7 @@ html {
                 overflow: auto;
                 background-color: fade(#ffffff, 10%);
                 box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
-                font-size: 13px;
+                font-size: 12px;
               }
 
               .variables {
@@ -438,17 +438,16 @@ html {
 
           &[data-type="text"] {
             width: 240px;
-            // min-height: 100px;
-            background-color: @main-icon-color;
-            // border-radius: 10px;
+            background-color: #ffffff;
             top: 40px;
             left: 40px;
 
             .node-content-line {
               height: 100%;
               padding: 5px;
-              background-color: fade(#000, 10%);
+              //background-color: fade(#000, 10%);
               box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
+              border-bottom: 1px solid rgba(31,75,96,0.2);
             }
           }
 

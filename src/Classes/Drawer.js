@@ -1,6 +1,8 @@
 import {UI} from "./UI.js";
 import {Type} from "./Node.js";
 import {Util} from "./Util.js";
+import {CycleType} from "./Node.js";
+import {Events, EventType} from "./Events.js";
 
 /**
  *
@@ -52,7 +54,7 @@ export class Drawer {
 
         //https://johnny.github.io/jquery-sortable/
         $(flowApp.ui.placeholders.boardList).sortable({
-            handle: 'i.icon-drag_indicator',
+            handle: 'i.icon-reorder',
             onDrop: function ($item, container, _super) {
                 _super($item, container);
 
@@ -65,7 +67,10 @@ export class Drawer {
                 });
 
                 flowApp.flow._boards = boards;
-                flowApp.save(flowApp.flow.id);
+
+                let board = $.flow.getSelectedBoard();
+                Events.register(EventType.updateBoard, board);
+
             }
         });
 
@@ -121,7 +126,9 @@ export class Drawer {
         });
 
         //Save the flow
-        this.flowApp.save(this.flowApp.id);
+        let board = $.flow.getSelectedBoard();
+        Events.register(EventType.updateBoard, board);
+
     }
 
     focusOnSelected() {
@@ -138,23 +145,19 @@ export class Drawer {
             let x = parseFloat($node.css("left"));
             let y = parseFloat($node.css("top"));
 
-            if((!firstX && !firstY) || (x < firstX && y < firstY)){
+            if ((!firstX && !firstY) || (x < firstX && y < firstY)) {
                 firstX = x;
                 firstY = y;
             }
-            if((!lastX && !lastY) || (x > lastX && y < lastY)){
+            if ((!lastX && !lastY) || (x > lastX && y < lastY)) {
                 lastX = x;
                 lastY = y;
             }
         });
 
-        console.debug("board Left/top", boardX, boardY);
-        console.debug("first Left/top", firstX, firstY);
-        console.debug("last Left/top", lastX, lastY);
-
         $board.css({
-            left: ($board.width()/2) - (firstX + ((lastX-firstX)/2)),
-            top: ($board.height()/2) - (firstY + ((lastY-firstY)/2)),
+            left: ($board.width() / 2) - (firstX + ((lastX - firstX) / 2)),
+            top: ($board.height() / 2) - (firstY + ((lastY - firstY) / 2)),
         });
         $.flow.updateConnections();
 
@@ -162,8 +165,6 @@ export class Drawer {
 
     drawNode(node) {
         let board = $.flow.getSelectedBoard();
-        let flowApp = this.flowApp;
-
         let lines = "";
         //Draw Node content
         switch (node._type) {
@@ -172,6 +173,7 @@ export class Drawer {
             case Type.choices:
             case Type.condition:
                 node._elements.forEach((element) => {
+
                     lines += UI.fillTemplate("node-" + node._type.toLowerCase() + "-line", {
                         nodeId: node._id,
                         nodeElementId: element._id,
@@ -187,7 +189,11 @@ export class Drawer {
             boardId: this.flowApp.flow.selectedBoardId,
             lines: lines,
             boardGroup: board._group,
-            connectionsCount: node._connections.length
+            connectionsCount: node._connections.length,
+            cycleIcon: node._cycleType === CycleType.list ? "icon-list-ol"
+                : node._cycleType === CycleType.repeat ? "icon-repeat"
+                    : node._cycleType === CycleType.random ? "icon-random" : "icon-list-ol"
+
         });
 
         $(this.flowApp.ui.placeholders.board).append(nodeEl);
@@ -218,7 +224,8 @@ export class Drawer {
                     element._content = sanitized;
             });
 
-            flowApp.save(flowApp.flow.id);
+            Events.register(EventType.updateBoard, board);
+
         });
 
         $.flow.makeNodeDraggableAndLinkable(node._id, {leftTop: true});
@@ -274,7 +281,6 @@ export class Drawer {
             line = $.flow.LeaderLine(fromNode, toNode, option);
         }
         connection._connectionLine = line;
-
         return line;
     }
 

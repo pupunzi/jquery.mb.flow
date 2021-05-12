@@ -53,14 +53,18 @@ export class Menu {
 
         i.forEach((item) => {
             let line = $("<li>").addClass("contextual-menu-item");
-
             if (item.className)
                 line.addClass(item.className);
 
             if (!item.name) {
                 line.addClass("separator");
             } else {
-                line.html(item.name);
+                let icon = "<i></i>";
+                if(item.icon){
+                    icon="<i class='icon " + item.icon +"'></i>";
+                }
+
+                line.html(icon + " " +item.name);
                 if (item.fn)
                     line.on("click", () => {
                         item.fn(e.target, e);
@@ -156,7 +160,7 @@ export class ContextualMenu {
             } else {
                 line.html(item.name);
                 if (item.fn)
-                    line.on("click", (e) => {
+                    line.on("click", () => {
                         item.fn(e.target, e);
                         this.hide();
                     });
