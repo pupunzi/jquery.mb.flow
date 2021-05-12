@@ -831,7 +831,7 @@ html body #wrapper #draw-area .node[data-type="choice"] .node-content .node-cont
 html body #wrapper #draw-area .node[data-type="choice"] .node-content .node-content-line .node-text {
   max-height: 100px;
   overflow: auto;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: transparent;
   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
 }
 html body #wrapper #draw-area .node[data-type="random"] {
@@ -866,7 +866,10 @@ html body #wrapper #draw-area .node[data-type="condition"] .menu {
 html body #wrapper #draw-area .node[data-type="condition"] .menu i.icon {
   color: #ffffff;
 }
-html body #wrapper #draw-area .node[data-type="condition"] .node-text {
+html body #wrapper #draw-area .node[data-type="condition"] .node-content .node-content-line {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+html body #wrapper #draw-area .node[data-type="condition"] .node-content .node-content-line .node-text {
   font-family: monospace;
   height: 100%;
   color: #a73a3a;
