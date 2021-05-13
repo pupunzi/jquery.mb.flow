@@ -751,12 +751,14 @@ html body #wrapper #draw-area .node .node-content .node-content-line {
 }
 html body #wrapper #draw-area .node .node-content .node-content-line.ui-sortable-helper {
   background-color: white;
+  color: #222222 !important;
 }
 html body #wrapper #draw-area .node .node-content .node-content-line i.icon {
   position: absolute;
   color: rgba(50, 50, 50, 0.34);
   cursor: move;
-  z-index: 1000;
+  z-index: 1;
+  font-size: 60%;
 }
 html body #wrapper #draw-area .node .node-content .node-content-line .node-text {
   padding-left: 20px;
