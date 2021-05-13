@@ -217,7 +217,6 @@ class FlowApp {
 
                     node._connections.delete(c);
                     board._connections.delete(c);
-
                 }
             });
 

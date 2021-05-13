@@ -749,7 +749,17 @@ html body #wrapper #draw-area .node .node-content {
 html body #wrapper #draw-area .node .node-content .node-content-line {
   position: relative;
 }
+html body #wrapper #draw-area .node .node-content .node-content-line.ui-sortable-helper {
+  background-color: white;
+}
+html body #wrapper #draw-area .node .node-content .node-content-line i.icon {
+  position: absolute;
+  color: rgba(50, 50, 50, 0.34);
+  cursor: move;
+  z-index: 1000;
+}
 html body #wrapper #draw-area .node .node-content .node-content-line .node-text {
+  padding-left: 20px;
   position: relative;
   width: 100%;
   min-height: 30px;
@@ -889,7 +899,6 @@ html body #wrapper #draw-area .node[data-type="condition"] .node-content .node-c
   font-family: monospace;
   height: 100%;
   color: #a73a3a;
-  padding: 5px;
   background-color: #ffffff !important;
   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
 }

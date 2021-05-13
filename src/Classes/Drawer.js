@@ -1,7 +1,6 @@
 import {UI} from "./UI.js";
-import {Type} from "./Node.js";
+import {CycleType, Type} from "./Node.js";
 import {Util} from "./Util.js";
-import {CycleType} from "./Node.js";
 import {Events, EventType} from "./Events.js";
 
 /**
@@ -23,7 +22,7 @@ export class Drawer {
 		let flow = this.flowApp.flow;
 		let content = UI.fillTemplate("flow-name", {
 			flowName: flow._name,
-			id      : flow._id
+			id: flow._id
 		});
 		$(this.flowApp.ui.placeholders.flowName).html(content);
 	}
@@ -37,9 +36,9 @@ export class Drawer {
 			if (board._id === flowApp.flow.selectedBoardId)
 				selected = "selected";
 			let content = UI.fillTemplate("board-list-element", {
-				boardName : board._name,
-				id        : board._id,
-				className : selected,
+				boardName: board._name,
+				id: board._id,
+				className: selected,
 				boardGroup: board._group
 			});
 
@@ -52,14 +51,11 @@ export class Drawer {
 			$(flowApp.ui.placeholders.boardList).append(content);
 		});
 
-		//https://johnny.github.io/jquery-sortable/
 		$(flowApp.ui.placeholders.boardList).sortable({
+			axis: "y",
 			handle: 'i.icon-reorder',
-			onDrop: function ($item, container, _super) {
-				_super($item, container);
-
+			stop: function () {
 				let boards = [];
-
 				$(flowApp.ui.placeholders.boardList).children().each(function () {
 					let boardId = $(this).data("board-id");
 					let board = flowApp.flow.getBoardById(boardId);
@@ -157,13 +153,14 @@ export class Drawer {
 
 		$board.css({
 			left: ($board.width() / 2) - (firstX + ((lastX - firstX) / 2)),
-			top : ($board.height() / 2) - (firstY + ((lastY - firstY) / 2)),
+			top: ($board.height() / 2) - (firstY + ((lastY - firstY) / 2)),
 		});
 		$.flow.updateConnections();
 
 	}
 
 	drawNode(node) {
+		let flowApp = this.flowApp;
 		let board = $.flow.getSelectedBoard();
 		let lines = "";
 		//Draw Node content
@@ -175,9 +172,9 @@ export class Drawer {
 				node._elements.forEach((element) => {
 
 					lines += UI.fillTemplate("node-" + node._type.toLowerCase() + "-line", {
-						nodeId       : node._id,
+						nodeId: node._id,
 						nodeElementId: element._id,
-						content      : element._content
+						content: element._content
 					});
 				});
 				break;
@@ -185,20 +182,20 @@ export class Drawer {
 
 		let failConnectionsCount = 0;
 		node._connections.forEach((connection) => {
-			if (connection._type === 3)
+			if (connection._type === 3 && node._type === Type.condition)
 				failConnectionsCount++;
 		});
 
 		let nodeEl = UI.fillTemplate("node-" + node._type.toLowerCase(), {
-			nodeId              : node._id,
-			flowId              : this.flowApp.flow.id,
-			boardId             : this.flowApp.flow.selectedBoardId,
-			lines               : lines,
-			boardGroup          : board._group,
-			connectionsCount    : node._connections.length,
-			cycleIcon           : node._cycleType === CycleType.list ? "icon-list-ol" : node._cycleType === CycleType.repeat ? "icon-repeat" : node._cycleType === CycleType.random ? "icon-random" : "icon-list-ol",
+			nodeId: node._id,
+			flowId: this.flowApp.flow.id,
+			boardId: this.flowApp.flow.selectedBoardId,
+			lines: lines,
+			boardGroup: board._group,
+			connectionsCount: node._connections.length,
+			cycleIcon: node._cycleType === CycleType.list ? "icon-list-ol" : node._cycleType === CycleType.repeat ? "icon-repeat" : node._cycleType === CycleType.random ? "icon-random" : "icon-list-ol",
 			failConnectionsCount: failConnectionsCount
-	});
+		});
 		$(this.flowApp.ui.placeholders.board).append(nodeEl);
 
 		node._connections.forEach((connection) => {
@@ -208,8 +205,35 @@ export class Drawer {
 		let $node = $(this.flowApp.ui.placeholders.board).find("#node_" + node._id);
 		$node.css({
 			left: node._x,
-			top : node._y
+			top: node._y
 		});
+
+		if ($node.find(".node-content").children().length > 1)
+			$node.find(".node-content").sortable({
+				handle: 'i.icon-reorder',
+				cursorAt: {left: 5},
+				axis: "y",
+				tolerance: 'pointer',
+				cursor: 'grabbing',
+				classes: {
+					"ui-sortable": "highlight"
+				},
+				sort: () => {
+					$.flow.updateConnections();
+				},
+				stop: () => {
+					let nodeElements = [];
+					$node.find(".node-content").children().each(function () {
+						let nodeElementId = $(this).data("node-element-id");
+						let nodeElement = flowApp.getElementById(node, nodeElementId);
+						nodeElements.push(nodeElement);
+					});
+					node._elements = nodeElements;
+					$.flow.updateConnections();
+					let board = $.flow.getSelectedBoard();
+					Events.register(EventType.updateBoard, board);
+				}
+			});
 
 		//Update nodeElement content
 		//todo: move to flowApp events
@@ -283,12 +307,12 @@ export class Drawer {
 		let color = this.getConnectionColorByConnectionType(type);
 
 		let option = {
-			element  : $(this.flowApp.ui.placeholders.board).get(0),
-			color    : color,
-			size     : 3,
-			path     : "fluid",
+			element: $(this.flowApp.ui.placeholders.board).get(0),
+			color: color,
+			size: 3,
+			path: "fluid",
 			startPlug: 'square',
-			dash     : {animation: true}
+			dash: {animation: true}
 		};
 
 		$.extend(option, opt);
@@ -296,6 +320,15 @@ export class Drawer {
 		let board = this.flowApp.ui.placeholders.board;
 		let node = $.flow.getNodeById(connection._from);
 		$(board).find("#node_" + connection._from).attr("data-connections-count", node._connections.length);
+
+		let failConnections = 0;
+		node._connections.forEach((connection) => {
+			if (connection._type === 3 && node._type === Type.condition)
+				failConnections++;
+		});
+
+		if (node._type === Type.condition && connection._type === 3)
+			$(board).find("#node_" + connection._from).attr("data-fail-connection-count", failConnections);
 
 		let fromNode = null;
 
@@ -330,7 +363,7 @@ export class Drawer {
 			this.startY = e.clientY;
 			selection.css({
 				left: this.startX,
-				top : this.startY
+				top: this.startY
 			});
 
 			$("body").append(selection);
@@ -343,7 +376,7 @@ export class Drawer {
 			let height = y - this.startY;
 
 			$("#selection").css({
-				width : width,
+				width: width,
 				height: height
 			});
 

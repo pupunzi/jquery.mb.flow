@@ -802,7 +802,6 @@ import {Connection} from "../Classes/Connection.js";
 							$(this).get(0).line.position();
 
 						}).one("mouseup", (e) => {
-
 							/*
 							start
 							text
@@ -842,6 +841,7 @@ import {Connection} from "../Classes/Connection.js";
 								toEl.data("node-id"),
 								connectionType
 							);
+
 							Events.register(EventType.addConnection, connection);
 						});
 					}

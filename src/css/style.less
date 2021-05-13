@@ -406,7 +406,19 @@ html {
             .node-content-line {
               position: relative;
 
+              &.ui-sortable-helper{
+                background-color: white;
+              }
+
+              i.icon {
+                position: absolute;
+                color: rgba(50, 50, 50, 0.34);
+                cursor: move;
+                z-index: 1000;
+              }
+
               .node-text {
+                padding-left: 20px;
                 position: relative;
                 width: 100%;
                 min-height: 30px;
@@ -574,7 +586,6 @@ html {
                   font-family: monospace;
                   height: 100%;
                   color: @alert-font-color;
-                  padding: 5px;
                   background-color: fade(#fff, 100%) !important;
                   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
                 }

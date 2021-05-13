@@ -104,16 +104,17 @@
             </div>
             <i class="icon icon-ellipsis-v node-menu" data-menu="node"></i>
         </div>
-        <div class="node-content">{{lines}}</div>
+        <ol class="node-content">{{lines}}</ol>
     </div>
 </template>
 
 <!-- TEXT NODE LINE -->
 <template id="node-text-line">
-    <div class="node-content-line line" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
+    <li class="node-content-line line" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
+        <i class="icon icon-reorder"></i>
         <div class="node-text" contenteditable="true">{{content}}</div>
         <!--<div class="variables" contenteditable="true"></div>-->
-    </div>
+    </li>
 </template>
 
 <!-- NOTE NODE                   ----------------------->
@@ -123,14 +124,14 @@
         <div class="menu">
             <div class="node-button-bar"><i class="icon icon-thumb-tack node-icon"></i></div>
         </div>
-        <div class="node-content">{{lines}}</div>
+        <ol class="node-content">{{lines}}</ol>
     </div>
 </template>
 <!-- NOTE NODE LINE -->
 <template id="node-note-line">
-    <div class="node-content-line line" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
+    <li class="node-content-line line" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
         <div class="node-text" contenteditable="true">{{content}}</div>
-    </div>
+    </li>
 </template>
 
 <!-- CHOICE NODE                ----------------------->
@@ -141,17 +142,18 @@
             <div class="node-button-bar"><i class="icon icon-th-list node-icon"></i></div>
             <i class="icon icon-ellipsis-v node-menu" data-menu="node"></i>
         </div>
-        <div class="node-content">{{lines}}</div>
+        <ol class="node-content">{{lines}}</ol>
     </div>
 </template>
 
 <!-- CHOICE NODE LINE -->
 <template id="node-choice-line">
-    <div class="node-content-line line anchorOut" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
+    <li class="node-content-line line anchorOut" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
+        <i class="icon icon-reorder"></i>
         <div class="node-text" contenteditable="true">{{content}}</div>
         <!--<div class="variables" contenteditable="true">{{variables}}</div>-->
         <div class="anchor"></div>
-    </div>
+    </li>
 </template>
 
 <!-- CONDITIONAL NODE                   ----------------------->
@@ -162,15 +164,16 @@
             <div class="node-button-bar"><i class="icon icon-sitemap node-icon"></i></div>
             <i class="icon icon-ellipsis-v node-menu" data-menu="node"></i>
         </div>
-        <div class="node-content">{{lines}}</div>
+        <ol class="node-content">{{lines}}</ol>
     </div>
 </template>
 
 <!-- CONDITIONAL NODE LINE -->
 <template id="node-condition-line">
-    <div class="node-content-line line anchorOut" data-flow-id="{{flowId}}" data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}" data-connections-count="{{connectionsCount}}">
+    <li class="node-content-line line anchorOut" data-flow-id="{{flowId}}" data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}" data-connections-count="{{connectionsCount}}">
+        <i class="icon icon-reorder"></i>
         <div class="node-text" contenteditable="true">{{content}}</div>
         <div class="anchor"></div>
-    </div>
+    </li>
 </template>
 
