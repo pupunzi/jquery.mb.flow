@@ -165,6 +165,7 @@ class FlowApp {
 
         //Add Connection
         this.events.on(EventType.addConnection, (e) => {
+
             let connection = e.detail;
             let board = this.flow.getBoardById(this.flow._selectedBoardId);
             let $board = $(this.ui.placeholders.board);
