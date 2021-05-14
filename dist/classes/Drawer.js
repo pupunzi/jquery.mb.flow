@@ -170,7 +170,6 @@ export class Drawer {
 			case Type.choices:
 			case Type.condition:
 				node._elements.forEach((element) => {
-
 					lines += UI.fillTemplate("node-" + node._type.toLowerCase() + "-line", {
 						nodeId: node._id,
 						nodeElementId: element._id,
@@ -237,7 +236,10 @@ export class Drawer {
 
 		//Update nodeElement content
 		//todo: move to flowApp events
-		$node.find(".node-text").on("blur", function () {
+		$node.find(".node-text").on("focus", function(){
+			$node.data("height", $node.height());
+		}).on("blur", function () {
+			$node.data("height", $node.height());
 
 			let content = $(this).html();
 			let sanitized = Util.sanitize(content);

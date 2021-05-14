@@ -895,7 +895,9 @@ html body #wrapper #draw-area .node[data-type="condition"] .menu i.icon {
   color: #ffffff;
 }
 html body #wrapper #draw-area .node[data-type="condition"] .node-content .node-content-line {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: #ffffff !important;
+  padding: 5px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 html body #wrapper #draw-area .node[data-type="condition"] .node-content .node-content-line .node-text {
   font-family: monospace;

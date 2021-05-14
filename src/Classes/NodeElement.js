@@ -12,7 +12,7 @@ class NodeElement {
 		this._id = Util.setUID();
 		this._type = type;
 		this._nodeId = nodeId;
-		this._content = "";
+		this._localizedContents = [];
 		this._selected = false;
 	}
 
@@ -51,6 +51,15 @@ class NodeElement {
 	get id() {
 		return this._id;
 	}
+}
+
+class NodeElementContent {
+	constructor(languageCode,) {
+		this._languageCode = languageCode;
+		this._content;
+	}
+
+
 }
 
 export {NodeElement};

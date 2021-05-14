@@ -487,22 +487,25 @@ import {Connection} from "../Classes/Connection.js";
 			window.nodeElement_contextual_menu = new ContextualMenu(".node-content-line", $.flow.contextualMenu.nodeElement, true);
 
 			$(document).on("keypress", "[contenteditable]", (e) => {
-
+				let $node = $(e.target).parents(".node");
+				$.flow.autoShiftNodes($node);
+				$.flow.updateConnections();
 				switch (e.key) {
 					case "Enter":
-						if ($(e.target).parents(".node").length > 0) {
+						if ($node.length > 0) {
+							$.flow.autoShiftNodes($node);
 							$.flow.updateConnections();
-							if ($.flow.metaKeys.indexOf("Shift") < 0) {
+							if ($.flow.metaKeys.indexOf("Shift") >= 0) {
 								e.preventDefault();
 								$(e.target).blur();
 							}
-
 							return;
 						}
 
 						e.preventDefault();
 						$(e.target).blur();
 						break;
+
 					case "Backspace":
 						if ($(e.target).parents(".node").length > 0) {
 							$.flow.updateConnections();
@@ -776,7 +779,7 @@ import {Connection} from "../Classes/Connection.js";
 
 						let startEl = $node.is(".anchorOut") ? $node : $(this);
 
-						if($.flow.metaKeys.indexOf("Alt") >= 0 && node._type === Type.condition)
+						if ($.flow.metaKeys.indexOf("Alt") >= 0 && node._type === Type.condition)
 							startEl = $node;
 
 						let fakeEl = $("<div id='fakeEl'>").css({
@@ -791,8 +794,8 @@ import {Connection} from "../Classes/Connection.js";
 						);
 
 						fakeEl.appendTo(flowApp.ui.placeholders.board);
-						let connColor = $.flow.metaKeys.indexOf("Alt")>=0 && node._type === Type.condition ? "red" : "orange";
-						$(this).get(0).line = $.flow.LeaderLine(startEl.is(".anchorOut") || ($.flow.metaKeys.indexOf("Alt") >= 0 && node._type === Type.condition)? startEl : startEl.find(".anchor"), fakeEl, {color: connColor, size: 3});
+						let connColor = $.flow.metaKeys.indexOf("Alt") >= 0 && node._type === Type.condition ? "red" : "orange";
+						$(this).get(0).line = $.flow.LeaderLine(startEl.is(".anchorOut") || ($.flow.metaKeys.indexOf("Alt") >= 0 && node._type === Type.condition) ? startEl : startEl.find(".anchor"), fakeEl, {color: connColor, size: 3});
 
 						$(document).on("mousemove.line", (e) => {
 							fakeEl.css({
@@ -818,7 +821,7 @@ import {Connection} from "../Classes/Connection.js";
 									connectionType = 1;
 									break;
 								case Type.condition:
-									if(startEl.data("node-element-id") != null)
+									if (startEl.data("node-element-id") != null)
 										connectionType = 2;
 									else
 										connectionType = 3;
@@ -849,10 +852,12 @@ import {Connection} from "../Classes/Connection.js";
 			});
 
 		},
-		LeaderLine                  : (from, to, opt) => {
+
+		LeaderLine: (from, to, opt) => {
 			return new LeaderLine(from.get(0), to.get(0), opt);
 		},
-		updateConnections           : () => {
+
+		updateConnections: () => {
 			let board = $.flow.getSelectedBoard();
 			let connections = board._connections;
 
@@ -868,14 +873,37 @@ import {Connection} from "../Classes/Connection.js";
 			})
 		},
 
+		autoShiftNodes: ($node) => {
+			let board = $.flow.getSelectedBoard();
+			let nodes = board._nodes;
+			let left = parseFloat($node.css("left"));
+			let top = parseFloat($node.css("top"));
+
+			if (!$node.get(0).h || $node.height() !== $node.get(0).h) {
+				nodes.forEach((node) => {
+					let $n = $(flowApp.ui.placeholders.board).find("#node_" + node._id);
+					let $nLeft = parseFloat($n.css("left"));
+					let $nTop = parseFloat($n.css("top"));
+					if (($nLeft >= left && $nLeft < left + $node.width()) && $nTop > top) {
+						let distance = $node.height() - $node.get(0).h;
+						$n.css({top: $nTop + distance });
+						node._x = $n.position().left;
+						node._y = $n.position().top;
+					}
+				});
+				$node.get(0).h = $node.height();
+			}
+		},
+
 		/**
 		 * Node
 		 */
-		getNodeById            : (nodeId) => {
+		getNodeById: (nodeId) => {
 			let board = $.flow.getSelectedBoard();
 			return board.getNodeById(nodeId);
 		},
-		addToSelectedNodes     : function (nodeId, multi = false) {
+
+		addToSelectedNodes: function (nodeId, multi = false) {
 			if (multi) {
 				if ($.flow.selectedNodes.indexOf(nodeId) < 0) {
 					$.flow.selectedNodes.unshift(nodeId);
@@ -888,6 +916,7 @@ import {Connection} from "../Classes/Connection.js";
 
 			Events.register(EventType.selectNode, {selectedNodeId: nodeId});
 		},
+
 		removeFromSelectedNodes: function (nodeId = null) {
 			if (nodeId)
 				$.flow.selectedNodes.delete(nodeId);

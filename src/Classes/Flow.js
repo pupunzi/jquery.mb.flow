@@ -8,17 +8,20 @@ import {Board} from "./Board.js";
 import {Events, EventType} from "./Events.js";
 import {Variable} from "./Variable.js";
 
-class Flow {
-
+export class Flow {
 	constructor(name) {
 		this._id = Util.setUID();
 		this._date = new Date().getTime();
+		this._locale = "EN";
 		this._name = name;
 		this._boards = [];
 		this._selectedBoardId = null;
 		this._boardGroups = [];
 		this._selectedBoardGroup = null;
+
+		this._settings = new FlowSettings();
 		this._variables = [];
+
 		this._actors = [];
 	}
 
@@ -128,7 +131,7 @@ class Flow {
 		Events.register(EventType.duplicatedBoard, board);
 	}
 
-	moveBoardToGroup(boardId, groupName){
+	moveBoardToGroup(boardId, groupName) {
 		let board = this.getBoardById(boardId);
 		console.debug("Board", board._name)
 		board._group = groupName;
@@ -164,7 +167,7 @@ class Flow {
 		}
 	}
 
-	addVariable(key, value = null){
+	addVariable(key, value = null) {
 		let variable = new Variable();
 		variable._key = key;
 		variable._value = value;
@@ -172,12 +175,29 @@ class Flow {
 		this._variables.push(variable);
 	}
 
-	deleteVariable(key){
-		this._variables.forEach((variable)=>{
-			if(variable.key === key)
+	deleteVariable(key) {
+		this._variables.forEach((variable) => {
+			if (variable.key === key)
 				this._variables.delete(variable);
 		})
 	}
 }
 
-export {Flow};
+export class FlowSettings {
+	constructor(flowId, mainLanguageCode = "EN") {
+		this._flowId = flowId;
+		this._currentLanguage = new Language(mainLanguageCode);
+		this.availableLanguages = [];
+		this._choiceBehavior = 0;
+		this._randomBehavior = 0;
+		this.enableEditorGrid = true;
+	}
+}
+
+export class Language {
+	constructor(code = "EN", desc = "") {
+		this._code = code;
+		this._desc = desc;
+	}
+
+}
