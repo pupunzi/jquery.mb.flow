@@ -143,7 +143,7 @@ export class AvatarDrawer {
         AvatarDrawer.drawOptionsValue("clothing");
         AvatarDrawer.drawOptionsValue("clothingColor", 'palette');
 
-        $("input[type=color]").val(AvatarDrawer.options["background"]);
+        $("input[type=color]")[0].value= AvatarDrawer.options["background"];
     }
 
     static drawOptionsValue(key, color = null) {

@@ -715,10 +715,10 @@ html body #wrapper #draw-area .node .menu {
 }
 html body #wrapper #draw-area .node .menu .actor-avatar {
   position: absolute;
-  width: 40px;
-  height: 40px;
-  left: -20px;
-  top: -20px;
+  width: 60px;
+  height: 60px;
+  left: -30px;
+  top: -30px;
   background: transparent;
   z-index: 100;
 }
@@ -1097,6 +1097,9 @@ html #avatar-window .flow-dialogue .options-editor input[type="color"] {
   width: 40px;
   height: 40px;
   vertical-align: middle;
+}
+html #avatar-window .flow-dialogue .options-editor button#randomize {
+  vertical-align: baseline;
 }
 html .contextual-menu {
   min-width: 150px;
