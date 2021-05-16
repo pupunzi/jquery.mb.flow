@@ -6,7 +6,6 @@
 import {Util} from "./Util.js";
 import {Board} from "./Board.js";
 import {Events, EventType} from "./Events.js";
-import {Variable} from "./Variable.js";
 import {Actor} from "./Actor.js";
 import {Locale} from "./Locale.js";
 
@@ -26,15 +25,15 @@ export class Flow {
         this._selectedBoardGroup = null;
 
         this._variables = {};
-
-        this._actors = [new Actor("System", null, "gray")];
+        this._actors = [new Actor()];
+        this._defaultActor = this._actors[0];
     }
 
     get variables() {
         return this._variables;
     }
 
-    get actors() {
+    get actorByName() {
         return this._actors;
     }
 
@@ -172,21 +171,6 @@ export class Flow {
         }
     }
 
-    addVariable(key, value = null) {
-        let variable = new Variable();
-        variable._key = key;
-        variable._value = value;
-
-        this._variables.push(variable);
-    }
-
-    deleteVariable(key) {
-        this._variables.forEach((variable) => {
-            if (variable.key === key)
-                this._variables.delete(variable);
-        })
-    }
-
     addLocale(locale, description) {
         this._availableLocale.push(new Locale(locale, description))
     }
@@ -196,6 +180,15 @@ export class Flow {
             if (locale._code === code)
                 this._availableLocale.delete(locale);
         })
+    }
+
+    getActorById(actorId) {
+        let a = null;
+        this._actors.forEach((actor) => {
+            if (actor._id === actorId)
+                a = actor;
+        });
+        return a;
     }
 }
 

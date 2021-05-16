@@ -56,10 +56,11 @@ class UI {
         if (opt.inputId != null) {
             dialogueInput = $("<div>").attr({id: opt.inputId, contentEditable: "true"}).addClass("flow-dialogue-input");
             let source = [];
-            for (const [key, value] of Object.entries(window.flowApp.flow._variables)) {
-                console.log(`${key}: ${value}`);
-                source.push(key);
-            }
+            if (window.flowApp.flow != null)
+                for (const [key, value] of Object.entries(window.flowApp.flow._variables)) {
+                    console.log(`${key}: ${value}`);
+                    source.push(key);
+                }
 
             dialogueInput.tagautocomplete({
                 tag: '$',

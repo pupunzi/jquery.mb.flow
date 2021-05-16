@@ -6,11 +6,11 @@ import {Util} from "./Util.js";
  *
  **/
 export class Actor {
-
-    constructor(name = "System", icon = null, color = null) {
+    constructor(name = "System", avatar = new Avatar(), color = Util.randomColor()) {
         this._id = Util.setUID();
         this._name = name;
-        this._icon = icon;
+        this._bio = "";
+        this._avatar = avatar;
         this._color = color;
     }
 
@@ -36,10 +36,22 @@ export class Actor {
 
 
     get icon() {
-        return this._icon;
+        return this._avatar;
     }
 
     set icon(value) {
-        this._icon = value;
+        this._avatar = value;
     }
+}
+
+export class Avatar {
+    constructor(options = null) {
+        this._options = options || {
+            eyes: "wink",
+            clothing: "hoodie",
+            hair: "dreads",
+            hairColor: "blonde"
+        }
+    }
+
 }

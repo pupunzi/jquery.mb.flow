@@ -42,10 +42,10 @@
               "_type": 0
             }
           ],
-          "_actor": {
+          "_actorId": {
             "_id": "3e54fce3-45b4-4da9-9296-fc85340c108f",
             "_name": "System",
-            "_icon": null,
+            "_avatar": null,
             "_color": null
           },
           "_date": 1621021889803
@@ -74,10 +74,10 @@
           "_x": 510,
           "_y": 390,
           "_connections": [],
-          "_actor": {
+          "_actorId": {
             "_id": "20f4522d-b6d4-4225-b92c-13f528435ce8",
             "_name": "System",
-            "_icon": null,
+            "_avatar": null,
             "_color": null
           },
           "_date": 1621024155926
@@ -96,7 +96,7 @@
     {
       "_id": "1f5b3571-55e9-40da-90ef-fd25fc7af081",
       "_name": "System",
-      "_icon": null,
+      "_avatar": null,
       "_color": "gray"
     }
   ]

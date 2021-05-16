@@ -6,14 +6,13 @@
 
 import {Util} from "./Util.js";
 import {NodeElement} from "./NodeElement.js";
-import {Actor} from "./Actor.js";
 
 export class Node {
-	constructor(boardId, type = Type.text) {
+	constructor(boardId,  type = Type.text) {
 		this._id = Util.setUID();
 		this._boardId = boardId;
 		this._type = type;
-		this._actor = new Actor();
+		this._actorId = null;
 		this._mood = null;
 		this._cycleType = type === Type.text ? CycleType.list : CycleType.none;
 		this._elements = [];
@@ -76,11 +75,11 @@ export class Node {
 	}
 
 	get actor() {
-		return this._actor;
+		return this._actorId;
 	}
 
 	set actor(value) {
-		this._actor = value;
+		this._actorId = value;
 	}
 
 	get boardId() {

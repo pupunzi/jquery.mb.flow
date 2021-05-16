@@ -467,12 +467,17 @@ html button.main:hover {
 }
 html button.small {
   height: 25px;
+  min-width: 0;
+  padding: 5px;
+}
+html button.round {
+  height: 25px;
   width: 25px;
   min-width: 0;
   padding: 5px;
   border-radius: 100%;
 }
-html button.small i.icon {
+html button.round i.icon {
   padding: 0;
   color: #ffffff;
   line-height: 0;
@@ -708,6 +713,15 @@ html body #wrapper #draw-area .node .menu {
   top: 0;
   height: 25px;
 }
+html body #wrapper #draw-area .node .menu .actor-avatar {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  left: -20px;
+  top: -20px;
+  background: transparent;
+  z-index: 100;
+}
 html body #wrapper #draw-area .node .menu i.icon {
   position: relative;
   color: #282828;
@@ -812,6 +826,9 @@ html body #wrapper #draw-area .node[data-type="text"] {
   top: 40px;
   left: 40px;
 }
+html body #wrapper #draw-area .node[data-type="text"] .node-button-bar {
+  padding-left: 30px;
+}
 html body #wrapper #draw-area .node[data-type="text"] .node-content-line {
   height: 100%;
   padding: 5px;
@@ -850,6 +867,12 @@ html body #wrapper #draw-area .node[data-type="choice"] {
 }
 html body #wrapper #draw-area .node[data-type="choice"] i.icon {
   color: #ffffff;
+}
+html body #wrapper #draw-area .node[data-type="choice"] .node-button-bar {
+  padding-left: 30px;
+}
+html body #wrapper #draw-area .node[data-type="choice"] .node-button-bar i.icon {
+  color: #282828;
 }
 html body #wrapper #draw-area .node[data-type="choice"] .node-content .node-content-line {
   position: relative;
@@ -982,6 +1005,98 @@ html .flow-overlay .flow-dialogue .flow-button-bar button {
   font-size: 100%;
   min-width: 100px;
   padding: 10px;
+}
+html #actors-window .flow-dialogue {
+  text-align: left;
+  max-height: 80vh;
+}
+html #actors-window .flow-dialogue .flow-button-bar {
+  text-align: right;
+  bottom: auto;
+  top: 0;
+}
+html #actors-window .flow-dialogue .flow-dialogue-title {
+  margin-top: 0;
+}
+html #actors-window .flow-dialogue .actors-list {
+  max-height: calc(100% - 130px);
+  overflow: auto;
+  padding: 5px;
+  box-shadow: inset 0 0 5px 2px rgba(31, 31, 31, 0.3);
+}
+html #actors-window .flow-dialogue .actors-list .actors-line {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+html #actors-window .flow-dialogue .actors-list .avatar {
+  width: 80px;
+  display: inline-block;
+  vertical-align: top;
+  cursor: pointer;
+}
+html #actors-window .flow-dialogue .actors-list .actor-data {
+  width: calc(100% - 130px);
+  display: inline-block;
+  vertical-align: top;
+}
+html #actors-window .flow-dialogue .actors-list .actor-data label {
+  margin: 0;
+  padding: 0;
+  font-size: 80%;
+  color: rgba(255, 255, 255, 0.3);
+}
+html #actors-window .flow-dialogue .actors-list .actor-data .name {
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 3px;
+}
+html #actors-window .flow-dialogue .actors-list .actor-data .bio {
+  margin: 3px;
+  padding: 5px;
+}
+html #actors-window .flow-dialogue .actors-list .actor-data .color {
+  width: 30px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.3);
+}
+html #avatar-window .flow-dialogue {
+  text-align: left;
+  max-height: 60vh;
+}
+html #avatar-window .flow-dialogue .flow-button-bar {
+  text-align: right;
+  bottom: auto;
+  top: 0;
+}
+html #avatar-window .flow-dialogue .flow-dialogue-title {
+  margin-top: 0;
+}
+html #avatar-window .flow-dialogue .avatar {
+  width: 210px;
+  display: inline-block;
+  vertical-align: top;
+}
+html #avatar-window .flow-dialogue .options-editor {
+  width: calc(100% - 220px);
+  display: inline-block;
+  vertical-align: top;
+}
+html #avatar-window .flow-dialogue .options-editor .options .option {
+  padding: 5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+html #avatar-window .flow-dialogue .options-editor .options .option label {
+  display: inline-block;
+  width: 200px;
+  white-space: nowrap;
+}
+html #avatar-window .flow-dialogue .options-editor input[type="color"] {
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
 }
 html .contextual-menu {
   min-width: 150px;

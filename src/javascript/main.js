@@ -10,6 +10,8 @@ import {KeyboardListener} from "../Classes/KeyboardListener.js";
 import {Events, EventType} from "../Classes/Events.js";
 import {Type} from "../Classes/Node.js";
 import {Connection} from "../Classes/Connection.js";
+import {ActorsDrawer} from "../Classes/ActorsDrawer.js";
+import {AvatarDrawer} from "../Classes/AvatarDrawer.js";
 
 (function ($, d) {
     $(() => {
@@ -325,59 +327,28 @@ import {Connection} from "../Classes/Connection.js";
                     }
                 },
             ],
-            variables: (target) => {
-                let t = $(target);
-                let parent = $(target).parents(".node-text");
+            actorMenu: (target) => {
+                let board = $.flow.selectedBoard();
+                let nodeId = $(target).parents(".node").data("node-id");
+                let node = board.getNodeById(nodeId);
                 let items = [];
-                target._variables = flowApp.flow._variables;
-                let editVariables = {
-                    name: 'Edit variables',
-                    icon: "icon-code",
-                    fn: function (target, e) {
-                        let opt = {
-                            title: "Variables",
-                            text: null,
-                            inputId: "vars",
-                            inputValue: t.text().replace(/{/g, "").replace(/}/g, ""),
-                            okLabel: "Update",
-                            cancelLabel: "Cancel",
-                            action: (content) => {
-                                let variables = Util.findVariables(content);
-                                variables.forEach((variable)=>{
-                                    content = content.replace(variable,"<i>" + variable + "</i>");
-                                });
-
-                                let c = "{" + content + "}";
-                                Util.addVariables(c);
-                                parent.find("#" + t.attr("id")).html(c);
-                                parent.focus();
-                            },
-                            className: null
-                        };
-                        UI.dialogue(opt);
-                    }
-                };
-                items.push(editVariables);
-
-                let deleteVariables = {
-                    name: 'Delete variables',
-                    icon: "icon-remove",
-                    className:"alert",
-                    fn: function (target, e) {
-/*
-                        let variables = Util.findVariables(t.html());
-                        variables.forEach((variable)=>{
-                            variable = variable.replace("$","");
-                            delete window.flowApp.flow._variables[variable];
-                        });
-*/
-                        parent.find("#" + t.attr("id")).remove();
-
-                    }
-                };
-                items.push(deleteVariables);
+                items.push({
+                    name: 'Actors',
+                    className: "listTitle"
+                });
+                items.push({});
+                flowApp.flow._actors.forEach((actor) => {
+                    items.push({
+                        name: actor._name,
+                        fn: function (target) {
+                            node._actorId = actor._id;
+                            flowApp.drawer.drawBoard();
+                        }
+                    })
+                });
 
                 return items;
+
             },
 
             //Contextual Menu
@@ -499,8 +470,8 @@ import {Connection} from "../Classes/Connection.js";
                                     cancelLabel: "Cancel",
                                     action: (content) => {
                                         let variables = Util.findVariables(content);
-                                        variables.forEach((variable)=>{
-                                            content = content.replace(variable,"<i>" + variable + "</i>");
+                                        variables.forEach((variable) => {
+                                            content = content.replace(variable, "<i>" + variable + "</i>");
                                         });
 
                                         let c = " <span id='variable_" + Util.setUID() + "' class='variables' contenteditable='false'>{" + content + "}</span> ";
@@ -533,7 +504,61 @@ import {Connection} from "../Classes/Connection.js";
                     ]
                 ;
                 return items;
-            }
+            },
+            variablesMenu: (target) => {
+                let t = $(target);
+                let parent = $(target).parents(".node-text");
+                let items = [];
+                target._variables = flowApp.flow._variables;
+                let editVariables = {
+                    name: 'Edit variables',
+                    icon: "icon-code",
+                    fn: function (target, e) {
+                        let opt = {
+                            title: "Variables",
+                            text: null,
+                            inputId: "vars",
+                            inputValue: t.text().replace(/{/g, "").replace(/}/g, ""),
+                            okLabel: "Update",
+                            cancelLabel: "Cancel",
+                            action: (content) => {
+                                let variables = Util.findVariables(content);
+                                variables.forEach((variable) => {
+                                    content = content.replace(variable, "<i>" + variable + "</i>");
+                                });
+
+                                let c = "{" + content + "}";
+                                Util.addVariables(c);
+                                parent.find("#" + t.attr("id")).html(c);
+                                parent.focus();
+                            },
+                            className: null
+                        };
+                        UI.dialogue(opt);
+                    }
+                };
+                items.push(editVariables);
+
+                let deleteVariables = {
+                    name: 'Delete variables',
+                    icon: "icon-remove",
+                    className: "alert",
+                    fn: function (target, e) {
+                        /*
+                                                let variables = Util.findVariables(t.html());
+                                                variables.forEach((variable)=>{
+                                                    variable = variable.replace("$","");
+                                                    delete window.flowApp.flow._variables[variable];
+                                                });
+                        */
+                        parent.find("#" + t.attr("id")).remove();
+
+                    }
+                };
+                items.push(deleteVariables);
+
+                return items;
+            },
         },
 
         flowApp: () => {
@@ -546,6 +571,8 @@ import {Connection} from "../Classes/Connection.js";
 
         init:
             () => {
+
+                window.Avataaars = Avataaars;
                 //Init keys listener
                 window.KeyListener = new KeyboardListener();
                 //Init Flow App
@@ -563,11 +590,12 @@ import {Connection} from "../Classes/Connection.js";
                 window.boards_groups = new Menu(".boards-group-menu", $.flow.contextualMenu.boardsGroups, true);
                 window.node_menu = new Menu("[data-menu=\"node\"]", $.flow.contextualMenu.nodeMenu, true);
                 window.cycle_menu = new Menu("[data-menu=\"cycle\"]", $.flow.contextualMenu.cycleMenu, true);
+                window.actor_menu = new Menu("[data-menu=\"actor\"]", $.flow.contextualMenu.actorMenu, true);
 
                 //Init Contextual menu
                 window.board_contextual_menu = new ContextualMenu(flowApp.ui.placeholders.drawingArea, $.flow.contextualMenu.board, true);
                 window.node_contextual_menu = new ContextualMenu(".node", $.flow.contextualMenu.node, false);
-                window.variables_contextual_menu = new ContextualMenu(".variables", $.flow.contextualMenu.variables, true);
+                window.variables_contextual_menu = new ContextualMenu(".variables", $.flow.contextualMenu.variablesMenu, true);
                 window.nodeElement_contextual_menu = new ContextualMenu(".node-content-line", $.flow.contextualMenu.nodeElement, true);
 
                 $(document).on("keypress", "[contenteditable]", (e) => {
@@ -1087,16 +1115,23 @@ import {Connection} from "../Classes/Connection.js";
                 }
 
                 Events.register(EventType.selectNode, {selectedNodeId: nodeId});
-            }
-
-        ,
+            },
 
         removeFromSelectedNodes: function (nodeId = null) {
             if (nodeId)
                 $.flow.selectedNodes.delete(nodeId);
             else
                 $.flow.selectedNodes = [];
+        },
+
+        drawActorsWindow: () => {
+            ActorsDrawer.openWindow()
+        },
+
+        drawAvatarWindow: (actorId) => {
+            AvatarDrawer.openWindow(actorId)
         }
+
 
     };
 

@@ -76,6 +76,12 @@ html {
 
     &.small {
       height: 25px;
+      min-width: 0;
+      padding: 5px;
+    }
+
+    &.round {
+      height: 25px;
       width: 25px;
       min-width: 0;
       padding: 5px;
@@ -357,6 +363,16 @@ html {
             top: 0;
             height: 25px;
 
+            .actor-avatar {
+              position: absolute;
+              width: 40px;
+              height: 40px;
+              left: -20px;
+              top: -20px;
+              background: transparent;
+              z-index: 100;
+            }
+
             i.icon {
               position: relative;
               color: darken(@main-color, 4%);
@@ -437,13 +453,13 @@ html {
                 background-color: #222222;
                 font-family: monospace;
                 //margin: 3px;
-                padding:  2px;
+                padding: 2px;
                 color: #fff;
                 box-shadow: inset 2px 2px 5px rgba(31, 31, 31, .1);
                 border-radius: 4px;
                 font-size: 100%;
 
-                i{
+                i {
                   font-style: normal;
                   color: #f0ce1b;
                 }
@@ -479,6 +495,13 @@ html {
             background-color: #ffffff;
             top: 40px;
             left: 40px;
+
+            .menu{
+            }
+
+            .node-button-bar {
+              padding-left: 30px;
+            }
 
             .node-content-line {
               height: 100%;
@@ -529,6 +552,13 @@ html {
               color: #ffffff;
             }
 
+            .node-button-bar {
+              padding-left: 30px;
+              i.icon {
+                color: darken(@main-color, 4%);
+              }
+            }
+
             .node-content {
               .node-content-line {
                 position: relative;
@@ -537,7 +567,7 @@ html {
                 color: #ffffff;
 
                 .node-text {
-                 // max-height: 100px;
+                  // max-height: 100px;
                   overflow: auto;
                   background-color: transparent;
                   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
@@ -698,6 +728,128 @@ html {
     }
   }
 
+  #actors-window {
+
+    .flow-dialogue {
+      text-align: left;
+      max-height: 80vh;
+
+      .flow-button-bar {
+        text-align: right;
+        bottom: auto;
+        top: 0;
+      }
+
+      .flow-dialogue-title {
+        margin-top: 0;
+      }
+
+      .actors-list {
+        max-height: calc(100% - 130px);
+        overflow: auto;
+        padding: 5px;
+        box-shadow: inset 0 0 5px 2px rgba(31, 31, 31, .3);
+
+        .actors-line {
+          border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .avatar {
+          width: 80px;
+          display: inline-block;
+          vertical-align: top;
+          cursor: pointer;
+        }
+
+        .actor-data {
+          width: calc(100% - 130px);
+          display: inline-block;
+          vertical-align: top;
+
+          label {
+            margin: 0;
+            padding: 0;
+            font-size: 80%;
+            color: rgba(255, 255, 255, 0.3);
+          }
+
+          .name {
+            padding: 5px;
+            //border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            margin: 3px;
+          }
+
+          .bio {
+            margin: 3px;
+            padding: 5px;
+            //border: 1px solid rgba(255, 255, 255, 0.3);
+          }
+
+          .color {
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.3);
+          }
+        }
+      }
+    }
+
+  }
+
+  #avatar-window{
+    .flow-dialogue {
+      text-align: left;
+      max-height: 60vh;
+
+      .flow-button-bar {
+        text-align: right;
+        bottom: auto;
+        top: 0;
+      }
+
+      .flow-dialogue-title {
+        margin-top: 0;
+      }
+
+      .avatar {
+        width: 210px;
+        display: inline-block;
+        vertical-align: top;
+      }
+
+      .options-editor {
+        width: calc(100% - 220px);
+        display: inline-block;
+        vertical-align: top;
+
+        .options {
+          .option {
+            padding: 5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+
+            label {
+              display: inline-block;
+              width: 200px;
+              white-space: nowrap;
+            }
+          }
+        }
+
+        input[type="color"] {
+          padding: 0;
+          margin: 0;
+          border: none;
+          background: transparent;
+          width: 40px;
+          height: 40px;
+          vertical-align: middle;
+        }
+      }
+    }
+
+  }
+
 
   /**
   Contextual flowMenu
@@ -785,7 +937,7 @@ html {
     color: @main-font-color;
     text-align: center;
 
-    .dialogue-content{
+    .dialogue-content {
       position: relative;
       margin: auto;
       border: 1px solid white;
@@ -829,6 +981,7 @@ body.move-board * {
       color: #ffffff;
       text-decoration: none;
     }
+
     &.active {
       background-color: #000000;
     }
