@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <style>
+        body{
+            font-family: 'Open Sans', sans-serif;
+        }
+        div[contenteditable] {
+            height: 100px;
+            border: 1px solid gray;
+        }
+        span[contenteditable=false]{
+            background: #9ad19a;
+            padding: 0 3px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+
+<div style="height: 100px; border: 1px solid gray" contenteditable="true">
+ <span contenteditable="false">AAA</span>
+</div>
+
+</body>
+</html>

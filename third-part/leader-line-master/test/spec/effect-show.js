@@ -20,7 +20,7 @@ describe('effect-show', function() {
       traceLog = window.traceLog;
       traceLog.enabled = true;
       pageDone = done;
-      ll = new window.LeaderLine(document.getElementById('elm1'), document.getElementById('elm3'));
+      ll = new window.LeaderLine(document.getNodeElementById('elm1'), document.getNodeElementById('elm3'));
       beforeDone();
     }, 'effect-show - ' + titles.shift());
   }
@@ -455,8 +455,8 @@ describe('effect-show', function() {
 
         traceLog.clear();
         ll.setOptions({
-          start: document.getElementById('iframe1').contentDocument.getElementById('elm1'),
-          end: document.getElementById('iframe1').contentDocument.getElementById('elm2')
+          start: document.getNodeElementById('iframe1').contentDocument.getElementById('elm1'),
+          end: document.getNodeElementById('iframe1').contentDocument.getElementById('elm2')
         });
         expect(traceLog.log).not.toContain('<SHOW_EFFECTS.fade.stop>');
         expect(props.isShown).toBe(false);
@@ -477,8 +477,8 @@ describe('effect-show', function() {
 
         traceLog.clear();
         ll.setOptions({
-          start: document.getElementById('iframe1').contentDocument.getElementById('elm1'),
-          end: document.getElementById('iframe1').contentDocument.getElementById('elm2')
+          start: document.getNodeElementById('iframe1').contentDocument.getElementById('elm1'),
+          end: document.getNodeElementById('iframe1').contentDocument.getElementById('elm2')
         });
         expect(traceLog.getTaggedLog('SHOW_EFFECTS.fade.stop')).toEqual([
           'finish=true', 'on=aplStats.show_on=false'
@@ -523,7 +523,7 @@ describe('effect-show', function() {
         var props;
 
         ll.remove();
-        ll = new window.LeaderLine(document.getElementById('elm1'), document.getElementById('elm3'),
+        ll = new window.LeaderLine(document.getNodeElementById('elm1'), document.getNodeElementById('elm3'),
           {hide: true});
         props = window.insProps[ll._id];
         expect(props.isShown).toBe(false);
@@ -537,7 +537,7 @@ describe('effect-show', function() {
         expect(props.svg.style.visibility).toBe('');
 
         ll.remove();
-        ll = new window.LeaderLine(document.getElementById('elm1'), document.getElementById('elm3'),
+        ll = new window.LeaderLine(document.getNodeElementById('elm1'), document.getNodeElementById('elm3'),
           {hide: true});
         props = window.insProps[ll._id];
         expect(props.isShown).toBe(false);
@@ -595,7 +595,7 @@ describe('effect-show', function() {
         var props;
 
         ll.remove();
-        ll = new window.LeaderLine(document.getElementById('elm1'), document.getElementById('elm3'),
+        ll = new window.LeaderLine(document.getNodeElementById('elm1'), document.getNodeElementById('elm3'),
           {hide: true});
         props = window.insProps[ll._id];
         expect(props.isShown).toBe(false);
@@ -609,7 +609,7 @@ describe('effect-show', function() {
         expect(props.svg.style.visibility).toBe('');
 
         ll.remove();
-        ll = new window.LeaderLine(document.getElementById('elm1'), document.getElementById('elm3'),
+        ll = new window.LeaderLine(document.getNodeElementById('elm1'), document.getNodeElementById('elm3'),
           {hide: true});
         props = window.insProps[ll._id];
         expect(props.isShown).toBe(false);
@@ -669,7 +669,7 @@ describe('effect-show', function() {
         var props;
 
         ll.remove();
-        ll = new window.LeaderLine(document.getElementById('elm1'), document.getElementById('elm3'),
+        ll = new window.LeaderLine(document.getNodeElementById('elm1'), document.getNodeElementById('elm3'),
           {hide: true});
         props = window.insProps[ll._id];
         expect(props.isShown).toBe(false);
@@ -683,7 +683,7 @@ describe('effect-show', function() {
         expect(props.svg.style.visibility).toBe('');
 
         ll.remove();
-        ll = new window.LeaderLine(document.getElementById('elm1'), document.getElementById('elm3'),
+        ll = new window.LeaderLine(document.getNodeElementById('elm1'), document.getNodeElementById('elm3'),
           {hide: true});
         props = window.insProps[ll._id];
         expect(props.isShown).toBe(false);

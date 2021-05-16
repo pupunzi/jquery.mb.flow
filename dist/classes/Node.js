@@ -13,8 +13,9 @@ export class Node {
 		this._id = Util.setUID();
 		this._boardId = boardId;
 		this._type = type;
-		this._cycleType = CycleType.list;
+		this._actor = new Actor();
 		this._mood = null;
+		this._cycleType = type === Type.text ? CycleType.list : CycleType.none;
 		this._elements = [];
 		this._x = 300;
 		this._y = 120;
@@ -22,7 +23,6 @@ export class Node {
 			return this.elements.length;
 		};
 		this._connections = [];
-		this._actor = new Actor();
 		this._date = new Date().getTime();
 
 		this.init();
@@ -51,7 +51,6 @@ export class Node {
 			case Type.condition:
 				let line = new NodeElement(this._type, this._id);
 				this.elements.push(line);
-				// console.debug("line", line);
 				break;
 		}
 	}
@@ -117,8 +116,6 @@ export class Node {
 	}
 }
 
-
-
 export class Type {
 	static start = "Start";
 	static text = "Text";
@@ -135,10 +132,5 @@ export class CycleType {
 	static list = "List";
 	static repeat = "Repeat";
 	static random = "Random";
-
-	static choices = "Choice";
-
-	static condition = "Condition";
-	static random = "Random";
-	static jumpToNode = "JumpToNode";
+	static none = null;
 }

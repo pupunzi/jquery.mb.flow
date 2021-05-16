@@ -765,7 +765,6 @@ html body #wrapper #draw-area .node .node-content .node-content-line .node-text 
   position: relative;
   width: 100%;
   min-height: 30px;
-  max-height: 100px;
   overflow: auto;
   background-color: rgba(255, 255, 255, 0.1);
   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
@@ -773,16 +772,18 @@ html body #wrapper #draw-area .node .node-content .node-content-line .node-text 
 }
 html body #wrapper #draw-area .node .node-content .node-content-line .variables {
   position: relative;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.4);
-  border-top: 1px solid rgba(50, 50, 50, 0.3);
+  display: inline-block;
+  background-color: #222222;
   font-family: monospace;
-  margin-top: 3px;
-  padding: 3px;
-  color: #841867;
-  box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
-  font-size: 13px;
+  padding: 2px;
+  color: #fff;
+  box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0.1);
+  border-radius: 4px;
+  font-size: 100%;
+}
+html body #wrapper #draw-area .node .node-content .node-content-line .variables i {
+  font-style: normal;
+  color: #f0ce1b;
 }
 html body #wrapper #draw-area .node[data-type="start"] {
   width: 60px;
@@ -857,7 +858,6 @@ html body #wrapper #draw-area .node[data-type="choice"] .node-content .node-cont
   color: #ffffff;
 }
 html body #wrapper #draw-area .node[data-type="choice"] .node-content .node-content-line .node-text {
-  max-height: 100px;
   overflow: auto;
   background-color: transparent;
   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
@@ -903,8 +903,10 @@ html body #wrapper #draw-area .node[data-type="condition"] .node-content .node-c
   font-family: monospace;
   height: 100%;
   color: #a73a3a;
+  padding-left: 0;
   background-color: #ffffff !important;
   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
+  white-space: nowrap;
 }
 html .flow-overlay {
   position: fixed;
@@ -951,7 +953,7 @@ html .flow-overlay .flow-dialogue .flow-dialogue-text {
 html .flow-overlay .flow-dialogue .flow-dialogue-input {
   padding: 10px;
   width: 100%;
-  margin-top: 40px;
+  margin: 40px auto;
   max-width: 30vw;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 5px;
@@ -963,6 +965,7 @@ html .flow-overlay .flow-dialogue .flow-dialogue-input {
   color: #ffffff;
   text-align: center;
   transition: all 0.3s;
+  white-space: nowrap;
 }
 html .flow-overlay .flow-dialogue .flow-dialogue-input:focus {
   border: 1px solid rgba(255, 255, 255, 0.4);
@@ -1032,13 +1035,27 @@ html .contextual-menu ul li.listElement {
 html .contextual-menu ul li.highlight {
   color: #9ad19a;
 }
-html #node-editor {
+html .dialogue-window {
   position: fixed;
-  width: 250px;
-  height: 100vh;
+  width: 350px;
+  height: 200px;
   top: 0;
   right: 0;
-  background-color: rgba(50, 50, 50, 0.1);
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  z-index: 100;
+  background-color: #323232;
+  color: #ffffff;
+  text-align: center;
+}
+html .dialogue-window .dialogue-content {
+  position: relative;
+  margin: auto;
+  border: 1px solid white;
+  width: 70%;
+  padding: 5px;
+  text-align: left;
 }
 body.dragging,
 body.dragging * {
@@ -1053,5 +1070,24 @@ body.move-board * {
   position: absolute;
   opacity: 0.5;
   z-index: calc(1 + 1000);
+}
+.typeahead.dropdown-menu {
+  background-color: rgba(34, 34, 34, 0.9);
+  color: #ffffff;
+  width: 100%;
+  z-index: 100;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.typeahead.dropdown-menu li {
+  padding: 5px;
+}
+.typeahead.dropdown-menu li a {
+  color: #ffffff;
+  text-decoration: none;
+}
+.typeahead.dropdown-menu li.active {
+  background-color: #000000;
 }
 /*# sourceMappingURL=style.css.map */

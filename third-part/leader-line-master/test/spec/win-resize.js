@@ -16,9 +16,9 @@ describe('window resize', function() {
       orgWidth = frame.style.width;
       orgHeight = frame.style.height;
 
-      iframeDoc = document.getElementById('iframe1').contentDocument;
-      ll1 = new window.LeaderLine(document.getElementById('elm1'), document.getElementById('elm2'));
-      ll2 = new window.LeaderLine(document.getElementById('elm3'), document.getElementById('elm4'));
+      iframeDoc = document.getNodeElementById('iframe1').contentDocument;
+      ll1 = new window.LeaderLine(document.getNodeElementById('elm1'), document.getNodeElementById('elm2'));
+      ll2 = new window.LeaderLine(document.getNodeElementById('elm3'), document.getNodeElementById('elm4'));
       ll3 = new window.LeaderLine(iframeDoc.getElementById('elm1'), iframeDoc.getElementById('elm2'));
       ll4 = new window.LeaderLine(iframeDoc.getElementById('elm3'), iframeDoc.getElementById('elm4'));
 
@@ -70,7 +70,7 @@ describe('window resize', function() {
     pathData4 = window.insProps[ll4._id].linePath.getPathData();
 
     traceLog.clear();
-    document.getElementById('iframe1').style.width = '50%';
+    document.getNodeElementById('iframe1').style.width = '50%';
     setTimeout(function() {
       expect(traceLog.getTaggedLog('positionByWindowResize') == null).toBe(true);
       expect(pathDataHasChanged(pathData1, window.insProps[ll1._id].linePath.getPathData())).toBe(false);
@@ -83,7 +83,7 @@ describe('window resize', function() {
 
   it('update position all even if it is not changed when window is resized', function(done) {
     var pathData1, pathData2, pathData3, pathData4, frameBBox,
-      iframeStyle = document.getElementById('iframe1').style;
+      iframeStyle = document.getNodeElementById('iframe1').style;
 
     iframeStyle.width = '400px';
     iframeStyle.height = '500px';
@@ -116,7 +116,7 @@ describe('window resize', function() {
 
   it('disabled positionByWindowResize', function(done) {
     var pathData1, pathData2, pathData3, pathData4, frameBBox,
-      elm1 = document.getElementById('elm1'), elm2 = document.getElementById('elm2'), elm1Left, elm2Left;
+      elm1 = document.getNodeElementById('elm1'), elm2 = document.getNodeElementById('elm2'), elm1Left, elm2Left;
 
     pathData1 = window.insProps[ll1._id].linePath.getPathData();
     pathData2 = window.insProps[ll2._id].linePath.getPathData();

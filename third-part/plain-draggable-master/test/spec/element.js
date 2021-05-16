@@ -31,7 +31,7 @@ describe('element', function() {
   });
 
   it('accepts HTMLElement as layer element', function() {
-    var draggable = new window.PlainDraggable(document.getElementById('elm1')),
+    var draggable = new window.PlainDraggable(document.getNodeElementById('elm1')),
       props = window.insProps[draggable._id];
 
     expect(props.svgPoint == null).toBe(true);
@@ -44,11 +44,11 @@ describe('element', function() {
 
     if (LIMIT) {
       expect(function() {
-        draggable = new window.PlainDraggable(document.getElementById('elm1'), {leftTop: true});
+        draggable = new window.PlainDraggable(document.getNodeElementById('elm1'), {leftTop: true});
         console.log(draggable); // dummy
       }).toThrowError('`transform` is not supported.');
     } else {
-      draggable = new window.PlainDraggable(document.getElementById('elm1'), {leftTop: true});
+      draggable = new window.PlainDraggable(document.getNodeElementById('elm1'), {leftTop: true});
       props = window.insProps[draggable._id];
       expect(props.svgPoint == null).toBe(true);
       expect(props.orgStyle[cssPropTransform] == null).toBe(true);
@@ -57,7 +57,7 @@ describe('element', function() {
   });
 
   it('accepts SVGElement that is root view as layer element', function() {
-    var draggable = new window.PlainDraggable(document.getElementById('svg1')),
+    var draggable = new window.PlainDraggable(document.getNodeElementById('svg1')),
       props = window.insProps[draggable._id];
 
     expect(props.svgPoint == null).toBe(true);
@@ -67,7 +67,7 @@ describe('element', function() {
 
   it('accepts SVGElement that is not root view as SVG element', function() {
     if (LIMIT) { return; }
-    var draggable = new window.PlainDraggable(document.getElementById('rect1')),
+    var draggable = new window.PlainDraggable(document.getNodeElementById('rect1')),
       props = window.insProps[draggable._id];
 
     expect(props.svgPoint != null).toBe(true); // Has SVG info
@@ -78,14 +78,14 @@ describe('element', function() {
     it('does not accept SVGSVGElement that has no `transform` (Trident and Edge bug)', function() {
       if (LIMIT) { return; }
       expect(function() {
-        var draggable = new window.PlainDraggable(document.getElementById('svg2'));
+        var draggable = new window.PlainDraggable(document.getNodeElementById('svg2'));
         console.log(draggable); // dummy
       }).toThrowError(window.Error, 'This element is not accepted. (SVGAnimatedTransformList)');
     });
   } else {
     it('accepts SVGElement (nested SVG) that is not root view as SVG element', function() {
       if (LIMIT) { return; }
-      var draggable = new window.PlainDraggable(document.getElementById('svg2')),
+      var draggable = new window.PlainDraggable(document.getNodeElementById('svg2')),
         props = window.insProps[draggable._id];
 
       expect(props.svgPoint != null).toBe(true); // Has SVG info
@@ -95,7 +95,7 @@ describe('element', function() {
 
   it('accepts SVGElement (nested rect) that is not root view as SVG element', function() {
     if (LIMIT) { return; }
-    var draggable = new window.PlainDraggable(document.getElementById('rect2')),
+    var draggable = new window.PlainDraggable(document.getNodeElementById('rect2')),
       props = window.insProps[draggable._id];
 
     expect(props.svgPoint != null).toBe(true); // Has SVG info
@@ -105,14 +105,14 @@ describe('element', function() {
   it('sets shadow to optimize it only when it has no shadow', function() {
     var INIT_SHADOW = '1px', // Keyword from initAnim(), the value might be formatted by browser
       cssPropBoxShadow = window.CSSPrefix.getName('boxShadow'),
-      elm = document.getElementById('elm1'),
+      elm = document.getNodeElementById('elm1'),
       draggable = new window.PlainDraggable(elm), // eslint-disable-line no-unused-vars
       cmpValue;
 
     // elm1 may has been already set by other tests
     expect(elm.style[cssPropBoxShadow].indexOf(INIT_SHADOW)).not.toBe(-1);
 
-    elm = document.getElementById('elm-shadow-by-id');
+    elm = document.getNodeElementById('elm-shadow-by-id');
     cmpValue = window.getComputedStyle(elm, '')[cssPropBoxShadow];
     expect(elm.style[cssPropBoxShadow]).toBe('');
     expect(cmpValue).not.toBe('');
@@ -129,7 +129,7 @@ describe('element', function() {
     expect(cmpValue.indexOf('5px')).not.toBe(-1);
 
     // Has no shadow yet
-    elm = document.getElementById('elm-shadow-by-style');
+    elm = document.getNodeElementById('elm-shadow-by-style');
     cmpValue = window.getComputedStyle(elm, '')[cssPropBoxShadow];
     expect(elm.style[cssPropBoxShadow]).toBe('');
     expect(cmpValue).toBe('none');

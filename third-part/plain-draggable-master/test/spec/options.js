@@ -28,9 +28,9 @@ describe('setOptions()', function() {
       body = pageBody;
       pageDone = done;
 
-      parent = document.getElementById('parent');
-      elm1 = document.getElementById('elm1');
-      handle = document.getElementById('handle');
+      parent = document.getNodeElementById('parent');
+      elm1 = document.getNodeElementById('elm1');
+      handle = document.getNodeElementById('handle');
       draggable = new window.PlainDraggable(elm1);
       props = window.insProps[draggable._id];
 
@@ -1449,7 +1449,7 @@ describe('setOptions()', function() {
   });
 
   it('should accept an PPBBox as `containment`', function(done) {
-    var iframe = document.getElementById('iframe'),
+    var iframe = document.getNodeElementById('iframe'),
       iWindow = iframe.contentWindow,
       iDocument = iWindow.document,
       iBody = iDocument.body,

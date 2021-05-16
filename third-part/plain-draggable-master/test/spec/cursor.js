@@ -33,21 +33,21 @@ describe('cursor', function() {
       defaultDraggingCursor = PlainDraggable.draggingCursor;
       orgValue.body = body.style.cursor;
 
-      var element = document.getElementById('default-0');
+      var element = document.getNodeElementById('default-0');
       orgValue.default = element.style.cursor;
       draggable.default.push(new PlainDraggable(element));
-      draggable.default.push(new PlainDraggable(document.getElementById('default-1')));
+      draggable.default.push(new PlainDraggable(document.getNodeElementById('default-1')));
 
-      element = document.getElementById('byInline-0');
+      element = document.getNodeElementById('byInline-0');
       orgValue.byInline = element.style.cursor;
       draggable.byInline.push(new PlainDraggable(element));
-      draggable.byInline.push(new PlainDraggable(document.getElementById('byInline-1')));
+      draggable.byInline.push(new PlainDraggable(document.getNodeElementById('byInline-1')));
 
-      element = document.getElementById('byParent');
+      element = document.getNodeElementById('byParent');
       orgValue.byParent = element.style.cursor;
       draggable.byParent = new PlainDraggable(element);
 
-      element = document.getElementById('byClass');
+      element = document.getNodeElementById('byClass');
       orgValue.byClass = element.style.cursor;
       draggable.byClass = new PlainDraggable(element);
 
@@ -1371,13 +1371,13 @@ describe('cursor', function() {
 
   it('is restored when handle is changed', function(done) {
     var propUserSelect = window.CSSPrefix.getName('userSelect'),
-      handleA = document.getElementById('handle-a'),
+      handleA = document.getNodeElementById('handle-a'),
       orgACursor = handleA.style.cursor,
       orgAUserSelect = handleA.style[propUserSelect],
-      handleB = document.getElementById('handle-b'),
+      handleB = document.getNodeElementById('handle-b'),
       orgBCursor = handleB.style.cursor,
       orgBUserSelect = handleB.style[propUserSelect],
-      item = new PlainDraggable(document.getElementById('handles'), {handle: handleA});
+      item = new PlainDraggable(document.getNodeElementById('handles'), {handle: handleA});
 
     expect(handleA.style.cursor).toBe(normalValue.draggable);
     expect(handleA.style[propUserSelect]).toBe('none');

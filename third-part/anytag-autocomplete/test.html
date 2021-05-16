@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Autocomplete - Multiple values</title>
+    <link rel="stylesheet" href="bootstrap.min.css" crossorigin="anonymous">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="tagAutocomplete.js"></script>
+<body style="margin: 40px">
+
+<div id="example" contenteditable="true" style="border-style:none; border-width: 1px;height: 50px">
+
+</div>
+
+<script>
+    $('div#example').tagautocomplete({
+        tag: '$',
+        source: ['ann', 'bill', 'casey'],
+        suffix: ""
+    });
+</script>
+
+</body>
+</html>
+

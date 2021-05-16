@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>avataaars</title>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="avataaars.js"></script>
+
+    <script>
+        function getRandom(key){
+            let path = Object.keys(Avataaars.paths[key]);
+            let rnd = Math.floor(Math.random() * (path.length -1))
+            return path[rnd];
+        }
+        function getRandomColor(key){
+            let path = Object.keys(Avataaars.colors[key]);
+            let rnd = Math.floor(Math.random() * (path.length -1))
+            return path[rnd];
+        }
+
+        let createAvatar = (opt)=>{
+            let options = {
+                eyes: getRandom("eyes"),//"wink",
+                clothing: getRandom("clothing"),//"hoodie",
+                hair: "dreads",
+                accessories: getRandom("accessories"),
+                // facialHair: getRandom("facialHair"),
+                mouth: getRandom("mouth"),
+                hairColor: getRandomColor("hair"),//"blonde",
+                top: getRandom("top"),
+                eyebrows: getRandom("eyebrows"),
+                clothingColor: getRandomColor("palette"),
+                skin: getRandomColor("skin"),
+                // background: getRandomColor("palette")
+            };
+            $.extend(opt, options);
+
+            console.debug(options)
+
+            let svg = Avataaars.create(options);
+            $("#svg-element").append(svg);
+            let s = new XMLSerializer().serializeToString($("#svg-element svg")[0]);
+            let encodedData = window.btoa(s);
+            let imgURL = "data:image/svg+xml;base64," + encodedData;
+            $("#avatar").attr("src", imgURL);
+            $("#svg-element").empty();
+        };
+        $(function () {
+            let img = $("<img>").attr({id:"avatar"});
+            img.css({width:200});
+            $("body").append(img);
+            createAvatar();
+            console.log( Avataaars.getEditableTypes() );
+            console.log(Avataaars.colors);
+            console.log(Object.keys(Avataaars.paths.eyes), Object.keys(Avataaars.paths.eyes).length);
+        })
+    </script>
+
+    <style>
+        #svg-element{
+            width: 200px;
+            height: 200px;
+        }
+
+    </style>
+</head>
+<body>
+<button onclick="createAvatar()">change</button>
+
+</body>
+<div id="svg-element" style="display: none;"></div>
+
+</html>

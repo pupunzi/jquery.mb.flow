@@ -9,6 +9,7 @@ import {Events, EventType} from "./Events.js";
 import {Drawer} from "./Drawer.js";
 import {Type} from "./Node.js";
 import {NodeElement} from "./NodeElement.js";
+import {Content} from "./Content.js";
 
 class FlowApp {
 
@@ -21,7 +22,6 @@ class FlowApp {
         this._drawer = new Drawer(this);
 
         this.initEvents();
-
     }
 
     get flow() {
@@ -157,9 +157,7 @@ class FlowApp {
             let nodeElementId = e.detail.nodeElementId;
             let board = $.flow.selectedBoard();
             let node = board.getNodeById(nodeId);
-
-            console.debug(nodeId, nodeElementId);
-            this.deleteNodeElement(node,nodeElementId);
+            this.deleteNodeElement(node, nodeElementId);
             this.drawer.drawBoard();
         });
 
@@ -190,7 +188,7 @@ class FlowApp {
                 $board.find("#node_" + connection._from).attr("data-connections-count", node._connections.length);
 
                 Events.register(EventType.updateBoard, board);
-               // return;
+                // return;
             }
 
             node._connections.forEach((c) => {
@@ -237,23 +235,47 @@ class FlowApp {
     }
 
     addNodeElement(node) {
-        let nodeElement = new NodeElement(this._type, this.id);
-        node._elements.unshift(nodeElement);
+        let nodeElement = new NodeElement(node._type, node._id);
+        let content = new Content(nodeElement._id, "", this.flow._locale);
+        nodeElement._localizedContents.push(content);
+        node._elements.push(nodeElement);
     }
 
-    deleteNodeElement(node, id) {
-        let el = this.getElementById(node,id);
+    deleteNodeElement(node, nodeElementId) {
+        let el = this.getNodeElementById(node, nodeElementId);
         if (el != null)
             node._elements.delete(el);
     }
 
-    getElementById(node, id) {
+    getNodeElementById(node, id) {
         let ne = null;
         node._elements.forEach((element) => {
             if (element._id === id)
                 ne = element;
         });
         return ne;
+    }
+
+    getContent(nodeElement, localeCode = this.flow._locale) {
+        let content = null;
+        nodeElement._localizedContents.forEach((localizedContent) => {
+            if (localizedContent._localeCode === localeCode)
+                content = localizedContent;
+        });
+        if(content === null){
+            content = new Content(nodeElement._id, "", localeCode);
+            nodeElement._localizedContents.push(content);
+        }
+        return content;
+    }
+
+    getContentText(nodeElement, localeCode = this.flow._locale){
+        return this.getContent(nodeElement,localeCode)._text;
+    }
+
+    updateContent(nodeElement, text, localeCode = this.flow._locale) {
+        let localizedContent = this.getContent(nodeElement, localeCode);
+        localizedContent._text = text;
     }
 
     addFlow(name = "New Flow") {

@@ -1,0 +1,43 @@
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+<body>
+<button id="click"/>Generate your spirit animal</button>
+
+<p>
+    <svg>
+        <polygon id="polygon" points="200,10 250,190 160,210" fill="green" stroke="black" stroke-width="1"/>
+
+    </svg>
+</p>
+</body>
+</body>
+
+
+<script type="text/javascript">
+
+
+    var random_points = function() {
+        //randomize a number of points between 3 and 11
+        var points = Math.floor(Math.random()*8)+ 3;
+        var array = [];
+
+        //for each point, randomize a coordinate and push it into an array
+        for (i=0;i<=points;i++) {
+            var x = Math.floor(Math.random()*500);
+            var y = Math.floor(Math.random()*500);
+            var coordinate = x.toString() + ',' + y.toString();
+            array.push(coordinate);
+        }
+        //format it for the "points" attribute
+        return array.join(' ').toString();
+
+    }
+
+    //Click the button to randomize the points
+    $('#click').click(function() {
+        $('#polygon').attr('fill', 'green').attr('points', random_points);
+    });
+</script>
+
+</html>

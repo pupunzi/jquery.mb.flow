@@ -2,7 +2,6 @@ import {Util} from "./Util.js";
 import {Type} from "./Node.js";
 
 class NodeElement {
-
 	/*
 	* Possible types:
 	* text
@@ -14,14 +13,6 @@ class NodeElement {
 		this._nodeId = nodeId;
 		this._localizedContents = [];
 		this._selected = false;
-	}
-
-	get content() {
-		return this._content;
-	}
-
-	set content(value) {
-		this._content = value;
 	}
 
 	get nodeId() {
@@ -53,13 +44,5 @@ class NodeElement {
 	}
 }
 
-class NodeElementContent {
-	constructor(languageCode,) {
-		this._languageCode = languageCode;
-		this._content;
-	}
-
-
-}
 
 export {NodeElement};

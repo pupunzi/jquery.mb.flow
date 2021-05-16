@@ -23,7 +23,7 @@ describe('options', function() {
       traceLog = window.traceLog;
       traceLog.enabled = true;
       pageDone = done;
-      ll = new window.LeaderLine(document.getElementById('elm1'), document.getElementById('elm2'));
+      ll = new window.LeaderLine(document.getNodeElementById('elm1'), document.getNodeElementById('elm2'));
       beforeDone();
     });
   }
@@ -216,40 +216,40 @@ describe('options', function() {
 
       // Change to element in iframe, `baseWindow` is not changed
       ll.setOptions({
-        start: document.getElementById('elm2'),
-        end: document.getElementById('elm3')
+        start: document.getNodeElementById('elm2'),
+        end: document.getNodeElementById('elm3')
       });
       expect(props.baseWindow).toBe(window);
       traceLog.clear();
-      ll.end = document.getElementById('iframe1').contentDocument.getElementById('elm2');
+      ll.end = document.getNodeElementById('iframe1').contentDocument.getElementById('elm2');
       expect(traceLog.log).not.toContain('<bindWindow>');
       expect(traceLog.getTaggedLog('setOptions')).toContain('needs.position');
       expect(props.baseWindow).toBe(window);
 
       // Change to element in iframe, `baseWindow` is changed
       traceLog.clear();
-      ll.start = document.getElementById('iframe1').contentDocument.getElementById('elm1');
+      ll.start = document.getNodeElementById('iframe1').contentDocument.getElementById('elm1');
       expect(traceLog.log).toContain('<bindWindow>');
       expect(traceLog.getTaggedLog('setOptions')).toContain('needs.position');
-      expect(props.baseWindow).toBe(document.getElementById('iframe1').contentWindow);
+      expect(props.baseWindow).toBe(document.getNodeElementById('iframe1').contentWindow);
 
       // SVG
-      ll.start = document.getElementById('rect1');
-      expect(props.options.anchorSE[0]).toBe(document.getElementById('rect1'));
+      ll.start = document.getNodeElementById('rect1');
+      expect(props.options.anchorSE[0]).toBe(document.getNodeElementById('rect1'));
 
       // invalid element
       ll.setOptions({
-        start: document.getElementById('elm2'),
-        end: document.getElementById('elm3')
+        start: document.getNodeElementById('elm2'),
+        end: document.getNodeElementById('elm3')
       });
       expect(function() {
         ll.start = ll.end;
       }).toThrow();
       expect(function() {
-        ll = new window.LeaderLine(document.getElementById('elm1'));
+        ll = new window.LeaderLine(document.getNodeElementById('elm1'));
       }).toThrow();
       expect(function() {
-        ll = new window.LeaderLine(5, document.getElementById('elm2'));
+        ll = new window.LeaderLine(5, document.getNodeElementById('elm2'));
       }).toThrow();
 
       pageDone();
@@ -335,17 +335,17 @@ describe('options', function() {
 
       // Change to element in iframe, `baseWindow` is not changed
       ll.setOptions({
-        start: document.getElementById('elm2'),
-        end: document.getElementById('elm3')
+        start: document.getNodeElementById('elm2'),
+        end: document.getNodeElementById('elm3')
       });
       traceLog.clear();
-      ll.end = document.getElementById('iframe1').contentDocument.getElementById('elm2');
+      ll.end = document.getNodeElementById('iframe1').contentDocument.getElementById('elm2');
       expect(traceLog.log).not.toContain('<bindWindow>');
       expect(traceLog.getTaggedLog('setOptions')).not.toContain('needs.line');
 
       // Change to element in iframe, `baseWindow` is changed
       traceLog.clear();
-      ll.start = document.getElementById('iframe1').contentDocument.getElementById('elm1');
+      ll.start = document.getNodeElementById('iframe1').contentDocument.getElementById('elm1');
       expect(traceLog.log).toContain('<bindWindow>');
       expect(traceLog.getTaggedLog('setOptions')).toContain('needs.line');
 
@@ -371,17 +371,17 @@ describe('options', function() {
 
       // Change to element in iframe, `baseWindow` is not changed
       ll.setOptions({
-        start: document.getElementById('elm2'),
-        end: document.getElementById('elm3')
+        start: document.getNodeElementById('elm2'),
+        end: document.getNodeElementById('elm3')
       });
       traceLog.clear();
-      ll.end = document.getElementById('iframe1').contentDocument.getElementById('elm2');
+      ll.end = document.getNodeElementById('iframe1').contentDocument.getElementById('elm2');
       expect(traceLog.log).not.toContain('<bindWindow>');
       expect(traceLog.getTaggedLog('setOptions')).not.toContain('needs.plug');
 
       // Change to element in iframe, `baseWindow` is changed
       traceLog.clear();
-      ll.start = document.getElementById('iframe1').contentDocument.getElementById('elm1');
+      ll.start = document.getNodeElementById('iframe1').contentDocument.getElementById('elm1');
       expect(traceLog.log).toContain('<bindWindow>');
       expect(traceLog.getTaggedLog('setOptions')).toContain('needs.plug');
 
@@ -424,17 +424,17 @@ describe('options', function() {
 
       // Change to element in iframe, `baseWindow` is not changed
       ll.setOptions({
-        start: document.getElementById('elm2'),
-        end: document.getElementById('elm3')
+        start: document.getNodeElementById('elm2'),
+        end: document.getNodeElementById('elm3')
       });
       traceLog.clear();
-      ll.end = document.getElementById('iframe1').contentDocument.getElementById('elm2');
+      ll.end = document.getNodeElementById('iframe1').contentDocument.getElementById('elm2');
       expect(traceLog.log).not.toContain('<bindWindow>');
       expect(traceLog.getTaggedLog('setOptions')).not.toContain('needs.lineOutline');
 
       // Change to element in iframe, `baseWindow` is changed
       traceLog.clear();
-      ll.start = document.getElementById('iframe1').contentDocument.getElementById('elm1');
+      ll.start = document.getNodeElementById('iframe1').contentDocument.getElementById('elm1');
       expect(traceLog.log).toContain('<bindWindow>');
       expect(traceLog.getTaggedLog('setOptions')).toContain('needs.lineOutline');
 
@@ -465,17 +465,17 @@ describe('options', function() {
 
       // Change to element in iframe, `baseWindow` is not changed
       ll.setOptions({
-        start: document.getElementById('elm2'),
-        end: document.getElementById('elm3')
+        start: document.getNodeElementById('elm2'),
+        end: document.getNodeElementById('elm3')
       });
       traceLog.clear();
-      ll.end = document.getElementById('iframe1').contentDocument.getElementById('elm2');
+      ll.end = document.getNodeElementById('iframe1').contentDocument.getElementById('elm2');
       expect(traceLog.log).not.toContain('<bindWindow>');
       expect(traceLog.getTaggedLog('setOptions')).not.toContain('needs.plugOutline');
 
       // Change to element in iframe, `baseWindow` is changed
       traceLog.clear();
-      ll.start = document.getElementById('iframe1').contentDocument.getElementById('elm1');
+      ll.start = document.getNodeElementById('iframe1').contentDocument.getElementById('elm1');
       expect(traceLog.log).toContain('<bindWindow>');
       expect(traceLog.getTaggedLog('setOptions')).toContain('needs.plugOutline');
 
@@ -512,7 +512,7 @@ describe('options', function() {
 
       // anchorSE
       traceLog.clear();
-      ll.start = document.getElementById('elm3');
+      ll.start = document.getNodeElementById('elm3');
       expect(traceLog.getTaggedLog('setOptions')).toContain('needs.position');
 
       // path

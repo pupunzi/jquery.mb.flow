@@ -22,7 +22,7 @@ describe('autoScroll', function() {
 
   beforeAll(function(beforeDone) {
     loadPage('spec/common-window.html', function(pageWindow, pageDocument, pageBody, done) {
-      var iframe = pageDocument.getElementById('iframe');
+      var iframe = pageDocument.getNodeElementById('iframe');
       window = iframe.contentWindow;
       document = window.document;
       pageDone = done;

@@ -540,90 +540,90 @@ describe('funcs', function() {
     });
 
     it('SVGGElement:true', function() {
-      var element = document.getElementById('elmG');
+      var element = document.getNodeElementById('elmG');
       expect(Object.prototype.toString.apply(element)).toBe('[object SVGGElement]');
       expect(isElement(element)).toBe(true);
       expect(typeof element.getBoundingClientRect).toBe('function');
     });
 
     it('SVGTextElement:true', function() {
-      var element = document.getElementById('elmText');
+      var element = document.getNodeElementById('elmText');
       expect(Object.prototype.toString.apply(element)).toBe('[object SVGTextElement]');
       expect(isElement(element)).toBe(true);
       expect(typeof element.getBoundingClientRect).toBe('function');
     });
 
     it('SVGRectElement:true', function() {
-      var element = document.getElementById('elmRect');
+      var element = document.getNodeElementById('elmRect');
       expect(Object.prototype.toString.apply(element)).toBe('[object SVGRectElement]');
       expect(isElement(element)).toBe(true);
       expect(typeof element.getBoundingClientRect).toBe('function');
     });
 
     it('SVGDefsElement:true', function() {
-      var element = document.getElementById('elmDefs');
+      var element = document.getNodeElementById('elmDefs');
       expect(Object.prototype.toString.apply(element)).toBe('[object SVGDefsElement]');
       expect(isElement(element)).toBe(true);
       expect(typeof element.getBoundingClientRect).toBe('function');
     });
 
     it('Another window HTMLAnchorElement:true', function() {
-      var element = document.getElementById('iframe-1').contentDocument.getElementsByTagName('a')[0];
+      var element = document.getNodeElementById('iframe-1').contentDocument.getElementsByTagName('a')[0];
       expect(Object.prototype.toString.apply(element)).toBe('[object HTMLAnchorElement]');
       expect(isElement(element)).toBe(true);
       expect(typeof element.getBoundingClientRect).toBe('function');
     });
 
     it('Another window HTMLParagraphElement:true', function() {
-      var element = document.getElementById('iframe-1').contentDocument.getElementsByTagName('p')[0];
+      var element = document.getNodeElementById('iframe-1').contentDocument.getElementsByTagName('p')[0];
       expect(Object.prototype.toString.apply(element)).toBe('[object HTMLParagraphElement]');
       expect(isElement(element)).toBe(true);
       expect(typeof element.getBoundingClientRect).toBe('function');
     });
 
     it('Another window HTMLHeadElement:true', function() {
-      var element = document.getElementById('iframe-1').contentDocument.getElementsByTagName('head')[0];
+      var element = document.getNodeElementById('iframe-1').contentDocument.getElementsByTagName('head')[0];
       expect(Object.prototype.toString.apply(element)).toBe('[object HTMLHeadElement]');
       expect(isElement(element)).toBe(true);
       expect(typeof element.getBoundingClientRect).toBe('function');
     });
 
     it('Another window HTMLScriptElement:true', function() {
-      var element = document.getElementById('iframe-1').contentDocument.getElementsByTagName('script')[0];
+      var element = document.getNodeElementById('iframe-1').contentDocument.getElementsByTagName('script')[0];
       expect(Object.prototype.toString.apply(element)).toBe('[object HTMLScriptElement]');
       expect(isElement(element)).toBe(true);
       expect(typeof element.getBoundingClientRect).toBe('function');
     });
 
     it('Another window HTMLBodyElement:true', function() {
-      var element = document.getElementById('iframe-1').contentDocument.body;
+      var element = document.getNodeElementById('iframe-1').contentDocument.body;
       expect(Object.prototype.toString.apply(element)).toBe('[object HTMLBodyElement]');
       expect(isElement(element)).toBe(true);
       expect(typeof element.getBoundingClientRect).toBe('function');
     });
 
     it('Another window HTMLHtmlElement:true', function() {
-      var element = document.getElementById('iframe-1').contentDocument.documentElement;
+      var element = document.getNodeElementById('iframe-1').contentDocument.documentElement;
       expect(Object.prototype.toString.apply(element)).toBe('[object HTMLHtmlElement]');
       expect(isElement(element)).toBe(true);
       expect(typeof element.getBoundingClientRect).toBe('function');
     });
 
     it('Another window HTMLDocument:false', function() {
-      var element = document.getElementById('iframe-1').contentDocument;
+      var element = document.getNodeElementById('iframe-1').contentDocument;
       expect(Object.prototype.toString.apply(element)).toBe('[object HTMLDocument]');
       expect(isElement(element)).toBe(false);
     });
 
     it('Another window HTMLCollection:false', function() {
-      var element = document.getElementById('iframe-1').contentDocument.getElementsByTagName('a');
+      var element = document.getNodeElementById('iframe-1').contentDocument.getElementsByTagName('a');
       expect(Object.prototype.toString.apply(element)).toBe('[object ' +
         (IS_WEBKIT ? 'NodeList' : 'HTMLCollection') + ']');
       expect(isElement(element)).toBe(false);
     });
 
     it('Another window HTMLOptionsCollection:false', function() {
-      var element = document.getElementById('iframe-1').contentDocument.getElementsByTagName('select')[0].options;
+      var element = document.getNodeElementById('iframe-1').contentDocument.getElementsByTagName('select')[0].options;
       if (!IS_TRIDENT) { // [TRIDENT] `<select>.options` returns itself.
         expect(Object.prototype.toString.apply(element)).toBe('[object HTMLOptionsCollection]');
         expect(isElement(element)).toBe(false);
@@ -633,7 +633,7 @@ describe('funcs', function() {
     });
 
     it('Another window HTMLFormControlsCollection:false', function() {
-      var element = document.getElementById('iframe-1').contentDocument.forms[0].elements;
+      var element = document.getNodeElementById('iframe-1').contentDocument.forms[0].elements;
       if (!IS_TRIDENT) { // [TRIDENT] The class is not supported.
         expect(Object.prototype.toString.apply(element)).toBe('[object HTMLFormControlsCollection]');
       }
@@ -641,35 +641,35 @@ describe('funcs', function() {
     });
 
     it('Another window SVGSVGElement:true', function() {
-      var element = document.getElementById('iframe-1').contentDocument.getElementsByTagName('svg')[0];
+      var element = document.getNodeElementById('iframe-1').contentDocument.getElementsByTagName('svg')[0];
       expect(Object.prototype.toString.apply(element)).toBe('[object SVGSVGElement]');
       expect(isElement(element)).toBe(true);
       expect(typeof element.getBoundingClientRect).toBe('function');
     });
 
     it('Another window SVGGElement:true', function() {
-      var element = document.getElementById('iframe-1').contentDocument.getElementById('elmG');
+      var element = document.getNodeElementById('iframe-1').contentDocument.getElementById('elmG');
       expect(Object.prototype.toString.apply(element)).toBe('[object SVGGElement]');
       expect(isElement(element)).toBe(true);
       expect(typeof element.getBoundingClientRect).toBe('function');
     });
 
     it('Another window SVGTextElement:true', function() {
-      var element = document.getElementById('iframe-1').contentDocument.getElementById('elmText');
+      var element = document.getNodeElementById('iframe-1').contentDocument.getElementById('elmText');
       expect(Object.prototype.toString.apply(element)).toBe('[object SVGTextElement]');
       expect(isElement(element)).toBe(true);
       expect(typeof element.getBoundingClientRect).toBe('function');
     });
 
     it('Another window SVGRectElement:true', function() {
-      var element = document.getElementById('iframe-1').contentDocument.getElementById('elmRect');
+      var element = document.getNodeElementById('iframe-1').contentDocument.getElementById('elmRect');
       expect(Object.prototype.toString.apply(element)).toBe('[object SVGRectElement]');
       expect(isElement(element)).toBe(true);
       expect(typeof element.getBoundingClientRect).toBe('function');
     });
 
     it('Another window SVGDefsElement:true', function() {
-      var element = document.getElementById('iframe-1').contentDocument.getElementById('elmDefs');
+      var element = document.getNodeElementById('iframe-1').contentDocument.getElementById('elmDefs');
       expect(Object.prototype.toString.apply(element)).toBe('[object SVGDefsElement]');
       expect(isElement(element)).toBe(true);
       expect(typeof element.getBoundingClientRect).toBe('function');

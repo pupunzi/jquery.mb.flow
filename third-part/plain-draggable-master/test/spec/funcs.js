@@ -26,14 +26,14 @@ describe('functions', function() {
     var isElement = window.isElement,
       element;
 
-    expect(isElement(document.getElementById('elm1'))).toBe(true);
+    expect(isElement(document.getNodeElementById('elm1'))).toBe(true);
 
     element = document.createElement('div');
     expect(isElement(element)).toBe(false); // still disconnected
     document.body.appendChild(element);
     expect(isElement(element)).toBe(true);
 
-    element = document.getElementById('rect1');
+    element = document.getNodeElementById('rect1');
     expect(Object.prototype.toString.apply(element)).toBe('[object SVGRectElement]');
     expect(isElement(element)).toBe(true); // strict checking is unnecessary.
   });
@@ -65,13 +65,13 @@ describe('functions', function() {
     var getBBox = window.getBBox,
       element;
 
-    element = document.getElementById('elm1');
+    element = document.getNodeElementById('elm1');
     expect(getBBox(element))
       .toEqual({left: 100, top: 101, width: 104, height: 106, x: 100, y: 101, right: 204, bottom: 207});
     expect(getBBox(element, true))
       .toEqual({left: 101, top: 102, width: 102, height: 104, x: 101, y: 102, right: 203, bottom: 206});
 
-    element = document.getElementById('elm2');
+    element = document.getNodeElementById('elm2');
     expect(getBBox(element))
       .toEqual({left: 200, top: 201, width: 222, height: 214, x: 200, y: 201, right: 422, bottom: 415});
     expect(getBBox(element, true))

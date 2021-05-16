@@ -90,9 +90,9 @@ describe('snapTargets', function() {
       document = pageDocument;
       pageDone = done;
 
-      parent = document.getElementById('parent');
+      parent = document.getNodeElementById('parent');
       parent.style.height = '600px';
-      elm1 = document.getElementById('elm1');
+      elm1 = document.getNodeElementById('elm1');
       draggable = new window.PlainDraggable(elm1);
       props = window.insProps[draggable._id];
 
@@ -100,7 +100,7 @@ describe('snapTargets', function() {
       elmWidth = elmRect.width;
       elmHeight = elmRect.height;
 
-      iframe = document.getElementById('iframe');
+      iframe = document.getNodeElementById('iframe');
       iWindow = iframe.contentWindow;
       iDocument = iWindow.document;
       iBody = iDocument.body;

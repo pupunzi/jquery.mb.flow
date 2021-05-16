@@ -23,7 +23,7 @@ describe('BBox with leftTop option', function() {
   it('keeps original BBox if possible', function() {
     var draggable, element, orgBBox, curBBox, saveWidth;
 
-    element = document.getElementById('elm1');
+    element = document.getNodeElementById('elm1');
     orgBBox = window.getBBox(element);
     expect(orgBBox).toEqual({left: 0, top: 0, x: 0, y: 0, width: 300, height: 20, right: 300, bottom: 20});
     draggable = new window.PlainDraggable(element, {leftTop: true});
@@ -35,7 +35,7 @@ describe('BBox with leftTop option', function() {
     expect(element.style.left).toBe('0px');
     expect(element.style.top).toBe('0px');
 
-    element = document.getElementById('elm2');
+    element = document.getNodeElementById('elm2');
     saveWidth = element.style.width;
     orgBBox = window.getBBox(element);
     expect(orgBBox).toEqual({left: 0, top: 30, x: 0, y: 30, width: 300, height: 26, right: 300, bottom: 56});
@@ -58,7 +58,7 @@ describe('BBox with leftTop option', function() {
     expect(curBBox).toEqual(orgBBox);
     expect(element.style.width).toBe('160px'); // Don't change
 
-    element = document.getElementById('elm3');
+    element = document.getNodeElementById('elm3');
     orgBBox = window.getBBox(element);
     expect(orgBBox).toEqual({left: 0, top: 60, x: 0, y: 60, width: 300, height: 26, right: 300, bottom: 86});
     draggable = new window.PlainDraggable(element, {leftTop: true});
@@ -70,7 +70,7 @@ describe('BBox with leftTop option', function() {
     expect(element.style.left).toBe('0px');
     expect(element.style.top).toBe('60px');
 
-    element = document.getElementById('elm4');
+    element = document.getNodeElementById('elm4');
     saveWidth = element.style.width;
     orgBBox = window.getBBox(element);
     expect(orgBBox).toEqual({left: 0, top: 120, x: 0, y: 120, width: 300, height: 30, right: 300, bottom: 150});
@@ -93,7 +93,7 @@ describe('BBox with leftTop option', function() {
     expect(curBBox).toEqual(orgBBox);
     expect(element.style.width).toBe('160px'); // Don't change
 
-    element = document.getElementById('elm5');
+    element = document.getNodeElementById('elm5');
     orgBBox = window.getBBox(element);
     expect(orgBBox).toEqual({left: 0, top: 170, x: 0, y: 170, width: 306, height: 36, right: 306, bottom: 206});
     draggable = new window.PlainDraggable(element, {leftTop: true});
@@ -105,7 +105,7 @@ describe('BBox with leftTop option', function() {
     expect(element.style.left).toBe('0px');
     expect(element.style.top).toBe('170px');
 
-    element = document.getElementById('elm6');
+    element = document.getNodeElementById('elm6');
     orgBBox = window.getBBox(element);
     expect(orgBBox).toEqual({left: 0, top: 220, x: 0, y: 220, width: 300, height: 30, right: 300, bottom: 250});
     draggable = new window.PlainDraggable(element, {leftTop: true});
@@ -117,7 +117,7 @@ describe('BBox with leftTop option', function() {
     expect(element.style.left).toBe('0px');
     expect(element.style.top).toBe('220px');
 
-    element = document.getElementById('elm7');
+    element = document.getNodeElementById('elm7');
     orgBBox = window.getBBox(element);
     expect(orgBBox).toEqual({left: 0, top: 90, x: 0, y: 90, width: 300, height: 40, right: 300, bottom: 130});
     draggable = new window.PlainDraggable(element, {leftTop: true});
@@ -129,7 +129,7 @@ describe('BBox with leftTop option', function() {
     expect(element.style.left).toBe('0px');
     expect(element.style.top).toBe('90px');
 
-    element = document.getElementById('elm8');
+    element = document.getNodeElementById('elm8');
     orgBBox = window.getBBox(element);
     expect(orgBBox).toEqual({left: 0, top: 270, x: 0, y: 270, width: 300, height: 30, right: 300, bottom: 300});
     draggable = new window.PlainDraggable(element, {leftTop: true});
@@ -141,7 +141,7 @@ describe('BBox with leftTop option', function() {
     expect(element.style.left).toBe('0px');
     expect(element.style.top).toBe('0px');
 
-    element = document.getElementById('elm9');
+    element = document.getNodeElementById('elm9');
     orgBBox = window.getBBox(element);
     // margin: 21px -> top: 21
     expect(orgBBox).toEqual({left: 22, top: 342, x: 22, y: 342, width: 300, height: 30, right: 322, bottom: 372});
@@ -155,7 +155,7 @@ describe('BBox with leftTop option', function() {
     expect(element.style.left).toBe('21px');
     expect(element.style.top).toBe('18px'); // not `21px` because maxTop is 18
 
-    element = document.getElementById('elm10');
+    element = document.getNodeElementById('elm10');
     orgBBox = window.getBBox(element);
     expect(orgBBox).toEqual({left: 22, top: 392, x: 22, y: 392, width: 300, height: 30, right: 322, bottom: 422});
     draggable = new window.PlainDraggable(element, {leftTop: true});
@@ -169,7 +169,7 @@ describe('BBox with leftTop option', function() {
   });
 
   it('gets offset by document', function() {
-    var iWindow = document.getElementById('iframe').contentWindow,
+    var iWindow = document.getNodeElementById('iframe').contentWindow,
       iDocument = iWindow.document,
       iBody = iDocument.body,
       draggable, element;

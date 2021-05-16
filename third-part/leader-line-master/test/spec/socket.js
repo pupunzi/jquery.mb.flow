@@ -28,29 +28,29 @@ describe('socket', function() {
   });
 
   it('decide both sockets', function() {
-    var ll = new window.LeaderLine(document.getElementById('elm1-center'),
-        document.getElementById('elm1-top'), {path: 'straight'}),
+    var ll = new window.LeaderLine(document.getNodeElementById('elm1-center'),
+        document.getNodeElementById('elm1-top'), {path: 'straight'}),
       props = window.insProps[ll._id];
 
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_TOP);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_BOTTOM);
 
-    ll.end = document.getElementById('elm1-right');
+    ll.end = document.getNodeElementById('elm1-right');
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_RIGHT);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_LEFT);
 
-    ll.end = document.getElementById('elm1-bottom');
+    ll.end = document.getNodeElementById('elm1-bottom');
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_BOTTOM);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_TOP);
 
-    ll.end = document.getElementById('elm1-left');
+    ll.end = document.getNodeElementById('elm1-left');
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_LEFT);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_RIGHT);
   });
 
   it('decide one side socket', function() {
-    var ll = new window.LeaderLine(document.getElementById('elm2-out'),
-        document.getElementById('elm2-in'), {path: 'straight'}),
+    var ll = new window.LeaderLine(document.getNodeElementById('elm2-out'),
+        document.getNodeElementById('elm2-in'), {path: 'straight'}),
       props = window.insProps[ll._id];
 
     ll.startSocket = 'top';
@@ -71,129 +71,129 @@ describe('socket', function() {
   });
 
   it('anchor width: 0', function() {
-    var ll = new window.LeaderLine(document.getElementById('elm3-center'),
-        document.getElementById('elm3-top'), {path: 'straight'}),
+    var ll = new window.LeaderLine(document.getNodeElementById('elm3-center'),
+        document.getNodeElementById('elm3-top'), {path: 'straight'}),
       props = window.insProps[ll._id];
 
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_TOP);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_BOTTOM);
 
-    ll.end = document.getElementById('elm3-right');
+    ll.end = document.getNodeElementById('elm3-right');
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_RIGHT);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_LEFT);
 
-    ll.end = document.getElementById('elm3-bottom');
+    ll.end = document.getNodeElementById('elm3-bottom');
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_BOTTOM);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_TOP);
 
-    ll.end = document.getElementById('elm3-left');
+    ll.end = document.getNodeElementById('elm3-left');
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_LEFT);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_RIGHT);
   });
 
   it('anchor height: 0', function() {
-    var ll = new window.LeaderLine(document.getElementById('elm4-center'),
-        document.getElementById('elm4-top'), {path: 'straight'}),
+    var ll = new window.LeaderLine(document.getNodeElementById('elm4-center'),
+        document.getNodeElementById('elm4-top'), {path: 'straight'}),
       props = window.insProps[ll._id];
 
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_TOP);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_BOTTOM);
 
-    ll.end = document.getElementById('elm4-right');
+    ll.end = document.getNodeElementById('elm4-right');
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_RIGHT);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_LEFT);
 
-    ll.end = document.getElementById('elm4-bottom');
+    ll.end = document.getNodeElementById('elm4-bottom');
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_BOTTOM);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_TOP);
 
-    ll.end = document.getElementById('elm4-left');
+    ll.end = document.getNodeElementById('elm4-left');
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_LEFT);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_RIGHT);
   });
 
   it('anchor width: 0, height: 0', function() {
-    var ll = new window.LeaderLine(document.getElementById('elm5-center'),
-        document.getElementById('elm5-top'), {path: 'straight'}),
+    var ll = new window.LeaderLine(document.getNodeElementById('elm5-center'),
+        document.getNodeElementById('elm5-top'), {path: 'straight'}),
       props = window.insProps[ll._id];
 
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_TOP);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_BOTTOM);
 
-    ll.end = document.getElementById('elm5-right');
+    ll.end = document.getNodeElementById('elm5-right');
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_RIGHT);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_LEFT);
 
-    ll.end = document.getElementById('elm5-bottom');
+    ll.end = document.getNodeElementById('elm5-bottom');
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_BOTTOM);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_TOP);
 
-    ll.end = document.getElementById('elm5-left');
+    ll.end = document.getNodeElementById('elm5-left');
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_LEFT);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_RIGHT);
   });
 
   it('decide both sockets anchor width: 0, height: 0', function() {
-    var ll = new window.LeaderLine(document.getElementById('elm6-center'),
-        document.getElementById('elm6-top'), {path: 'straight'}),
+    var ll = new window.LeaderLine(document.getNodeElementById('elm6-center'),
+        document.getNodeElementById('elm6-top'), {path: 'straight'}),
       props = window.insProps[ll._id];
 
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_TOP);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_BOTTOM);
 
-    ll.end = document.getElementById('elm6-right');
+    ll.end = document.getNodeElementById('elm6-right');
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_RIGHT);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_LEFT);
 
-    ll.end = document.getElementById('elm6-bottom');
+    ll.end = document.getNodeElementById('elm6-bottom');
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_BOTTOM);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_TOP);
 
-    ll.end = document.getElementById('elm6-left');
+    ll.end = document.getNodeElementById('elm6-left');
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_LEFT);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_RIGHT);
   });
 
   it('same distance X and Y', function() {
-    var ll = new window.LeaderLine(document.getElementById('elm7-center'),
-        document.getElementById('elm7-top'), {path: 'straight'}),
+    var ll = new window.LeaderLine(document.getNodeElementById('elm7-center'),
+        document.getNodeElementById('elm7-top'), {path: 'straight'}),
       props = window.insProps[ll._id];
 
     // prior X
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_RIGHT);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_LEFT);
 
-    ll.end = document.getElementById('elm7-right');
+    ll.end = document.getNodeElementById('elm7-right');
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_RIGHT);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_LEFT);
 
     // prior X
-    ll.end = document.getElementById('elm7-bottom');
+    ll.end = document.getNodeElementById('elm7-bottom');
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_LEFT);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_RIGHT);
 
-    ll.end = document.getElementById('elm7-left');
+    ll.end = document.getNodeElementById('elm7-left');
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_LEFT);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_RIGHT);
   });
 
   it('nearly same distance X and Y', function() {
-    var ll = new window.LeaderLine(document.getElementById('elm8-center'),
-        document.getElementById('elm8-top'), {path: 'straight'}),
+    var ll = new window.LeaderLine(document.getNodeElementById('elm8-center'),
+        document.getNodeElementById('elm8-top'), {path: 'straight'}),
       props = window.insProps[ll._id];
 
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_TOP);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_BOTTOM);
 
-    ll.end = document.getElementById('elm8-right');
+    ll.end = document.getNodeElementById('elm8-right');
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_RIGHT);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_LEFT);
 
-    ll.end = document.getElementById('elm8-bottom');
+    ll.end = document.getNodeElementById('elm8-bottom');
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_BOTTOM);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_TOP);
 
-    ll.end = document.getElementById('elm8-left');
+    ll.end = document.getNodeElementById('elm8-left');
     expect(props.curStats.position_socketXYSE[0].socketId).toBe(SOCKET_LEFT);
     expect(props.curStats.position_socketXYSE[1].socketId).toBe(SOCKET_RIGHT);
   });

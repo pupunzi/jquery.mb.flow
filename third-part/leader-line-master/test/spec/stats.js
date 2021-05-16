@@ -20,7 +20,7 @@ describe('stats', function() {
       traceLog = window.traceLog;
       traceLog.enabled = true;
       pageDone = done;
-      ll = new window.LeaderLine(document.getElementById('elm1'), document.getElementById('elm3'));
+      ll = new window.LeaderLine(document.getNodeElementById('elm1'), document.getNodeElementById('elm3'));
       beforeDone();
     }/* , 'stats - ' + titles.shift() */);
   });
@@ -1026,7 +1026,7 @@ describe('stats', function() {
 
     // capsMaskAnchor_enabledSE, capsMaskAnchor_pathDataSE
     expect(props.curStats.capsMaskAnchor_enabledSE[1]).toBe(false);
-    ll.setOptions({end: document.getElementById('elm2'), endPlug: 'behind'});
+    ll.setOptions({end: document.getNodeElementById('elm2'), endPlug: 'behind'});
     expect(traceLog.getTaggedLog('updateMask')).toContainAll([
       'capsMaskAnchor_enabledSE[1]=true', 'capsMaskAnchor_pathDataSE[1]'
     ]);
@@ -1050,7 +1050,7 @@ describe('stats', function() {
     expect(props.aplStats.lineMask_outlineMode).toBe(true);
 
     // capsMaskAnchor_pathDataSE when caps_enabled false
-    ll.end = document.getElementById('elm3');
+    ll.end = document.getNodeElementById('elm3');
     expect(traceLog.getTaggedLog('updateMask')).toNotContainAny([
       'capsMaskAnchor_pathDataSE[1]'
     ]);
@@ -1072,7 +1072,7 @@ describe('stats', function() {
 
 
     // capsMaskAnchor_pathDataSE when capsMaskAnchor_enabledSE false
-    ll.start = document.getElementById('elm2');
+    ll.start = document.getNodeElementById('elm2');
     expect(traceLog.getTaggedLog('updateMask')).toNotContainAny([
       'capsMaskAnchor_pathDataSE[0]'
     ]);
@@ -1169,7 +1169,7 @@ describe('stats', function() {
     ll.remove();
 
     traceLog.clear();
-    ll = new window.LeaderLine(document.getElementById('elm1'), document.getElementById('elm2'));
+    ll = new window.LeaderLine(document.getNodeElementById('elm1'), document.getNodeElementById('elm2'));
     expect(traceLog.log).toEqual([
       /* eslint-disable indent */
       '<bindWindow>', '</bindWindow>',
@@ -1245,8 +1245,8 @@ describe('stats', function() {
     ]);
 
     traceLog.clear();
-    ll.setOptions({start: document.getElementById('iframe1').contentDocument.getElementById('elm1'),
-      end: document.getElementById('iframe1').contentDocument.getElementById('elm2')});
+    ll.setOptions({start: document.getNodeElementById('iframe1').contentDocument.getElementById('elm1'),
+      end: document.getNodeElementById('iframe1').contentDocument.getElementById('elm2')});
     expect(traceLog.log).toEqual([
       /* eslint-disable indent */
       '<bindWindow>', '</bindWindow>',

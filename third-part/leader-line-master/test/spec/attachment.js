@@ -33,7 +33,7 @@ describe('attachment', function() {
       traceLog = window.traceLog;
       traceLog.enabled = true;
       pageDone = done;
-      ll = new window.LeaderLine(document.getElementById('elm1'), document.getElementById('elm3'));
+      ll = new window.LeaderLine(document.getNodeElementById('elm1'), document.getNodeElementById('elm3'));
       beforeDone();
     }, 'attachment - ' + titles.shift());
   }
@@ -64,25 +64,25 @@ describe('attachment', function() {
         atc, attachProps;
 
       // replace to attachProps.element
-      atc = window.LeaderLine.pointAnchor({element: document.getElementById('elm1')});
+      atc = window.LeaderLine.pointAnchor({element: document.getNodeElementById('elm1')});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
       expect(props.attachments.length).toBe(1);
       expect(attachProps.boundTargets.length).toBe(1);
       atc.remove();
-      expect(ll.start).toBe(document.getElementById('elm1'));
-      expect(ll.end).toBe(document.getElementById('elm3'));
+      expect(ll.start).toBe(document.getNodeElementById('elm1'));
+      expect(ll.end).toBe(document.getNodeElementById('elm3'));
       expect(props.attachments.length).toBe(0);
 
       // replace to document.body
-      atc = window.LeaderLine.pointAnchor({element: document.getElementById('elm3')});
+      atc = window.LeaderLine.pointAnchor({element: document.getNodeElementById('elm3')});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
       expect(props.attachments.length).toBe(1);
       expect(attachProps.boundTargets.length).toBe(1);
       atc.remove();
       expect(ll.start).toBe(document.body);
-      expect(ll.end).toBe(document.getElementById('elm3'));
+      expect(ll.end).toBe(document.getNodeElementById('elm3'));
       expect(props.attachments.length).toBe(0);
 
       // replace to LeaderLineAttachment
@@ -137,7 +137,7 @@ describe('attachment', function() {
     it(registerTitle('parse options'), function(done) {
       var atc, attachProps,
         defaultOptions = {
-          element: document.getElementById('elm1'),
+          element: document.getNodeElementById('elm1'),
           showEffectName: 'draw',
           style: {dummy: 9}
         };
@@ -146,45 +146,45 @@ describe('attachment', function() {
 
       atc = window.LeaderLine.mouseHoverAnchor(defaultOptions);
       attachProps = window.insAttachProps[atc._id];
-      expect(attachProps.element).toBe(document.getElementById('elm1'));
+      expect(attachProps.element).toBe(document.getNodeElementById('elm1'));
       expect(attachProps.showEffectName).toBe('draw');
       expect(attachProps.style.dummy).toBe(9);
 
-      atc = window.LeaderLine.mouseHoverAnchor(document.getElementById('elm2'));
+      atc = window.LeaderLine.mouseHoverAnchor(document.getNodeElementById('elm2'));
       attachProps = window.insAttachProps[atc._id];
-      expect(attachProps.element).toBe(document.getElementById('elm2'));
+      expect(attachProps.element).toBe(document.getNodeElementById('elm2'));
       expect(attachProps.showEffectName == null).toBe(true);
       expect(attachProps.style.dummy == null).toBe(true);
 
-      atc = window.LeaderLine.mouseHoverAnchor(document.getElementById('elm2'), defaultOptions);
+      atc = window.LeaderLine.mouseHoverAnchor(document.getNodeElementById('elm2'), defaultOptions);
       attachProps = window.insAttachProps[atc._id];
-      expect(attachProps.element).toBe(document.getElementById('elm2'));
+      expect(attachProps.element).toBe(document.getNodeElementById('elm2'));
       expect(attachProps.showEffectName).toBe('draw');
       expect(attachProps.style.dummy).toBe(9);
 
-      atc = window.LeaderLine.mouseHoverAnchor(document.getElementById('elm2'), 'none');
+      atc = window.LeaderLine.mouseHoverAnchor(document.getNodeElementById('elm2'), 'none');
       attachProps = window.insAttachProps[atc._id];
-      expect(attachProps.element).toBe(document.getElementById('elm2'));
+      expect(attachProps.element).toBe(document.getNodeElementById('elm2'));
       expect(attachProps.showEffectName).toBe('none');
       expect(attachProps.style.dummy == null).toBe(true);
 
-      atc = window.LeaderLine.mouseHoverAnchor(document.getElementById('elm2'), 'none', defaultOptions);
+      atc = window.LeaderLine.mouseHoverAnchor(document.getNodeElementById('elm2'), 'none', defaultOptions);
       attachProps = window.insAttachProps[atc._id];
-      expect(attachProps.element).toBe(document.getElementById('elm2'));
+      expect(attachProps.element).toBe(document.getNodeElementById('elm2'));
       expect(attachProps.showEffectName).toBe('none');
       expect(attachProps.style.dummy).toBe(9);
 
       // invalid value
 
-      atc = window.LeaderLine.mouseHoverAnchor(document.getElementById('elm2'), true);
+      atc = window.LeaderLine.mouseHoverAnchor(document.getNodeElementById('elm2'), true);
       attachProps = window.insAttachProps[atc._id];
-      expect(attachProps.element).toBe(document.getElementById('elm2'));
+      expect(attachProps.element).toBe(document.getNodeElementById('elm2'));
       expect(attachProps.showEffectName == null).toBe(true);
       expect(attachProps.style.dummy == null).toBe(true);
 
-      atc = window.LeaderLine.mouseHoverAnchor(document.getElementById('elm2'), true, defaultOptions);
+      atc = window.LeaderLine.mouseHoverAnchor(document.getNodeElementById('elm2'), true, defaultOptions);
       attachProps = window.insAttachProps[atc._id];
-      expect(attachProps.element).toBe(document.getElementById('elm2'));
+      expect(attachProps.element).toBe(document.getNodeElementById('elm2'));
       expect(attachProps.showEffectName == null).toBe(true);
       // defaultOptions also is ignored
       expect(attachProps.style.dummy == null).toBe(true);
@@ -202,8 +202,8 @@ describe('attachment', function() {
       var props1 = window.insProps[ll._id], log,
         atc1, atc2, attachProps1, attachProps2, ll2, props2;
 
-      atc1 = window.LeaderLine.pointAnchor({element: document.getElementById('elm1')});
-      atc2 = window.LeaderLine.pointAnchor({element: document.getElementById('elm2')});
+      atc1 = window.LeaderLine.pointAnchor({element: document.getNodeElementById('elm1')});
+      atc2 = window.LeaderLine.pointAnchor({element: document.getNodeElementById('elm2')});
       attachProps1 = window.insAttachProps[atc1._id];
       attachProps2 = window.insAttachProps[atc2._id];
       expect(atc1.isRemoved).toBe(false);
@@ -222,7 +222,7 @@ describe('attachment', function() {
 
       // unbind -> remove
       traceLog.clear();
-      ll.start = document.getElementById('elm1');
+      ll.start = document.getNodeElementById('elm1');
       setTimeout(function() {
         expect(traceLog.getTaggedLog('removeAttachment')).toEqual([]);
         expect(props1.attachments.length).toBe(0);
@@ -231,7 +231,7 @@ describe('attachment', function() {
 
         // 2 ll - 1 atc
         ll.start = atc2;
-        ll2 = new window.LeaderLine(atc2, document.getElementById('elm4'));
+        ll2 = new window.LeaderLine(atc2, document.getNodeElementById('elm4'));
         props2 = window.insProps[ll2._id];
         expect(props1.attachments.length).toBe(1);
         expect(props2.attachments.length).toBe(1);
@@ -241,7 +241,7 @@ describe('attachment', function() {
 
         // unbind 1
         traceLog.clear();
-        ll.start = document.getElementById('elm1');
+        ll.start = document.getNodeElementById('elm1');
         setTimeout(function() {
           log = traceLog.getTaggedLog('removeAttachment');
           expect(log != null).toBe(false);
@@ -253,7 +253,7 @@ describe('attachment', function() {
 
           // unbind 2 -> remove
           traceLog.clear();
-          ll2.start = document.getElementById('elm1');
+          ll2.start = document.getNodeElementById('elm1');
           setTimeout(function() {
             expect(traceLog.getTaggedLog('removeAttachment')).toEqual([]);
             expect(props1.attachments.length).toBe(0);
@@ -262,7 +262,7 @@ describe('attachment', function() {
             expect(window.insAttachProps[atc2._id] != null).toBe(false);
 
             // remove atc -> unbind
-            atc1 = window.LeaderLine.pointAnchor({element: document.getElementById('elm1')});
+            atc1 = window.LeaderLine.pointAnchor({element: document.getNodeElementById('elm1')});
             attachProps1 = window.insAttachProps[atc1._id];
             ll.start = atc1;
             ll2.start = atc1;
@@ -280,14 +280,14 @@ describe('attachment', function() {
               expect(props1.attachments.length).toBe(0);
               expect(props2.attachments.length).toBe(0);
               expect(atc1.isRemoved).toBe(true);
-              expect(ll.start).toBe(document.getElementById('elm1'));
-              expect(ll2.start).toBe(document.getElementById('elm1'));
-              expect(ll.end).toBe(document.getElementById('elm3')); // not changed
-              expect(ll2.end).toBe(document.getElementById('elm4')); // not changed
+              expect(ll.start).toBe(document.getNodeElementById('elm1'));
+              expect(ll2.start).toBe(document.getNodeElementById('elm1'));
+              expect(ll.end).toBe(document.getNodeElementById('elm3')); // not changed
+              expect(ll2.end).toBe(document.getNodeElementById('elm4')); // not changed
 
               // remove ll -> unbind -> remove atc
-              atc1 = window.LeaderLine.pointAnchor({element: document.getElementById('elm1')});
-              atc2 = window.LeaderLine.pointAnchor({element: document.getElementById('elm2')});
+              atc1 = window.LeaderLine.pointAnchor({element: document.getNodeElementById('elm1')});
+              atc2 = window.LeaderLine.pointAnchor({element: document.getNodeElementById('elm2')});
               attachProps1 = window.insAttachProps[atc1._id];
               attachProps2 = window.insAttachProps[atc2._id];
               ll.setOptions({start: atc1, end: atc2});
@@ -317,11 +317,11 @@ describe('attachment', function() {
         atc1, atc2, attachProps1, attachProps2, ll2, props2;
 
       traceLog.clear();
-      atc1 = window.LeaderLine.areaAnchor({element: document.getElementById('elm1')});
+      atc1 = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1')});
       expect(traceLog.log).toEqual([
         '<ATTACHMENTS.areaAnchor.init>', '</ATTACHMENTS.areaAnchor.init>'
       ]);
-      atc2 = window.LeaderLine.areaAnchor({element: document.getElementById('elm2')});
+      atc2 = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm2')});
       attachProps1 = window.insAttachProps[atc1._id];
       attachProps2 = window.insAttachProps[atc2._id];
 
@@ -355,7 +355,7 @@ describe('attachment', function() {
 
       // unbind -> remove
       traceLog.clear();
-      ll.start = document.getElementById('elm1');
+      ll.start = document.getNodeElementById('elm1');
       setTimeout(function() {
         expect(traceLog.log).toEqual([
           /* eslint-disable indent */
@@ -385,7 +385,7 @@ describe('attachment', function() {
 
         // 2 ll - 1 atc
         ll.start = atc2;
-        ll2 = new window.LeaderLine(atc2, document.getElementById('elm4'));
+        ll2 = new window.LeaderLine(atc2, document.getNodeElementById('elm4'));
         props2 = window.insProps[ll2._id];
         expect(props1.attachments.length).toBe(1);
         expect(props2.attachments.length).toBe(1);
@@ -397,7 +397,7 @@ describe('attachment', function() {
 
         // unbind 1
         traceLog.clear();
-        ll.start = document.getElementById('elm1');
+        ll.start = document.getNodeElementById('elm1');
         setTimeout(function() {
           expect(traceLog.log).toEqual([
             /* eslint-disable indent */
@@ -434,7 +434,7 @@ describe('attachment', function() {
 
           // unbind 2 -> remove
           traceLog.clear();
-          ll2.start = document.getElementById('elm1');
+          ll2.start = document.getNodeElementById('elm1');
           setTimeout(function() {
             expect(traceLog.log).toEqual([
               /* eslint-disable indent */
@@ -464,7 +464,7 @@ describe('attachment', function() {
             expect(props2.events.svgShow.length).toBe(0); // removeEventHandler
 
             // remove atc -> unbind
-            atc1 = window.LeaderLine.areaAnchor({element: document.getElementById('elm1')});
+            atc1 = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1')});
             attachProps1 = window.insAttachProps[atc1._id];
             ll.start = atc1;
             ll2.start = atc1;
@@ -533,8 +533,8 @@ describe('attachment', function() {
               expect(props2.events.svgShow.length).toBe(0);
 
               // remove ll -> unbind -> remove atc
-              atc1 = window.LeaderLine.areaAnchor({element: document.getElementById('elm1')});
-              atc2 = window.LeaderLine.areaAnchor({element: document.getElementById('elm2')});
+              atc1 = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1')});
+              atc2 = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm2')});
               attachProps1 = window.insAttachProps[atc1._id];
               attachProps2 = window.insAttachProps[atc2._id];
               ll.setOptions({start: atc1, end: atc2});
@@ -589,7 +589,7 @@ describe('attachment', function() {
         atc;
 
       // values
-      atc = window.LeaderLine.pointAnchor({element: document.getElementById('elm1'), x: 5, y: 6});
+      atc = window.LeaderLine.pointAnchor({element: document.getNodeElementById('elm1'), x: 5, y: 6});
       ll.start = atc;
       // elm1 (1, 2) w:100 h:30
       expect(props.curStats.position_socketXYSE[0].x).toBe(6);
@@ -603,16 +603,16 @@ describe('attachment', function() {
       ]);
       expect(props.curStats.capsMaskAnchor_strokeWidthSE[0]).toBe(0);
 
-      document.getElementById('iframe1').style.borderWidth = '0';
+      document.getNodeElementById('iframe1').style.borderWidth = '0';
       // iframe1 left: 500px; top: 50px; > elm2 left: 104px; top: 108px;
       atc = window.LeaderLine.pointAnchor({
-        element: document.getElementById('iframe1').contentDocument.getElementById('elm2'), x: 5, y: 6});
+        element: document.getNodeElementById('iframe1').contentDocument.getElementById('elm2'), x: 5, y: 6});
       ll.start = atc;
       expect(props.curStats.position_socketXYSE[0].x).toBe(609);
       expect(props.curStats.position_socketXYSE[0].y).toBe(164);
 
       // Percent
-      atc = window.LeaderLine.pointAnchor({element: document.getElementById('elm1'), x: '10%', y: '80%'});
+      atc = window.LeaderLine.pointAnchor({element: document.getNodeElementById('elm1'), x: '10%', y: '80%'});
       ll.start = atc;
       // elm1 (1, 2) w:100 h:30
       expect(props.curStats.position_socketXYSE[0].x).toBe(11);
@@ -627,7 +627,7 @@ describe('attachment', function() {
       expect(props.curStats.capsMaskAnchor_strokeWidthSE[0]).toBe(0);
 
       // default x, y (50%)
-      atc = window.LeaderLine.pointAnchor({element: document.getElementById('elm1')});
+      atc = window.LeaderLine.pointAnchor({element: document.getNodeElementById('elm1')});
       ll.start = atc;
       // elm1 (1, 2) w:100 h:30
       expect(props.curStats.position_socketXYSE[0].x).toBe(51);
@@ -642,7 +642,7 @@ describe('attachment', function() {
       expect(props.curStats.capsMaskAnchor_strokeWidthSE[0]).toBe(0);
 
       // outside of element
-      atc = window.LeaderLine.pointAnchor({element: document.getElementById('elm1'), x: -1, y: -2});
+      atc = window.LeaderLine.pointAnchor({element: document.getNodeElementById('elm1'), x: -1, y: -2});
       ll.start = atc;
       // elm1 (1, 2) w:100 h:30
       expect(props.curStats.position_socketXYSE[0].x).toBe(0);
@@ -657,7 +657,7 @@ describe('attachment', function() {
       expect(props.curStats.capsMaskAnchor_strokeWidthSE[0]).toBe(0);
 
       // outside of element Percent
-      atc = window.LeaderLine.pointAnchor({element: document.getElementById('elm1'), x: '150%', y: '180%'});
+      atc = window.LeaderLine.pointAnchor({element: document.getNodeElementById('elm1'), x: '150%', y: '180%'});
       ll.start = atc;
       // elm1 (1, 2) w:100 h:30
       expect(props.curStats.position_socketXYSE[0].x).toBe(151);
@@ -680,7 +680,7 @@ describe('attachment', function() {
         atc, attachProps, len, gap;
 
       // rect
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1'),
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1'),
         x: 5, y: 6, width: 7, height: 8, size: 0});
       ll.start = atc;
       // elm1 (1, 2) w:100 h:30
@@ -695,10 +695,10 @@ describe('attachment', function() {
       ]);
       expect(props.curStats.capsMaskAnchor_strokeWidthSE[0]).toBe(0);
 
-      document.getElementById('iframe1').style.borderWidth = '0';
+      document.getNodeElementById('iframe1').style.borderWidth = '0';
       // iframe1 left: 500px; top: 50px; > elm2 left: 104px; top: 108px;
       atc = window.LeaderLine.areaAnchor({
-        element: document.getElementById('iframe1').contentDocument.getElementById('elm2'),
+        element: document.getNodeElementById('iframe1').contentDocument.getElementById('elm2'),
         x: 5, y: 6, width: 7, height: 8, size: 0});
       ll.start = atc;
       expect(props.curStats.position_socketXYSE[0].x).toBe(609);
@@ -713,7 +713,7 @@ describe('attachment', function() {
       expect(props.curStats.capsMaskAnchor_strokeWidthSE[0]).toBe(0);
 
       // Percent
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1'),
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1'),
         x: '10%', y: '80%', width: '20%', height: '50%', size: 0});
       ll.start = atc;
       // elm1 (1, 2) w:100 h:30
@@ -729,7 +729,7 @@ describe('attachment', function() {
       expect(props.curStats.capsMaskAnchor_strokeWidthSE[0]).toBe(0);
 
       // default x, y (-5%), width, height (110%)
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1'), size: 0});
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1'), size: 0});
       ll.start = atc;
       // elm1 (1, 2) w:100 h:30
       expect(Math.abs(props.curStats.position_socketXYSE[0].x - 106)).toBeLessThan(TOLERANCE);
@@ -746,7 +746,7 @@ describe('attachment', function() {
       // dash number
       len = 5;
       gap = 11;
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1'),
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1'),
         dash: {len: len, gap: gap}});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
@@ -758,7 +758,7 @@ describe('attachment', function() {
       expect(attachProps.curStats.strokeWidth * 2).toBe(8); // auto
       len = 8;
       gap = 11;
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1'),
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1'),
         dash: {len: 0, gap: gap}});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
@@ -771,7 +771,7 @@ describe('attachment', function() {
       expect(attachProps.curStats.strokeWidth).toBe(4); // auto
       len = 8;
       gap = 4;
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1'),
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1'),
         dash: true});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
@@ -787,7 +787,7 @@ describe('attachment', function() {
       var props = window.insProps[ll._id],
         atc, attachProps;
 
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1')});
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1')});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
       setTimeout(function() { // `bind` calls setTimeout
@@ -819,7 +819,7 @@ describe('attachment', function() {
         ]);
         expect(attachProps.curStats.color).toBe('red');
 
-        ll.start = document.getElementById('elm1');
+        ll.start = document.getNodeElementById('elm1');
         expect(props.events.cur_line_color.length).toBe(0); // removeEventHandler
 
         pageDone();
@@ -831,7 +831,7 @@ describe('attachment', function() {
       var props = window.insProps[ll._id],
         atc, attachProps;
 
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1'), color: 'blue'});
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1'), color: 'blue'});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
       setTimeout(function() { // `bind` calls setTimeout
@@ -863,7 +863,7 @@ describe('attachment', function() {
         ]);
         expect(attachProps.curStats.color).toBe('blue');
 
-        ll.start = document.getElementById('elm1');
+        ll.start = document.getNodeElementById('elm1');
         expect(props.events.cur_line_color == null).toBe(true);
 
         pageDone();
@@ -875,7 +875,7 @@ describe('attachment', function() {
       var props = window.insProps[ll._id],
         atc, attachProps;
 
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1'),
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1'),
         x: 5, y: 5, width: 10, height: 10}); // (6, 7)-(16, 17)
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
@@ -911,9 +911,9 @@ describe('attachment', function() {
       var props = window.insProps[ll._id],
         ll2, props2, atc, attachProps;
 
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1')});
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1')});
       attachProps = window.insAttachProps[atc._id];
-      ll2 = new window.LeaderLine(atc, document.getElementById('elm2'), {color: 'red', size: 8}); // #1
+      ll2 = new window.LeaderLine(atc, document.getNodeElementById('elm2'), {color: 'red', size: 8}); // #1
       props2 = window.insProps[ll2._id];
       ll.start = atc; // #2
       setTimeout(function() { // `bind` calls setTimeout
@@ -941,7 +941,7 @@ describe('attachment', function() {
         expect(attachProps.curStats.color).toBe('yellow');
         expect(attachProps.curStats.strokeWidth).toBe(11);
 
-        ll2.start = document.getElementById('elm1');
+        ll2.start = document.getNodeElementById('elm1');
         setTimeout(function() { // `bind` calls setTimeout
           // affected by ll
           expect(attachProps.curStats.color).toBe('green');
@@ -957,7 +957,7 @@ describe('attachment', function() {
       var props = window.insProps[ll._id],
         atc, attachProps;
 
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1')});
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1')});
       attachProps = window.insAttachProps[atc._id];
       ll.hide('none');
       setTimeout(function() {
@@ -986,9 +986,9 @@ describe('attachment', function() {
       var props = window.insProps[ll._id],
         ll2, props2, atc, attachProps;
 
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1')});
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1')});
       attachProps = window.insAttachProps[atc._id];
-      ll2 = new window.LeaderLine(atc, document.getElementById('elm2'), {hide: true});
+      ll2 = new window.LeaderLine(atc, document.getNodeElementById('elm2'), {hide: true});
       props2 = window.insProps[ll2._id];
       ll.start = atc;
       setTimeout(function() { // `bind` calls setTimeout
@@ -1014,7 +1014,7 @@ describe('attachment', function() {
             expect(attachProps.isShown).toBe(true);
             expect(attachProps.svg.style.visibility).toBe('');
 
-            ll2.start = document.getElementById('elm1');
+            ll2.start = document.getNodeElementById('elm1');
             setTimeout(function() { // `bind` calls setTimeout
               expect(attachProps.boundTargets.length).toBe(1);
               expect(attachProps.isShown).toBe(false);
@@ -1031,7 +1031,7 @@ describe('attachment', function() {
       var props = window.insProps[ll._id],
         atc, attachProps, len, gap;
 
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1'),
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1'),
         dash: true});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
@@ -1058,11 +1058,11 @@ describe('attachment', function() {
       var props = window.insProps[ll._id],
         ll2, props2, atc, rect;
 
-      rect = document.getElementById('elm3').getBoundingClientRect();
+      rect = document.getNodeElementById('elm3').getBoundingClientRect();
 
       atc = window.LeaderLine.areaAnchor(
-        {element: document.getElementById('elm3'), x: 0, y: 0, width: '100%', height: '100%'});
-      ll2 = new window.LeaderLine(document.getElementById('elm4'), atc, {endSocket: 'bottom'});
+        {element: document.getNodeElementById('elm3'), x: 0, y: 0, width: '100%', height: '100%'});
+      ll2 = new window.LeaderLine(document.getNodeElementById('elm4'), atc, {endSocket: 'bottom'});
       props2 = window.insProps[ll2._id];
       ll.end = atc;
       setTimeout(function() {
@@ -1080,7 +1080,7 @@ describe('attachment', function() {
           expect(props2.curStats.position_socketXYSE[1].x).toBe(rect.left + rect.width / 2);
           expect(props2.curStats.position_socketXYSE[1].y).toBe(rect.bottom + 7);
 
-          ll2.end = document.getElementById('elm3'); // Unbind
+          ll2.end = document.getNodeElementById('elm3'); // Unbind
           setTimeout(function() {
             expect(props.curStats.position_socketXYSE[1].x).toBe(rect.left - 4);
             expect(props.curStats.position_socketXYSE[1].y).toBe(rect.top + rect.height / 2);
@@ -1100,7 +1100,7 @@ describe('attachment', function() {
         rect, r, offset, padding;
 
       // size: 0, radius: 0
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1'),
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1'),
         x: 5, y: 6, width: 7, height: 8, size: 0});
       ll.start = atc;
       rect = getRectByXYWH(elmX + 5, elmY + 6, 7, 8);
@@ -1116,7 +1116,7 @@ describe('attachment', function() {
       expect(props.curStats.position_socketXYSE[0].y).toBe(rect.bottom);
 
       // size: 2, radius: 0
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1'),
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1'),
         x: 5, y: 6, width: 7, height: 8, size: 2});
       ll.start = atc;
       rect = getRectByXYWH(elmX + 5, elmY + 6, 7, 8);
@@ -1132,7 +1132,7 @@ describe('attachment', function() {
       expect(props.curStats.position_socketXYSE[0].y).toBe(rect.bottom + 2);
 
       // Percent size: 5, radius: 0
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1'),
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1'),
         x: '10%', y: '80%', width: '20%', height: '50%', size: 5});
       ll.start = atc;
       rect = getRectByXYWH(elmX + elmWidth * 0.1, elmY + elmHeight * 0.8, elmWidth * 0.2, elmHeight * 0.5);
@@ -1149,7 +1149,7 @@ describe('attachment', function() {
 
       // size: 0, radius: 4
       r = 4;
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1'),
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1'),
         x: 0, y: 0, width: '100%', height: '100%', size: 0, radius: r});
       ll.start = atc;
       offset = r / Math.SQRT2;
@@ -1185,7 +1185,7 @@ describe('attachment', function() {
 
       // size: 4, radius: 5
       r = 5;
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1'),
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1'),
         x: 0, y: 0, width: '100%', height: '100%', size: 4, radius: r});
       ll.start = atc;
       offset = (r - 2) / Math.SQRT2;
@@ -1231,7 +1231,7 @@ describe('attachment', function() {
         rx, ry, offsetX, offsetY, paddingX, paddingY;
 
       // size: 0, width: 10, height: 10
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1'), shape: 'circle',
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1'), shape: 'circle',
         x: 5, y: 6, width: 10, height: 10, size: 0});
       ll.start = atc;
       r = 5 * Math.SQRT2;
@@ -1263,7 +1263,7 @@ describe('attachment', function() {
       expect(props.curStats.position_socketXYSE[0].y).toBe(rect.bottom + padding);
 
       // size: 0, width: 20, height: 10
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1'), shape: 'circle',
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1'), shape: 'circle',
         x: 5, y: 6, width: 20, height: 10, size: 0});
       ll.start = atc;
       rx = 10 * Math.SQRT2;
@@ -1298,7 +1298,7 @@ describe('attachment', function() {
       expect(props.curStats.position_socketXYSE[0].y).toBe(rect.top + rect.height / 2);
 
       // size: 0, width: 0, height: 0 -> 10
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1'), shape: 'circle',
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1'), shape: 'circle',
         x: 5, y: 6, width: 10, height: 10, size: 0});
       ll.start = atc;
       r = 5 * Math.SQRT2;
@@ -1330,7 +1330,7 @@ describe('attachment', function() {
       expect(props.curStats.position_socketXYSE[0].y).toBe(rect.bottom + padding);
 
       // size: 4, width: 10, height: 10
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1'), shape: 'circle',
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1'), shape: 'circle',
         x: 5, y: 6, width: 10, height: 10, size: 4});
       ll.start = atc;
       r = 5 * Math.SQRT2 + 2;
@@ -1362,7 +1362,7 @@ describe('attachment', function() {
       expect(props.curStats.position_socketXYSE[0].y).toBe(rect.bottom + padding + 2);
 
       // size: 4, width: 20, height: 10
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1'), shape: 'circle',
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1'), shape: 'circle',
         x: 5, y: 6, width: 20, height: 10, size: 4});
       ll.start = atc;
       rx = 10 * Math.SQRT2 + 2;
@@ -1406,7 +1406,7 @@ describe('attachment', function() {
         rect, padding;
 
       // size: 0
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1'), shape: 'polygon',
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1'), shape: 'polygon',
         points: [[0, 60], [80, 10], [80, 80]], size: 0, fillColor: 'rgba(0, 0, 255, 0.5)'});
       ll.start = atc;
       expect(props.curStats.capsMaskAnchor_pathDataSE[0]).toEqual([
@@ -1422,7 +1422,7 @@ describe('attachment', function() {
       expect(props.curStats.position_socketXYSE[0].y).toBe(rect.bottom + padding);
 
       // size: 4
-      atc = window.LeaderLine.areaAnchor({element: document.getElementById('elm1'), shape: 'polygon',
+      atc = window.LeaderLine.areaAnchor({element: document.getNodeElementById('elm1'), shape: 'polygon',
         points: [[0, 60], [80, 10], [80, 80]], size: 4, fillColor: 'rgba(0, 0, 255, 0.5)'});
       ll.start = atc;
       expect(props.curStats.capsMaskAnchor_pathDataSE[0]).toEqual([
@@ -1464,39 +1464,39 @@ describe('attachment', function() {
 
       // style.display
       // inline in native
-      atc = window.LeaderLine.mouseHoverAnchor({element: document.getElementById('span-a')});
+      atc = window.LeaderLine.mouseHoverAnchor({element: document.getNodeElementById('span-a')});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
       expect(attachProps.style.display).toBe('inline-block');
       // no-inline via class
-      atc = window.LeaderLine.mouseHoverAnchor({element: document.getElementById('span-b')});
+      atc = window.LeaderLine.mouseHoverAnchor({element: document.getNodeElementById('span-b')});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
       expect(attachProps.style.display == null).toBe(true);
       // no-inline via attribute
-      atc = window.LeaderLine.mouseHoverAnchor({element: document.getElementById('span-c')});
+      atc = window.LeaderLine.mouseHoverAnchor({element: document.getNodeElementById('span-c')});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
       expect(attachProps.style.display == null).toBe(true);
       // no-inline in native
-      atc = window.LeaderLine.mouseHoverAnchor({element: document.getElementById('h3-a')});
+      atc = window.LeaderLine.mouseHoverAnchor({element: document.getNodeElementById('h3-a')});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
       expect(attachProps.style.display == null).toBe(true);
       // inline via class
-      atc = window.LeaderLine.mouseHoverAnchor({element: document.getElementById('h3-b')});
+      atc = window.LeaderLine.mouseHoverAnchor({element: document.getNodeElementById('h3-b')});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
       expect(attachProps.style.display).toBe('inline-block');
       // inline via attribute
-      atc = window.LeaderLine.mouseHoverAnchor({element: document.getElementById('h3-c')});
+      atc = window.LeaderLine.mouseHoverAnchor({element: document.getNodeElementById('h3-c')});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
       expect(attachProps.style.display).toBe('inline-block');
 
       // style.padding
       // padding:0 in native
-      atc = window.LeaderLine.mouseHoverAnchor({element: document.getElementById('span-d')});
+      atc = window.LeaderLine.mouseHoverAnchor({element: document.getNodeElementById('span-d')});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
       expect(attachProps.style.paddingTop).toBe(1 + 'px');
@@ -1504,7 +1504,7 @@ describe('attachment', function() {
       expect(attachProps.style.paddingBottom).toBe(1 + 'px');
       expect(attachProps.style.paddingLeft).toBe(2 + 'px');
       // padding:60 via class
-      atc = window.LeaderLine.mouseHoverAnchor({element: document.getElementById('span-e')});
+      atc = window.LeaderLine.mouseHoverAnchor({element: document.getNodeElementById('span-e')});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
       expect(attachProps.style.paddingTop == null).toBe(true);
@@ -1512,7 +1512,7 @@ describe('attachment', function() {
       expect(attachProps.style.paddingBottom == null).toBe(true);
       expect(attachProps.style.paddingLeft == null).toBe(true);
       // padding:60 via attribute
-      atc = window.LeaderLine.mouseHoverAnchor({element: document.getElementById('span-f')});
+      atc = window.LeaderLine.mouseHoverAnchor({element: document.getNodeElementById('span-f')});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
       expect(attachProps.style.paddingTop == null).toBe(true);
@@ -1520,7 +1520,7 @@ describe('attachment', function() {
       expect(attachProps.style.paddingBottom == null).toBe(true);
       expect(attachProps.style.paddingLeft == null).toBe(true);
       // padding:2 via class
-      atc = window.LeaderLine.mouseHoverAnchor({element: document.getElementById('span-g')});
+      atc = window.LeaderLine.mouseHoverAnchor({element: document.getNodeElementById('span-g')});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
       expect(attachProps.style.paddingTop == null).toBe(true);
@@ -1528,7 +1528,7 @@ describe('attachment', function() {
       expect(attachProps.style.paddingBottom == null).toBe(true);
       expect(attachProps.style.paddingLeft == null).toBe(true);
       // padding:2 via attribute
-      atc = window.LeaderLine.mouseHoverAnchor({element: document.getElementById('span-h')});
+      atc = window.LeaderLine.mouseHoverAnchor({element: document.getNodeElementById('span-h')});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
       expect(attachProps.style.paddingTop == null).toBe(true);
@@ -1538,7 +1538,7 @@ describe('attachment', function() {
 
       // height (min-height: 15)
       // box-sizing: content-box
-      atc = window.LeaderLine.mouseHoverAnchor({element: document.getElementById('height1')});
+      atc = window.LeaderLine.mouseHoverAnchor({element: document.getNodeElementById('height1')});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
       expect(attachProps.style.paddingTop).toBe(1 + 'px');
@@ -1547,7 +1547,7 @@ describe('attachment', function() {
       expect(attachProps.style.paddingLeft).toBe(2 + 'px');
       expect(attachProps.style.height).toBe(13 + 'px');
       // box-sizing: border-box
-      atc = window.LeaderLine.mouseHoverAnchor({element: document.getElementById('height2')});
+      atc = window.LeaderLine.mouseHoverAnchor({element: document.getNodeElementById('height2')});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
       expect(attachProps.style.paddingTop).toBe(1 + 'px');
@@ -1559,25 +1559,25 @@ describe('attachment', function() {
       // style.backgroundPosition
       // IS_WEBKIT: false
       window.engineFlags({IS_WEBKIT: false});
-      atc = window.LeaderLine.mouseHoverAnchor({element: document.getElementById('span-a')});
+      atc = window.LeaderLine.mouseHoverAnchor({element: document.getNodeElementById('span-a')});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
       expect(attachProps.style.backgroundPosition).toBe('right 2px top 2px');
       // IS_WEBKIT: true
       window.engineFlags({IS_WEBKIT: true});
       // padding:0 in native
-      atc = window.LeaderLine.mouseHoverAnchor({element: document.getElementById('span-d')});
+      atc = window.LeaderLine.mouseHoverAnchor({element: document.getNodeElementById('span-d')});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
-      bBox = document.getElementById('span-d').getBoundingClientRect();
+      bBox = document.getNodeElementById('span-d').getBoundingClientRect();
       expect(attachProps.style.backgroundPosition).toBe(
         (bBox.width - 12/* backgroundSize.width */ - 2/* backgroundPosition.right */) + 'px ' +
         2/* backgroundPosition.top */ + 'px');
       // padding:60 via class
-      atc = window.LeaderLine.mouseHoverAnchor({element: document.getElementById('span-e')});
+      atc = window.LeaderLine.mouseHoverAnchor({element: document.getNodeElementById('span-e')});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
-      bBox = document.getElementById('span-e').getBoundingClientRect();
+      bBox = document.getNodeElementById('span-e').getBoundingClientRect();
       expect(attachProps.style.backgroundPosition).toBe(
         (bBox.width - 12/* backgroundSize.width */ - 2/* backgroundPosition.right */) + 'px ' +
         2/* backgroundPosition.top */ + 'px');
@@ -1586,7 +1586,7 @@ describe('attachment', function() {
       window.engineFlags({IS_WEBKIT: IS_WEBKIT});
 
       // merge
-      atc = window.LeaderLine.mouseHoverAnchor({element: document.getElementById('span-a'),
+      atc = window.LeaderLine.mouseHoverAnchor({element: document.getNodeElementById('span-a'),
         style: {backgroundColor: 'red', cursor: 'pointer', backgroundImage: null}});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
@@ -1596,13 +1596,13 @@ describe('attachment', function() {
       expect('backgroundImage' in attachProps.style).toBe(false);
 
       // SVG
-      expect(Object.prototype.toString.apply(document.getElementById('rect1'))).toBe('[object SVGRectElement]');
+      expect(Object.prototype.toString.apply(document.getNodeElementById('rect1'))).toBe('[object SVGRectElement]');
       expect(function() {
-        atc = window.LeaderLine.mouseHoverAnchor({element: document.getElementById('rect1')});
+        atc = window.LeaderLine.mouseHoverAnchor({element: document.getNodeElementById('rect1')});
       }).toThrow();
 
       // onSwitch
-      element = document.getElementById('span-a');
+      element = document.getNodeElementById('span-a');
       ll.start = element;
       atc = window.LeaderLine.mouseHoverAnchor({element: element,
         onSwitch: function() { called = true; }, showEffectName: 'none'});
@@ -1716,7 +1716,7 @@ describe('attachment', function() {
       expect(attachProps.curStats.color).toBe('red');
 
       // It's changed by binding ll
-      ll2 = new window.LeaderLine(document.getElementById('elm1'), document.getElementById('elm3'), {
+      ll2 = new window.LeaderLine(document.getNodeElementById('elm1'), document.getNodeElementById('elm3'), {
         color: 'blue'
       });
       props2 = window.insProps[ll2._id];
@@ -1834,7 +1834,7 @@ describe('attachment', function() {
       expect(attachProps.curStats.color).toBe('yellow');
 
       // It's changed by binding ll
-      ll2 = new window.LeaderLine(document.getElementById('elm1'), document.getElementById('elm3'), {
+      ll2 = new window.LeaderLine(document.getNodeElementById('elm1'), document.getNodeElementById('elm3'), {
         color: 'blue'
       });
       props2 = window.insProps[ll2._id];
@@ -1972,7 +1972,7 @@ describe('attachment', function() {
       expect(props.attachments.length).toBe(1);
 
       // move anchor
-      document.getElementById('elm3').style.top = '15px';
+      document.getNodeElementById('elm3').style.top = '15px';
       // elm3 (216, 15) w:100 h:30
       // socket: left (216, 30)
       ll.position();
@@ -1987,12 +1987,12 @@ describe('attachment', function() {
       ll.endLabel = atc;
       width = (bBox = attachProps.elmPosition.getBBox()).width;
       height = bBox.height;
-      document.getElementById('elm3').style.left = '300px';
-      document.getElementById('elm3').style.top = '300px';
+      document.getNodeElementById('elm3').style.left = '300px';
+      document.getNodeElementById('elm3').style.top = '300px';
       sideLen = 8;
 
-      document.getElementById('elm1').style.left = '0';
-      document.getElementById('elm1').style.top = '250px';
+      document.getNodeElementById('elm1').style.left = '0';
+      document.getNodeElementById('elm1').style.top = '250px';
       ll.position();
       // socket: left (300, 315)
       expect(Math.abs(attachProps.elmPosition.x.baseVal.getItem(0).value) - (300 - width - height / 2))
@@ -2010,7 +2010,7 @@ describe('attachment', function() {
 
       ll.size = 4;
       sideLen = 8;
-      document.getElementById('elm1').style.top = '350px';
+      document.getNodeElementById('elm1').style.top = '350px';
       ll.position();
       // socket: left (300, 315)
       expect(Math.abs(attachProps.elmPosition.x.baseVal.getItem(0).value) - (300 - width - height / 2))
@@ -2018,8 +2018,8 @@ describe('attachment', function() {
       expect(Math.abs(attachProps.elmPosition.y.baseVal.getItem(0).value) - (315 - sideLen - height / 2))
         .toBeLessThan(TOLERANCE);
 
-      document.getElementById('elm1').style.left = '600px';
-      document.getElementById('elm1').style.top = '250px';
+      document.getNodeElementById('elm1').style.left = '600px';
+      document.getNodeElementById('elm1').style.top = '250px';
       ll.position();
       // socket: right (400, 315)
       expect(Math.abs(attachProps.elmPosition.x.baseVal.getItem(0).value) - (400 + height / 2))
@@ -2027,7 +2027,7 @@ describe('attachment', function() {
       expect(Math.abs(attachProps.elmPosition.y.baseVal.getItem(0).value) - (315 + sideLen + height / 2 + height))
         .toBeLessThan(TOLERANCE);
 
-      document.getElementById('elm1').style.top = '350px';
+      document.getNodeElementById('elm1').style.top = '350px';
       ll.position();
       // socket: right (400, 315)
       expect(Math.abs(attachProps.elmPosition.x.baseVal.getItem(0).value) - (400 + height / 2))
@@ -2035,8 +2035,8 @@ describe('attachment', function() {
       expect(Math.abs(attachProps.elmPosition.y.baseVal.getItem(0).value) - (315 - sideLen - height / 2))
         .toBeLessThan(TOLERANCE);
 
-      document.getElementById('elm1').style.left = '250px';
-      document.getElementById('elm1').style.top = '0';
+      document.getNodeElementById('elm1').style.left = '250px';
+      document.getNodeElementById('elm1').style.top = '0';
       ll.position();
       // socket: top (350, 300)
       expect(Math.abs(attachProps.elmPosition.x.baseVal.getItem(0).value) - (350 + sideLen + height / 2))
@@ -2044,7 +2044,7 @@ describe('attachment', function() {
       expect(Math.abs(attachProps.elmPosition.y.baseVal.getItem(0).value) - (300 - height / 2))
         .toBeLessThan(TOLERANCE);
 
-      document.getElementById('elm1').style.left = '350px';
+      document.getNodeElementById('elm1').style.left = '350px';
       ll.position();
       // socket: top (350, 300)
       expect(Math.abs(attachProps.elmPosition.x.baseVal.getItem(0).value) - (350 - sideLen - width - height / 2))
@@ -2052,8 +2052,8 @@ describe('attachment', function() {
       expect(Math.abs(attachProps.elmPosition.y.baseVal.getItem(0).value) - (300 - height / 2))
         .toBeLessThan(TOLERANCE);
 
-      document.getElementById('elm1').style.left = '250px';
-      document.getElementById('elm1').style.top = '600px';
+      document.getNodeElementById('elm1').style.left = '250px';
+      document.getNodeElementById('elm1').style.top = '600px';
       ll.position();
       // socket: bottom (350, 330)
       expect(Math.abs(attachProps.elmPosition.x.baseVal.getItem(0).value) - (350 + sideLen + height / 2))
@@ -2061,7 +2061,7 @@ describe('attachment', function() {
       expect(Math.abs(attachProps.elmPosition.y.baseVal.getItem(0).value) - (330 + height / 2 + height))
         .toBeLessThan(TOLERANCE);
 
-      document.getElementById('elm1').style.left = '350px';
+      document.getNodeElementById('elm1').style.left = '350px';
       ll.position();
       // socket: bottom (350, 330)
       expect(Math.abs(attachProps.elmPosition.x.baseVal.getItem(0).value) - (350 - sideLen - width - height / 2))
@@ -2094,7 +2094,7 @@ describe('attachment', function() {
         .toBeLessThan(TOLERANCE);
 
       // move anchor
-      document.getElementById('elm1').style.top = '99px';
+      document.getNodeElementById('elm1').style.top = '99px';
       ll.position();
       expect(props.pathList.baseVal.length).toBe(1);
       expect(props.pathList.baseVal[0].length).toBe(4);
@@ -2205,7 +2205,7 @@ describe('attachment', function() {
       expect(attachProps.curStats.color).toBe('red');
 
       // It's changed by binding ll
-      ll2 = new window.LeaderLine(document.getElementById('elm1'), document.getElementById('elm3'), {
+      ll2 = new window.LeaderLine(document.getNodeElementById('elm1'), document.getNodeElementById('elm3'), {
         color: 'blue'
       });
       props2 = window.insProps[ll2._id];
@@ -2328,7 +2328,7 @@ describe('attachment', function() {
       expect(attachProps.curStats.color).toBe('yellow');
 
       // It's changed by binding ll
-      ll2 = new window.LeaderLine(document.getElementById('elm1'), document.getElementById('elm3'), {
+      ll2 = new window.LeaderLine(document.getNodeElementById('elm1'), document.getNodeElementById('elm3'), {
         color: 'blue'
       });
       props2 = window.insProps[ll2._id];
@@ -2464,8 +2464,8 @@ describe('attachment', function() {
       )).toBe(true);
 
       ll.size = 4;
-      document.getElementById('elm3').style.left = '300px';
-      document.getElementById('elm3').style.top = '300px';
+      document.getNodeElementById('elm3').style.left = '300px';
+      document.getNodeElementById('elm3').style.top = '300px';
       ll.position();
       expect(matchPathData(attachProps.elmPath.getPathData(),
         /* eslint-disable */

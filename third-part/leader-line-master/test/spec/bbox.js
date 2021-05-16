@@ -134,8 +134,8 @@ describe('BBox', function() {
 
           setUpDocument(condition.props, document, body);
           ll = new window.LeaderLine(
-            document.getElementById('static'),
-            document.getElementById('absolute'),
+            document.getNodeElementById('static'),
+            document.getNodeElementById('absolute'),
             {endPlug: 'behind'}); // Make it have anchorBBoxSE[1]
           props = window.insProps[ll._id];
 
@@ -206,12 +206,12 @@ describe('BBox', function() {
           var elms = {}, docProps = {}, show = SHOW_LOG && !!document.title;
           if (show) { console.log('---- ' + title); }
 
-          elms.static = document.getElementById('static');
-          elms.absolute = document.getElementById('absolute');
-          elms.iframe1Win = document.getElementById('iframe1').contentWindow;
-          elms.iframe1 = document.getElementById('iframe1').contentDocument;
-          elms.iframe2Win = document.getElementById('iframe2').contentWindow;
-          elms.iframe2 = document.getElementById('iframe2').contentDocument;
+          elms.static = document.getNodeElementById('static');
+          elms.absolute = document.getNodeElementById('absolute');
+          elms.iframe1Win = document.getNodeElementById('iframe1').contentWindow;
+          elms.iframe1 = document.getNodeElementById('iframe1').contentDocument;
+          elms.iframe2Win = document.getNodeElementById('iframe2').contentWindow;
+          elms.iframe2 = document.getNodeElementById('iframe2').contentDocument;
           elms.iframe1_static = elms.iframe1.getElementById('static');
           elms.iframe1_absolute = elms.iframe1.getElementById('absolute');
           elms.iframe2_static = elms.iframe2.getElementById('static');
@@ -416,13 +416,13 @@ describe('BBox', function() {
         loadPage('spec/bbox/scroll.html', function(window, document) {
           var elms = {};
 
-          elms.static = document.getElementById('static');
-          elms.overflow1 = document.getElementById('overflow1');
-          elms.overflow1_static = document.getElementById('overflow1-static');
-          elms.overflow1_overflow2 = document.getElementById('overflow2');
-          elms.overflow1_overflow2_absolute = document.getElementById('overflow2-absolute');
-          elms.iframe1Win = document.getElementById('iframe1').contentWindow;
-          elms.iframe1 = document.getElementById('iframe1').contentDocument;
+          elms.static = document.getNodeElementById('static');
+          elms.overflow1 = document.getNodeElementById('overflow1');
+          elms.overflow1_static = document.getNodeElementById('overflow1-static');
+          elms.overflow1_overflow2 = document.getNodeElementById('overflow2');
+          elms.overflow1_overflow2_absolute = document.getNodeElementById('overflow2-absolute');
+          elms.iframe1Win = document.getNodeElementById('iframe1').contentWindow;
+          elms.iframe1 = document.getNodeElementById('iframe1').contentDocument;
           elms.iframe1_static = elms.iframe1.getElementById('static');
           elms.iframe1_overflow1 = elms.iframe1.getElementById('overflow1');
           elms.iframe1_overflow1_static = elms.iframe1.getElementById('overflow1-static');
@@ -603,10 +603,10 @@ describe('BBox', function() {
 
       loadPage('spec/common/page.html', function(window, document) {
         var ll = new window.LeaderLine(
-            document.getElementById('elm1'),
-            document.getElementById('rect1')),
+            document.getNodeElementById('elm1'),
+            document.getNodeElementById('rect1')),
           aplStats = window.insProps[ll._id].aplStats,
-          bBox = document.getElementById('rect1').getBoundingClientRect(),
+          bBox = document.getNodeElementById('rect1').getBoundingClientRect(),
           TOLERANCE = window.IS_TRIDENT ? 3 : 0.1;
 
         // {x: 205, y: 216, width: 20, height: 20}

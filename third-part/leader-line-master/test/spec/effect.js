@@ -20,7 +20,7 @@ describe('effect', function() {
       traceLog = window.traceLog;
       traceLog.enabled = true;
       pageDone = done;
-      ll = new window.LeaderLine(document.getElementById('elm1'), document.getElementById('elm3'));
+      ll = new window.LeaderLine(document.getNodeElementById('elm1'), document.getNodeElementById('elm3'));
       beforeDone();
     }, 'effect - ' + titles.shift());
   }
@@ -99,17 +99,17 @@ describe('effect', function() {
 
       // Change to element in iframe, `baseWindow` is not changed
       ll.setOptions({
-        start: document.getElementById('elm2'),
-        end: document.getElementById('elm3')
+        start: document.getNodeElementById('elm2'),
+        end: document.getNodeElementById('elm3')
       });
       traceLog.clear();
-      ll.end = document.getElementById('iframe1').contentDocument.getElementById('elm2');
+      ll.end = document.getNodeElementById('iframe1').contentDocument.getElementById('elm2');
       expect(traceLog.log).not.toContain('<bindWindow>');
       expect(traceLog.getTaggedLog('setOptions')).not.toContain('needs.effect');
 
       // Change to element in iframe, `baseWindow` is changed
       traceLog.clear();
-      ll.start = document.getElementById('iframe1').contentDocument.getElementById('elm1');
+      ll.start = document.getNodeElementById('iframe1').contentDocument.getElementById('elm1');
       expect(traceLog.log).toContain('<bindWindow>');
       expect(traceLog.getTaggedLog('setOptions')).toContain('needs.effect');
       // remove() in <bindWindow> -> init()
@@ -172,8 +172,8 @@ describe('effect', function() {
       // Change to element in iframe, `baseWindow` is changed
       traceLog.clear();
       ll.setOptions({
-        start: document.getElementById('iframe1').contentDocument.getElementById('elm1'),
-        end: document.getElementById('iframe1').contentDocument.getElementById('elm2')
+        start: document.getNodeElementById('iframe1').contentDocument.getElementById('elm1'),
+        end: document.getNodeElementById('iframe1').contentDocument.getElementById('elm2')
       });
       // remove() in <bindWindow> -> init()
       expect(traceLog.getTaggedLog('setEffect')).toEqual(['dash_enabled=true']);
@@ -563,8 +563,8 @@ describe('effect', function() {
       // update() by bindWindow()
       traceLog.clear();
       ll.setOptions({
-        start: document.getElementById('iframe1').contentDocument.getElementById('elm1'),
-        end: document.getElementById('iframe1').contentDocument.getElementById('elm2')
+        start: document.getNodeElementById('iframe1').contentDocument.getElementById('elm1'),
+        end: document.getNodeElementById('iframe1').contentDocument.getElementById('elm2')
       });
       // remove() in <bindWindow> -> init()
       expect(traceLog.log).toContainAll(['<bindWindow>', '<EFFECTS.dash.remove>', '<EFFECTS.dash.init>']);
@@ -759,7 +759,7 @@ describe('effect', function() {
 
       // update() by events apl_path
       traceLog.clear();
-      ll.end = document.getElementById('elm2');
+      ll.end = document.getNodeElementById('elm2');
       point1 = {x: props.aplStats.position_socketXYSE[1].x, y: props.aplStats.position_socketXYSE[1].y};
       expect(traceLog.log).toNotContainAny(['<EFFECTS.gradient.init>', '<EFFECTS.gradient.remove>']);
       expect(traceLog.getTaggedLog('updatePath')).toContain('path_pathData');
@@ -815,8 +815,8 @@ describe('effect', function() {
       // update() by bindWindow()
       traceLog.clear();
       ll.setOptions({
-        start: document.getElementById('iframe1').contentDocument.getElementById('elm1'),
-        end: document.getElementById('iframe1').contentDocument.getElementById('elm2')
+        start: document.getNodeElementById('iframe1').contentDocument.getElementById('elm1'),
+        end: document.getNodeElementById('iframe1').contentDocument.getElementById('elm2')
       });
       point0 = {x: props.aplStats.position_socketXYSE[0].x, y: props.aplStats.position_socketXYSE[0].y};
       point1 = {x: props.aplStats.position_socketXYSE[1].x, y: props.aplStats.position_socketXYSE[1].y};
@@ -908,7 +908,7 @@ describe('effect', function() {
 
       // update() by events new_edge4viewBox
       traceLog.clear();
-      elmEnd = document.getElementById('elm3');
+      elmEnd = document.getNodeElementById('elm3');
       elmEnd.style.left = '200px';
       elmEnd.style.top = '200px';
       ll.position();
@@ -950,8 +950,8 @@ describe('effect', function() {
       // update() by bindWindow()
       traceLog.clear();
       ll.setOptions({
-        start: document.getElementById('iframe1').contentDocument.getElementById('elm1'),
-        end: document.getElementById('iframe1').contentDocument.getElementById('elm2')
+        start: document.getNodeElementById('iframe1').contentDocument.getElementById('elm1'),
+        end: document.getNodeElementById('iframe1').contentDocument.getElementById('elm2')
       });
       // remove() in <bindWindow> -> init()
       expect(traceLog.log).toContainAll(['<bindWindow>', '<EFFECTS.dropShadow.remove>', '<EFFECTS.dropShadow.init>']);

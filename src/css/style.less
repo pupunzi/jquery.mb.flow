@@ -406,9 +406,9 @@ html {
             .node-content-line {
               position: relative;
 
-              &.ui-sortable-helper{
+              &.ui-sortable-helper {
                 background-color: white;
-                color: #222222!important;
+                color: #222222 !important;
               }
 
               i.icon {
@@ -424,7 +424,7 @@ html {
                 position: relative;
                 width: 100%;
                 min-height: 30px;
-                max-height: 100px;
+                //max-height: 100px;
                 overflow: auto;
                 background-color: fade(#ffffff, 10%);
                 box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
@@ -433,16 +433,20 @@ html {
 
               .variables {
                 position: relative;
-                width: 100%;
-                height: 100%;
-                background-color: fade(#ffffff, 40%);
-                border-top: 1px solid fade(@main-color, 30%);
+                display: inline-block;
+                background-color: #222222;
                 font-family: monospace;
-                margin-top: 3px;
-                padding: 3px;
-                color: #841867;
-                box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
-                font-size: 13px;
+                //margin: 3px;
+                padding:  2px;
+                color: #fff;
+                box-shadow: inset 2px 2px 5px rgba(31, 31, 31, .1);
+                border-radius: 4px;
+                font-size: 100%;
+
+                i{
+                  font-style: normal;
+                  color: #f0ce1b;
+                }
               }
             }
           }
@@ -533,7 +537,7 @@ html {
                 color: #ffffff;
 
                 .node-text {
-                  max-height: 100px;
+                 // max-height: 100px;
                   overflow: auto;
                   background-color: transparent;
                   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
@@ -592,8 +596,10 @@ html {
                   font-family: monospace;
                   height: 100%;
                   color: @alert-font-color;
+                  padding-left: 0;
                   background-color: fade(#fff, 100%) !important;
                   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
+                  white-space: nowrap;
                 }
               }
             }
@@ -655,7 +661,7 @@ html {
       .flow-dialogue-input {
         padding: 10px;
         width: 100%;
-        margin-top: 40px;
+        margin: 40px auto;
         max-width: 30vw;
         border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 5px;
@@ -667,6 +673,7 @@ html {
         color: #ffffff;
         text-align: center;
         transition: all .3s;
+        white-space: nowrap;
 
         &:focus {
           border: 1px solid rgba(255, 255, 255, 0.4);
@@ -705,7 +712,6 @@ html {
     margin: 0;
     border-radius: 10px;
     z-index: calc(@base-z-index + 100);
-
 
     ul {
       padding: 0;
@@ -757,7 +763,6 @@ html {
         &.highlight {
           color: @highlight-font-color;
         }
-
       }
     }
   }
@@ -766,13 +771,28 @@ html {
   Node Editor
    */
 
-  #node-editor {
+  .dialogue-window {
     position: fixed;
-    width: 250px;
-    height: 100vh;
+    width: 350px;
+    height: 200px;
     top: 0;
     right: 0;
-    background-color: fade(@main-color, 10%);
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    z-index: 100;
+    background-color: @main-color;
+    color: @main-font-color;
+    text-align: center;
+
+    .dialogue-content{
+      position: relative;
+      margin: auto;
+      border: 1px solid white;
+      width: 70%;
+      padding: 5px;
+      text-align: left;
+    }
   }
 }
 
@@ -793,5 +813,27 @@ body.move-board * {
   z-index: calc(@base-z-index + 1000);
 }
 
+.typeahead.dropdown-menu {
+  background-color: rgba(34, 34, 34, 0.9);
+  color: #ffffff;
+  width: 100%;
+  z-index: 100;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  li {
+    padding: 5px;
+
+    a {
+      color: #ffffff;
+      text-decoration: none;
+    }
+    &.active {
+      background-color: #000000;
+    }
+  }
+
+}
 
 

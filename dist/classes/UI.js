@@ -11,7 +11,7 @@ class UI {
             boardListButtonBar: "#boards-list-button-bar",
             boardList: "#boards-list",
             drawingArea: "#draw-area",
-            grid:"#grid",
+            grid: "#grid",
             board: "#board",
             connections: "#connections",
             boardGroupName: ".group-label .name"
@@ -22,16 +22,29 @@ class UI {
         return this._placeholders;
     }
 
-    static dialogue(title, text = null, inputName = null, inputPlaceholder = null, inputValue = null, okLabel = "Ok", cancelLabel = "Cancel", action = null, className = null) {
+    static dialogue(options = {}) {
+
+        let opt = {
+            title: "Dialogue",
+            text: null,
+            inputId: null,
+            inputValue: null,
+            okLabel: "Ok",
+            cancelLabel: "Cancel",
+            action: null,
+            className: null
+        };
+        $.extend(opt, options);
+
         let time = 100;
         let overlay = $("<div>").addClass("flow-overlay");
         let dialogue = $("<div>").addClass("flow-dialogue");
 
-        if (className != null)
-            dialogue.addClass(className);
+        if (opt.className != null)
+            dialogue.addClass(opt.className);
 
-        let dialogueTitle = $("<h2>").addClass("flow-dialogue-title").html(title);
-        let dialogueText = $("<p>").addClass("flow-dialogue-text").html(text);
+        let dialogueTitle = $("<h2>").addClass("flow-dialogue-title").html(opt.title);
+        let dialogueText = $("<p>").addClass("flow-dialogue-text").html(opt.text);
         let buttonBar = $("<div>").addClass("flow-button-bar");
 
         dialogue.append(dialogueTitle);
@@ -40,33 +53,42 @@ class UI {
             dialogue.append(dialogueText);
 
         let dialogueInput = null;
-        if (inputName != null) {
-            dialogueInput = $("<input>").addClass("flow-dialogue-input").attr({
-                name: inputName,
-                placeholder: inputPlaceholder
+        if (opt.inputId != null) {
+            dialogueInput = $("<div>").attr({id: opt.inputId, contentEditable: "true"}).addClass("flow-dialogue-input");
+            let source = [];
+            for (const [key, value] of Object.entries(window.flowApp.flow._variables)) {
+                console.log(`${key}: ${value}`);
+                source.push(key);
+            }
+
+            dialogueInput.tagautocomplete({
+                tag: '$',
+                source: source,
+                suffix: ""
             });
 
-            if (inputValue != null)
-                dialogueInput.val(inputValue).select();
+
+            if (opt.inputValue != null)
+                dialogueInput.html(opt.inputValue).select();
 
             dialogue.append(dialogueInput);
         }
-        let dialogueOkButton = $("<button>").addClass("flow-dialogue-ok main").html(okLabel);
+        let dialogueOkButton = $("<button>").addClass("flow-dialogue-ok main").html(opt.okLabel);
 
-        if (cancelLabel != null) {
-            let dialogueCancelButton = $("<button>").addClass("flow-dialogue-cancel").html(cancelLabel);
+        if (opt.cancelLabel != null) {
+            let dialogueCancelButton = $("<button>").addClass("flow-dialogue-cancel").html(opt.cancelLabel);
             dialogueCancelButton.on("click", () => {
                 closeDialogue();
             });
             buttonBar.append(dialogueCancelButton);
         }
 
-        if (typeof action === "function") {
+        if (typeof opt.action === "function") {
             dialogueOkButton.on("click", () => {
-                let v = dialogueInput != null ? dialogueInput.val() : null;
+                let v = dialogueInput != null ? dialogueInput.html() : null;
                 if (v && v.length === 0)
                     return;
-                action(v);
+                opt.action(v);
                 closeDialogue();
             });
         } else {
@@ -81,11 +103,12 @@ class UI {
         overlay.fadeOut(0);
         $("body").after(overlay);
         overlay.fadeIn(time, () => {
-            if (inputName != null) {
+            if (opt.inputId != null) {
                 dialogueInput.focus();
             }
             $(document).on("keydown.dialogue", (e) => {
                 if (e.key === "Enter") {
+                    e.preventDefault();
                     let v = dialogueInput != null ? dialogueInput.val() : null;
                     if (v == null || (v && v.length > 0))
                         dialogueOkButton.click();
@@ -104,7 +127,7 @@ class UI {
     }
 
     static fillTemplate(templateId, data) {
-        if($("#" + templateId).length===0)
+        if ($("#" + templateId).length === 0)
             return "";
         return $("#" + templateId).get(0).innerHTML.replace(/{{(\w*)}}/g, function (m, key) {
             return data.hasOwnProperty(key) ? data[key] : "";

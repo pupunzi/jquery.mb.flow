@@ -130,8 +130,8 @@ export class Drawer {
 	focusOnSelected() {
 
 		let $board = $(this.flowApp.ui.placeholders.board);
-		let boardX = parseFloat($board.css("left"));
-		let boardY = parseFloat($board.css("top"));
+		// let boardX = parseFloat($board.css("left"));
+		// let boardY = parseFloat($board.css("top"));
 
 		let nodesId = $.flow.selectedNodes;
 		let firstX = 0, firstY = 0;
@@ -156,7 +156,6 @@ export class Drawer {
 			top: ($board.height() / 2) - (firstY + ((lastY - firstY) / 2)),
 		});
 		$.flow.updateConnections();
-
 	}
 
 	drawNode(node) {
@@ -173,7 +172,7 @@ export class Drawer {
 					lines += UI.fillTemplate("node-" + node._type.toLowerCase() + "-line", {
 						nodeId: node._id,
 						nodeElementId: element._id,
-						content: element._content
+						content: this.flowApp.getContentText(element)
 					});
 				});
 				break;
@@ -224,7 +223,7 @@ export class Drawer {
 					let nodeElements = [];
 					$node.find(".node-content").children().each(function () {
 						let nodeElementId = $(this).data("node-element-id");
-						let nodeElement = flowApp.getElementById(node, nodeElementId);
+						let nodeElement = flowApp.getNodeElementById(node, nodeElementId);
 						nodeElements.push(nodeElement);
 					});
 					node._elements = nodeElements;
@@ -236,21 +235,22 @@ export class Drawer {
 
 		//Update nodeElement content
 		//todo: move to flowApp events
-		$node.find(".node-text").on("focus", function(){
-			$node.data("height", $node.height());
-		}).on("blur", function () {
-			$node.data("height", $node.height());
 
+		$node.find(".node-text").on("blur", function () {
+			$node.data("height", $node.height());
 			let content = $(this).html();
 			let sanitized = Util.sanitize(content);
 			$(this).html(sanitized);
-
-			Util.evaluateVariablesInText(sanitized);
+			//Util.addVariables(sanitized);
 
 			let nodeElementId = $(this).parents(".node-content-line").data("node-element-id");
+
+			/**
+			 * Update Node Element content
+			 */
 			node._elements.forEach((element) => {
 				if (element._id === nodeElementId)
-					element._content = sanitized;
+					flowApp.updateContent(element,sanitized);
 			});
 
 			Events.register(EventType.updateBoard, board);
@@ -424,6 +424,23 @@ export class Drawer {
 			}
 		})
 
+	}
+
+	drawDialogue(content,callback,template){
+		let dialogueWindow = UI.fillTemplate(template, {
+			dialogueContent: content
+		});
+
+		$("body").append(dialogueWindow);
+		$(".flow-overlay").find(".cancel").on("click",()=>{
+			$(".flow-overlay").remove();
+		});
+		$(".flow-overlay").find(".ok").on("click",()=>{
+			console.debug("OK")
+			content = $(".flow-overlay").find(".dialogue-content").html();
+			callback(content);
+			$(".flow-overlay").remove();
+		})
 	}
 
 }

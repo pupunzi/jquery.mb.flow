@@ -1,0 +1,103 @@
+{
+  "_id": "e95361b2-e967-4f8b-891a-50d1d136b08f",
+  "_date": 1621021889795,
+  "_name": "New Flow",
+  "_mainLocale": {
+    "_id": "0c83d36b-373e-4e88-b068-82dc41da6ba3",
+    "_code": "EN",
+    "_desc": "English"
+  },
+  "_locale": "EN",
+  "_availableLocale": [
+    {
+      "_id": "0c83d36b-373e-4e88-b068-82dc41da6ba3",
+      "_code": "EN",
+      "_desc": "English"
+    }
+  ],
+  "_boards": [
+    {
+      "_id": "7b7cb6db-94d4-47dc-a338-22c07d3c2b91",
+      "_flowId": "e95361b2-e967-4f8b-891a-50d1d136b08f",
+      "_name": "My Board",
+      "_date": 1621021889795,
+      "_x": 0,
+      "_y": 0,
+      "_nodes": [
+        {
+          "_id": "4462c142-8dc3-454f-8562-7c28404da8f0",
+          "_boardId": "7b7cb6db-94d4-47dc-a338-22c07d3c2b91",
+          "_type": "Start",
+          "_cycleType": "List",
+          "_mood": null,
+          "_elements": [],
+          "_x": 300,
+          "_y": 120,
+          "_connections": [
+            {
+              "_id": "3b71bdda-d638-4d7c-b86d-b7295e6999dd",
+              "_connectionLine": null,
+              "_from": "4462c142-8dc3-454f-8562-7c28404da8f0",
+              "_to": "010a9392-1c2a-4e28-9ca5-2a2d67eeb1fb",
+              "_type": 0
+            }
+          ],
+          "_actor": {
+            "_id": "3e54fce3-45b4-4da9-9296-fc85340c108f",
+            "_name": "System",
+            "_icon": null,
+            "_color": null
+          },
+          "_date": 1621021889803
+        },
+        {
+          "_id": "985b2044-fe43-49d3-a059-125fc36acf5a",
+          "_boardId": "7b7cb6db-94d4-47dc-a338-22c07d3c2b91",
+          "_type": "Text",
+          "_cycleType": "List",
+          "_mood": null,
+          "_elements": [
+            {
+              "_id": "a4be92e1-f63d-4df7-a6fb-45b81f238923",
+              "_type": "Text",
+              "_nodeId": "985b2044-fe43-49d3-a059-125fc36acf5a",
+              "_localizedContents": [
+                {
+                  "_nodeElementId": "a4be92e1-f63d-4df7-a6fb-45b81f238923",
+                  "_localeCode": "EN",
+                  "_text": "Curabitur blandit tempus porttitor."
+                }
+              ],
+              "_selected": false
+            }
+          ],
+          "_x": 510,
+          "_y": 390,
+          "_connections": [],
+          "_actor": {
+            "_id": "20f4522d-b6d4-4225-b92c-13f528435ce8",
+            "_name": "System",
+            "_icon": null,
+            "_color": null
+          },
+          "_date": 1621024155926
+        }
+      ],
+      "_selectedNodes": [],
+      "_group": "Main Group",
+      "_connections": []
+    }
+  ],
+  "_selectedBoardId": "7b7cb6db-94d4-47dc-a338-22c07d3c2b91",
+  "_boardGroups": [],
+  "_selectedBoardGroup": "all",
+  "_variables": {},
+  "_actors": [
+    {
+      "_id": "1f5b3571-55e9-40da-90ef-fd25fc7af081",
+      "_name": "System",
+      "_icon": null,
+      "_color": "gray"
+    }
+  ]
+}
