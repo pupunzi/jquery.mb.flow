@@ -10,12 +10,12 @@
     <script>
         function getRandom(key){
             let path = Object.keys(Avataaars.paths[key]);
-            let rnd = Math.floor(Math.random() * (path.length -1))
+            let rnd = Math.floor(Math.random() * (path.length -1));
             return path[rnd];
         }
         function getRandomColor(key){
             let path = Object.keys(Avataaars.colors[key]);
-            let rnd = Math.floor(Math.random() * (path.length -1))
+            let rnd = Math.floor(Math.random() * (path.length -1));
             return path[rnd];
         }
 
@@ -36,7 +36,7 @@
             };
             $.extend(opt, options);
 
-            console.debug(options)
+            console.debug(options);
 
             let svg = Avataaars.create(options);
             $("#svg-element").append(svg);
@@ -48,19 +48,31 @@
         };
         $(function () {
             let img = $("<img>").attr({id:"avatar"});
-            img.css({width:200});
             $("body").append(img);
             createAvatar();
             console.log( Avataaars.getEditableTypes() );
             console.log(Avataaars.colors);
             console.log(Object.keys(Avataaars.paths.eyes), Object.keys(Avataaars.paths.eyes).length);
-        })
+        });
+
+        setInterval(()=>{createAvatar()},300)
     </script>
 
     <style>
+        body{
+            background: #222222;
+        }
         #svg-element{
-            width: 200px;
-            height: 200px;
+            position: relative;
+            margin: auto;
+            width: 500px;
+            height: 500px;
+        }
+        img{
+            display: block;
+            position: relative;
+            height: 80vh;
+            margin: auto;
         }
 
     </style>
