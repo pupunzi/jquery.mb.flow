@@ -81,7 +81,9 @@
       <div class="options-editor">
         <div class="options"></div>
         <label for="background">Background</label>
+
         <input id="background" type="color" value="{{color}}">
+        <!--<div id="background"></div>-->
         <button id="randomize" class="small">Randomize</button>
       </div>
     </div>
@@ -118,6 +120,17 @@
     <i class="icon icon-random"></i>
   </div>
 </template>
+
+
+<!-- Sequence NODE                  ----------------------->
+<!--
+<template id="node-sequence">
+  <div id="node_{{nodeId}}" class="node anchorOut" data-type="sequence" data-flow-id="{{flowId}}"
+       data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
+    <i class="icon icon-random"></i>
+  </div>
+</template>
+-->
 
 <!-- TEXT NODE                   ----------------------->
 <template id="node-text">

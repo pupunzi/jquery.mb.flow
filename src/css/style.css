@@ -718,10 +718,10 @@ html body #wrapper #draw-area .node .menu {
 }
 html body #wrapper #draw-area .node .menu .actor-avatar {
   position: absolute;
-  width: 60px;
-  height: 60px;
-  left: -30px;
-  top: -30px;
+  width: 40px;
+  height: 40px;
+  left: -15px;
+  top: -15px;
   background: transparent;
 }
 html body #wrapper #draw-area .node .menu i.icon {
@@ -1040,6 +1040,13 @@ html #actors-window .flow-dialogue .actors-list .actors-line .avatar {
   display: inline-block;
   vertical-align: top;
   cursor: pointer;
+}
+html #actors-window .flow-dialogue .actors-list .actors-line .avatar:hover:after {
+  content: "Edit";
+  position: absolute;
+  bottom: 0;
+  padding: 5px;
+  background-color: #333333;
 }
 html #actors-window .flow-dialogue .actors-list .actors-line .actor-data {
   width: calc(100% - 130px);

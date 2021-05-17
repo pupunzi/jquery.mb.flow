@@ -36,8 +36,6 @@
             };
             $.extend(opt, options);
 
-            console.debug(options)
-
             let svg = Avataaars.create(options);
             $("#svg-element").append(svg);
             let s = new XMLSerializer().serializeToString($("#svg-element svg")[0]);
@@ -48,19 +46,34 @@
         };
         $(function () {
             let img = $("<img>").attr({id:"avatar"});
-            img.css({width:200});
             $("body").append(img);
             createAvatar();
             console.log( Avataaars.getEditableTypes() );
             console.log(Avataaars.colors);
             console.log(Object.keys(Avataaars.paths.eyes), Object.keys(Avataaars.paths.eyes).length);
-        })
+        });
+
+        setInterval(()=>{
+            createAvatar()
+        }, 100)
+
     </script>
 
     <style>
+        body{
+            background-color: #1f1f1f;
+        }
+
         #svg-element{
             width: 200px;
             height: 200px;
+        }
+
+        img{
+            position: relative;
+            display: block;
+            height: 80vh;
+            margin: auto;
         }
 
     </style>

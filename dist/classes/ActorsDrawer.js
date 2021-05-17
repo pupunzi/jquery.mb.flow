@@ -78,7 +78,7 @@ export class ActorsDrawer {
 
             let opt = {
                 title      : "Delete Actor",
-                text       : "Are you sude you want to delete " + actor._name + "?",
+                text       : `Are you sure you want to delete "${actor._name}"? <br> All the dialogue nodes that are using "${actor._name}" will result without actor.`,
                 inputId    : null,
                 inputValue : null,
                 okLabel    : "Remove",

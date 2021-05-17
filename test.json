@@ -1,103 +1,402 @@
 {
-  "_id": "e95361b2-e967-4f8b-891a-50d1d136b08f",
-  "_date": 1621021889795,
+  "_id": "e128b92a-ac77-40fa-aa3f-ccd846f89ec2",
+  "_date": 1621260173441,
   "_name": "New Flow",
   "_mainLocale": {
-    "_id": "0c83d36b-373e-4e88-b068-82dc41da6ba3",
+    "_id": "b41467e7-abc5-4c70-8d89-cdafe5c55663",
     "_code": "EN",
     "_desc": "English"
   },
   "_locale": "EN",
   "_availableLocale": [
     {
-      "_id": "0c83d36b-373e-4e88-b068-82dc41da6ba3",
+      "_id": "b41467e7-abc5-4c70-8d89-cdafe5c55663",
       "_code": "EN",
       "_desc": "English"
     }
   ],
   "_boards": [
     {
-      "_id": "7b7cb6db-94d4-47dc-a338-22c07d3c2b91",
-      "_flowId": "e95361b2-e967-4f8b-891a-50d1d136b08f",
+      "_id": "8ada5bee-d0bd-4a42-9d9b-e2b95fc5d3e5",
+      "_flowId": "e128b92a-ac77-40fa-aa3f-ccd846f89ec2",
       "_name": "My Board",
-      "_date": 1621021889795,
+      "_date": 1621260173441,
       "_x": 0,
       "_y": 0,
       "_nodes": [
         {
-          "_id": "4462c142-8dc3-454f-8562-7c28404da8f0",
-          "_boardId": "7b7cb6db-94d4-47dc-a338-22c07d3c2b91",
+          "_id": "54d79506-4b3b-4eba-9920-a707d91fdab1",
+          "_boardId": "8ada5bee-d0bd-4a42-9d9b-e2b95fc5d3e5",
           "_type": "Start",
-          "_cycleType": "List",
+          "_actorId": "d94bd614-b3d2-4558-9347-a47753de5d5c",
           "_mood": null,
+          "_cycleType": null,
           "_elements": [],
           "_x": 300,
           "_y": 120,
           "_connections": [
             {
-              "_id": "3b71bdda-d638-4d7c-b86d-b7295e6999dd",
-              "_connectionLine": null,
-              "_from": "4462c142-8dc3-454f-8562-7c28404da8f0",
-              "_to": "010a9392-1c2a-4e28-9ca5-2a2d67eeb1fb",
+              "_id": "acbe9dff-6708-4023-8b27-8e26a934fedc",
+              "_connectionLine": {},
+              "_from": "54d79506-4b3b-4eba-9920-a707d91fdab1",
+              "_to": "99aa27c0-d3c5-43ba-8f65-abd38eb94e68",
               "_type": 0
             }
           ],
-          "_actorId": {
-            "_id": "3e54fce3-45b4-4da9-9296-fc85340c108f",
-            "_name": "System",
-            "_avatar": null,
-            "_color": null
-          },
-          "_date": 1621021889803
+          "_date": 1621260173446
         },
         {
-          "_id": "985b2044-fe43-49d3-a059-125fc36acf5a",
-          "_boardId": "7b7cb6db-94d4-47dc-a338-22c07d3c2b91",
+          "_id": "99aa27c0-d3c5-43ba-8f65-abd38eb94e68",
+          "_boardId": "8ada5bee-d0bd-4a42-9d9b-e2b95fc5d3e5",
           "_type": "Text",
-          "_cycleType": "List",
+          "_actorId": "d94bd614-b3d2-4558-9347-a47753de5d5c",
           "_mood": null,
+          "_cycleType": "List",
           "_elements": [
             {
-              "_id": "a4be92e1-f63d-4df7-a6fb-45b81f238923",
+              "_id": "16dbb032-1696-4361-bcd3-756c4736d6ae",
               "_type": "Text",
-              "_nodeId": "985b2044-fe43-49d3-a059-125fc36acf5a",
+              "_nodeId": "99aa27c0-d3c5-43ba-8f65-abd38eb94e68",
               "_localizedContents": [
                 {
-                  "_nodeElementId": "a4be92e1-f63d-4df7-a6fb-45b81f238923",
+                  "_nodeElementId": "16dbb032-1696-4361-bcd3-756c4736d6ae",
                   "_localeCode": "EN",
-                  "_text": "Curabitur blandit tempus porttitor."
+                  "_text": ""
                 }
               ],
               "_selected": false
             }
           ],
-          "_x": 510,
-          "_y": 390,
+          "_x": 500,
+          "_y": 280,
+          "_connections": [
+            {
+              "_id": "cdf6a9d9-74d1-4b86-9386-dab77e82e75d",
+              "_connectionLine": {},
+              "_from": "99aa27c0-d3c5-43ba-8f65-abd38eb94e68",
+              "_to": "c34fe1c9-de76-4f6d-9e74-e3dae583d6bc",
+              "_type": 0
+            }
+          ],
+          "_date": 1621260177388
+        },
+        {
+          "_id": "c34fe1c9-de76-4f6d-9e74-e3dae583d6bc",
+          "_boardId": "8ada5bee-d0bd-4a42-9d9b-e2b95fc5d3e5",
+          "_type": "Text",
+          "_actorId": "df86171e-c2b9-42b7-8e38-0916de8b32d7",
+          "_mood": null,
+          "_cycleType": "List",
+          "_elements": [
+            {
+              "_id": "72a09dd3-6e57-4391-a58c-2342520f8942",
+              "_type": "Text",
+              "_nodeId": "c34fe1c9-de76-4f6d-9e74-e3dae583d6bc",
+              "_localizedContents": [
+                {
+                  "_nodeElementId": "72a09dd3-6e57-4391-a58c-2342520f8942",
+                  "_localeCode": "EN",
+                  "_text": ""
+                }
+              ],
+              "_selected": false
+            }
+          ],
+          "_x": 500,
+          "_y": 420,
+          "_connections": [
+            {
+              "_id": "b34392be-ed04-4822-91ed-8810bf4f53d7",
+              "_connectionLine": {},
+              "_from": "c34fe1c9-de76-4f6d-9e74-e3dae583d6bc",
+              "_to": "f6dfcebe-45f0-4940-86b2-5b14d8e52835",
+              "_type": 0
+            }
+          ],
+          "_date": 1621260180605
+        },
+        {
+          "_id": "f6dfcebe-45f0-4940-86b2-5b14d8e52835",
+          "_boardId": "8ada5bee-d0bd-4a42-9d9b-e2b95fc5d3e5",
+          "_type": "Text",
+          "_actorId": "d94bd614-b3d2-4558-9347-a47753de5d5c",
+          "_mood": null,
+          "_cycleType": "List",
+          "_elements": [
+            {
+              "_id": "fb74f45f-7f3f-4263-b5c6-291003e26240",
+              "_type": "Text",
+              "_nodeId": "f6dfcebe-45f0-4940-86b2-5b14d8e52835",
+              "_localizedContents": [
+                {
+                  "_nodeElementId": "fb74f45f-7f3f-4263-b5c6-291003e26240",
+                  "_localeCode": "EN",
+                  "_text": ""
+                }
+              ],
+              "_selected": false
+            }
+          ],
+          "_x": 500,
+          "_y": 560,
           "_connections": [],
-          "_actorId": {
-            "_id": "20f4522d-b6d4-4225-b92c-13f528435ce8",
-            "_name": "System",
-            "_avatar": null,
-            "_color": null
-          },
-          "_date": 1621024155926
+          "_date": 1621260183418
+        },
+        {
+          "_id": "4a138abb-4226-4911-b7df-0583781ab0f1",
+          "_boardId": "8ada5bee-d0bd-4a42-9d9b-e2b95fc5d3e5",
+          "_type": "Text",
+          "_actorId": "e3f6b480-adfd-48cf-81ab-9c4e7db238b0",
+          "_mood": null,
+          "_cycleType": "List",
+          "_elements": [
+            {
+              "_id": "065f50aa-afdb-40a1-acc3-52f0d2c47184",
+              "_type": "Text",
+              "_nodeId": "4a138abb-4226-4911-b7df-0583781ab0f1",
+              "_localizedContents": [
+                {
+                  "_nodeElementId": "065f50aa-afdb-40a1-acc3-52f0d2c47184",
+                  "_localeCode": "EN",
+                  "_text": ""
+                }
+              ],
+              "_selected": false
+            }
+          ],
+          "_x": 900,
+          "_y": 280,
+          "_connections": [
+            {
+              "_id": "b3fa9958-3ec1-4237-9593-286b6d6a04d7",
+              "_connectionLine": {},
+              "_from": "4a138abb-4226-4911-b7df-0583781ab0f1",
+              "_to": "2842c527-b34c-4c69-82df-5ac53335e29b",
+              "_type": 0
+            }
+          ],
+          "_date": 1621260191304
+        },
+        {
+          "_id": "2842c527-b34c-4c69-82df-5ac53335e29b",
+          "_boardId": "8ada5bee-d0bd-4a42-9d9b-e2b95fc5d3e5",
+          "_type": "Text",
+          "_actorId": "d94bd614-b3d2-4558-9347-a47753de5d5c",
+          "_mood": null,
+          "_cycleType": "List",
+          "_elements": [
+            {
+              "_id": "588dc32e-9e65-4d4b-92b4-008f847e8e0d",
+              "_type": "Text",
+              "_nodeId": "2842c527-b34c-4c69-82df-5ac53335e29b",
+              "_localizedContents": [
+                {
+                  "_nodeElementId": "588dc32e-9e65-4d4b-92b4-008f847e8e0d",
+                  "_localeCode": "EN",
+                  "_text": ""
+                }
+              ],
+              "_selected": false
+            }
+          ],
+          "_x": 900,
+          "_y": 420,
+          "_connections": [
+            {
+              "_id": "2c6f1b22-3d1a-46b5-b83d-0ebd2369b29e",
+              "_connectionLine": {},
+              "_from": "2842c527-b34c-4c69-82df-5ac53335e29b",
+              "_to": "fc87bbbc-182f-453c-92fe-213ee19b2f23",
+              "_type": 0
+            }
+          ],
+          "_date": 1621260195602
+        },
+        {
+          "_id": "fc87bbbc-182f-453c-92fe-213ee19b2f23",
+          "_boardId": "8ada5bee-d0bd-4a42-9d9b-e2b95fc5d3e5",
+          "_type": "Text",
+          "_actorId": "e3f6b480-adfd-48cf-81ab-9c4e7db238b0",
+          "_mood": null,
+          "_cycleType": "List",
+          "_elements": [
+            {
+              "_id": "268e0e40-2691-4bf4-a0ef-ec3aacc2be12",
+              "_type": "Text",
+              "_nodeId": "fc87bbbc-182f-453c-92fe-213ee19b2f23",
+              "_localizedContents": [
+                {
+                  "_nodeElementId": "268e0e40-2691-4bf4-a0ef-ec3aacc2be12",
+                  "_localeCode": "EN",
+                  "_text": ""
+                }
+              ],
+              "_selected": false
+            }
+          ],
+          "_x": 900,
+          "_y": 560,
+          "_connections": [],
+          "_date": 1621260200417
         }
       ],
       "_selectedNodes": [],
       "_group": "Main Group",
-      "_connections": []
+      "_connections": [
+        {
+          "_id": "acbe9dff-6708-4023-8b27-8e26a934fedc",
+          "_connectionLine": {},
+          "_from": "54d79506-4b3b-4eba-9920-a707d91fdab1",
+          "_to": "99aa27c0-d3c5-43ba-8f65-abd38eb94e68",
+          "_type": 0
+        },
+        {
+          "_id": "cdf6a9d9-74d1-4b86-9386-dab77e82e75d",
+          "_connectionLine": {},
+          "_from": "99aa27c0-d3c5-43ba-8f65-abd38eb94e68",
+          "_to": "c34fe1c9-de76-4f6d-9e74-e3dae583d6bc",
+          "_type": 0
+        },
+        {
+          "_id": "b34392be-ed04-4822-91ed-8810bf4f53d7",
+          "_connectionLine": {},
+          "_from": "c34fe1c9-de76-4f6d-9e74-e3dae583d6bc",
+          "_to": "f6dfcebe-45f0-4940-86b2-5b14d8e52835",
+          "_type": 0
+        },
+        {
+          "_id": "b3fa9958-3ec1-4237-9593-286b6d6a04d7",
+          "_connectionLine": {},
+          "_from": "4a138abb-4226-4911-b7df-0583781ab0f1",
+          "_to": "2842c527-b34c-4c69-82df-5ac53335e29b",
+          "_type": 0
+        },
+        {
+          "_id": "2c6f1b22-3d1a-46b5-b83d-0ebd2369b29e",
+          "_connectionLine": {},
+          "_from": "2842c527-b34c-4c69-82df-5ac53335e29b",
+          "_to": "fc87bbbc-182f-453c-92fe-213ee19b2f23",
+          "_type": 0
+        }
+      ]
     }
   ],
-  "_selectedBoardId": "7b7cb6db-94d4-47dc-a338-22c07d3c2b91",
+  "_selectedBoardId": "8ada5bee-d0bd-4a42-9d9b-e2b95fc5d3e5",
   "_boardGroups": [],
   "_selectedBoardGroup": "all",
   "_variables": {},
   "_actors": [
     {
-      "_id": "1f5b3571-55e9-40da-90ef-fd25fc7af081",
-      "_name": "System",
-      "_avatar": null,
-      "_color": "gray"
+      "_id": "c777120b-89bd-4314-b64c-db566dab45ef",
+      "_name": "New Actor",
+      "_bio": "",
+      "_avatar": {
+        "_options": {
+          "eyes": "cry",
+          "clothing": "blazerAndShirt",
+          "hair": "dreads",
+          "hairColor": "blondeGolden",
+          "facialHair": "beardMedium",
+          "facialHairColor": "auburn",
+          "accessories": "sunglasses",
+          "mouth": "concerned",
+          "top": "bob",
+          "eyebrows": "angryNatural",
+          "clothingColor": "blue01",
+          "skin": "yellow",
+          "background": "#54109A"
+        }
+      },
+      "_color": "#AD0052"
+    },
+    {
+      "_id": "e3f6b480-adfd-48cf-81ab-9c4e7db238b0",
+      "_name": "Rabby",
+      "_bio": "",
+      "_avatar": {
+        "_options": {
+          "eyes": "eyeRoll",
+          "clothing": "blazerAndSweater",
+          "hair": "dreads",
+          "hairColor": "brown",
+          "facialHair": "beardMagestic",
+          "facialHairColor": "brownDark",
+          "accessories": "round",
+          "mouth": "disbelief",
+          "top": "hat",
+          "eyebrows": "raisedExcited",
+          "clothingColor": "gray01",
+          "skin": "light",
+          "background": "#615656"
+        }
+      },
+      "_color": "#101E3B"
+    },
+    {
+      "_id": "df86171e-c2b9-42b7-8e38-0916de8b32d7",
+      "_name": "New Actor 2",
+      "_bio": "",
+      "_avatar": {
+        "_options": {
+          "eyes": "wink",
+          "clothing": "hoodie",
+          "hair": "dreads",
+          "hairColor": "pastelPink",
+          "facialHair": "moustaceFancy",
+          "facialHairColor": "blondeGolden",
+          "accessories": "none",
+          "mouth": "grimace",
+          "top": "winterHat02",
+          "eyebrows": "defaultNatural",
+          "clothingColor": "pastelYellow",
+          "skin": "tanned",
+          "background": "#294f60"
+        }
+      },
+      "_color": "#D91E8E"
+    },
+    {
+      "_id": "d94bd614-b3d2-4558-9347-a47753de5d5c",
+      "_name": "Vigor",
+      "_bio": "",
+      "_avatar": {
+        "_options": {
+          "eyes": "wink",
+          "clothing": "hoodie",
+          "hair": "dreads",
+          "hairColor": "blonde",
+          "background": "#12aeca"
+        }
+      },
+      "_color": "#6C3B94"
     }
-  ]
+  ],
+  "_defaultActor": {
+    "_id": "d94bd614-b3d2-4558-9347-a47753de5d5c",
+    "_name": "Vigor",
+    "_bio": "",
+    "_avatar": {
+      "_options": {
+        "eyes": "wink",
+        "clothing": "hoodie",
+        "hair": "dreads",
+        "hairColor": "blonde"
+      }
+    },
+    "_color": "#6C3B94"
+  },
+  "_nullActor": {
+    "_id": "27af411c-5a5d-4ec5-b1bb-c1c1ea7d579b",
+    "_name": "<span style='color:red'>No Actor!!!</span>",
+    "_bio": "",
+    "_avatar": {
+      "_options": {
+        "eyes": "wink",
+        "clothing": "hoodie",
+        "hair": "dreads",
+        "hairColor": "blonde"
+      }
+    },
+    "_color": "#9D57B8"
+  }
 }

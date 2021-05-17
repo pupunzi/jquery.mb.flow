@@ -370,10 +370,10 @@ html {
 
             .actor-avatar {
               position: absolute;
-              width: 60px;
-              height: 60px;
-              left: -30px;
-              top: -30px;
+              width: 40px;
+              height: 40px;
+              left: -15px;
+              top: -15px;
               background: transparent;
               //z-index: 100;
             }
@@ -772,6 +772,14 @@ html {
             display: inline-block;
             vertical-align: top;
             cursor: pointer;
+
+            &:hover:after{
+              content: "Edit";
+              position: absolute;
+              bottom: 0;
+              padding: 5px;
+              background-color: #333333;
+            }
           }
 
           .actor-data {
