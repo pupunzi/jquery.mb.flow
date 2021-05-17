@@ -4,95 +4,98 @@
 
 <!-- FLOW NAME                   ----------------------->
 <template id="flow-name">
-    <div data-flow-id="{{id}}">
-        <h1 id="flow_{{id}}" class="name">{{flowName}}</h1>
-        <i class="icon icon-ellipsis-v flows-menu menu"></i>
-        <button class="" id="openActors" onclick="$.flow.drawActorsWindow()"><i class="icon icon-meh-o"></i>Actors
-        </button>
-        <button class="" id="openVariables" onclick=""><i class="icon icon-code"></i>Variables</button>
-    </div>
+  <div data-flow-id="{{id}}">
+    <h1 id="flow_{{id}}" class="name">{{flowName}}</h1>
+    <i class="icon icon-ellipsis-v flows-menu menu"></i>
+    <button class="" id="openActors" onclick="$.flow.drawActorsWindow()"><i class="icon icon-meh-o"></i>Actors
+    </button>
+    <button class="" id="openVariables" onclick=""><i class="icon icon-code"></i>Variables</button>
+  </div>
 </template>
 
 <!-- BOARD LIST ELEMENT          ----------------------->
 <template id="board-list-element">
-    <li id="board_{{id}}" class="board-list-element {{className}}" data-board-id="{{id}}"
-        data-board-group="{{boardGroup}}">
-        <i class="icon icon-reorder"></i>
-        <div class="name" onclick="flowApp.flow.selectBoard('{{id}}')">{{boardName}}</div>
-        <i class="icon icon-ellipsis-v board-list-element-menu menu"></i>
-    </li>
+  <li id="board_{{id}}" class="board-list-element {{className}}" data-board-id="{{id}}"
+      data-board-group="{{boardGroup}}">
+    <i class="icon icon-reorder"></i>
+    <div class="name" onclick="flowApp.flow.selectBoard('{{id}}')">{{boardName}}</div>
+    <i class="icon icon-ellipsis-v board-list-element-menu menu"></i>
+  </li>
 </template>
 
 <!-- EDIT VARIABLES                 ----------------------->
 <template id="edit-avatar">
-    <div class="flow-overlay" style="">
-        <div class="flow-dialogue" id="variables-window">
-            <h2 class="flow-dialogue-title">Edit Avatar</h2>
-            <div contenteditable="true" spellcheck=false class="flow-dialogue-input">{{dialogueContent}}</div>
-            <div class="flow-button-bar">
-                <button class="cancel" onclick="">Cancel</button>
-                <button class="ok" onclick="">Insert</button>
-            </div>
-        </div>
+  <div class="flow-overlay" style="">
+    <div class="flow-dialogue" id="variables-window">
+      <h2 class="flow-dialogue-title">Edit Avatar</h2>
+      <div contenteditable="true" spellcheck=false class="flow-dialogue-input">{{dialogueContent}}</div>
+      <div class="flow-button-bar">
+        <button class="cancel" onclick="">Cancel</button>
+        <button class="ok" onclick="">Insert</button>
+      </div>
     </div>
+  </div>
 </template>
 
 <!-- ACTORS                 ----------------------->
 <template id="actors">
-    <div class="flow-overlay" id="actors-window">
-        <div class="flow-dialogue big">
-            <h2 class="flow-dialogue-title">Actors</h2>
-            <div class="flow-button-bar">
-                <button class="cancel" onclick="">Close</button>
-                <button class="addNew main" onclick="">Add New</button>
-            </div>
-            <div class="actors-list">
-                {{actorsLine}}
-            </div>
-        </div>
+  <div class="flow-overlay" id="actors-window">
+    <div class="flow-dialogue big">
+      <button class="addNew main" onclick="" style="float: right;">Add New</button>
+      <h2 class="flow-dialogue-title">Actors</h2>
+      <div class="flow-button-bar">
+        <button class="cancel" onclick="">Close</button>
+      </div>
+      <div class="actors-list">
+        {{actorsLine}}
+      </div>
     </div>
+  </div>
 </template>
 
 <!-- ACTORS LINE             ----------------------->
 <template id="actors-line">
-    <div class="actors-line" data-actor-id="{{actorId}}">
-        <div class="avatar" onclick="$.flow.drawAvatarWindow('{{actorId}}')">{{avatar}}</div>
-        <div class="actor-data">
-            <label>Name</label>
-            <h3 class="name" contenteditable="true" spellcheck=false>{{name}}</h3>
-            <label>Bio</label>
-            <p class="bio" contenteditable="true" spellcheck=false>{{bio}}</p>
-            <!--<div class="color" style="background: {{color}}"></div>-->
-        </div>
+  <div class="actors-line" data-actor-id="{{actorId}}">
+    <div class="avatar" onclick="$.flow.drawAvatarWindow('{{actorId}}')">{{avatar}}</div>
+    <div class="actor-data">
+      <label>Name</label>
+      <h3 class="name" contenteditable="true" spellcheck=false>{{name}}</h3>
+      <label>Bio</label>
+      <p class="bio" contenteditable="true" spellcheck=false>{{bio}}</p>
+      <!--<div class="color" style="background: {{color}}"></div>-->
     </div>
+    <button class="round alert delete"><i class="icon icon-remove"></i></button>
+  </div>
 </template>
 
 <!-- AVATAR                 ----------------------->
 <template id="avatar-editor">
-    <div class="flow-overlay" id="avatar-window">
-        <div class="flow-dialogue big"  data-actor-id="{{actorId}}">
-            <h2 class="flow-dialogue-title">Avatar for: {{actorName}}</h2>
-            <div class="flow-button-bar">
-                <button class="cancel" onclick="">Close</button>
-                <button class="update main" onclick="">Update</button>
-            </div>
-            <div class="avatar">{{avatar}}</div>
-            <div class="options-editor">
-                <div class="options"></div>
-                <label for="background">Background</label>
-                <input id="background" type="color" value="{{color}}">
-                <button id="randomize" class="main small">Randomize</button>
-            </div>
-        </div>
+  <div class="flow-overlay" id="avatar-window">
+    <div class="flow-dialogue big" data-actor-id="{{actorId}}">
+      <h2 class="flow-dialogue-title">{{actorName}}</h2>
+      <div class="flow-button-bar">
+        <button class="cancel" onclick="">Close</button>
+        <button class="update main" onclick="">Update</button>
+      </div>
+      <div class="avatar">{{avatar}}</div>
+      <div class="options-editor">
+        <div class="options"></div>
+        <label for="background">Background</label>
+
+        <input id="background" type="color" value="{{color}}">
+        <!--<div id="background"></div>-->
+        <button id="randomize" class="small">Randomize</button>
+      </div>
     </div>
+  </div>
 
 </template>
 <!-- AVATAR OPTIONS            ----------------------->
 <template id="avatar-option-line">
-    <div class="option">
-        <label for="{{optionName}}">{{optionName}}</label>
-        <select id="{{optionName}}" name="{{optionName}}" value="" data-key="{{optionName}}"></select>
-    </div>
+  <div class="option">
+    <label for="{{optionName}}">{{optionName}}</label>
+    <select id="{{optionName}}" name="{{optionName}}" value="" data-key="{{optionName}}"></select>
+  </div>
 </template>
 
 
@@ -104,110 +107,121 @@
 
 <!-- START NODE                  ----------------------->
 <template id="node-start">
-    <div id="node_{{nodeId}}" class="node anchorOut" data-type="start" data-flow-id="{{flowId}}"
-         data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
-        <i class="icon icon-caret-right"></i>
-    </div>
+  <div id="node_{{nodeId}}" class="node anchorOut" data-type="start" data-flow-id="{{flowId}}"
+       data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
+    <i class="icon icon-caret-right"></i>
+  </div>
 </template>
 
 <!-- Random NODE                  ----------------------->
 <template id="node-random">
-    <div id="node_{{nodeId}}" class="node anchorOut" data-type="random" data-flow-id="{{flowId}}"
-         data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
-        <i class="icon icon-random"></i>
-    </div>
+  <div id="node_{{nodeId}}" class="node anchorOut" data-type="random" data-flow-id="{{flowId}}"
+       data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
+    <i class="icon icon-random"></i>
+  </div>
 </template>
+
+
+<!-- Sequence NODE                  ----------------------->
+<!--
+<template id="node-sequence">
+  <div id="node_{{nodeId}}" class="node anchorOut" data-type="sequence" data-flow-id="{{flowId}}"
+       data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
+    <i class="icon icon-random"></i>
+  </div>
+</template>
+-->
 
 <!-- TEXT NODE                   ----------------------->
 <template id="node-text">
-    <div id="node_{{nodeId}}" class="node anchorOut" data-type="text" data-flow-id="{{flowId}}"
-         data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}"
-         data-color="{{color}}">
-        <div class="menu">
-            <div class="node-button-bar">
-                <div class="actor-avatar">{{avatar}}</div>
-                <i class="icon {{cycleIcon}}" data-menu="cycle"></i>
-                <i class="icon icon-user" data-menu="actor"></i>
-                <span class="actor-name">{{actorName}}</span>
-            </div>
-            <i class="icon icon-ellipsis-v node-menu" data-menu="node"></i>
-        </div>
-        <ol class="node-content">{{lines}}</ol>
+  <div id="node_{{nodeId}}" class="node anchorOut" data-type="text" data-flow-id="{{flowId}}"
+       data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}"
+       data-color="{{color}}">
+    <div class="menu">
+      <div class="node-button-bar">
+        <div class="actor-avatar">{{avatar}}</div>
+        <i class="icon {{cycleIcon}}" data-menu="cycle"></i>
+        <i class="icon icon-user" data-menu="actor"></i>
+        <span class="actor-name">{{actorName}}</span>
+      </div>
+      <i class="icon icon-ellipsis-v node-menu" data-menu="node"></i>
     </div>
+    <ol class="node-content">{{lines}}</ol>
+  </div>
 </template>
 
 <!-- TEXT NODE LINE -->
 <template id="node-text-line">
-    <li class="node-content-line line" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
-        <i class="icon icon-reorder"></i>
-        <div class="node-text" contenteditable="true" spellcheck=false>{{content}}</div>
-    </li>
+  <li class="node-content-line line" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
+    <i class="icon icon-reorder"></i>
+    <div class="node-text" contenteditable="true" spellcheck=false>{{content}}</div>
+  </li>
 </template>
 
 <!-- NOTE NODE                   ----------------------->
 <template id="node-note">
-    <div id="node_{{nodeId}}" class="node anchorOut" data-type="note" data-flow-id="{{flowId}}"
-         data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
-        <div class="menu">
-            <div class="node-button-bar"><i class="icon icon-thumb-tack node-icon"></i></div>
-        </div>
-        <ol class="node-content">{{lines}}</ol>
+  <div id="node_{{nodeId}}" class="node anchorOut" data-type="note" data-flow-id="{{flowId}}"
+       data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
+    <div class="menu">
+      <div class="node-button-bar"><i class="icon icon-thumb-tack node-icon"></i></div>
     </div>
+    <ol class="node-content">{{lines}}</ol>
+  </div>
 </template>
 <!-- NOTE NODE LINE -->
 <template id="node-note-line">
-    <li class="node-content-line line" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
-        <div class="node-text" contenteditable="true" spellcheck=false>{{content}}</div>
-    </li>
+  <li class="node-content-line line" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
+    <div class="node-text" contenteditable="true" spellcheck=false>{{content}}</div>
+  </li>
 </template>
 
 <!-- CHOICE NODE                ----------------------->
 <template id="node-choice">
-    <div id="node_{{nodeId}}" class="node" data-type="choice" data-flow-id="{{flowId}}" data-board-id="{{boardId}}"
-         data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
-        <div class="menu">
-            <div class="node-button-bar">
-                <div class="actor-avatar">{{avatar}}</div>
-                <i class="icon icon-user" data-menu="actor"></i>
-                <span class="actor-name">{{actorName}}</span>
-                <!--<i class="icon icon-th-list node-icon"></i>-->
-            </div>
-            <i class="icon icon-ellipsis-v node-menu" data-menu="node"></i>
-        </div>
-        <ol class="node-content">{{lines}}</ol>
+  <div id="node_{{nodeId}}" class="node" data-type="choice" data-flow-id="{{flowId}}" data-board-id="{{boardId}}"
+       data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
+    <div class="menu">
+      <div class="node-button-bar">
+        <div class="actor-avatar">{{avatar}}</div>
+        <i class="icon icon-user" data-menu="actor"></i>
+        <span class="actor-name">{{actorName}}</span>
+        <!--<i class="icon icon-th-list node-icon"></i>-->
+      </div>
+      <i class="icon icon-ellipsis-v node-menu" data-menu="node"></i>
     </div>
+    <ol class="node-content">{{lines}}</ol>
+  </div>
 </template>
 
 <!-- CHOICE NODE LINE -->
 <template id="node-choice-line">
-    <li class="node-content-line line anchorOut" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
-        <i class="icon icon-reorder"></i>
-        <div class="node-text" contenteditable="true" spellcheck=false>{{content}}</div>
-        <div class="anchor"></div>
-    </li>
+  <li class="node-content-line line anchorOut" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
+    <i class="icon icon-reorder"></i>
+    <div class="node-text" contenteditable="true" spellcheck=false>{{content}}</div>
+    <div class="anchor"></div>
+  </li>
 </template>
 
 <!-- CONDITIONAL NODE                   ----------------------->
 <template id="node-condition">
-    <div id="node_{{nodeId}}" class="node" data-type="condition" data-flow-id="{{flowId}}" data-board-id="{{boardId}}"
-         data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}"
-         data-fail-connection-count="{{failConnectionsCount}}">
-        <div class="menu">
-            <div class="node-button-bar"><i class="icon icon-sitemap node-icon"></i></div>
-            <i class="icon icon-ellipsis-v node-menu" data-menu="node"></i>
-        </div>
-        <ol class="node-content">{{lines}}</ol>
+  <div id="node_{{nodeId}}" class="node" data-type="condition" data-flow-id="{{flowId}}" data-board-id="{{boardId}}"
+       data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}"
+       data-fail-connection-count="{{failConnectionsCount}}">
+    <div class="menu">
+      <div class="node-button-bar"><i class="icon icon-sitemap node-icon"></i></div>
+      <i class="icon icon-ellipsis-v node-menu" data-menu="node"></i>
     </div>
+    <ol class="node-content">{{lines}}</ol>
+  </div>
 </template>
 
 <!-- CONDITIONAL NODE LINE -->
 <template id="node-condition-line">
-    <li class="node-content-line line anchorOut" data-flow-id="{{flowId}}" data-board-id="{{boardId}}"
-        data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}"
-        data-connections-count="{{connectionsCount}}">
-        <i class="icon icon-reorder"></i>
-        <div class="node-text" contenteditable="true" spellcheck=false>{{content}}</div>
-        <div class="anchor"></div>
-    </li>
+  <li class="node-content-line line anchorOut" data-flow-id="{{flowId}}" data-board-id="{{boardId}}"
+      data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}"
+      data-connections-count="{{connectionsCount}}">
+    <i class="icon icon-reorder"></i>
+    <div class="node-text" contenteditable="true" spellcheck=false>{{content}}</div>
+    <div class="anchor"></div>
+  </li>
 </template>
 

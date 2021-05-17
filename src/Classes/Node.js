@@ -121,9 +121,11 @@ export class Type {
 	static note = "Note";
 
 	static choices = "Choice";
-
+	static variables = "variables";
 	static condition = "Condition";
+
 	static random = "Random";
+	static sequence = "Sequence";
 	static jumpToNode = "JumpToNode";
 }
 

@@ -1,0 +1,53 @@
+<! Doctype html>
+<html>
+<head lang="en">
+  <meta charset="utf-8">
+  <title></title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    div {
+      background-color: red;
+      margin: 0;
+      padding: 0;
+      width: 30px;
+      height: 30px;
+      position: absolute;
+    }
+  </style>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+</head>
+<body>
+<div>
+  <div id="bk"></div>
+</div>
+</body>
+<script>
+	$(function () {
+		var orgx, orgy, elex, eley, hasmove = false;
+	  $(document).on("mousedown", function (e) {
+			orgx = e.pageX;// Record the horizontal position of the mouse
+			orgy = e.pageY;// Record the vertical position of the mouse
+			elex = $("#bk").offset().left;// Record the horizontal position of the element
+			eley = $("#bk").offset().top;// Record the vertical position of the element
+			hasmove = true;// Mark the current element can be dragged when the mouse is pressed
+		});
+		$(document).on("mousemove", function (e) {
+			if (hasmove) {// perform operation when element can be dragged
+// The new position calculation method is the last position of the element plus a new displacement
+				let left = elex + Math.round((e.pageX - orgx) / 30) * 30;
+				let top = eley + Math.round((e.pageY - orgy) / 30) * 30;
+// Update location information
+				$("#bk").css({
+					top: top, left: left
+				});
+			}
+		}).on("mouseup", function (e) {
+			hasmove = false;// Set elements not draggable when the mouse is released
+		});
+	})
+</script>
+</html>

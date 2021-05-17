@@ -74,6 +74,10 @@ html {
       }
     }
 
+    &.alert {
+      background-color: #e74c3c;
+    }
+
     &.small {
       height: 25px;
       min-width: 0;
@@ -93,6 +97,7 @@ html {
         line-height: 0;
       }
     }
+
 
     &:hover {
       box-shadow: 2px 2px 10px rgba(12, 12, 12, 0.4);
@@ -365,12 +370,12 @@ html {
 
             .actor-avatar {
               position: absolute;
-              width: 60px;
-              height: 60px;
-              left: -30px;
-              top: -30px;
+              width: 40px;
+              height: 40px;
+              left: -15px;
+              top: -15px;
               background: transparent;
-              z-index: 100;
+              //z-index: 100;
             }
 
             i.icon {
@@ -444,7 +449,7 @@ html {
                 overflow: auto;
                 background-color: fade(#ffffff, 10%);
                 box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
-                font-size: 12px;
+                font-size: 15px;
               }
 
               .variables {
@@ -457,7 +462,7 @@ html {
                 color: #fff;
                 box-shadow: inset 2px 2px 5px rgba(31, 31, 31, .1);
                 border-radius: 4px;
-                font-size: 100%;
+                font-size: 80%;
 
                 i {
                   font-style: normal;
@@ -496,7 +501,7 @@ html {
             top: 40px;
             left: 40px;
 
-            .menu{
+            .menu {
             }
 
             .node-button-bar {
@@ -554,6 +559,7 @@ html {
 
             .node-button-bar {
               padding-left: 30px;
+
               i.icon {
                 color: darken(@main-color, 4%);
               }
@@ -661,7 +667,7 @@ html {
       max-width: 40vw;
       min-height: 400px;
       max-height: 40vh;
-      background-color: rgba(31, 75, 96, 0.9);
+      background-color: rgba(15, 19, 21, 0.9);
       color: #ffffff;
       box-shadow: 2px 2px 10px rgba(12, 12, 12, 0.4);
       padding: 40px;
@@ -733,11 +739,12 @@ html {
     .flow-dialogue {
       text-align: left;
       max-height: 80vh;
+      background-color: rgba(52, 100, 123, 0.96);
 
       .flow-button-bar {
         text-align: right;
-        bottom: auto;
-        top: 0;
+        bottom: 0;
+        //top: 0;
       }
 
       .flow-dialogue-title {
@@ -751,56 +758,72 @@ html {
         box-shadow: inset 0 0 5px 2px rgba(31, 31, 31, .3);
 
         .actors-line {
+          position: relative;
           border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-        }
 
-        .avatar {
-          width: 80px;
-          display: inline-block;
-          vertical-align: top;
-          cursor: pointer;
-        }
+          .alert.delete{
+            position: absolute;
+            top:0;
+            right: 0;
+          };
 
-        .actor-data {
-          width: calc(100% - 130px);
-          display: inline-block;
-          vertical-align: top;
+          .avatar {
+            width: 80px;
+            display: inline-block;
+            vertical-align: top;
+            cursor: pointer;
 
-          label {
-            margin: 0;
-            padding: 0;
-            font-size: 80%;
-            color: rgba(255, 255, 255, 0.3);
+            &:hover:after{
+              content: "Edit";
+              position: absolute;
+              bottom: 0;
+              padding: 5px;
+              background-color: #333333;
+            }
           }
 
-          .name {
-            padding: 5px;
-            //border: 1px solid rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.1);
-            margin: 3px;
+          .actor-data {
+            width: calc(100% - 130px);
+            display: inline-block;
+            vertical-align: top;
+
+            label {
+              margin: 0;
+              padding: 0;
+              font-size: 80%;
+              color: rgba(255, 255, 255, 0.3);
+            }
+
+            .name {
+              padding: 5px;
+              //border: 1px solid rgba(255, 255, 255, 0.3);
+              background: rgba(255, 255, 255, 0.1);
+              margin: 3px;
+            }
+
+            .bio {
+              margin: 3px;
+              padding: 5px;
+              //border: 1px solid rgba(255, 255, 255, 0.3);
+            }
+
+            .color {
+              width: 30px;
+              height: 30px;
+              background: rgba(255, 255, 255, 0.3);
+            }
           }
 
-          .bio {
-            margin: 3px;
-            padding: 5px;
-            //border: 1px solid rgba(255, 255, 255, 0.3);
-          }
-
-          .color {
-            width: 30px;
-            height: 30px;
-            background: rgba(255, 255, 255, 0.3);
-          }
         }
       }
     }
-
   }
 
-  #avatar-window{
+  #avatar-window {
     .flow-dialogue {
       text-align: left;
       max-height: 60vh;
+      background-color: rgba(52, 100, 123, 0.96);
 
       .flow-button-bar {
         text-align: right;
@@ -848,8 +871,8 @@ html {
 
         button#randomize {
           vertical-align: baseline;
+          float: right;
         }
-
 
       }
     }

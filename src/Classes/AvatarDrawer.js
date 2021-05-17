@@ -60,7 +60,7 @@ export class AvatarDrawer {
         AvatarDrawer.options = actor._avatar._options;
         AvatarDrawer.drawOptions();
 
-        $("input[type=color]").on("change", function () {
+        $("input[type=color]").on("input", function () {
             AvatarDrawer.options['background'] = $(this).val();
             let avatarBox = avatarWindow.find(".avatar");
             let avatar = AvatarDrawer.createAvatar(AvatarDrawer.options);
@@ -143,7 +143,7 @@ export class AvatarDrawer {
         AvatarDrawer.drawOptionsValue("clothing");
         AvatarDrawer.drawOptionsValue("clothingColor", 'palette');
 
-        $("input[type=color]")[0].value= AvatarDrawer.options["background"];
+        $("input[type=color]")[0].value= AvatarDrawer.options["background"] || "#ffffff";
     }
 
     static drawOptionsValue(key, color = null) {
