@@ -6,7 +6,6 @@ import {Util} from "./Util.js";
 export class ActorsDrawer {
 
     static openWindow() {
-
         $(".flow-overlay").remove();
 
         let actorsLine = "";
@@ -20,6 +19,8 @@ export class ActorsDrawer {
             });
             actorsLine += actorLine;
         });
+
+
         let actorsWindow = UI.fillTemplate("actors", {
             actorsLine: actorsLine
         });
@@ -69,6 +70,28 @@ export class ActorsDrawer {
             let actor = window.flowApp.flow.getActorById(actorId);
             actor._bio = $(this).text();
             window.flowApp.save(window.flowApp.flow._id)
+        });
+
+        actorsWindow.find(".delete").on("click", function () {
+            let actorId = $(this).parents(".actors-line").data("actor-id");
+            let actor = window.flowApp.flow.getActorById(actorId);
+
+            let opt = {
+                title      : "Delete Actor",
+                text       : "Are you sude you want to delete " + actor._name + "?",
+                inputId    : null,
+                inputValue : null,
+                okLabel    : "Remove",
+                cancelLabel: "Cancel",
+                action     : ()=>{
+                    window.flowApp.flow.deleteActor(actorId);
+                    ActorsDrawer.drawActorsList();
+                },
+                className  : "alert"
+            };
+            UI.dialogue(opt);
+
+            window.flowApp.save(window.flowApp.flow._id);
         });
 
     }

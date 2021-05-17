@@ -211,7 +211,7 @@ export class Drawer {
                 failConnectionsCount++;
         });
 
-        let actor = flowApp.flow.getActorById(node._actorId);
+        let actor = flowApp.flow.getActorById(node._actorId) || flowApp.flow._nullActor;
 
         let nodeEl = UI.fillTemplate("node-" + node._type.toLowerCase(), {
             nodeId: node._id,

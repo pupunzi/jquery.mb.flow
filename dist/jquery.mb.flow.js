@@ -852,6 +852,7 @@ import {AvatarDrawer} from "../Classes/AvatarDrawer.js";
 				let action = function (name) {
 					flowApp.flow.addBoard(name, flowApp.flow.selectedBoardGroup);
 				};
+
 				let opt = {
 					title      : title,
 					text       : text,

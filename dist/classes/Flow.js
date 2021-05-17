@@ -8,6 +8,8 @@ import {Board} from "./Board.js";
 import {Events, EventType} from "./Events.js";
 import {Actor} from "./Actor.js";
 import {Locale} from "./Locale.js";
+import {Avatar} from "./Actor.js";
+import {AvatarDrawer} from "./AvatarDrawer.js";
 
 export class Flow {
     constructor(name) {
@@ -27,6 +29,7 @@ export class Flow {
         this._variables = {};
         this._actors = [new Actor()];
         this._defaultActor = this._actors[0];
+        this._nullActor = new Actor("<span style='color:red'>No Actor!!!</span>");
     }
 
     get variables() {
@@ -189,6 +192,29 @@ export class Flow {
                 a = actor;
         });
         return a;
+    }
+
+    addActor(){
+        let actor = new Actor("New Actor", new Avatar(AvatarDrawer.randomOptions()), Util.randomColor());
+        this._actors.unshift(actor);
+        return actor._id;
+    }
+
+    deleteActor(actorId){
+
+        let actor = this.getActorById(actorId);
+
+        let flow = this;
+        flow.boards.forEach((board)=>{
+            board._nodes.forEach((node)=>{
+                if(node._actorId === actorId) {
+                    console.debug("flow._nullActor" , flow._nullActor);
+                    node._actorId = flow._nullActor._id
+                }
+            })
+        });
+        flow._actors.delete(actor);
+        window.flowApp.save(this._id);
     }
 }
 

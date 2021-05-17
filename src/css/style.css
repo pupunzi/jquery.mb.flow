@@ -465,6 +465,9 @@ html button.main {
 html button.main:hover {
   background-color: #4c9947;
 }
+html button.alert {
+  background-color: #e74c3c;
+}
 html button.small {
   height: 25px;
   min-width: 0;
@@ -1024,35 +1027,41 @@ html #actors-window .flow-dialogue .actors-list {
   box-shadow: inset 0 0 5px 2px rgba(31, 31, 31, 0.3);
 }
 html #actors-window .flow-dialogue .actors-list .actors-line {
+  position: relative;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
-html #actors-window .flow-dialogue .actors-list .avatar {
+html #actors-window .flow-dialogue .actors-list .actors-line .alert.delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+html #actors-window .flow-dialogue .actors-list .actors-line .avatar {
   width: 80px;
   display: inline-block;
   vertical-align: top;
   cursor: pointer;
 }
-html #actors-window .flow-dialogue .actors-list .actor-data {
+html #actors-window .flow-dialogue .actors-list .actors-line .actor-data {
   width: calc(100% - 130px);
   display: inline-block;
   vertical-align: top;
 }
-html #actors-window .flow-dialogue .actors-list .actor-data label {
+html #actors-window .flow-dialogue .actors-list .actors-line .actor-data label {
   margin: 0;
   padding: 0;
   font-size: 80%;
   color: rgba(255, 255, 255, 0.3);
 }
-html #actors-window .flow-dialogue .actors-list .actor-data .name {
+html #actors-window .flow-dialogue .actors-list .actors-line .actor-data .name {
   padding: 5px;
   background: rgba(255, 255, 255, 0.1);
   margin: 3px;
 }
-html #actors-window .flow-dialogue .actors-list .actor-data .bio {
+html #actors-window .flow-dialogue .actors-list .actors-line .actor-data .bio {
   margin: 3px;
   padding: 5px;
 }
-html #actors-window .flow-dialogue .actors-list .actor-data .color {
+html #actors-window .flow-dialogue .actors-list .actors-line .actor-data .color {
   width: 30px;
   height: 30px;
   background: rgba(255, 255, 255, 0.3);
