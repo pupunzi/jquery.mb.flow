@@ -48,6 +48,8 @@ export class Node {
 			case Type.note:
 			case Type.choices:
 			case Type.condition:
+			case Type.sequence:
+			case Type.variables:
 				let line = new NodeElement(this._type, this._id);
 				this.elements.push(line);
 				break;

@@ -140,8 +140,8 @@
     <div class="menu">
       <div class="node-button-bar">
         <div class="actor-avatar">{{avatar}}</div>
-        <i class="icon {{cycleIcon}}" data-menu="cycle"></i>
         <i class="icon icon-user" data-menu="actor"></i>
+        <i class="icon {{cycleIcon}}" data-menu="cycle"></i>
         <span class="actor-name">{{actorName}}</span>
       </div>
       <i class="icon icon-ellipsis-v node-menu" data-menu="node"></i>
@@ -225,3 +225,42 @@
   </li>
 </template>
 
+<!-- SEQUENCE NODE                   ----------------------->
+<template id="node-sequence">
+  <div id="node_{{nodeId}}" class="node" data-type="sequence" data-flow-id="{{flowId}}" data-board-id="{{boardId}}"
+       data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}" >
+    <div class="menu">
+      <div class="node-button-bar"><i class="icon icon-tasks node-icon"></i></div>
+      <i class="icon icon-ellipsis-v node-menu" data-menu="node"></i>
+    </div>
+    <ol class="node-content">{{lines}}</ol>
+  </div>
+</template>
+
+<!-- SEQUENCE NODE LINE -->
+<template id="node-sequence-line">
+  <li class="node-content-line line anchorOut" data-flow-id="{{flowId}}" data-board-id="{{boardId}}"
+      data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}"
+      data-connections-count="{{connectionsCount}}">
+    <div class="node-text" spellcheck=false>{{content}}</div>
+    <div class="anchor"></div>
+  </li>
+</template>
+
+<!-- VARIABLES NODE                   ----------------------->
+<template id="node-variables">
+  <div id="node_{{nodeId}}" class="node anchorOut" data-type="variables" data-flow-id="{{flowId}}"
+       data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
+    <div class="menu">
+      <div class="node-button-bar"><i class="icon icon-code node-icon"></i></div>
+    </div>
+    <ol class="node-content">{{lines}}</ol>
+  </div>
+</template>
+
+<!-- VARIABLES NODE LINE -->
+<template id="node-variables-line">
+  <li class="node-content-line line" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
+    <div class="node-text" contenteditable="true" spellcheck=false>{{content}}</div>
+  </li>
+</template>

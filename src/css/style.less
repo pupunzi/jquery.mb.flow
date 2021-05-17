@@ -546,6 +546,39 @@ html {
             }
           }
 
+          &[data-type="variables"] {
+            width: 240px;
+            min-height: 100px;
+            background-color: rgb(132, 146, 156);
+            top: 40px;
+            left: 40px;
+
+            .menu {
+              position: absolute;
+              background-color: transparent;
+
+              i.icon{
+                color: #ffffff;
+              }
+            }
+
+            .node-content-line {
+              margin-top: 20px;
+              height: calc(100% - 20px);
+              min-height: 90px;
+              padding: 5px;
+              background-color: transparent;
+              box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
+
+              .node-text {
+                color: #ffffff;
+                background-color: transparent;
+                min-height: 90px;
+                padding: 5px;
+              }
+            }
+          }
+
           &[data-type="choice"] {
             width: 240px;
             background-color: #739f73;
@@ -575,6 +608,43 @@ html {
                 .node-text {
                   // max-height: 100px;
                   overflow: auto;
+                  background-color: transparent;
+                  box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
+                }
+              }
+            }
+          }
+
+          &[data-type="sequence"] {
+            width: 60px;
+            background-color: #9f637b;
+            top: 40px;
+            left: 40px;
+
+            i.icon {
+              color: #ffffff;
+            }
+
+            .node-button-bar {
+              padding-left: 5px;
+
+              i.icon {
+                color: #ffffff;
+              }
+            }
+
+            .node-content {
+              .node-content-line {
+                position: relative;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                padding: 5px;
+                min-height: 10px;
+                color: #ffffff;
+
+                .node-text {
+                  // max-height: 100px;
+                  overflow: auto;
+                  min-height: 10px;
                   background-color: transparent;
                   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
                 }

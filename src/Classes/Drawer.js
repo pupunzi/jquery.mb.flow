@@ -22,29 +22,6 @@ export class Drawer {
         return window.Avataaars.create(options);
     }
 
-    static getConnectionColorByConnectionType(type) {
-        let color = 'gray';
-        switch (type) {
-            case 0:
-                color = '#c7c0b1';
-                break;
-            case 1:
-                color = '#b17330';
-                break;
-            case 2:
-                color = '#588b48';
-                break;
-            case 3:
-                color = '#a82a14';
-                break;
-            case 4:
-                color = '#900961';
-                break;
-        }
-
-        return color;
-    }
-
     updateFlowName() {
         let flow = this.flowApp.flow;
         let content = UI.fillTemplate("flow-name", {
@@ -195,11 +172,14 @@ export class Drawer {
             case Type.note:
             case Type.choices:
             case Type.condition:
+            case Type.sequence:
+            case Type.variables:
+                let counter = 0;
                 node._elements.forEach((element) => {
                     lines += UI.fillTemplate("node-" + node._type.toLowerCase() + "-line", {
                         nodeId: node._id,
                         nodeElementId: element._id,
-                        content: this.flowApp.getContentText(element)
+                        content: node._type === Type.sequence ? ++counter : this.flowApp.getContentText(element)
                     });
                 });
                 break;
@@ -207,7 +187,7 @@ export class Drawer {
 
         let failConnectionsCount = 0;
         node._connections.forEach((connection) => {
-            if (connection._type === 3 && node._type === Type.condition)
+            if (connection._type === 3 && (node._type === Type.condition ||  node._type === Type.sequence))
                 failConnectionsCount++;
         });
 
@@ -331,17 +311,17 @@ export class Drawer {
         $(board).find("#node_" + connection._from).attr("data-connections-count", node._connections.length);
 
         let failConnections = 0;
-        node._connections.forEach((connection) => {
-            if (connection._type === 3 && node._type === Type.condition)
+        node._connections.forEach((c) => {
+            if (c._type === 3 && (node._type === Type.condition ||  node._type === Type.sequence))
                 failConnections++;
         });
 
-        if (node._type === Type.condition && connection._type === 3)
+        if (connection._type === 3 && (node._type === Type.condition ||  node._type === Type.sequence))
             $(board).find("#node_" + connection._from).attr("data-fail-connection-count", failConnections);
 
         let fromNode = null;
 
-        if (connection._nodeElementId !== undefined) { //&& node._type !== Type.text && node._type !== Type.note
+        if (connection._nodeElementId !== undefined) {
             fromNode = $(board).find("[data-node-element-id=\"" + connection._nodeElementId + "\"] .anchor");
         } else {
             fromNode = $(board).find("#node_" + connection._from);
@@ -355,6 +335,35 @@ export class Drawer {
         }
         connection._connectionLine = line;
         return line;
+    }
+
+    static getConnectionColorByConnectionType(type) {
+        let color = 'gray';
+        switch (type) {
+            case 0:
+                color = '#c7c0b1';
+                break;
+            case 1:
+                color = '#66a778';
+                break;
+            case 2:
+                color = '#5096a7';
+                break;
+            case 3:
+                color = '#a82a14';
+                break;
+            case 4:
+                color = '#900961';
+                break;
+            case 5:
+                color = '#b76903';
+                break;
+            case 6:
+                color = '#9f637b';
+                break;
+        }
+
+        return color;
     }
 
     drawSelection(e) {

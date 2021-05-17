@@ -861,6 +861,34 @@ html body #wrapper #draw-area .node[data-type="note"] .node-content-line .node-t
   background-color: transparent;
   min-height: 90px;
 }
+html body #wrapper #draw-area .node[data-type="variables"] {
+  width: 240px;
+  min-height: 100px;
+  background-color: #84929c;
+  top: 40px;
+  left: 40px;
+}
+html body #wrapper #draw-area .node[data-type="variables"] .menu {
+  position: absolute;
+  background-color: transparent;
+}
+html body #wrapper #draw-area .node[data-type="variables"] .menu i.icon {
+  color: #ffffff;
+}
+html body #wrapper #draw-area .node[data-type="variables"] .node-content-line {
+  margin-top: 20px;
+  height: calc(100% - 20px);
+  min-height: 90px;
+  padding: 5px;
+  background-color: transparent;
+  box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
+}
+html body #wrapper #draw-area .node[data-type="variables"] .node-content-line .node-text {
+  color: #ffffff;
+  background-color: transparent;
+  min-height: 90px;
+  padding: 5px;
+}
 html body #wrapper #draw-area .node[data-type="choice"] {
   width: 240px;
   background-color: #739f73;
@@ -884,6 +912,34 @@ html body #wrapper #draw-area .node[data-type="choice"] .node-content .node-cont
 }
 html body #wrapper #draw-area .node[data-type="choice"] .node-content .node-content-line .node-text {
   overflow: auto;
+  background-color: transparent;
+  box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
+}
+html body #wrapper #draw-area .node[data-type="sequence"] {
+  width: 60px;
+  background-color: #9f637b;
+  top: 40px;
+  left: 40px;
+}
+html body #wrapper #draw-area .node[data-type="sequence"] i.icon {
+  color: #ffffff;
+}
+html body #wrapper #draw-area .node[data-type="sequence"] .node-button-bar {
+  padding-left: 5px;
+}
+html body #wrapper #draw-area .node[data-type="sequence"] .node-button-bar i.icon {
+  color: #ffffff;
+}
+html body #wrapper #draw-area .node[data-type="sequence"] .node-content .node-content-line {
+  position: relative;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 5px;
+  min-height: 10px;
+  color: #ffffff;
+}
+html body #wrapper #draw-area .node[data-type="sequence"] .node-content .node-content-line .node-text {
+  overflow: auto;
+  min-height: 10px;
   background-color: transparent;
   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
 }
