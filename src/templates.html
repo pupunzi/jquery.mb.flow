@@ -41,10 +41,10 @@
 <template id="actors">
     <div class="flow-overlay" id="actors-window">
         <div class="flow-dialogue big">
+            <button class="addNew main" onclick="" style="float: right;">Add New</button>
             <h2 class="flow-dialogue-title">Actors</h2>
             <div class="flow-button-bar">
                 <button class="cancel" onclick="">Close</button>
-                <button class="addNew main" onclick="">Add New</button>
             </div>
             <div class="actors-list">
                 {{actorsLine}}
@@ -71,7 +71,7 @@
 <template id="avatar-editor">
     <div class="flow-overlay" id="avatar-window">
         <div class="flow-dialogue big"  data-actor-id="{{actorId}}">
-            <h2 class="flow-dialogue-title">Avatar for: {{actorName}}</h2>
+            <h2 class="flow-dialogue-title">{{actorName}}</h2>
             <div class="flow-button-bar">
                 <button class="cancel" onclick="">Close</button>
                 <button class="update main" onclick="">Update</button>
@@ -81,7 +81,7 @@
                 <div class="options"></div>
                 <label for="background">Background</label>
                 <input id="background" type="color" value="{{color}}">
-                <button id="randomize" class="main small">Randomize</button>
+                <button id="randomize" class="small">Randomize</button>
             </div>
         </div>
     </div>

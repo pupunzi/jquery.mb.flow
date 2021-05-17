@@ -21,6 +21,8 @@ class FlowApp {
         this._flow = null;
         this._drawer = new Drawer(this);
 
+        this._grid = 20;
+
         this.initEvents();
     }
 

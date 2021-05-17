@@ -103,7 +103,7 @@ export class Drawer {
     }
 
     drawGrid() {
-        let grid = 30;
+        let grid = flowApp._grid;
         let gridN = $(window).width() / grid;
         $(this.flowApp.ui.placeholders.grid).empty();
 
