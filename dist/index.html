@@ -12,8 +12,9 @@
   <div id="logo"><img src="assets/images/logo.png"></div>
   <div id="flow-name-placeholder"><h1>Flow Name</h1></div>
   <div id="flows-button-bar">
-    <button class="main" id="openFlow" onclick="$.flow.openFlow()"><i class="icon icon-folder"></i>Open</button>
-    <button class="main" id="newFlow" onclick="$.flow.addFlow()"><i class="icon icon-plus"></i>New</button>
+    <!--<button class="" id="openFlow" onclick="$('#import-flow').trigger('click');"><i class="icon icon-folder"></i>Open</button>-->
+    <!--<button class="main" id="newFlow" onclick="flowApp.exportToFile()"><i class="icon icon-plus"></i>Save</button>-->
+    <!--<button class="main" id="newFlow" onclick="$.flow.addFlow()"><i class="icon icon-plus"></i>New</button>-->
   </div>
 </header>
 <section id="wrapper">
@@ -35,7 +36,10 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="module" src="jquery.mb.flow.min.js"></script>
+<script type="module" src="jquery.mb.flow.js"></script>
+
+<!--<input id="import-flow" type="file" name="flow" accept=".flow" style="position: absolute; z-index: 10000; display: none"/>-->
+
 </body>
 </html>
 
@@ -162,17 +166,6 @@
   </div>
 </template>
 
-
-<!-- Sequence NODE                  ----------------------->
-<!--
-<template id="node-sequence">
-  <div id="node_{{nodeId}}" class="node anchorOut" data-type="sequence" data-flow-id="{{flowId}}"
-       data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
-    <i class="icon icon-random"></i>
-  </div>
-</template>
--->
-
 <!-- TEXT NODE                   ----------------------->
 <template id="node-text">
   <div id="node_{{nodeId}}" class="node anchorOut" data-type="text" data-flow-id="{{flowId}}"
@@ -190,7 +183,6 @@
     <ol class="node-content">{{lines}}</ol>
   </div>
 </template>
-
 <!-- TEXT NODE LINE -->
 <template id="node-text-line">
   <li class="node-content-line line" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
@@ -232,7 +224,6 @@
     <ol class="node-content">{{lines}}</ol>
   </div>
 </template>
-
 <!-- CHOICE NODE LINE -->
 <template id="node-choice-line">
   <li class="node-content-line line anchorOut" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
@@ -254,7 +245,6 @@
     <ol class="node-content">{{lines}}</ol>
   </div>
 </template>
-
 <!-- CONDITIONAL NODE LINE -->
 <template id="node-condition-line">
   <li class="node-content-line line anchorOut" data-flow-id="{{flowId}}" data-board-id="{{boardId}}"
@@ -277,7 +267,6 @@
     <ol class="node-content">{{lines}}</ol>
   </div>
 </template>
-
 <!-- SEQUENCE NODE LINE -->
 <template id="node-sequence-line">
   <li class="node-content-line line anchorOut" data-flow-id="{{flowId}}" data-board-id="{{boardId}}"
@@ -298,7 +287,6 @@
     <ol class="node-content">{{lines}}</ol>
   </div>
 </template>
-
 <!-- VARIABLES NODE LINE -->
 <template id="node-variables-line">
   <li class="node-content-line line" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">

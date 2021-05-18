@@ -70,6 +70,55 @@
   src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN8rs-VQ.ttf) format('truetype');
 }
 @font-face {
+  font-family: 'DM Mono';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/dmmono/v5/aFTT7PB1QTsUX8KYth-orYataA.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'DM Mono';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/dmmono/v5/aFTW7PB1QTsUX8KYth-QAQ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'DM Mono';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/dmmono/v5/aFTT7PB1QTsUX8KYth-o9YetaA.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'DM Mono';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/dmmono/v5/aFTR7PB1QTsUX8KYvrGyIYQ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'DM Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/dmmono/v5/aFTU7PB1QTsUX8KYhh0.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'DM Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/dmmono/v5/aFTR7PB1QTsUX8KYvumzIYQ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Patrick Hand SC';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/patrickhandsc/v8/0nkwC9f7MfsBiWcLtY65AWDK873ViQ.ttf) format('truetype');
+}
+@font-face {
   font-family: 'flowIcons';
   src: url('fonts/flowIcons.ttf?74nk3m') format('truetype'), url('fonts/flowIcons.woff?74nk3m') format('woff'), url('fonts/flowIcons.svg?74nk3m#flowIcons') format('svg');
   font-weight: normal;
@@ -747,6 +796,8 @@ html body #wrapper #draw-area .node .menu .node-button-bar .node-icon {
   color: #323232;
 }
 html body #wrapper #draw-area .node .menu .actor-name {
+  font-family: 'Patrick Hand SC', sans-serif;
+  font-size: 120%;
   padding: 0;
   margin: 0;
   width: 100px;
@@ -784,6 +835,7 @@ html body #wrapper #draw-area .node .node-content .node-content-line .node-text 
   overflow: auto;
   background-color: rgba(255, 255, 255, 0.1);
   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
+  font-family: 'DM Mono', monospace;
   font-size: 15px;
 }
 html body #wrapper #draw-area .node .node-content .node-content-line .variables {

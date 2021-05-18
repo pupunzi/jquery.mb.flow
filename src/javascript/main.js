@@ -52,9 +52,8 @@ import {Drawer} from "./Classes/Drawer.js";
                     {
                         name: 'Export',
                         fn: function (target) {
-                            let boardId = $(target).parent().data("board-id");
-                            let boardName = $(target).parent().find(".name").text();
-                            console.debug("Export board ", boardId);
+	                        flowApp.exportToFile();
+                            //console.debug("Export board ", boardId);
                         }
                     }
                 ];
@@ -112,32 +111,42 @@ import {Drawer} from "./Classes/Drawer.js";
                         console.log('Duplicate', $(target).parent().data("flow-id"));
                     }
                 },
-                {},
-                {
-                    name: 'Options', //<i class="icon icon-cog"></i>
-                    fn: function (target) {
-                        let flowId = $(target).parent().data("flow-id");
-                        let flowName = $(target).parent().find(".name").text();
-                        console.debug("Export " + flowId + "  -  " + flowName);
-                    }
-                },
-                {
-                    name: 'Export',
-                    fn: function (target) {
-                        let flowId = $(target).parent().data("flow-id");
-                        let flowName = $(target).parent().find(".name").text();
-                        console.debug("Export " + flowId + "  -  " + flowName);
-                    }
-                },
-                {},
                 {
                     name: 'New',
-                    className: "highlight",
+                    // className: "highlight",
                     fn: function (target) {
                         $.flow.addFlow();
                     }
                 },
                 {},
+                {
+                    name: 'Options',
+                    fn: function (target) {
+
+                    }
+                },
+                {
+                    name: 'List',
+                    fn: function (target) {
+
+                    }
+                },
+	            {},
+	            {
+                    name: 'Export',
+	                className: "highlight",
+	                fn: function (target) {
+		                flowApp.exportToFile()
+                    }
+                },
+	            {
+                    name: 'Import',
+	                className: "highlight",
+	                fn: function (target) {
+		               FlowApp.ImportFromFile()
+                    }
+                },
+	            {},
                 {
                     name: 'Delete',
                     className: "alert",
@@ -720,6 +729,10 @@ import {Drawer} from "./Classes/Drawer.js";
                     $(".node").draggable("enable");
                 });
 
+                $(window).on("resize", ()=>{
+	                flowApp.drawer.drawGrid();
+                });
+
                 /**
                  * Move drawing area by dragging
                  */
@@ -917,7 +930,7 @@ import {Drawer} from "./Classes/Drawer.js";
                 let opt = {
                     title: "Delete Board",
                     text: "Are you sure you want to delete<br><b>" + $(target).parent().find(".name").text() + "</b>?",
-                    inputId: "boardName",
+                    inputId: null,
                     inputValue: null,
                     okLabel: "Yes",
                     cancelLabel: "Cancel",

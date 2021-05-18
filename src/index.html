@@ -12,8 +12,9 @@
   <div id="logo"><img src="assets/images/logo.png"></div>
   <div id="flow-name-placeholder"><h1>Flow Name</h1></div>
   <div id="flows-button-bar">
-    <button class="main" id="openFlow" onclick="$.flow.openFlow()"><i class="icon icon-folder"></i>Open</button>
-    <button class="main" id="newFlow" onclick="$.flow.addFlow()"><i class="icon icon-plus"></i>New</button>
+    <!--<button class="" id="openFlow" onclick="$('#import-flow').trigger('click');"><i class="icon icon-folder"></i>Open</button>-->
+    <!--<button class="main" id="newFlow" onclick="flowApp.exportToFile()"><i class="icon icon-plus"></i>Save</button>-->
+    <!--<button class="main" id="newFlow" onclick="$.flow.addFlow()"><i class="icon icon-plus"></i>New</button>-->
   </div>
 </header>
 <section id="wrapper">
@@ -35,6 +36,9 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="module" src="jquery.mb.flow.min.js"></script>
+<script type="module" src="jquery.mb.flow.js"></script>
+
+<!--<input id="import-flow" type="file" name="flow" accept=".flow" style="position: absolute; z-index: 10000; display: none"/>-->
+
 </body>
 </html>

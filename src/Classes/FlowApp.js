@@ -10,316 +10,360 @@ import {Drawer} from "./Drawer.js";
 import {Type} from "./Node.js";
 import {NodeElement} from "./NodeElement.js";
 import {Content} from "./Content.js";
+import {Util} from "./Util.js";
 
-class FlowApp {
 
-    constructor() {
-        this._date = new Date().getTime();
-        this._ui = new UI();
-        this._events = new Events();
-        this._flowsIds = $.mbStorage.get("flows") || [];
-        this._flow = null;
-        this._drawer = new Drawer(this);
+export class FlowApp {
 
-        this._grid = 20;
+	constructor() {
+		this._date = new Date().getTime();
+		this._ui = new UI();
+		this._events = new Events();
+		this._flowsIds = $.mbStorage.get("flows") || [];
+		this._flow = null;
+		this._drawer = new Drawer(this);
 
-        this.initEvents();
-    }
+		this._grid = 30;
 
-    get flow() {
-        return this._flow;
-    }
+		this.initEvents();
+	}
 
-    set flow(value) {
-        this._flow = value;
-    }
+	get flow() {
+		return this._flow;
+	}
 
-    get drawer() {
-        return this._drawer;
-    }
+	set flow(value) {
+		this._flow = value;
+	}
 
-    get events() {
-        return this._events;
-    }
+	get drawer() {
+		return this._drawer;
+	}
 
-    get ui() {
-        return this._ui;
-    }
+	get events() {
+		return this._events;
+	}
 
-    get flows() {
-        return this._flowsIds;
-    }
+	get ui() {
+		return this._ui;
+	}
 
-    initEvents() {
+	get flows() {
+		return this._flowsIds;
+	}
 
-        //Add Flow
-        this.events.on(EventType.addFlow, (e) => {
-            this.drawer.updateFlowName();
-            this.drawer.drawBoardList();
-        });
+	initEvents() {
 
-        //Remove Flow
-        this.events.on(EventType.deleteFlow, (e) => {
-            let flow = this.flows[0];
-            if (flow != null) {
-                this.load(flow.id);
-                $.mbStorage.set("lastFlow", flow.id);
-            } else
-                this.addFlow();
-        });
+		//Add Flow
+		this.events.on(EventType.addFlow, (e) => {
+			this.drawer.updateFlowName();
+			this.drawer.drawBoardList();
+		});
 
-        //Update Flow name
-        this.events.on(EventType.updateFlowName, (e) => {
-            this.drawer.drawBoardList();
-        });
+		//Remove Flow
+		this.events.on(EventType.deleteFlow, (e) => {
+			let flow = this.flows[0];
+			if (flow != null) {
+				this.load(flow.id);
+				$.mbStorage.set("lastFlow", flow.id);
+			} else
+				this.addFlow();
+		});
 
-        //Load Flow
-        this.events.on(EventType.loadFlow, (e) => {
-            this.flow.selectedBoardGroup = "all";
-            this.drawer.updateFlowName();
-            for (const variable in this.flow._variables) {
-                this.flow._variables[variable] = null;
-            }
+		//Update Flow name
+		this.events.on(EventType.updateFlowName, (e) => {
+			this.drawer.drawBoardList();
+		});
 
-            this.drawer.drawBoardList();
-        });
+		//Load Flow
+		this.events.on(EventType.loadFlow, (e) => {
+			this.flow.selectedBoardGroup = "all";
+			this.drawer.updateFlowName();
+			for (const variable in this.flow._variables) {
+				this.flow._variables[variable] = null;
+			}
 
-        //Add Group
-        this.events.on(EventType.addGroup, (e) => {
-            this.flow.selectedBoardGroup = e.detail.groupName;
-            this.drawer.drawBoardList();
-        });
+			this.drawer.drawBoardList();
+		});
 
-        //Edit Group Name
-        this.events.on(EventType.updateGroupName, (e) => {
-            this.flow.selectedBoardGroup = e.detail.newName;
-            this.drawer.drawBoardList();
-        });
+		//Add Group
+		this.events.on(EventType.addGroup, (e) => {
+			this.flow.selectedBoardGroup = e.detail.groupName;
+			this.drawer.drawBoardList();
+		});
 
-        //Add Board
-        this.events.on(EventType.addBoard, (e) => {
-            this.drawer.drawBoardList();
-        });
+		//Edit Group Name
+		this.events.on(EventType.updateGroupName, (e) => {
+			this.flow.selectedBoardGroup = e.detail.newName;
+			this.drawer.drawBoardList();
+		});
 
-        //Delete Board
-        this.events.on(EventType.deleteBoard, (e) => {
-            if (this.flow.boards.length > 0) {
-                let board = this.flow.boards[0];
-                this.flow.selectBoard(board._id);
-            }
-            this.drawer.drawBoardList();
-        });
+		//Add Board
+		this.events.on(EventType.addBoard, (e) => {
+			this.drawer.drawBoardList();
+		});
 
-        //Duplicated Board
-        this.events.on(EventType.duplicatedBoard, (e) => {
-            this.drawer.drawBoardList();
-        });
+		//Delete Board
+		this.events.on(EventType.deleteBoard, (e) => {
+			if (this.flow.boards.length > 0) {
+				let board = this.flow.boards[0];
+				this.flow.selectBoard(board._id);
+			}
+			this.drawer.drawBoardList();
+		});
 
-        //Select Board
-        this.events.on(EventType.selectBoard, (e) => {
-            this.drawer.drawBoardList();
-        });
+		//Duplicated Board
+		this.events.on(EventType.duplicatedBoard, (e) => {
+			this.drawer.drawBoardList();
+		});
 
-        //Update Board
-        this.events.on(EventType.updateBoard, (e) => {
-            this.save(this.flow.id);
-        });
+		//Select Board
+		this.events.on(EventType.selectBoard, (e) => {
+			this.drawer.drawBoardList();
+		});
 
-        //Add Node
-        this.events.on(EventType.addNode, (e) => {
-            this.drawer.drawBoard();
-        });
+		//Update Board
+		this.events.on(EventType.updateBoard, (e) => {
+			this.save(this.flow.id);
+		});
 
-        // Update Node
-        this.events.on(EventType.updateNode, (e) => {
-            this.save(this.flow.id);
-        });
+		//Add Node
+		this.events.on(EventType.addNode, (e) => {
+			this.drawer.drawBoard();
+		});
 
-        //Delete Node
-        this.events.on(EventType.deleteNode, (e) => {
-            this.drawer.drawBoard();
-        });
+		// Update Node
+		this.events.on(EventType.updateNode, (e) => {
+			this.save(this.flow.id);
+		});
 
-        //Select Node
-        this.events.on(EventType.selectNode, (e) => {
-            //this.drawer.focusOnSelected();
-            //console.debug("selectNode", e.detail);
-        });
+		//Delete Node
+		this.events.on(EventType.deleteNode, (e) => {
+			this.drawer.drawBoard();
+		});
 
-        //Add NodeElement
-        this.events.on(EventType.addNodeElement, (e) => {
-            let node = e.detail;
-            this.addNodeElement(node);
-            this.drawer.drawBoard();
-        });
+		//Select Node
+		this.events.on(EventType.selectNode, (e) => {
+			//this.drawer.focusOnSelected();
+			//console.debug("selectNode", e.detail);
+		});
 
-        //Delete NodeElement
-        this.events.on(EventType.deletetNodeElement, (e) => {
-            let nodeId = e.detail.nodeId;
-            let nodeElementId = e.detail.nodeElementId;
-            let board = $.flow.selectedBoard();
-            let node = board.getNodeById(nodeId);
-            this.deleteNodeElement(node, nodeElementId);
-            this.drawer.drawBoard();
-        });
+		//Add NodeElement
+		this.events.on(EventType.addNodeElement, (e) => {
+			let node = e.detail;
+			this.addNodeElement(node);
+			this.drawer.drawBoard();
+		});
 
-        //Add Connection
-        this.events.on(EventType.addConnection, (e) => {
+		//Delete NodeElement
+		this.events.on(EventType.deletetNodeElement, (e) => {
+			let nodeId = e.detail.nodeId;
+			let nodeElementId = e.detail.nodeElementId;
+			let board = $.flow.selectedBoard();
+			let node = board.getNodeById(nodeId);
+			this.deleteNodeElement(node, nodeElementId);
+			this.drawer.drawBoard();
+		});
 
-            let connection = e.detail;
-            let board = this.flow.getBoardById(this.flow._selectedBoardId);
-            let $board = $(this.ui.placeholders.board);
-            let node = board.getNodeById(connection._from);
+		//Add Connection
+		this.events.on(EventType.addConnection, (e) => {
 
-            board._connections.push(connection);
-            node._connections.push(connection);
+			let connection = e.detail;
+			let board = this.flow.getBoardById(this.flow._selectedBoardId);
+			let $board = $(this.ui.placeholders.board);
+			let node = board.getNodeById(connection._from);
 
-            if (!connection._to || connection._to === connection._from) {
+			board._connections.push(connection);
+			node._connections.push(connection);
 
-                node._connections.delete(connection);
-                board._connections.delete(connection);
+			if (!connection._to || connection._to === connection._from) {
 
-                if (node._type === Type.random) {
-                    let firstConnection = node._connections[node._connections.length - 1];
-                    if (firstConnection._connectionLine != null)
-                        firstConnection._connectionLine.remove();
-                    node._connections.delete(firstConnection);
-                    board._connections.delete(firstConnection);
-                }
+				node._connections.delete(connection);
+				board._connections.delete(connection);
 
-                $board.find("#node_" + connection._from).attr("data-connections-count", node._connections.length);
+				if (node._type === Type.random) {
+					let firstConnection = node._connections[node._connections.length - 1];
+					if (firstConnection._connectionLine != null)
+						firstConnection._connectionLine.remove();
+					node._connections.delete(firstConnection);
+					board._connections.delete(firstConnection);
+				}
 
-                Events.register(EventType.updateBoard, board);
-                // return;
-            }
+				$board.find("#node_" + connection._from).attr("data-connections-count", node._connections.length);
 
-            node._connections.forEach((c) => {
+				Events.register(EventType.updateBoard, board);
+				// return;
+			}
 
-                if (c === connection)
-                    return;
+			node._connections.forEach((c) => {
 
-                if (c._from === connection._from && c._to === connection._to) {
-                    if (c._connectionLine != null)
-                        c._connectionLine.remove();
+				if (c === connection)
+					return;
 
-                    node._connections.delete(c);
-                    board._connections.delete(c);
+				if (c._from === connection._from && c._to === connection._to) {
+					if (c._connectionLine != null)
+						c._connectionLine.remove();
 
-                    return;
-                }
+					node._connections.delete(c);
+					board._connections.delete(c);
 
-                if (c._from === connection._from
-                    && c._nodeElementId === connection._nodeElementId
-                    && node._type !== Type.random) {
+					return;
+				}
 
-                    if (c._connectionLine != null)
-                        c._connectionLine.remove();
+				if (c._from === connection._from
+					&& c._nodeElementId === connection._nodeElementId
+					&& node._type !== Type.random) {
 
-                    node._connections.delete(c);
-                    board._connections.delete(c);
-                }
-            });
+					if (c._connectionLine != null)
+						c._connectionLine.remove();
 
-            if (node._connections.length === 0) {
-                $board.find("#node_" + connection._from).attr("data-connections-count", 0);
-            } else {
-                $board.find("#node_" + connection._from).attr("data-connections-count", node._connections.length);
-                flowApp.drawer.drawConnection(connection);
-            }
+					node._connections.delete(c);
+					board._connections.delete(c);
+				}
+			});
 
-            Events.register(EventType.updateBoard, board);
-        });
+			if (node._connections.length === 0) {
+				$board.find("#node_" + connection._from).attr("data-connections-count", 0);
+			} else {
+				$board.find("#node_" + connection._from).attr("data-connections-count", node._connections.length);
+				flowApp.drawer.drawConnection(connection);
+			}
 
-        //Delete Connection
-        this.events.on(EventType.deleteConnection, (e) => {
-            console.debug("deleteConnection", e.detail);
-        });
-    }
+			Events.register(EventType.updateBoard, board);
+		});
 
-    addNodeElement(node) {
-        let nodeElement = new NodeElement(node._type, node._id);
-        let content = new Content(nodeElement._id, "", this.flow._locale);
-        nodeElement._localizedContents.push(content);
-        node._elements.push(nodeElement);
-    }
+		//Delete Connection
+		this.events.on(EventType.deleteConnection, (e) => {
+			console.debug("deleteConnection", e.detail);
+		});
+	}
 
-    deleteNodeElement(node, nodeElementId) {
-        let el = this.getNodeElementById(node, nodeElementId);
-        if (el != null)
-            node._elements.delete(el);
-    }
+	addNodeElement(node) {
+		let nodeElement = new NodeElement(node._type, node._id);
+		let content = new Content(nodeElement._id, "", this.flow._locale);
+		nodeElement._localizedContents.push(content);
+		node._elements.push(nodeElement);
+	}
 
-    getNodeElementById(node, id) {
-        let ne = null;
-        node._elements.forEach((element) => {
-            if (element._id === id)
-                ne = element;
-        });
-        return ne;
-    }
+	deleteNodeElement(node, nodeElementId) {
+		let el = this.getNodeElementById(node, nodeElementId);
+		if (el != null)
+			node._elements.delete(el);
+	}
 
-    getContent(nodeElement, localeCode = this.flow._locale) {
-        let content = null;
-        nodeElement._localizedContents.forEach((localizedContent) => {
-            if (localizedContent._localeCode === localeCode)
-                content = localizedContent;
-        });
-        if(content === null){
-            content = new Content(nodeElement._id, "", localeCode);
-            nodeElement._localizedContents.push(content);
-        }
-        return content;
-    }
+	getNodeElementById(node, id) {
+		let ne = null;
+		node._elements.forEach((element) => {
+			if (element._id === id)
+				ne = element;
+		});
+		return ne;
+	}
 
-    getContentText(nodeElement, localeCode = this.flow._locale){
-        return this.getContent(nodeElement,localeCode)._text;
-    }
+	getContent(nodeElement, localeCode = this.flow._locale) {
+		let content = null;
+		nodeElement._localizedContents.forEach((localizedContent) => {
+			if (localizedContent._localeCode === localeCode)
+				content = localizedContent;
+		});
+		if (content === null) {
+			content = new Content(nodeElement._id, "", localeCode);
+			nodeElement._localizedContents.push(content);
+		}
+		return content;
+	}
 
-    updateContent(nodeElement, text, localeCode = this.flow._locale) {
-        let localizedContent = this.getContent(nodeElement, localeCode);
-        localizedContent._text = text;
-    }
+	getContentText(nodeElement, localeCode = this.flow._locale) {
+		return this.getContent(nodeElement, localeCode)._text;
+	}
 
-    addFlow(name = "New Flow") {
-        this.flow = new Flow(name);
-        this._flowsIds.unshift({id: this.flow.id, name: this.flow.name});
-        $.mbStorage.set("lastFlow", this.flow.id);
-        let board = this.flow.addBoard("My Board");
-        this.flow.selectBoard(board._id);
-        Events.register(EventType.addFlow, this.flow);
-        Events.register(EventType.updateBoard, board);
-        return this.flow;
-    }
+	updateContent(nodeElement, text, localeCode = this.flow._locale) {
+		let localizedContent = this.getContent(nodeElement, localeCode);
+		localizedContent._text = text;
+	}
 
-    deleteFlow(flowId) {
-        this._flowsIds.forEach((f) => {
-            if (f.id === flowId) {
-                this._flowsIds.delete(f);
-                $.mbStorage.remove("flow_" + flowId);
-            }
-        });
-        this.save(null);
-        Events.register(EventType.deleteFlow, this.flow);
-    }
+	addFlow(name = "New Flow") {
+		this.flow = new Flow(name);
+		this._flowsIds.unshift({id: this.flow.id, name: this.flow.name});
+		$.mbStorage.set("lastFlow", this.flow.id);
+		let board = this.flow.addBoard("My Board");
+		this.flow.selectBoard(board._id);
+		Events.register(EventType.addFlow, this.flow);
+		Events.register(EventType.updateBoard, board);
+		return this.flow;
+	}
 
-    save(id) {
-        $.mbStorage.set("flows", this._flowsIds);
-        if (id != null)
-            $.mbStorage.set("flow_" + id, this.flow);
+	deleteFlow(flowId) {
+		this._flowsIds.forEach((f) => {
+			if (f.id === flowId) {
+				this._flowsIds.delete(f);
+				$.mbStorage.remove("flow_" + flowId);
+			}
+		});
+		this.save(null);
+		Events.register(EventType.deleteFlow, this.flow);
+	}
 
-        console.debug("FLOW", this.flow);
-        Events.register(EventType.saveFlow, this.flow);
-    }
+	save(id) {
+		$.mbStorage.set("flows", this._flowsIds);
+		if (id != null)
+			$.mbStorage.set("flow_" + id, this.flow);
 
-    load(id) {
-        let flow = $.mbStorage.get("flow_" + id);
-        this.flow = new Flow(flow.name);
-        for (const property in flow) {
-            this.flow[property] = flow[property];
-        }
-        Events.register(EventType.loadFlow, this.flow);
-        return this.flow;
-    }
+		console.debug("FLOW", this.flow);
+		Events.register(EventType.saveFlow, this.flow);
+	}
+
+	load(id) {
+		let flow = $.mbStorage.get("flow_" + id);
+		this.flow = new Flow(flow.name);
+		for (const property in flow) {
+			this.flow[property] = flow[property];
+		}
+		Events.register(EventType.loadFlow, this.flow);
+		return this.flow;
+	}
+
+	exportToFile() {
+		let flowString = JSON.stringify(this.flow);
+		let flow = new Blob([flowString], {type: "text/json;charset=utf-8"});
+		FlowApp.saveAs(flow, this.flow._name + ".json")
+	}
+
+	static saveAs(blob, filename) {
+		// Microsoft Edge/IE 10+
+		if (navigator.msSaveOrOpenBlob) {
+			navigator.msSaveOrOpenBlob(blob, filename);
+			return true;
+		}
+
+		if (typeof URL !== 'undefined' && 'download' in HTMLAnchorElement.prototype) {
+			let link = document.createElement('a');
+			link.href = URL.createObjectURL(blob);
+			link.download = filename;
+			link.addEventListener('click', function () {
+				requestAnimationFrame(function () {
+					URL.revokeObjectURL(link.href);
+					link.remove();
+				})
+			}, false);
+
+			link.dispatchEvent(new MouseEvent('click'));
+			return true;
+		}
+		return false;
+	};
+
+	static ImportFromFile(){
+		let fileUploader = document.createElement('input');
+		fileUploader.type = "file";
+		fileUploader.accept = ".flow";
+		fileUploader.addEventListener('click', function () {
+			requestAnimationFrame(function () {
+				URL.revokeObjectURL(fileUploader.href);
+				fileUploader.remove();
+			})
+		}, false);
+		fileUploader.dispatchEvent(new MouseEvent('click'));
+		return true;
+	}
 }
-
-export {FlowApp};
