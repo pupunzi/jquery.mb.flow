@@ -5,8 +5,8 @@
 import {FlowApp} from "./Classes/FlowApp.js";
 import {Util} from "./Classes/Util.js";
 import {UI} from "./Classes/UI.js";
-import {ContextualMenu, Menu} from "./Classes/Menu.js";
-import {KeyboardListener} from "./Classes/KeyboardListener.js";
+import {ContextualMenu, Menu, ClassName} from "./Classes/Menu.js";
+import {KeyboardListener, KeyType} from "./Classes/KeyboardListener.js";
 import {Events, EventType} from "./Classes/Events.js";
 import {Type} from "./Classes/Node.js";
 import {Connection} from "./Classes/Connection.js";
@@ -14,7 +14,7 @@ import {ActorsDrawer} from "./Classes/ActorsDrawer.js";
 import {AvatarDrawer} from "./Classes/AvatarDrawer.js";
 import {Drawer} from "./Classes/Drawer.js";
 
-(function ($, d) {
+(function ($, d, w) {
     $(() => {
         //Init Flow
         $.flow.init();
@@ -66,7 +66,7 @@ import {Drawer} from "./Classes/Drawer.js";
                     items.push({});
                     items.push({
                         name: "Move to: ",
-                        className: "listTitle"
+                        className: ClassName.listTitle
                     });
                 }
                 groups.forEach((groupName) => {
@@ -88,7 +88,7 @@ import {Drawer} from "./Classes/Drawer.js";
                 items.push({});
                 items.push({
                     name: 'Delete',
-                    className: "alert",
+                    className: ClassName.alert,
                     fn: function (target) {
                         let boardId = $(target).parent().data("board-id");
                         $.flow.deleteBoard(boardId, target);
@@ -107,7 +107,8 @@ import {Drawer} from "./Classes/Drawer.js";
                     }
                 },
                 {
-                    name: 'Duplicate', fn: function (target) {
+                    name: 'Duplicate',
+                    fn: function (target) {
                         console.log('Duplicate', $(target).parent().data("flow-id"));
                     }
                 },
@@ -121,12 +122,14 @@ import {Drawer} from "./Classes/Drawer.js";
                 {},
                 {
                     name: 'Options',
+                    icon: "icon-cog",
                     fn: function (target) {
 
                     }
                 },
                 {
-                    name: 'List',
+                    name: 'Flows List',
+                    icon: "icon-list-ul",
                     fn: function (target) {
 
                     }
@@ -134,14 +137,16 @@ import {Drawer} from "./Classes/Drawer.js";
 	            {},
 	            {
                     name: 'Export',
-	                className: "highlight",
+	                className: ClassName.highlight,
+                    icon: "icon-download",
 	                fn: function (target) {
 		                flowApp.exportToFile()
                     }
                 },
 	            {
                     name: 'Import',
-	                className: "highlight",
+                    icon: "icon-upload",
+                    className: ClassName.highlight,
 	                fn: function (target) {
 		               FlowApp.ImportFromFile()
                     }
@@ -149,14 +154,14 @@ import {Drawer} from "./Classes/Drawer.js";
 	            {},
                 {
                     name: 'Delete',
-                    className: "alert",
+                    className: ClassName.alert,
                     fn: function (target) {
                         let flowId = $(target).parent().data("flow-id");
                         $.flow.deleteFlow(flowId, target);
                     }
                 },
             ],
-            boardsGroups: () => {
+            boardsGroups: (target) => {
                 let items = [];
 
                 let showAll = {
@@ -174,7 +179,7 @@ import {Drawer} from "./Classes/Drawer.js";
                 groups.forEach((groupName) => {
                     let group = {
                         name: groupName,
-                        className: "listElement",
+                        className: ClassName.listElement,
                         fn: function (target) {
                             //console.debug("filter by group:" + groupName);
                             flowApp.flow.selectedBoardGroup = groupName;
@@ -207,7 +212,7 @@ import {Drawer} from "./Classes/Drawer.js";
 
                 let newGroup = {
                     name: "New Group",
-                    className: "highlight",
+                    className: ClassName.highlight,
                     fn: function (target) {
 
                         let opt = {
@@ -221,7 +226,7 @@ import {Drawer} from "./Classes/Drawer.js";
                                 flowApp.flow.addGroup(name);
                                 $.flow.showBoardsByGroup(name);
                             },
-                            className: "alert"
+                            className: ""
                         };
                         UI.dialogue(opt);
                     }
@@ -254,7 +259,7 @@ import {Drawer} from "./Classes/Drawer.js";
                     },
                     {
                         name: 'Delete',
-                        className: "alert",
+                        className: ClassName.alert,
                         fn: function (target, e) {
                             let nodeId = $(target).parents(".node").data("node-id");
                             if (nodeId != null) {
@@ -269,7 +274,7 @@ import {Drawer} from "./Classes/Drawer.js";
                     items.push({});
                     items.push({
                         name: 'Remove Connections',
-                        className: "listTitle"
+                        className: ClassName.listTitle
                     });
                 }
                 if (nodeId != null) {
@@ -277,7 +282,7 @@ import {Drawer} from "./Classes/Drawer.js";
                     node._connections.forEach((connection) => {
                         items.push({
                             name: 'Connection ' + ++connIdx,
-                            className: "alert",
+                            className: ClassName.alert,
                             fn: function (target, e) {
                                 //console.debug(connection);
                                 connection._connectionLine.remove();
@@ -290,7 +295,7 @@ import {Drawer} from "./Classes/Drawer.js";
                             },
                             outFn: function (target, e) {
                                 let type = connection._type || 0;
-                                let color = flowApp.drawer.getConnectionColorByConnectionType(type);
+                                let color = Drawer.getConnectionColorByConnectionType(type);
                                 connection._connectionLine.setOptions({color: color})
                             }
                         })
@@ -299,44 +304,51 @@ import {Drawer} from "./Classes/Drawer.js";
 
                 return items;
             },
-            cycleMenu: [
-                {
-                    name: 'List',
-                    icon: 'icon-list-ol',
-                    fn: function (target) {
-                        let board = $.flow.selectedBoard();
-                        let nodeId = $(target).parents(".node").data("node-id");
-                        let node = board.getNodeById(nodeId);
-                        node._cycleType = "List";
-                        $(target).attr("class", 'icon icon-list-ol');
-                        Events.register(EventType.updateBoard, board);
-                    }
-                },
-                {
-                    name: 'Repeat',
-                    icon: 'icon-repeat',
-                    fn: function (target) {
-                        let board = $.flow.selectedBoard();
-                        let nodeId = $(target).parents(".node").data("node-id");
-                        let node = board.getNodeById(nodeId);
-                        node._cycleType = "Repeat";
-                        $(target).attr("class", 'icon icon-repeat');
-                        Events.register(EventType.updateBoard, board);
-                    }
-                },
-                {
-                    name: 'Random',
-                    icon: 'icon-random',
-                    fn: function (target) {
-                        let board = $.flow.selectedBoard();
-                        let nodeId = $(target).parents(".node").data("node-id");
-                        let node = board.getNodeById(nodeId);
-                        node._cycleType = "Random";
-                        $(target).attr("class", 'icon icon-random');
-                        Events.register(EventType.updateBoard, board);
-                    }
-                },
-            ],
+            cycleMenu: (target)=>{
+                let board = $.flow.selectedBoard();
+                let nodeId = $(target).parents(".node").data("node-id");
+                let node = board.getNodeById(nodeId);
+                let items = [
+                    {
+                        name: 'List',
+                        icon: 'icon-list-ol',
+                        className: node._cycleType ==="List" ? ClassName.highlight : null,
+                        fn: function (target) {
+                            node._cycleType = "List";
+                            $(target).attr("class", 'icon icon-list-ol');
+                            Events.register(EventType.updateBoard, board);
+                        }
+                    },
+                    {
+                        name: 'Loop',
+                        icon: 'icon-repeat',
+                        className: node._cycleType ==="Repeat" ? ClassName.highlight : null,
+                        fn: function (target) {
+                            let board = $.flow.selectedBoard();
+                            let nodeId = $(target).parents(".node").data("node-id");
+                            let node = board.getNodeById(nodeId);
+                            node._cycleType = "Repeat";
+                            $(target).attr("class", 'icon icon-repeat');
+                            Events.register(EventType.updateBoard, board);
+                        }
+                    },
+                    {
+                        name: 'Random',
+                        icon: 'icon-random',
+                        className: node._cycleType ==="Random" ? ClassName.highlight : null,
+                        fn: function (target) {
+                            let board = $.flow.selectedBoard();
+                            let nodeId = $(target).parents(".node").data("node-id");
+                            let node = board.getNodeById(nodeId);
+                            node._cycleType = "Random";
+                            $(target).attr("class", 'icon icon-random');
+                            Events.register(EventType.updateBoard, board);
+                        }
+                    },
+                ];
+
+                return items;
+            },
             actorMenu: (target) => {
                 let board = $.flow.selectedBoard();
                 let nodeId = $(target).parents(".node").data("node-id");
@@ -344,12 +356,13 @@ import {Drawer} from "./Classes/Drawer.js";
                 let items = [];
                 items.push({
                     name: 'Actors',
-                    className: "listTitle"
+                    className: ClassName.listTitle
                 });
                 items.push({});
                 flowApp.flow._actors.forEach((actor) => {
                     items.push({
                         name: actor._name,
+                        className: actor._id === node._actorId ? ClassName.highlight : null,
                         fn: function (target) {
                             node._actorId = actor._id;
                             flowApp.drawer.drawBoard();
@@ -422,6 +435,10 @@ import {Drawer} from "./Classes/Drawer.js";
 
             ],
             node: (target) => {
+                let nodeId = $(target).parents(".node").data("node-id");
+                let board = $.flow.selectedBoard();
+                let node = board.getNodeById(nodeId);
+
                 let items = [
                     {
                         name: 'Clone',
@@ -431,7 +448,7 @@ import {Drawer} from "./Classes/Drawer.js";
                     },
                     {
                         name: 'Delete',
-                        className: "alert",
+                        className: ClassName.alert,
                         fn: function (target, e) {
                             let nodeId = $(target).parents(".node").data("node-id");
                             if (nodeId != null) {
@@ -441,15 +458,12 @@ import {Drawer} from "./Classes/Drawer.js";
                         }
                     },
                 ];
-                let nodeId = $(target).parents(".node").data("node-id");
-                let board = $.flow.selectedBoard();
-                let node = board.getNodeById(nodeId);
 
                 if (node._connections.length) {
                     items.push({});
                     items.push({
                         name: 'Remove Connections',
-                        className: "listTitle"
+                        className: ClassName.listTitle
                     });
                 }
 
@@ -458,7 +472,7 @@ import {Drawer} from "./Classes/Drawer.js";
                     node._connections.forEach((connection) => {
                         items.push({
                             name: 'Connection ' + ++connIdx,
-                            className: "alert",
+                            className: ClassName.alert,
                             fn: function (target, e) {
                                 console.debug(connection);
                                 connection._connectionLine.remove();
@@ -475,25 +489,21 @@ import {Drawer} from "./Classes/Drawer.js";
                         })
                     })
                 }
-
-
                 return items;
             },
             nodeElement: (target) => {
                 let t = $(target).is(".node-text") ? $(target) : $(target).find(".node-text");
                 let caretPos = t.caret();
-
-                let items = [];
-                items = [
+                let items = [
                     {
                         name: 'Delete Line',
                         icon: "icon-remove",
-                        className: "alert",
+                        className: ClassName.alert,
                         fn: function (target, e) {
                             let t = $(target).is(".node-content-line") ? $(target) : $(target).parents(".node-content-line")
                             let nodeId = t.data("node-id");
                             let nodeElementId = t.data("node-element-id");
-                            console.debug(t, nodeId, nodeElementId);
+                            //console.debug(t, nodeId, nodeElementId);
                             Events.register(EventType.deletetNodeElement, {
                                 nodeId: nodeId,
                                 nodeElementId: nodeElementId
@@ -569,23 +579,17 @@ import {Drawer} from "./Classes/Drawer.js";
                 };
                 items.push(editVariables);
 
+/*
                 let deleteVariables = {
                     name: 'Delete variables',
                     icon: "icon-remove",
-                    className: "alert",
+                    className: ClassName.alert,
                     fn: function (target, e) {
-                        /*
-                                                let variables = Util.findVariables(t.html());
-                                                variables.forEach((variable)=>{
-                                                    variable = variable.replace("$","");
-                                                    delete window.flowApp.flow._variables[variable];
-                                                });
-                        */
                         parent.find("#" + t.attr("id")).remove();
-
                     }
                 };
                 items.push(deleteVariables);
+*/
 
                 return items;
             },
@@ -602,11 +606,11 @@ import {Drawer} from "./Classes/Drawer.js";
         init:
             () => {
 
-                window.Avataaars = Avataaars;
+                w.Avataaars = Avataaars;
                 //Init keys listener
-                window.KeyListener = new KeyboardListener();
+                w.KeyListener = new KeyboardListener();
                 //Init Flow App
-                window.flowApp = new FlowApp();
+                w.flowApp = new FlowApp();
 
                 // get last flow opened on previous session
                 let lastFlow = $.mbStorage.get("lastFlow");
@@ -617,34 +621,34 @@ import {Drawer} from "./Classes/Drawer.js";
                 /**
                  * Init Menu
                  * */
-                window.flows_menu = new Menu(".flows-menu", $.flow.contextualMenu.flows, true);
-                window.board_list_element_menu = new Menu(".board-list-element-menu", $.flow.contextualMenu.boardListElement, true);
-                window.boards_groups = new Menu(".boards-group-menu", $.flow.contextualMenu.boardsGroups, true);
-                window.node_menu = new Menu("[data-menu=\"node\"]", $.flow.contextualMenu.nodeMenu, true);
-                window.cycle_menu = new Menu("[data-menu=\"cycle\"]", $.flow.contextualMenu.cycleMenu, true);
-                window.actor_menu = new Menu("[data-menu=\"actor\"]", $.flow.contextualMenu.actorMenu, true);
+                w.flows_menu = new Menu(".flows-menu", $.flow.contextualMenu.flows, true);
+                w.board_list_element_menu = new Menu(".board-list-element-menu", $.flow.contextualMenu.boardListElement, true);
+                w.boards_groups = new Menu(".boards-group-menu", $.flow.contextualMenu.boardsGroups, true);
+                w.node_menu = new Menu("[data-menu=\"node\"]", $.flow.contextualMenu.nodeMenu, true);
+                w.cycle_menu = new Menu("[data-menu=\"cycle\"]", $.flow.contextualMenu.cycleMenu, true);
+                w.actor_menu = new Menu("[data-menu=\"actor\"]", $.flow.contextualMenu.actorMenu, true);
 
                 /**
                  * Init Contextual menu
                  * */
-                window.board_contextual_menu = new ContextualMenu(flowApp.ui.placeholders.drawingArea, $.flow.contextualMenu.board, true);
-                window.node_contextual_menu = new ContextualMenu(".node", $.flow.contextualMenu.node, false);
-                window.variables_contextual_menu = new ContextualMenu(".variables", $.flow.contextualMenu.variablesMenu, true);
-                window.nodeElement_contextual_menu = new ContextualMenu(".node-content-line", $.flow.contextualMenu.nodeElement, true);
+                w.board_contextual_menu = new ContextualMenu(flowApp.ui.placeholders.drawingArea, $.flow.contextualMenu.board, true);
+                w.node_contextual_menu = new ContextualMenu(".node", $.flow.contextualMenu.node, false);
+                w.variables_contextual_menu = new ContextualMenu(".variables", $.flow.contextualMenu.variablesMenu, true);
+                w.nodeElement_contextual_menu = new ContextualMenu(".node-content-line", $.flow.contextualMenu.nodeElement, true);
 
                 /**
                  * prevent paste of unwanted styled element
                  */
                 $("[contenteditable]").on('paste', function (e) {
                     e.preventDefault();
-                    var text = (e.originalEvent || e).clipboardData.getData('text/plain');
-                    document.execCommand("insertHTML", false, text);
+                    let text = (e.originalEvent || e).clipboardData.getData('text/plain');
+                    d.execCommand("insertHTML", false, text);
                 });
 
                 /**
                  * Content Editable keys behavior
                  */
-                $(document).on("keypress", "[contenteditable]", (e) => {
+                $(d).on("keypress", "[contenteditable]", (e) => {
                     let $node = $(e.target).parents(".node");
                     if ($node.length > 0) {
                         $.flow.autoShiftNodes($node);
@@ -652,11 +656,11 @@ import {Drawer} from "./Classes/Drawer.js";
                         $(e.target)[0].caretPos = $(e.target).caret();
                     }
                     switch (e.key) {
-                        case "Enter":
+                        case KeyType.enter:
                             if ($node.length > 0) {
                                 $.flow.autoShiftNodes($node);
                                 $.flow.updateConnections();
-                                if ($.flow.metaKeys.indexOf("Shift") >= 0) {
+                                if ($.flow.metaKeys.indexOf(KeyType.shift) >= 0) {
                                     e.preventDefault();
                                     $(e.target).blur();
                                 }
@@ -664,7 +668,7 @@ import {Drawer} from "./Classes/Drawer.js";
                             }
                             break;
 
-                        case "Backspace":
+                        case KeyType.backspace:
                             if ($(e.target).parents(".node").length > 0) {
                                 $.flow.autoShiftNodes($node);
                                 $.flow.updateConnections();
@@ -673,7 +677,7 @@ import {Drawer} from "./Classes/Drawer.js";
                             break;
 
                         default:
-                            if ($.flow.metaKeys.indexOf("Meta") >= 0) {
+                            if ($.flow.metaKeys.indexOf(KeyType.meta) >= 0) {
                                 console.debug(e.key);
                                 e.preventDefault();
                                 return false;
@@ -684,9 +688,9 @@ import {Drawer} from "./Classes/Drawer.js";
                 /**
                  * General keydown behavior
                  */
-                $(document).on("keydown", (e) => {
+                $(d).on("keydown", (e) => {
 
-                    if ($.flow.metaKeys.indexOf("Meta") >= 0) {
+                    if ($.flow.metaKeys.indexOf(KeyType.meta) >= 0) {
                         $(".node").draggable("disable");
                         //  boardArea.draggable("enable");
                         let board = $.flow.selectedBoard();
@@ -711,7 +715,7 @@ import {Drawer} from "./Classes/Drawer.js";
                         }
                     }
 
-                    if ($.flow.metaKeys.indexOf("Control") >= 0) {
+                    if ($.flow.metaKeys.indexOf(KeyType.control) >= 0) {
                         let board = $.flow.selectedBoard();
                         e.stopPropagation();
                         switch (e.key) {
@@ -725,11 +729,11 @@ import {Drawer} from "./Classes/Drawer.js";
                         }
                     }
                 });
-                $(document).on("keyup", () => {
+                $(d).on("keyup", () => {
                     $(".node").draggable("enable");
                 });
 
-                $(window).on("resize", ()=>{
+                $(w).on("resize", ()=>{
 	                flowApp.drawer.drawGrid();
                 });
 
@@ -739,12 +743,12 @@ import {Drawer} from "./Classes/Drawer.js";
                 let boardArea = $(flowApp.ui.placeholders.board);
                 boardArea[0].style.zoom = 1;
                 let pos = {};
-                $(document).on("mousedown.drag", (e) => {
+                $(d).on("mousedown.drag", (e) => {
 
                     if ($(e.target).parents(".node").length)
                         return;
 
-                    if ($.flow.metaKeys.indexOf("Meta") >= 0) {
+                    if ($.flow.metaKeys.indexOf(KeyType.meta) >= 0) {
 
                         $("body").css("cursor", "grab");
 
@@ -757,19 +761,19 @@ import {Drawer} from "./Classes/Drawer.js";
 
                         };
 
-                    } else if ($.flow.metaKeys.indexOf("Shift") >= 0) {
+                    } else if ($.flow.metaKeys.indexOf(KeyType.shift) >= 0) {
                         //make selection
                         flowApp.drawer.drawSelection(e)
                     }
 
-                    $(document).on("mousemove.drag", (e) => {
+                    $(d).on("mousemove.drag", (e) => {
 
                         $.flow.latMousePosition = {x: e.clientX, y: e.clientY};
 
                         if ($(e.target).parents(".node").length)
                             return;
 
-                        if ($.flow.metaKeys.indexOf("Meta") >= 0) {
+                        if ($.flow.metaKeys.indexOf(KeyType.meta) >= 0) {
 
                             if (pos.hasMove) {
                                 let left = pos.left + Math.round((e.pageX - pos.x) / flowApp._grid) * flowApp._grid;
@@ -781,14 +785,14 @@ import {Drawer} from "./Classes/Drawer.js";
 
                             $.flow.updateConnections();
 
-                        } else if ($.flow.metaKeys.indexOf("Shift") >= 0) {
+                        } else if ($.flow.metaKeys.indexOf(KeyType.shift) >= 0) {
                             flowApp.drawer.drawSelection(e)
                         }
 
                     }).one("mouseup.drag", (e) => {
                         flowApp.drawer.drawSelection(e);
                         pos.hasMove = false;
-                        if ($.flow.metaKeys.indexOf("Meta") >= 0) {
+                        if ($.flow.metaKeys.indexOf(KeyType.meta) >= 0) {
 
                             $.flow.updateConnections();
 
@@ -799,7 +803,7 @@ import {Drawer} from "./Classes/Drawer.js";
                             board._y = parseFloat(boardArea.css("top"));
                             Events.register(EventType.updateBoard, board);
                         }
-                        $(document).off("mousemove.drag");
+                        $(d).off("mousemove.drag");
                     });
                 });
             },
@@ -1024,14 +1028,14 @@ import {Drawer} from "./Classes/Drawer.js";
 
                     $(this).on("mousedown", function (e) {
 
-                        if ($.flow.metaKeys.indexOf("Meta") >= 0) {
+                        if ($.flow.metaKeys.indexOf(KeyType.meta) >= 0) {
 
                             e.stopPropagation();
                             let drawingArea = $(flowApp.ui.placeholders.board);
 
                             let startEl = $node.is(".anchorOut") ? $node : $(this);
 
-                            if ($.flow.metaKeys.indexOf("Alt") >= 0 && node._type === Type.condition)
+                            if ($.flow.metaKeys.indexOf(KeyType.alt) >= 0 && node._type === Type.condition)
                                 startEl = $node;
 
                             let fakeEl = $("<div id='fakeEl'>").css({
@@ -1046,13 +1050,13 @@ import {Drawer} from "./Classes/Drawer.js";
                             );
 
                             fakeEl.appendTo(flowApp.ui.placeholders.board);
-                            let connColor = $.flow.metaKeys.indexOf("Alt") >= 0 && node._type === Type.condition ? "red" : "orange";
-                            $(this).get(0).line = $.flow.LeaderLine(startEl.is(".anchorOut") || ($.flow.metaKeys.indexOf("Alt") >= 0 && node._type === Type.condition) ? startEl : startEl.find(".anchor"), fakeEl, {
+                            let connColor = $.flow.metaKeys.indexOf(KeyType.alt) >= 0 && node._type === Type.condition ? "red" : "orange";
+                            $(this).get(0).line = $.flow.LeaderLine(startEl.is(".anchorOut") || ($.flow.metaKeys.indexOf(KeyType.alt) >= 0 && node._type === Type.condition) ? startEl : startEl.find(".anchor"), fakeEl, {
                                 color: connColor,
                                 size: 3
                             });
 
-                            $(document).on("mousemove.line", (e) => {
+                            $(d).on("mousemove.line", (e) => {
                                 fakeEl.css({
                                     left: e.clientX - drawingArea.position().left,
                                     top: e.clientY - drawingArea.position().top
@@ -1083,7 +1087,7 @@ import {Drawer} from "./Classes/Drawer.js";
                                         break;
                                 }
 
-                                $(document).off("mousemove.line");
+                                $(d).off("mousemove.line");
 
                                 fakeEl.remove();
                                 $(this).get(0).line.remove();
@@ -1214,17 +1218,17 @@ import {Drawer} from "./Classes/Drawer.js";
 
     function pasteHtmlAtCaret(html) {
         var sel, range;
-        if (window.getSelection) {
+        if (w.getSelection) {
             // IE9 and non-IE
-            sel = window.getSelection();
+            sel = w.getSelection();
             if (sel.getRangeAt && sel.rangeCount) {
                 range = sel.getRangeAt(0);
                 range.deleteContents();
                 // Range.createContextualFragment() would be useful here but is
                 // non-standard and not supported in all browsers (IE9, for one)
-                var el = document.createElement("div");
+                var el = d.createElement("div");
                 el.innerHTML = html;
-                var frag = document.createDocumentFragment(), node, lastNode;
+                var frag = d.createDocumentFragment(), node, lastNode;
                 while ((node = el.firstChild)) {
                     lastNode = frag.appendChild(node);
                 }
@@ -1243,4 +1247,4 @@ import {Drawer} from "./Classes/Drawer.js";
     }
 
 })
-(jQuery, document);
+(jQuery, document, window);

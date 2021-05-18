@@ -211,3 +211,11 @@ export class ContextualMenu {
         });
     }
 }
+
+export class ClassName {
+    static highlight = "highlight";
+    static alert = "alert";
+    static selected = "selected";
+    static listTitle = "listTitle";
+    static listElement = "listElement";
+}

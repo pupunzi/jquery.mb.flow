@@ -2,6 +2,7 @@ import {UI} from "./UI.js";
 import {CycleType, Type} from "./Node.js";
 import {Util} from "./Util.js";
 import {Events, EventType} from "./Events.js";
+import {KeyType} from "./KeyboardListener.js";
 
 /**
  *
@@ -272,7 +273,7 @@ export class Drawer {
         $.flow.makeNodeDraggableAndLinkable(node._id, {leftTop: true});
 
         $node.on("mouseup", (e) => {
-            let isMulti = $.flow.metaKeys.indexOf("Shift") >= 0 || $.flow.selectedNodes.length > 1;
+            let isMulti = $.flow.metaKeys.indexOf(KeyType.shift) >= 0 || $.flow.selectedNodes.length > 1;
             if (!isMulti) {
                 $(this.flowApp.ui.placeholders.board).find(".node").removeClass("selected");
             }

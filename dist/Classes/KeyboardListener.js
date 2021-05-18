@@ -20,3 +20,14 @@ export class KeyboardListener {
         });
     }
 }
+
+export class KeyType {
+    static meta = "Meta";
+    static alt = "Alt";
+    static shift = "Shift";
+    static enter = "Enter";
+    static backspace = "Backspace";
+    static control = "Control";
+    static alt = "Alt";
+
+}
