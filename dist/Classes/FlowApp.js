@@ -12,7 +12,6 @@ import {NodeElement} from "./NodeElement.js";
 import {Content} from "./Content.js";
 import {Util} from "./Util.js";
 
-
 export class FlowApp {
 
 	constructor() {
@@ -144,7 +143,7 @@ export class FlowApp {
 
 		//Select Node
 		this.events.on(EventType.selectNode, (e) => {
-			//this.drawer.focusOnSelected();
+			//this.drawer.focusOnSelectedNode();
 			//console.debug("selectNode", e.detail);
 		});
 

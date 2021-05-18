@@ -403,8 +403,12 @@ html {
               position: absolute;
               padding: 3px;
 
+              i.icon {
+                color: fade(@main-color,60);
+              }
+
               .node-icon {
-                color: @main-color;
+                color: fade(@main-color,40);
               }
             }
 
@@ -439,13 +443,17 @@ html {
 
               i.icon {
                 position: absolute;
+                top: 3px;
+                left: 3px;
                 color: rgba(50, 50, 50, 0.34);
                 cursor: move;
-                z-index: 1;
+                //z-index: 1;
                 font-size: 60%;
               }
 
               .node-text {
+                font-family: 'DM Mono', monospace;
+                font-size: 16px;
                 padding-left: 20px;
                 position: relative;
                 width: 100%;
@@ -454,8 +462,6 @@ html {
                 overflow: auto;
                 background-color: fade(#ffffff, 10%);
                 box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
-                font-family: 'DM Mono', monospace;
-                font-size: 15px;
               }
 
               .variables {
@@ -526,19 +532,19 @@ html {
           &[data-type="note"] {
             width: 240px;
             min-height: 100px;
-            background-color: rgb(208, 173, 82);
-            transform: rotate(-2deg);
+            background-color: rgb(208, 196, 0);
+            transform: rotate(-4deg);
+            z-index: -1;
 
             top: 40px;
             left: 40px;
 
             .menu {
-              position: absolute;
-              background-color: transparent;
+              //position: absolute;
+             // background-color: transparent;
             }
 
             .node-content-line {
-              margin-top: 10px;
               height: 100%;
               min-height: 90px;
               padding: 5px;
@@ -546,6 +552,7 @@ html {
               box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
 
               .node-text {
+                padding: 5px;
                 background-color: transparent;
                 min-height: 90px;
               }
@@ -598,10 +605,6 @@ html {
 
             .node-button-bar {
               padding-left: 30px;
-
-              i.icon {
-                color: darken(@main-color, 4%);
-              }
             }
 
             .node-content {

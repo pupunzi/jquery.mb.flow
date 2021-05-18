@@ -132,11 +132,9 @@ export class Drawer {
 
     }
 
-    focusOnSelected() {
+    focusOnSelectedNode() {
 
         let $board = $(this.flowApp.ui.placeholders.board);
-        // let boardX = parseFloat($board.css("left"));
-        // let boardY = parseFloat($board.css("top"));
 
         let nodesId = $.flow.selectedNodes;
         let firstX = 0, firstY = 0;
@@ -441,23 +439,6 @@ export class Drawer {
             }
         })
 
-    }
-
-    drawDialogue(content, callback, template) {
-        let dialogueWindow = UI.fillTemplate(template, {
-            dialogueContent: content
-        });
-
-        $("body").append(dialogueWindow);
-        $(".flow-overlay").find(".cancel").on("click", () => {
-            $(".flow-overlay").remove();
-        });
-        $(".flow-overlay").find(".ok").on("click", () => {
-            console.debug("OK")
-            content = $(".flow-overlay").find(".dialogue-content").html();
-            callback(content);
-            $(".flow-overlay").remove();
-        })
     }
 
 }

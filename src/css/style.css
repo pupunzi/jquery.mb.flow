@@ -849,8 +849,11 @@ html body #wrapper #draw-area .node .menu .node-button-bar {
   position: absolute;
   padding: 3px;
 }
+html body #wrapper #draw-area .node .menu .node-button-bar i.icon {
+  color: rgba(50, 50, 50, 0.6);
+}
 html body #wrapper #draw-area .node .menu .node-button-bar .node-icon {
-  color: #323232;
+  color: rgba(50, 50, 50, 0.4);
 }
 html body #wrapper #draw-area .node .menu .actor-name {
   font-family: 'Patrick Hand SC', sans-serif;
@@ -879,12 +882,15 @@ html body #wrapper #draw-area .node .node-content .node-content-line.ui-sortable
 }
 html body #wrapper #draw-area .node .node-content .node-content-line i.icon {
   position: absolute;
+  top: 3px;
+  left: 3px;
   color: rgba(50, 50, 50, 0.34);
   cursor: move;
-  z-index: 1;
   font-size: 60%;
 }
 html body #wrapper #draw-area .node .node-content .node-content-line .node-text {
+  font-family: 'DM Mono', monospace;
+  font-size: 16px;
   padding-left: 20px;
   position: relative;
   width: 100%;
@@ -892,8 +898,6 @@ html body #wrapper #draw-area .node .node-content .node-content-line .node-text 
   overflow: auto;
   background-color: rgba(255, 255, 255, 0.1);
   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
-  font-family: 'DM Mono', monospace;
-  font-size: 15px;
 }
 html body #wrapper #draw-area .node .node-content .node-content-line .variables {
   position: relative;
@@ -949,17 +953,13 @@ html body #wrapper #draw-area .node[data-type="text"] .node-content-line {
 html body #wrapper #draw-area .node[data-type="note"] {
   width: 240px;
   min-height: 100px;
-  background-color: #d0ad52;
-  transform: rotate(-2deg);
+  background-color: #d0c400;
+  transform: rotate(-4deg);
+  z-index: -1;
   top: 40px;
   left: 40px;
 }
-html body #wrapper #draw-area .node[data-type="note"] .menu {
-  position: absolute;
-  background-color: transparent;
-}
 html body #wrapper #draw-area .node[data-type="note"] .node-content-line {
-  margin-top: 10px;
   height: 100%;
   min-height: 90px;
   padding: 5px;
@@ -967,6 +967,7 @@ html body #wrapper #draw-area .node[data-type="note"] .node-content-line {
   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
 }
 html body #wrapper #draw-area .node[data-type="note"] .node-content-line .node-text {
+  padding: 5px;
   background-color: transparent;
   min-height: 90px;
 }
@@ -1009,9 +1010,6 @@ html body #wrapper #draw-area .node[data-type="choice"] i.icon {
 }
 html body #wrapper #draw-area .node[data-type="choice"] .node-button-bar {
   padding-left: 30px;
-}
-html body #wrapper #draw-area .node[data-type="choice"] .node-button-bar i.icon {
-  color: #282828;
 }
 html body #wrapper #draw-area .node[data-type="choice"] .node-content .node-content-line {
   position: relative;
