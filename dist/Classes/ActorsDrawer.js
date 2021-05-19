@@ -31,7 +31,7 @@ export class ActorsDrawer {
         actorsWindow = $(".flow-overlay");
 
         actorsWindow.find(".addNew").on("click", () => {
-            let newActor = new Actor("New Actor", new Avatar(AvatarDrawer.randomOptions()), Util.randomColor());
+            let newActor = new Actor(null, new Avatar(AvatarDrawer.randomOptions()), Util.randomColor());
             window.flowApp.flow._actors.unshift(newActor);
             ActorsDrawer.drawActorsList();
         });

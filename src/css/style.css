@@ -1303,6 +1303,9 @@ html .contextual-menu ul li {
   cursor: pointer;
   transition: all 0.3s;
   border-top: 1px solid rgba(50, 50, 50, 0.4);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 html .contextual-menu ul li:hover {
   background-color: rgba(0, 0, 0, 0.3);

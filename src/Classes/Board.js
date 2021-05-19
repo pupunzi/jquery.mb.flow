@@ -67,7 +67,8 @@ class Board {
 
     addNode(type = Type.text, position = null) {
         let n = new Node(this.id, type);
-        n._actorId = window.flowApp.flow._defaultActor._id;
+        n._actorId = window.flowApp.flow.getDefaultActor()._id;
+
         if (position != null) {
             let startX = $(window.flowApp.ui.placeholders.board).offset().left;
             let startY = $(window.flowApp.ui.placeholders.board).offset().top;
@@ -76,6 +77,10 @@ class Board {
         }
 
         this._nodes.push(n);
+
+        // console.debug(n._actorId);
+        // console.debug(this._nodes);
+
         Events.register(EventType.addNode, n);
         return n;
     }
