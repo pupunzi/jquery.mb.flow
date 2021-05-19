@@ -62,12 +62,14 @@ class UI {
                     source.push(key);
                 }
 
+            /**
+             * Autocomplete for variables
+             */
             dialogueInput.tagautocomplete({
                 tag: '$',
                 source: source,
                 suffix: ""
             });
-
 
             if (opt.inputValue != null)
                 dialogueInput.html(opt.inputValue).select();

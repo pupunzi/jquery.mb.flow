@@ -37,6 +37,8 @@ export class Drawer {
         $(flowApp.ui.placeholders.boardList).empty();
 
         flowApp.flow._boards.forEach((board) => {
+
+            console.debug(board._id)
             let selected = "";
             if (board._id === flowApp.flow.selectedBoardId)
                 selected = "selected";
@@ -47,11 +49,15 @@ export class Drawer {
                 boardGroup: board._group
             });
 
+/*
             $(content).on("click", (e) => {
-                console.debug(board._id);
-                flowApp.flow.selectBoard(board._id);
+                console.debug(this);
+                return;
+
                 e.stopPropagation();
+                flowApp.flow.selectBoard(board._id);
             });
+*/
 
             $(flowApp.ui.placeholders.boardList).append(content);
         });
@@ -190,8 +196,8 @@ export class Drawer {
                 failConnectionsCount++;
         });
 
-        console.debug("Actor ID::", node._actorId);
-        console.debug("Actor::", flowApp.flow.getActorById(node._actorId));
+        // console.debug("Actor ID::", node._actorId);
+        // console.debug("Actor::", flowApp.flow.getActorById(node._actorId));
 
         let actor = flowApp.flow.getActorById(node._actorId) || flowApp.flow._nullActor;
         let nodeEl = UI.fillTemplate("node-" + node._type.toLowerCase(), {
@@ -254,7 +260,7 @@ export class Drawer {
             let content = $(this).html();
             let sanitized = Util.sanitize(content);
             $(this).html(sanitized);
-            //Util.addVariables(sanitized);
+            //Util.parseVariables(sanitized);
 
             let nodeElementId = $(this).parents(".node-content-line").data("node-element-id");
 
