@@ -986,6 +986,9 @@ html {
         cursor: pointer;
         transition: all .3s;
         border-top: 1px solid fade(@main-color, 40%);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
 
         &:hover {
           background-color: @contextual-menu-hover-color;
@@ -1030,7 +1033,6 @@ html {
   /**
   Node Editor
    */
-
   .dialogue-window {
     position: fixed;
     width: 350px;
