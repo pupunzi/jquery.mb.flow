@@ -37,8 +37,6 @@ export class Drawer {
         $(flowApp.ui.placeholders.boardList).empty();
 
         flowApp.flow._boards.forEach((board) => {
-
-            console.debug(board._id)
             let selected = "";
             if (board._id === flowApp.flow.selectedBoardId)
                 selected = "selected";
@@ -48,17 +46,7 @@ export class Drawer {
                 className: selected,
                 boardGroup: board._group
             });
-
-/*
-            $(content).on("click", (e) => {
-                console.debug(this);
-                return;
-
-                e.stopPropagation();
-                flowApp.flow.selectBoard(board._id);
-            });
-*/
-
+            
             $(flowApp.ui.placeholders.boardList).append(content);
         });
 
