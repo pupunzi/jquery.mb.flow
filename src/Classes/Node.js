@@ -18,7 +18,7 @@ export class Node {
 		this._elements = [];
 		this._x = 300;
 		this._y = 120;
-		this._jumpTo = null;
+		this._jumpTo = {};
 
 		let n = this;
 		this._count = function () {

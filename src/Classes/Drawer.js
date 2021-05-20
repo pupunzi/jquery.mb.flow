@@ -294,13 +294,19 @@ export class Drawer {
             fillNodes($.flow.selectedBoard()._id);
 
             $node.find("[name=board-id]").on("change", function () {
-                let nodeId = $(this).val();
-                console.debug(nodeId);
-                if (nodeId != null)
-                    fillNodes(nodeId);
-            })
+                let boardId = $(this).val();
+                if (boardId != null)
+                    fillNodes(boardId);
+                node._jumpTo.boardId = boardId;
+                node._jumpTo.nodeId = null;
+                console.debug(node._jumpTo);
 
-            //todo: update _jumpTo
+            });
+            $node.find("[name=node-id]").on("change", function () {
+                let nodeId = $(this).val();
+                node._jumpTo.nodeId = nodeId;
+                console.debug(node._jumpTo);
+            })
 
         }
 
