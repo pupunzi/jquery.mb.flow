@@ -21,6 +21,7 @@ import {Drawer} from "./Classes/Drawer.js";
 	 * █████████████████████████████████████████████████████████████████████████████████████████████████████████████████████ */
 
 	$.flow = {
+
 		metaKeys        : [],
 		draggable       : [],
 		areaSize        : {},
@@ -29,8 +30,9 @@ import {Drawer} from "./Classes/Drawer.js";
 		vars            : {},
 
 		contextualMenu: {
-			//███████ Menu █████████████████████████████████████████████████
-			boardListElement: (target) => {
+			//███████ Menu ████████████████████████████████████████████████
+
+			boardListElementMenu: (target) => {
 
 				let items = [
 					{
@@ -95,7 +97,7 @@ import {Drawer} from "./Classes/Drawer.js";
 
 				return items;
 			},
-			flows           : (target) => {
+			flowsMenu           : (target) => {
 				let flowId = $(target).parent().data("flow-id");
 				let items = [
 					{
@@ -160,7 +162,7 @@ import {Drawer} from "./Classes/Drawer.js";
 
 				return items;
 			},
-			boardsGroups    : (target) => {
+			boardsGroupsMenu    : (target) => {
 				let items = [];
 
 				let showAll = {
@@ -234,7 +236,7 @@ import {Drawer} from "./Classes/Drawer.js";
 
 				return items;
 			},
-			nodeMenu        : (target) => {
+			nodeMenu            : (target) => {
 				let board = $.flow.selectedBoard();
 				let nodeId = $(target).parents(".node").data("node-id");
 				let node = board.getNodeById(nodeId);
@@ -306,7 +308,7 @@ import {Drawer} from "./Classes/Drawer.js";
 
 				return items;
 			},
-			cycleMenu       : (target) => {
+			cycleMenu           : (target) => {
 				let board = $.flow.selectedBoard();
 				let nodeId = $(target).parents(".node").data("node-id");
 				let node = board.getNodeById(nodeId);
@@ -351,7 +353,7 @@ import {Drawer} from "./Classes/Drawer.js";
 
 				return items;
 			},
-			actorMenu       : (target) => {
+			actorMenu           : (target) => {
 				let board = $.flow.selectedBoard();
 				let nodeId = $(target).parents(".node").data("node-id");
 				let node = board.getNodeById(nodeId);
@@ -377,7 +379,8 @@ import {Drawer} from "./Classes/Drawer.js";
 			},
 
 			//███████ Contextual Menu ██████████████████████████████████████
-			board        : (target) => {
+
+			boardMenu      : (target) => {
 				let board = $.flow.selectedBoard();
 				let items = [
 					{
@@ -433,64 +436,7 @@ import {Drawer} from "./Classes/Drawer.js";
 
 				return items;
 			},
-			node         : (target) => {
-				let nodeId = $(target).parents(".node").data("node-id");
-				let board = $.flow.selectedBoard();
-				let node = board.getNodeById(nodeId);
-
-				let items = [
-					{
-						name: 'Clone',
-						fn  : function (target) {
-							console.debug("Clone")
-						}
-					},
-					{
-						name     : 'Delete',
-						className: ClassName.alert,
-						fn       : function (target, e) {
-							let nodeId = $(target).parents(".node").data("node-id");
-							if (nodeId != null) {
-								let board = $.flow.selectedBoard();
-								board.deleteNodeById(nodeId);
-							}
-						}
-					},
-				];
-
-				if (node._connections.length) {
-					items.push({});
-					items.push({
-						name     : 'Remove Connections',
-						className: ClassName.listTitle
-					});
-				}
-
-				if (nodeId != null) {
-					let connIdx = 0;
-					node._connections.forEach((connection) => {
-						items.push({
-							name     : 'Connection ' + ++connIdx,
-							className: ClassName.alert,
-							fn       : function (target, e) {
-								console.debug(connection);
-								connection._connectionLine.remove();
-								node._connections.delete(connection);
-								board._connections.delete(connection);
-								Events.register(EventType.updateBoard, board);
-							},
-							hoverFn  : function (target, e) {
-								connection._connectionLine.setOptions({color: "red"})
-							},
-							outFn    : function (target, e) {
-								connection._connectionLine.setOptions({color: Drawer.getConnectionColorByConnectionType(connection._type)})
-							}
-						})
-					})
-				}
-				return items;
-			},
-			nodeElement  : (target) => {
+			nodeElementMenu: (target) => {
 				let t = $(target).is(".node-text") ? $(target) : $(target).find(".node-text");
 				let caretPos = t.caret();
 				let items = [
@@ -544,7 +490,7 @@ import {Drawer} from "./Classes/Drawer.js";
 				}
 				return items;
 			},
-			variablesMenu: (target) => {
+			variablesMenu  : (target) => {
 				let t = $(target).is(".variables") ? $(target) : $(target).parents(".variables");
 				let parent = $(target).parents(".node-text");
 				let items = [];
@@ -607,18 +553,18 @@ import {Drawer} from "./Classes/Drawer.js";
 				$.flow.addFlow();
 
 			//███████ Init Menu ██████████████████████████████████████████████████
-			w.flows_menu = new Menu(".flows-menu", $.flow.contextualMenu.flows, true);
-			w.board_list_element_menu = new Menu(".board-list-element-menu", $.flow.contextualMenu.boardListElement, true);
-			w.boards_groups = new Menu(".boards-group-menu", $.flow.contextualMenu.boardsGroups, true);
+			w.flows_menu = new Menu(".flows-menu", $.flow.contextualMenu.flowsMenu, true);
+			w.board_list_element_menu = new Menu(".board-list-element-menu", $.flow.contextualMenu.boardListElementMenu, true);
+			w.boards_groups = new Menu(".boards-group-menu", $.flow.contextualMenu.boardsGroupsMenu, true);
 			w.node_menu = new Menu("[data-menu=\"node\"]", $.flow.contextualMenu.nodeMenu, true);
 			w.cycle_menu = new Menu("[data-menu=\"cycle\"]", $.flow.contextualMenu.cycleMenu, true);
 			w.actor_menu = new Menu("[data-menu=\"actor\"]", $.flow.contextualMenu.actorMenu, true);
 
 			//███████ Init Contextual menu ██████████████████████████████████████
-			w.board_contextual_menu = new ContextualMenu(flowApp.ui.placeholders.drawingArea, $.flow.contextualMenu.board, true);
-			w.node_contextual_menu = new ContextualMenu(".node", $.flow.contextualMenu.node, false);
+			w.board_contextual_menu = new ContextualMenu(flowApp.ui.placeholders.drawingArea, $.flow.contextualMenu.boardMenu, true);
+			w.node_contextual_menu = new ContextualMenu(".node", $.flow.contextualMenu.nodeMenu, false);
 			w.variables_contextual_menu = new ContextualMenu(".variables", $.flow.contextualMenu.variablesMenu, true);
-			w.nodeElement_contextual_menu = new ContextualMenu(".node-content-line", $.flow.contextualMenu.nodeElement, true);
+			w.nodeElement_contextual_menu = new ContextualMenu(".node-content-line", $.flow.contextualMenu.nodeElementMenu, true);
 
 			//███████ Paste as Simple Text ██████████████████████████████████████
 			$(d).on('paste', "[contenteditable]", (e) => {

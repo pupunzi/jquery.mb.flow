@@ -14,6 +14,10 @@ import {Content} from "./Content.js";
 export class FlowApp {
 
 	constructor() {
+
+		this.basePath = null;
+		this._endPoint = null;
+
 		this._date = new Date().getTime();
 		this._ui = new UI();
 		this._events = new Events();

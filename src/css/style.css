@@ -606,6 +606,9 @@ html body {
   background-color: #323232;
   overflow: hidden;
 }
+html body.mini-map {
+  pointer-events: none;
+}
 html body ol {
   padding: 0;
   margin: 0;

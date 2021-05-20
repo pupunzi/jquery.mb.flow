@@ -100,14 +100,12 @@ html {
       }
     }
 
-
     &:hover {
       box-shadow: 2px 2px 10px rgba(12, 12, 12, 0.4);
       background-color: lighten(@button-color, 10%);
       opacity: 1;
     }
   }
-
 
   body {
     position: fixed;
@@ -119,6 +117,10 @@ html {
     background-color: #323232;
 
     overflow: hidden;
+
+    &.mini-map{
+      pointer-events: none;
+    }
 
     ol {
       padding: 0;
@@ -204,7 +206,6 @@ html {
             line-height: 100%;
           }
         }
-
       }
     }
 
@@ -246,7 +247,6 @@ html {
               margin-left: 10px;
             }
           }
-
         }
 
         #boards-list {

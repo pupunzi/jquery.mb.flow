@@ -342,7 +342,7 @@ export class Drawer {
                 color = '#66a778';
                 break;
             case 2:
-                color = '#5096a7';
+                color = '#50a751';
                 break;
             case 3:
                 color = '#a82a14';

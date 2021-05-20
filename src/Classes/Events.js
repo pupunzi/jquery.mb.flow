@@ -53,5 +53,8 @@ export class EventType {
 	static addConnection = "addConnection";
 	static deleteConnection = "deleteConnection";
 
+	//Parser
+	static sourceLoaded = "sourceLoaded";
+
 }
 

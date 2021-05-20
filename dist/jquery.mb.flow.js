@@ -21,6 +21,7 @@ import {Drawer} from "./Classes/Drawer.js";
 	 * █████████████████████████████████████████████████████████████████████████████████████████████████████████████████████ */
 
 	$.flow = {
+
 		metaKeys        : [],
 		draggable       : [],
 		areaSize        : {},
@@ -29,8 +30,9 @@ import {Drawer} from "./Classes/Drawer.js";
 		vars            : {},
 
 		contextualMenu: {
-			//███████ Menu █████████████████████████████████████████████████
-			boardListElement: (target) => {
+			//███████ Menu ████████████████████████████████████████████████
+
+			boardListElementMenu: (target) => {
 
 				let items = [
 					{
@@ -95,7 +97,7 @@ import {Drawer} from "./Classes/Drawer.js";
 
 				return items;
 			},
-			flows           : (target) => {
+			flowsMenu           : (target) => {
 				let flowId = $(target).parent().data("flow-id");
 				let items = [
 					{
@@ -160,7 +162,7 @@ import {Drawer} from "./Classes/Drawer.js";
 
 				return items;
 			},
-			boardsGroups    : (target) => {
+			boardsGroupsMenu    : (target) => {
 				let items = [];
 
 				let showAll = {
@@ -234,7 +236,7 @@ import {Drawer} from "./Classes/Drawer.js";
 
 				return items;
 			},
-			nodeMenu        : (target) => {
+			nodeMenu            : (target) => {
 				let board = $.flow.selectedBoard();
 				let nodeId = $(target).parents(".node").data("node-id");
 				let node = board.getNodeById(nodeId);
@@ -306,7 +308,7 @@ import {Drawer} from "./Classes/Drawer.js";
 
 				return items;
 			},
-			cycleMenu       : (target) => {
+			cycleMenu           : (target) => {
 				let board = $.flow.selectedBoard();
 				let nodeId = $(target).parents(".node").data("node-id");
 				let node = board.getNodeById(nodeId);
@@ -351,7 +353,7 @@ import {Drawer} from "./Classes/Drawer.js";
 
 				return items;
 			},
-			actorMenu       : (target) => {
+			actorMenu           : (target) => {
 				let board = $.flow.selectedBoard();
 				let nodeId = $(target).parents(".node").data("node-id");
 				let node = board.getNodeById(nodeId);
@@ -377,7 +379,8 @@ import {Drawer} from "./Classes/Drawer.js";
 			},
 
 			//███████ Contextual Menu ██████████████████████████████████████
-			board        : (target) => {
+
+			boardMenu      : (target) => {
 				let board = $.flow.selectedBoard();
 				let items = [
 					{
@@ -433,64 +436,7 @@ import {Drawer} from "./Classes/Drawer.js";
 
 				return items;
 			},
-			node         : (target) => {
-				let nodeId = $(target).parents(".node").data("node-id");
-				let board = $.flow.selectedBoard();
-				let node = board.getNodeById(nodeId);
-
-				let items = [
-					{
-						name: 'Clone',
-						fn  : function (target) {
-							console.debug("Clone")
-						}
-					},
-					{
-						name     : 'Delete',
-						className: ClassName.alert,
-						fn       : function (target, e) {
-							let nodeId = $(target).parents(".node").data("node-id");
-							if (nodeId != null) {
-								let board = $.flow.selectedBoard();
-								board.deleteNodeById(nodeId);
-							}
-						}
-					},
-				];
-
-				if (node._connections.length) {
-					items.push({});
-					items.push({
-						name     : 'Remove Connections',
-						className: ClassName.listTitle
-					});
-				}
-
-				if (nodeId != null) {
-					let connIdx = 0;
-					node._connections.forEach((connection) => {
-						items.push({
-							name     : 'Connection ' + ++connIdx,
-							className: ClassName.alert,
-							fn       : function (target, e) {
-								console.debug(connection);
-								connection._connectionLine.remove();
-								node._connections.delete(connection);
-								board._connections.delete(connection);
-								Events.register(EventType.updateBoard, board);
-							},
-							hoverFn  : function (target, e) {
-								connection._connectionLine.setOptions({color: "red"})
-							},
-							outFn    : function (target, e) {
-								connection._connectionLine.setOptions({color: Drawer.getConnectionColorByConnectionType(connection._type)})
-							}
-						})
-					})
-				}
-				return items;
-			},
-			nodeElement  : (target) => {
+			nodeElementMenu: (target) => {
 				let t = $(target).is(".node-text") ? $(target) : $(target).find(".node-text");
 				let caretPos = t.caret();
 				let items = [
@@ -544,7 +490,7 @@ import {Drawer} from "./Classes/Drawer.js";
 				}
 				return items;
 			},
-			variablesMenu: (target) => {
+			variablesMenu  : (target) => {
 				let t = $(target).is(".variables") ? $(target) : $(target).parents(".variables");
 				let parent = $(target).parents(".node-text");
 				let items = [];
@@ -607,18 +553,18 @@ import {Drawer} from "./Classes/Drawer.js";
 				$.flow.addFlow();
 
 			//███████ Init Menu ██████████████████████████████████████████████████
-			w.flows_menu = new Menu(".flows-menu", $.flow.contextualMenu.flows, true);
-			w.board_list_element_menu = new Menu(".board-list-element-menu", $.flow.contextualMenu.boardListElement, true);
-			w.boards_groups = new Menu(".boards-group-menu", $.flow.contextualMenu.boardsGroups, true);
+			w.flows_menu = new Menu(".flows-menu", $.flow.contextualMenu.flowsMenu, true);
+			w.board_list_element_menu = new Menu(".board-list-element-menu", $.flow.contextualMenu.boardListElementMenu, true);
+			w.boards_groups = new Menu(".boards-group-menu", $.flow.contextualMenu.boardsGroupsMenu, true);
 			w.node_menu = new Menu("[data-menu=\"node\"]", $.flow.contextualMenu.nodeMenu, true);
 			w.cycle_menu = new Menu("[data-menu=\"cycle\"]", $.flow.contextualMenu.cycleMenu, true);
 			w.actor_menu = new Menu("[data-menu=\"actor\"]", $.flow.contextualMenu.actorMenu, true);
 
 			//███████ Init Contextual menu ██████████████████████████████████████
-			w.board_contextual_menu = new ContextualMenu(flowApp.ui.placeholders.drawingArea, $.flow.contextualMenu.board, true);
-			w.node_contextual_menu = new ContextualMenu(".node", $.flow.contextualMenu.node, false);
+			w.board_contextual_menu = new ContextualMenu(flowApp.ui.placeholders.drawingArea, $.flow.contextualMenu.boardMenu, true);
+			w.node_contextual_menu = new ContextualMenu(".node", $.flow.contextualMenu.nodeMenu, false);
 			w.variables_contextual_menu = new ContextualMenu(".variables", $.flow.contextualMenu.variablesMenu, true);
-			w.nodeElement_contextual_menu = new ContextualMenu(".node-content-line", $.flow.contextualMenu.nodeElement, true);
+			w.nodeElement_contextual_menu = new ContextualMenu(".node-content-line", $.flow.contextualMenu.nodeElementMenu, true);
 
 			//███████ Paste as Simple Text ██████████████████████████████████████
 			$(d).on('paste', "[contenteditable]", (e) => {
@@ -1237,7 +1183,7 @@ import {Drawer} from "./Classes/Drawer.js";
 				range = sel.getRangeAt(0);
 				range.deleteContents();
 				// Range.createContextualFragment() would be useful here but is
-				// non-standard and not supported in all browsers (IE9, for one)
+				// non-standard and not supported in all mbBrowsers (IE9, for one)
 				var el = d.createElement("div");
 				el.innerHTML = html;
 				var frag = d.createDocumentFragment(), node, lastNode;
@@ -1260,6 +1206,62 @@ import {Drawer} from "./Classes/Drawer.js";
 
 })
 (jQuery, document, window);
+
+/**
+ *
+ * Description:
+ *  Flow Parser library
+ **/
+;
+$.flowApp = $.flow || {};
+
+$.flow.parser = {
+
+	source: null,
+	boards: [],
+
+
+	selectedBoardId: null,
+	selectedNodeId : null,
+
+	node: {
+		get    : (nodeId) => {
+		},
+		getNext: () => {
+		},
+
+		getPrev: () => {
+		},
+
+		goTo:(nodeId)=>{
+
+		},
+
+		goToNext: ()=>{
+
+		},
+
+		goToPrev: ()=>{
+
+		},
+
+		getType: (nodeId = null) => {
+
+		},
+
+		evalVariables: (string) => {
+
+		},
+
+		getActor: (nodeId = null) => {
+
+		}
+	},
+
+	start: () => {}
+
+
+};
 
 const Avataaars = {
   defaultOptions: {
@@ -1925,7 +1927,7 @@ const Avataaars = {
 /*___________________________________________________________________________________________________________________________________________________
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _
- _ file: jquery.mb.browser.min.js                                                                                                                   _
+ _ file: jquery.mb.mbBrowser.min.js                                                                                                                   _
  _ last modified: 24/05/17 19.56                                                                                                                    _
  _                                                                                                                                                  _
  _ Open Lab s.r.l., Florence - Italy                                                                                                                _
@@ -1942,19 +1944,19 @@ const Avataaars = {
  _                                                                                                                                                  _
  _ Copyright (c) 2001-2017. Matteo Bicocchi (Pupunzi);                                                                                              _
  ___________________________________________________________________________________________________________________________________________________*/
-var nAgt=navigator.userAgent;jQuery.browser=jQuery.browser||{};jQuery.browser.mozilla=!1;jQuery.browser.webkit=!1;jQuery.browser.opera=!1;jQuery.browser.safari=!1;jQuery.browser.chrome=!1;jQuery.browser.androidStock=!1;jQuery.browser.msie=!1;jQuery.browser.edge=!1;jQuery.browser.ua=nAgt;function isTouchSupported(){var a=nAgt.msMaxTouchPoints,e="ontouchstart"in document.createElement("div");return a||e?!0:!1}
+var nAgt=navigator.userAgent;jQuery.mbBrowser=jQuery.mbBrowser||{};jQuery.mbBrowser.mozilla=!1;jQuery.mbBrowser.webkit=!1;jQuery.mbBrowser.opera=!1;jQuery.mbBrowser.safari=!1;jQuery.mbBrowser.chrome=!1;jQuery.mbBrowser.androidStock=!1;jQuery.mbBrowser.msie=!1;jQuery.mbBrowser.edge=!1;jQuery.mbBrowser.ua=nAgt;function isTouchSupported(){var a=nAgt.msMaxTouchPoints,e="ontouchstart"in document.createElement("div");return a||e?!0:!1}
 var getOS=function(){var a={version:"Unknown version",name:"Unknown OS"};-1!=navigator.appVersion.indexOf("Win")&&(a.name="Windows");-1!=navigator.appVersion.indexOf("Mac")&&0>navigator.appVersion.indexOf("Mobile")&&(a.name="Mac");-1!=navigator.appVersion.indexOf("Linux")&&(a.name="Linux");/Mac OS X/.test(nAgt)&&!/Mobile/.test(nAgt)&&(a.version=/Mac OS X ([\._\d]+)/.exec(nAgt)[1],a.version=a.version.replace(/_/g,".").substring(0,5));/Windows/.test(nAgt)&&(a.version="Unknown.Unknown");/Windows NT 5.1/.test(nAgt)&&
 (a.version="5.1");/Windows NT 6.0/.test(nAgt)&&(a.version="6.0");/Windows NT 6.1/.test(nAgt)&&(a.version="6.1");/Windows NT 6.2/.test(nAgt)&&(a.version="6.2");/Windows NT 10.0/.test(nAgt)&&(a.version="10.0");/Linux/.test(nAgt)&&/Linux/.test(nAgt)&&(a.version="Unknown.Unknown");a.name=a.name.toLowerCase();a.major_version="Unknown";a.minor_version="Unknown";"Unknown.Unknown"!=a.version&&(a.major_version=parseFloat(a.version.split(".")[0]),a.minor_version=parseFloat(a.version.split(".")[1]));return a};
-jQuery.browser.os=getOS();jQuery.browser.hasTouch=isTouchSupported();jQuery.browser.name=navigator.appName;jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion);jQuery.browser.majorVersion=parseInt(navigator.appVersion,10);var nameOffset,verOffset,ix;
-if(-1!=(verOffset=nAgt.indexOf("Opera")))jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=nAgt.substring(verOffset+6),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8));else if(-1!=(verOffset=nAgt.indexOf("OPR")))jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=nAgt.substring(verOffset+4);else if(-1!=(verOffset=nAgt.indexOf("MSIE")))jQuery.browser.msie=!0,jQuery.browser.name="Microsoft Internet Explorer",
-	jQuery.browser.fullVersion=nAgt.substring(verOffset+5);else if(-1!=nAgt.indexOf("Trident")){jQuery.browser.msie=!0;jQuery.browser.name="Microsoft Internet Explorer";var start=nAgt.indexOf("rv:")+3,end=start+4;jQuery.browser.fullVersion=nAgt.substring(start,end)}else-1!=(verOffset=nAgt.indexOf("Edge"))?(jQuery.browser.edge=!0,jQuery.browser.name="Microsoft Edge",jQuery.browser.fullVersion=nAgt.substring(verOffset+5)):-1!=(verOffset=nAgt.indexOf("Chrome"))?(jQuery.browser.webkit=!0,jQuery.browser.chrome=
-	!0,jQuery.browser.name="Chrome",jQuery.browser.fullVersion=nAgt.substring(verOffset+7)):-1<nAgt.indexOf("mozilla/5.0")&&-1<nAgt.indexOf("android ")&&-1<nAgt.indexOf("applewebkit")&&!(-1<nAgt.indexOf("chrome"))?(verOffset=nAgt.indexOf("Chrome"),jQuery.browser.webkit=!0,jQuery.browser.androidStock=!0,jQuery.browser.name="androidStock",jQuery.browser.fullVersion=nAgt.substring(verOffset+7)):-1!=(verOffset=nAgt.indexOf("Safari"))?(jQuery.browser.webkit=!0,jQuery.browser.safari=!0,jQuery.browser.name=
-	"Safari",jQuery.browser.fullVersion=nAgt.substring(verOffset+7),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8))):-1!=(verOffset=nAgt.indexOf("AppleWebkit"))?(jQuery.browser.webkit=!0,jQuery.browser.safari=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=nAgt.substring(verOffset+7),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8))):-1!=(verOffset=nAgt.indexOf("Firefox"))?(jQuery.browser.mozilla=
-	!0,jQuery.browser.name="Firefox",jQuery.browser.fullVersion=nAgt.substring(verOffset+8)):(nameOffset=nAgt.lastIndexOf(" ")+1)<(verOffset=nAgt.lastIndexOf("/"))&&(jQuery.browser.name=nAgt.substring(nameOffset,verOffset),jQuery.browser.fullVersion=nAgt.substring(verOffset+1),jQuery.browser.name.toLowerCase()==jQuery.browser.name.toUpperCase()&&(jQuery.browser.name=navigator.appName));
--1!=(ix=jQuery.browser.fullVersion.indexOf(";"))&&(jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,ix));-1!=(ix=jQuery.browser.fullVersion.indexOf(" "))&&(jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,ix));jQuery.browser.majorVersion=parseInt(""+jQuery.browser.fullVersion,10);isNaN(jQuery.browser.majorVersion)&&(jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion),jQuery.browser.majorVersion=parseInt(navigator.appVersion,10));
-jQuery.browser.version=jQuery.browser.majorVersion;jQuery.browser.android=/Android/i.test(nAgt);jQuery.browser.blackberry=/BlackBerry|BB|PlayBook/i.test(nAgt);jQuery.browser.ios=/iPhone|iPad|iPod|webOS/i.test(nAgt);jQuery.browser.operaMobile=/Opera Mini/i.test(nAgt);jQuery.browser.windowsMobile=/IEMobile|Windows Phone/i.test(nAgt);jQuery.browser.kindle=/Kindle|Silk/i.test(nAgt);
-jQuery.browser.mobile=jQuery.browser.android||jQuery.browser.blackberry||jQuery.browser.ios||jQuery.browser.windowsMobile||jQuery.browser.operaMobile||jQuery.browser.kindle;jQuery.isMobile=jQuery.browser.mobile;jQuery.isTablet=jQuery.browser.mobile&&765<jQuery(window).width();jQuery.isAndroidDefault=jQuery.browser.android&&!/chrome/i.test(nAgt);jQuery.mbBrowser=jQuery.browser;
-jQuery.browser.versionCompare=function(a,e){if("stringstring"!=typeof a+typeof e)return!1;for(var c=a.split("."),d=e.split("."),b=0,f=Math.max(c.length,d.length);b<f;b++){if(c[b]&&!d[b]&&0<parseInt(c[b])||parseInt(c[b])>parseInt(d[b]))return 1;if(d[b]&&!c[b]&&0<parseInt(d[b])||parseInt(c[b])<parseInt(d[b]))return-1}return 0};
+jQuery.mbBrowser.os=getOS();jQuery.mbBrowser.hasTouch=isTouchSupported();jQuery.mbBrowser.name=navigator.appName;jQuery.mbBrowser.fullVersion=""+parseFloat(navigator.appVersion);jQuery.mbBrowser.majorVersion=parseInt(navigator.appVersion,10);var nameOffset,verOffset,ix;
+if(-1!=(verOffset=nAgt.indexOf("Opera")))jQuery.mbBrowser.opera=!0,jQuery.mbBrowser.name="Opera",jQuery.mbBrowser.fullVersion=nAgt.substring(verOffset+6),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.mbBrowser.fullVersion=nAgt.substring(verOffset+8));else if(-1!=(verOffset=nAgt.indexOf("OPR")))jQuery.mbBrowser.opera=!0,jQuery.mbBrowser.name="Opera",jQuery.mbBrowser.fullVersion=nAgt.substring(verOffset+4);else if(-1!=(verOffset=nAgt.indexOf("MSIE")))jQuery.mbBrowser.msie=!0,jQuery.mbBrowser.name="Microsoft Internet Explorer",
+	jQuery.mbBrowser.fullVersion=nAgt.substring(verOffset+5);else if(-1!=nAgt.indexOf("Trident")){jQuery.mbBrowser.msie=!0;jQuery.mbBrowser.name="Microsoft Internet Explorer";var start=nAgt.indexOf("rv:")+3,end=start+4;jQuery.mbBrowser.fullVersion=nAgt.substring(start,end)}else-1!=(verOffset=nAgt.indexOf("Edge"))?(jQuery.mbBrowser.edge=!0,jQuery.mbBrowser.name="Microsoft Edge",jQuery.mbBrowser.fullVersion=nAgt.substring(verOffset+5)):-1!=(verOffset=nAgt.indexOf("Chrome"))?(jQuery.mbBrowser.webkit=!0,jQuery.mbBrowser.chrome=
+	!0,jQuery.mbBrowser.name="Chrome",jQuery.mbBrowser.fullVersion=nAgt.substring(verOffset+7)):-1<nAgt.indexOf("mozilla/5.0")&&-1<nAgt.indexOf("android ")&&-1<nAgt.indexOf("applewebkit")&&!(-1<nAgt.indexOf("chrome"))?(verOffset=nAgt.indexOf("Chrome"),jQuery.mbBrowser.webkit=!0,jQuery.mbBrowser.androidStock=!0,jQuery.mbBrowser.name="androidStock",jQuery.mbBrowser.fullVersion=nAgt.substring(verOffset+7)):-1!=(verOffset=nAgt.indexOf("Safari"))?(jQuery.mbBrowser.webkit=!0,jQuery.mbBrowser.safari=!0,jQuery.mbBrowser.name=
+	"Safari",jQuery.mbBrowser.fullVersion=nAgt.substring(verOffset+7),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.mbBrowser.fullVersion=nAgt.substring(verOffset+8))):-1!=(verOffset=nAgt.indexOf("AppleWebkit"))?(jQuery.mbBrowser.webkit=!0,jQuery.mbBrowser.safari=!0,jQuery.mbBrowser.name="Safari",jQuery.mbBrowser.fullVersion=nAgt.substring(verOffset+7),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.mbBrowser.fullVersion=nAgt.substring(verOffset+8))):-1!=(verOffset=nAgt.indexOf("Firefox"))?(jQuery.mbBrowser.mozilla=
+	!0,jQuery.mbBrowser.name="Firefox",jQuery.mbBrowser.fullVersion=nAgt.substring(verOffset+8)):(nameOffset=nAgt.lastIndexOf(" ")+1)<(verOffset=nAgt.lastIndexOf("/"))&&(jQuery.mbBrowser.name=nAgt.substring(nameOffset,verOffset),jQuery.mbBrowser.fullVersion=nAgt.substring(verOffset+1),jQuery.mbBrowser.name.toLowerCase()==jQuery.mbBrowser.name.toUpperCase()&&(jQuery.mbBrowser.name=navigator.appName));
+-1!=(ix=jQuery.mbBrowser.fullVersion.indexOf(";"))&&(jQuery.mbBrowser.fullVersion=jQuery.mbBrowser.fullVersion.substring(0,ix));-1!=(ix=jQuery.mbBrowser.fullVersion.indexOf(" "))&&(jQuery.mbBrowser.fullVersion=jQuery.mbBrowser.fullVersion.substring(0,ix));jQuery.mbBrowser.majorVersion=parseInt(""+jQuery.mbBrowser.fullVersion,10);isNaN(jQuery.mbBrowser.majorVersion)&&(jQuery.mbBrowser.fullVersion=""+parseFloat(navigator.appVersion),jQuery.mbBrowser.majorVersion=parseInt(navigator.appVersion,10));
+jQuery.mbBrowser.version=jQuery.mbBrowser.majorVersion;jQuery.mbBrowser.android=/Android/i.test(nAgt);jQuery.mbBrowser.blackberry=/BlackBerry|BB|PlayBook/i.test(nAgt);jQuery.mbBrowser.ios=/iPhone|iPad|iPod|webOS/i.test(nAgt);jQuery.mbBrowser.operaMobile=/Opera Mini/i.test(nAgt);jQuery.mbBrowser.windowsMobile=/IEMobile|Windows Phone/i.test(nAgt);jQuery.mbBrowser.kindle=/Kindle|Silk/i.test(nAgt);
+jQuery.mbBrowser.mobile=jQuery.mbBrowser.android||jQuery.mbBrowser.blackberry||jQuery.mbBrowser.ios||jQuery.mbBrowser.windowsMobile||jQuery.mbBrowser.operaMobile||jQuery.mbBrowser.kindle;jQuery.isMobile=jQuery.mbBrowser.mobile;jQuery.isTablet=jQuery.mbBrowser.mobile&&765<jQuery(window).width();jQuery.isAndroidDefault=jQuery.mbBrowser.android&&!/chrome/i.test(nAgt);jQuery.mbBrowser=jQuery.mbBrowser;
+jQuery.mbBrowser.versionCompare=function(a,e){if("stringstring"!=typeof a+typeof e)return!1;for(var c=a.split("."),d=e.split("."),b=0,f=Math.max(c.length,d.length);b<f;b++){if(c[b]&&!d[b]&&0<parseInt(c[b])||parseInt(c[b])>parseInt(d[b]))return 1;if(d[b]&&!c[b]&&0<parseInt(d[b])||parseInt(c[b])<parseInt(d[b]))return-1}return 0};
 
 
 /*
@@ -2013,9 +2015,9 @@ jQuery.fn.css3=function(d){return this.each(function(){var a=jQuery(this),b=jQue
  _                                                                                                                                                  _
  _ Copyright (c) 2001-2017. Matteo Bicocchi (Pupunzi);                                                                                              _
  ___________________________________________________________________________________________________________________________________________________*/
-(function(b){b.simpleSlider={defaults:{initialval:0,maxval:100,orientation:"h",readonly:!1,callback:!1},events:{start:b.browser.mobile?"touchstart":"mousedown",end:b.browser.mobile?"touchend":"mouseup",move:b.browser.mobile?"touchmove":"mousemove"},init:function(d){return this.each(function(){var a=this,c=b(a);c.addClass("simpleSlider");a.opt={};b.extend(a.opt,b.simpleSlider.defaults,d);b.extend(a.opt,c.data());var f="h"===a.opt.orientation?"horizontal":"vertical";f=b("<div/>").addClass("level").addClass(f);
-		c.prepend(f);a.level=f;c.css({cursor:"default"});"auto"==a.opt.maxval&&(a.opt.maxval=b(a).outerWidth());c.updateSliderVal();a.opt.readonly||(c.on(b.simpleSlider.events.start,function(e){b.browser.mobile&&(e=e.changedTouches[0]);a.canSlide=!0;c.updateSliderVal(e);"h"===a.opt.orientation?c.css({cursor:"col-resize"}):c.css({cursor:"row-resize"});a.lastVal=a.val;b.browser.mobile||(e.preventDefault(),e.stopPropagation())}),b(document).on(b.simpleSlider.events.move,function(e){b.browser.mobile&&(e=e.changedTouches[0]);
-			a.canSlide&&(b(document).css({cursor:"default"}),c.updateSliderVal(e),b.browser.mobile||(e.preventDefault(),e.stopPropagation()))}).on(b.simpleSlider.events.end,function(){b(document).css({cursor:"auto"});a.canSlide=!1;c.css({cursor:"auto"})}))})},updateSliderVal:function(d){var a=this.get(0);if(a.opt){a.opt.initialval="number"==typeof a.opt.initialval?a.opt.initialval:a.opt.initialval(a);var c=b(a).outerWidth(),f=b(a).outerHeight();a.x="object"==typeof d?d.clientX+document.body.scrollLeft-this.offset().left:
+(function(b){b.simpleSlider={defaults:{initialval:0,maxval:100,orientation:"h",readonly:!1,callback:!1},events:{start:b.mbBrowser.mobile?"touchstart":"mousedown",end:b.mbBrowser.mobile?"touchend":"mouseup",move:b.mbBrowser.mobile?"touchmove":"mousemove"},init:function(d){return this.each(function(){var a=this,c=b(a);c.addClass("simpleSlider");a.opt={};b.extend(a.opt,b.simpleSlider.defaults,d);b.extend(a.opt,c.data());var f="h"===a.opt.orientation?"horizontal":"vertical";f=b("<div/>").addClass("level").addClass(f);
+		c.prepend(f);a.level=f;c.css({cursor:"default"});"auto"==a.opt.maxval&&(a.opt.maxval=b(a).outerWidth());c.updateSliderVal();a.opt.readonly||(c.on(b.simpleSlider.events.start,function(e){b.mbBrowser.mobile&&(e=e.changedTouches[0]);a.canSlide=!0;c.updateSliderVal(e);"h"===a.opt.orientation?c.css({cursor:"col-resize"}):c.css({cursor:"row-resize"});a.lastVal=a.val;b.mbBrowser.mobile||(e.preventDefault(),e.stopPropagation())}),b(document).on(b.simpleSlider.events.move,function(e){b.mbBrowser.mobile&&(e=e.changedTouches[0]);
+			a.canSlide&&(b(document).css({cursor:"default"}),c.updateSliderVal(e),b.mbBrowser.mobile||(e.preventDefault(),e.stopPropagation()))}).on(b.simpleSlider.events.end,function(){b(document).css({cursor:"auto"});a.canSlide=!1;c.css({cursor:"auto"})}))})},updateSliderVal:function(d){var a=this.get(0);if(a.opt){a.opt.initialval="number"==typeof a.opt.initialval?a.opt.initialval:a.opt.initialval(a);var c=b(a).outerWidth(),f=b(a).outerHeight();a.x="object"==typeof d?d.clientX+document.body.scrollLeft-this.offset().left:
 			"number"==typeof d?d*c/a.opt.maxval:a.opt.initialval*c/a.opt.maxval;a.y="object"==typeof d?d.clientY+document.body.scrollTop-this.offset().top:"number"==typeof d?(a.opt.maxval-a.opt.initialval-d)*f/a.opt.maxval:a.opt.initialval*f/a.opt.maxval;a.y=this.outerHeight()-a.y;a.scaleX=a.x*a.opt.maxval/c;a.scaleY=a.y*a.opt.maxval/f;a.outOfRangeX=a.scaleX>a.opt.maxval?a.scaleX-a.opt.maxval:0>a.scaleX?a.scaleX:0;a.outOfRangeY=a.scaleY>a.opt.maxval?a.scaleY-a.opt.maxval:0>a.scaleY?a.scaleY:0;a.outOfRange="h"===
 	a.opt.orientation?a.outOfRangeX:a.outOfRangeY;a.value="undefined"!=typeof d?"h"===a.opt.orientation?a.x>=this.outerWidth()?a.opt.maxval:0>=a.x?0:a.scaleX:a.y>=this.outerHeight()?a.opt.maxval:0>=a.y?0:a.scaleY:"h"===a.opt.orientation?a.scaleX:a.scaleY;"h"===a.opt.orientation?a.level.width(Math.floor(100*a.x/c)+"%"):a.level.height(Math.floor(100*a.y/f));a.lastVal===a.value&&("h"===a.opt.orientation&&(a.x>=this.outerWidth()||0>=a.x)||"h"!==a.opt.orientation&&(a.y>=this.outerHeight()||0>=a.y))||("function"===
 	typeof a.opt.callback&&a.opt.callback(a),a.lastVal=a.value)}}};b.fn.simpleSlider=b.simpleSlider.init;b.fn.updateSliderVal=b.simpleSlider.updateSliderVal})(jQuery);
