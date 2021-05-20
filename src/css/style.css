@@ -4,70 +4,70 @@
   font-style: italic;
   font-weight: 300;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKWyV-hs.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/opensans/v20/memnYaGs126MiZpBA-UFUKWyV-hs.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
   font-weight: 400;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/opensans/v18/mem6YaGs126MiZpBA-UFUJ0e.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/opensans/v20/mem6YaGs126MiZpBA-UFUJ0e.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
   font-weight: 600;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKXGUehs.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/opensans/v20/memnYaGs126MiZpBA-UFUKXGUehs.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
   font-weight: 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKWiUOhs.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/opensans/v20/memnYaGs126MiZpBA-UFUKWiUOhs.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
   font-weight: 800;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKW-U-hs.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/opensans/v20/memnYaGs126MiZpBA-UFUKW-U-hs.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN_r8-VQ.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/opensans/v20/mem5YaGs126MiZpBA-UN_r8-VQ.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/opensans/v18/mem8YaGs126MiZpBA-U1Ug.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/opensans/v20/mem8YaGs126MiZpBA-U1Ug.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UNirk-VQ.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/opensans/v20/mem5YaGs126MiZpBA-UNirk-VQ.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN7rg-VQ.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/opensans/v20/mem5YaGs126MiZpBA-UN7rg-VQ.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 800;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN8rs-VQ.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/opensans/v20/mem5YaGs126MiZpBA-UN8rs-VQ.ttf) format('truetype');
 }
 @font-face {
   font-family: 'DM Mono';
@@ -788,7 +788,7 @@ html body #wrapper #draw-area .node[data-connections-count="0"]:not([data-type="
   position: absolute;
   width: 15px;
   height: 15px;
-  border: 3px solid #cc181e;
+  border: 3px solid #4b0001;
   background-color: #ffffff;
   border-radius: 100%;
   bottom: -10px;
@@ -799,7 +799,7 @@ html body #wrapper #draw-area .node[data-fail-connection-count="0"]:after {
   position: absolute;
   width: 15px;
   height: 15px;
-  border: 3px solid #cc181e;
+  border: 3px solid #4b0001;
   background-color: #ffffff;
   border-radius: 100%;
   bottom: -10px;
@@ -1117,15 +1117,15 @@ html .flow-overlay .flow-dialogue {
   max-width: 40vw;
   min-height: 400px;
   max-height: 40vh;
-  background-color: rgba(15, 19, 21, 0.9);
+  background-color: #001823;
   color: #ffffff;
-  box-shadow: 2px 2px 10px rgba(12, 12, 12, 0.4);
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
   padding: 40px;
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 html .flow-overlay .flow-dialogue.alert {
-  background-color: rgba(204, 24, 30, 0.9);
+  background-color: #4b0001;
 }
 html .flow-overlay .flow-dialogue.alert button.main {
   background-color: #ffffff;
@@ -1174,7 +1174,8 @@ html .flow-overlay .flow-dialogue .flow-button-bar button {
 html #actors-window .flow-dialogue {
   text-align: left;
   max-height: 80vh;
-  background-color: rgba(52, 100, 123, 0.96);
+  background-color: #001823;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 html #actors-window .flow-dialogue .flow-button-bar {
   text-align: right;
@@ -1239,7 +1240,8 @@ html #actors-window .flow-dialogue .actors-list .actors-line .actor-data .color 
 html #avatar-window .flow-dialogue {
   text-align: left;
   max-height: 60vh;
-  background-color: rgba(52, 100, 123, 0.96);
+  background-color: #001823;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 html #avatar-window .flow-dialogue .flow-button-bar {
   text-align: right;

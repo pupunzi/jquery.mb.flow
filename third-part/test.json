@@ -1,0 +1,9 @@
+{
+  "enrollmentID": "605b339218c017001a269233",
+  "activityID": "605a175fcb333e001a2a4434",
+  "userID": "LearningLab",
+  "metadata": {
+    "opinionGathererEndpoint": "https://startuplegend.unibocconi.it/probe",
+    "populationSize": 1000
+  }
+}

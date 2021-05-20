@@ -333,7 +333,7 @@ html {
             position: absolute;
             width: 15px;
             height: 15px;
-            border: 3px solid @dialogue-alert;
+            border: 3px solid @dialogue-window-color-alert;
             background-color: #ffffff;
             border-radius: 100%;
             bottom: -10px;
@@ -345,7 +345,7 @@ html {
             position: absolute;
             width: 15px;
             height: 15px;
-            border: 3px solid @dialogue-alert;
+            border: 3px solid @dialogue-window-color-alert;
             background-color: #ffffff;
             border-radius: 100%;
             bottom: -10px;
@@ -746,15 +746,15 @@ html {
       max-width: 40vw;
       min-height: 400px;
       max-height: 40vh;
-      background-color: rgba(15, 19, 21, 0.9);
+      background-color: @dialogue-window-color;
       color: #ffffff;
-      box-shadow: 2px 2px 10px rgba(12, 12, 12, 0.4);
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
       padding: 40px;
       text-align: center;
       border: 1px solid rgba(255, 255, 255, 0.2);
 
       &.alert {
-        background-color: fade(@dialogue-alert, 90%);
+        background-color: @dialogue-window-color-alert;
 
         button {
           &.main {
@@ -818,7 +818,8 @@ html {
     .flow-dialogue {
       text-align: left;
       max-height: 80vh;
-      background-color: rgba(52, 100, 123, 0.96);
+      background-color: @dialogue-window-color;
+      border: 1px solid rgba(255, 255, 255, 0.2);
 
       .flow-button-bar {
         text-align: right;
@@ -902,7 +903,8 @@ html {
     .flow-dialogue {
       text-align: left;
       max-height: 60vh;
-      background-color: rgba(52, 100, 123, 0.96);
+      background-color: @dialogue-window-color;
+      border: 1px solid rgba(255, 255, 255, 0.2);
 
       .flow-button-bar {
         text-align: right;
