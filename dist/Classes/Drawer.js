@@ -273,6 +273,7 @@ export class Drawer {
         // ███████ Fill node type jumpToNode ████████████████████████████████
 
         if (node._type === Type.jumpToNode) {
+            $node.find("[name=board-id]").empty();
             flowApp.flow.boards.forEach((board) => {
                 let opt = $("<option>").attr("value", board._id).html(board._name);
                 if (board._id === flowApp.flow._selectedBoardId)
@@ -281,10 +282,11 @@ export class Drawer {
             });
 
             let fillNodes = (boardId) => {
+                $node.find("[name=node-id]").empty();
                 flowApp.flow.getBoardById(boardId)._nodes.forEach((node) => {
-                    if (node._type === Type.jumpToNode || node._type === Type.random || node._type === Type.start)
+                    if (node._type === Type.jumpToNode || node._type === Type.random)
                         return;
-                    let label = flowApp.getContent(node._elements[0])._text.substring(0, 10) + "...";
+                    let label = node._type === Type.start ? "start" : flowApp.getContent(node._elements[0])._text.substring(0, 10) + "...";
                     let opt = $("<option>").attr("value", node._id).html(label);
                     $node.find("[name=node-id]").append(opt);
                 });
@@ -293,11 +295,12 @@ export class Drawer {
 
             $node.find("[name=board-id]").on("change", function () {
                 let nodeId = $(this).val();
+                console.debug(nodeId);
                 if (nodeId != null)
                     fillNodes(nodeId);
             })
 
-            //todo: update _jumpTo 
+            //todo: update _jumpTo
 
         }
 
