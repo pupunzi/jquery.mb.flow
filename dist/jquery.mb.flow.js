@@ -1212,14 +1212,14 @@ import {Drawer} from "./Classes/Drawer.js";
  * Description:
  *  Flow Parser library
  **/
+import {FlowParser} from "../Classes/FlowParser";
+
 ;
 $.flowApp = $.flow || {};
 
 $.flow.parser = {
-
-	source: null,
+	source: new FlowParser("url/to/json"),
 	boards: [],
-
 
 	selectedBoardId: null,
 	selectedNodeId : null,
@@ -1259,8 +1259,7 @@ $.flow.parser = {
 	},
 
 	start: () => {}
-
-
+	
 };
 
 const Avataaars = {

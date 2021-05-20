@@ -26,7 +26,7 @@ export class FlowParser {
 
 	initEvents() {
 
-		//Add Flow
+		//Source Loaded
 		this._events.on(EventType.sourceLoaded, (e) => {
 			this._ready = true;
 		});
