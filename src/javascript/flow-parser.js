@@ -3,17 +3,21 @@
  * Description:
  *  Flow Parser library
  **/
-import {FlowParser} from "../Classes/FlowParser";
+import {FlowParser} from "./Classes/FlowParser.js";
 
 ;
 $.flowApp = $.flow || {};
 
 $.flow.parser = {
-	source: new FlowParser("url/to/json"),
+	source: null,
 	boards: [],
 
 	selectedBoardId: null,
 	selectedNodeId : null,
+
+	load: (sourceURL = null)=>{
+		$.flow.source = new FlowParser(sourceURL);
+	},
 
 	node: {
 		get    : (nodeId) => {

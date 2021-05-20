@@ -18,8 +18,11 @@ export class Node {
 		this._elements = [];
 		this._x = 300;
 		this._y = 120;
+		this._jumpTo = null;
+
+		let n = this;
 		this._count = function () {
-			return this.elements.length;
+			return n.elements.length;
 		};
 		this._connections = [];
 		this._date = new Date().getTime();

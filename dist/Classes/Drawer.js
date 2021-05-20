@@ -23,6 +23,35 @@ export class Drawer {
         return window.Avataaars.create(options);
     }
 
+    static getConnectionColorByConnectionType(type) {
+        let color = 'gray';
+        switch (type) {
+            case 0:
+                color = '#c7c0b1';
+                break;
+            case 1:
+                color = '#66a778';
+                break;
+            case 2:
+                color = '#50a751';
+                break;
+            case 3:
+                color = '#a82a14';
+                break;
+            case 4:
+                color = '#900961';
+                break;
+            case 5:
+                color = '#b76903';
+                break;
+            case 6:
+                color = '#9f637b';
+                break;
+        }
+
+        return color;
+    }
+
     updateFlowName() {
         let flow = this.flowApp.flow;
         let content = UI.fillTemplate("flow-name", {
@@ -46,7 +75,7 @@ export class Drawer {
                 className: selected,
                 boardGroup: board._group
             });
-            
+
             $(flowApp.ui.placeholders.boardList).append(content);
         });
 
@@ -159,7 +188,9 @@ export class Drawer {
         let flowApp = this.flowApp;
         let board = $.flow.getSelectedBoard();
         let lines = "";
-        //Draw Node content
+
+        // ███████ Draw Node content ████████████████████████████████
+
         switch (node._type) {
             case Type.text:
             case Type.note:
@@ -180,12 +211,9 @@ export class Drawer {
 
         let failConnectionsCount = 0;
         node._connections.forEach((connection) => {
-            if (connection._type === 3 && (node._type === Type.condition ||  node._type === Type.sequence))
+            if (connection._type === 3 && (node._type === Type.condition || node._type === Type.sequence))
                 failConnectionsCount++;
         });
-
-        // console.debug("Actor ID::", node._actorId);
-        // console.debug("Actor::", flowApp.flow.getActorById(node._actorId));
 
         let actor = flowApp.flow.getActorById(node._actorId) || flowApp.flow._nullActor;
         let nodeEl = UI.fillTemplate("node-" + node._type.toLowerCase(), {
@@ -212,6 +240,8 @@ export class Drawer {
             left: node._x,
             top: node._y
         });
+
+        //███████ Make nodeElements sortable ████████████████████████████████
 
         if ($node.find(".node-content").children().length > 1)
             $node.find(".node-content").sortable({
@@ -240,8 +270,38 @@ export class Drawer {
                 }
             });
 
-        //Update nodeElement content
-        //todo: move to flowApp events
+        // ███████ Fill node type jumpToNode ████████████████████████████████
+
+        if (node._type === Type.jumpToNode) {
+            flowApp.flow.boards.forEach((board) => {
+                let opt = $("<option>").attr("value", board._id).html(board._name);
+                if (board._id === flowApp.flow._selectedBoardId)
+                    opt.attr("selected", "selected");
+                $node.find("[name=board-id]").append(opt);
+            });
+
+            let fillNodes = (boardId) => {
+                flowApp.flow.getBoardById(boardId)._nodes.forEach((node) => {
+                    if (node._type === Type.jumpToNode || node._type === Type.random || node._type === Type.start)
+                        return;
+                    let label = flowApp.getContent(node._elements[0])._text.substring(0, 10) + "...";
+                    let opt = $("<option>").attr("value", node._id).html(label);
+                    $node.find("[name=node-id]").append(opt);
+                });
+            };
+            fillNodes($.flow.selectedBoard()._id);
+
+            $node.find("[name=board-id]").on("change", function () {
+                let nodeId = $(this).val();
+                if (nodeId != null)
+                    fillNodes(nodeId);
+            })
+
+            //todo: update _jumpTo 
+
+        }
+
+        // ███████ Update nodeElement content ████████████████████████████████
 
         $node.find(".node-text").on("blur", function () {
             $node.data("height", $node.height());
@@ -252,9 +312,6 @@ export class Drawer {
 
             let nodeElementId = $(this).parents(".node-content-line").data("node-element-id");
 
-            /**
-             * Update Node Element content
-             */
             node._elements.forEach((element) => {
                 if (element._id === nodeElementId)
                     flowApp.updateContent(element, sanitized);
@@ -307,11 +364,11 @@ export class Drawer {
 
         let failConnections = 0;
         node._connections.forEach((c) => {
-            if (c._type === 3 && (node._type === Type.condition ||  node._type === Type.sequence))
+            if (c._type === 3 && (node._type === Type.condition || node._type === Type.sequence))
                 failConnections++;
         });
 
-        if (connection._type === 3 && (node._type === Type.condition ||  node._type === Type.sequence))
+        if (connection._type === 3 && (node._type === Type.condition || node._type === Type.sequence))
             $(board).find("#node_" + connection._from).attr("data-fail-connection-count", failConnections);
 
         let fromNode = null;
@@ -332,37 +389,7 @@ export class Drawer {
         return line;
     }
 
-    static getConnectionColorByConnectionType(type) {
-        let color = 'gray';
-        switch (type) {
-            case 0:
-                color = '#c7c0b1';
-                break;
-            case 1:
-                color = '#66a778';
-                break;
-            case 2:
-                color = '#50a751';
-                break;
-            case 3:
-                color = '#a82a14';
-                break;
-            case 4:
-                color = '#900961';
-                break;
-            case 5:
-                color = '#b76903';
-                break;
-            case 6:
-                color = '#9f637b';
-                break;
-        }
-
-        return color;
-    }
-
     drawSelection(e) {
-
         if (e.type === "mousedown") {
 
             if ($(e.target).parents(".node").length)

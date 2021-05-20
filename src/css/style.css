@@ -794,6 +794,7 @@ html body #wrapper #draw-area #board {
 html body #wrapper #draw-area .node {
   position: absolute;
   box-shadow: 2px 2px 10px rgba(12, 12, 12, 0.4);
+  width: 240px;
 }
 html body #wrapper #draw-area .node[data-connections-count="0"]:not([data-type="note"]):after {
   content: "";
@@ -948,7 +949,6 @@ html body #wrapper #draw-area .node[data-type="start"] i {
   padding: 0;
 }
 html body #wrapper #draw-area .node[data-type="text"] {
-  width: 240px;
   background-color: #ffffff;
   top: 40px;
   left: 40px;
@@ -963,7 +963,6 @@ html body #wrapper #draw-area .node[data-type="text"] .node-content-line {
   border-bottom: 1px solid rgba(31, 75, 96, 0.2);
 }
 html body #wrapper #draw-area .node[data-type="note"] {
-  width: 240px;
   min-height: 100px;
   background-color: #d0c400;
   transform: rotate(-4deg);
@@ -984,7 +983,6 @@ html body #wrapper #draw-area .node[data-type="note"] .node-content-line .node-t
   min-height: 90px;
 }
 html body #wrapper #draw-area .node[data-type="variables"] {
-  width: 240px;
   min-height: 100px;
   background-color: #84929c;
   top: 40px;
@@ -1010,6 +1008,33 @@ html body #wrapper #draw-area .node[data-type="variables"] .node-content-line .n
   background-color: transparent;
   min-height: 90px;
   padding: 5px;
+}
+html body #wrapper #draw-area .node[data-type="jumpToNode"] {
+  min-height: 40px;
+  background-color: #222222;
+  top: 40px;
+  left: 40px;
+}
+html body #wrapper #draw-area .node[data-type="jumpToNode"] .menu {
+  position: absolute;
+  background-color: transparent;
+}
+html body #wrapper #draw-area .node[data-type="jumpToNode"] .menu i.icon {
+  color: #ffffff;
+}
+html body #wrapper #draw-area .node[data-type="jumpToNode"] .node-content {
+  margin-top: 20px;
+  height: calc(100% - 20px);
+  min-height: 30px;
+  padding: 5px;
+  background-color: transparent;
+  box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
+}
+html body #wrapper #draw-area .node[data-type="jumpToNode"] .node-content select {
+  background-color: #0c0c0c;
+  color: #ffffff;
+  padding: 5px;
+  width: 49%;
 }
 html body #wrapper #draw-area .node[data-type="choice"] {
   width: 240px;

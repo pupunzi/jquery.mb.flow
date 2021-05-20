@@ -23,11 +23,12 @@ export class Flow {
 
 		this._boards = [];
 		this._selectedBoardId = null;
-		this._boardGroups = [];
+		this._flowGroups = [];
 		this._selectedBoardGroup = null;
 
 		this._variables = {};
-		this._actors = [new Actor()];
+
+		this._actors = [new Actor("New Actor")];
 		this._defaultActor = this.getDefaultActor();
 		this._nullActor = new Actor("<span style='color:red'>No Actor!!!</span>", {eyes: null, clothing: null, hair: null, hairColor: null});
 	}
@@ -35,66 +36,49 @@ export class Flow {
 	get variables() {
 		return this._variables;
 	}
-
-	get actorByName() {
+	get actors() {
+		
 		return this._actors;
 	}
-
 	get date() {
 		return this._date;
 	}
-
 	get selectedBoardGroup() {
 		return this._selectedBoardGroup;
 	}
-
 	set selectedBoardGroup(value) {
 		this._selectedBoardGroup = value;
 	}
-
-	get boardGroups() {
-		return this._boardGroups;
+	get fowGroups() {
+		return this._flowGroups;
 	}
-
 	get selectedBoardId() {
 		return this._selectedBoardId;
 	}
-
 	set selectedBoardId(value) {
 		this._selectedBoardId = value;
 	}
-
 	get boards() {
 		return this._boards;
 	}
-
 	get name() {
 		return this._name;
 	}
-
 	set name(value) {
 		this._name = value;
 	}
-
 	get id() {
 		return this._id;
 	}
+
+	// ███████ Flow ███████████████████████████████████████████
 
 	updateName(name) {
 		this._name = name.length === 0 ? this._name : name;
 		Events.register(EventType.updateFlowName, this);
 	}
 
-	updateGroupName(oldName, newName) {
-		console.debug(oldName, this.boards.length);
-		this.boards.forEach((board) => {
-			if (board._group === oldName) {
-				board._group = newName;
-			}
-		});
-		Events.register(EventType.updateGroupName, {newName: newName});
-	}
-
+	// ███████ Board ███████████████████████████████████████████
 	getBoardById(id) {
 		let b = null;
 		let idx = 0;
@@ -111,14 +95,6 @@ export class Flow {
 		});
 		return b;
 	}
-
-	addGroup(groupName) {
-		this.addBoard("New Board", groupName);
-		this._boardGroups.push(groupName);
-		this.selectedBoardGroup = groupName;
-		Events.register(EventType.addGroup, {groupName: groupName});
-	}
-
 	addBoard(name, groupName = "Main Group") {
 		let board = new Board(name, groupName, this.id);
 		this.selectedBoardGroup = groupName;
@@ -127,7 +103,6 @@ export class Flow {
 		Events.register(EventType.addBoard, board);
 		return board;
 	}
-
 	duplicateBoard(boardId) {
 		let board = this.getBoardById(boardId);
 		let copy = Object.assign({}, board);
@@ -137,32 +112,6 @@ export class Flow {
 		this.selectBoard(copy._id);
 		Events.register(EventType.duplicatedBoard, board);
 	}
-
-	moveBoardToGroup(boardId, groupName) {
-		let board = this.getBoardById(boardId);
-		console.debug("Board", board._name)
-		board._group = groupName;
-	}
-
-	selectBoard(boardId) {
-
-		if(this.selectedBoardId === boardId)
-			return;
-
-		this.selectedBoardId = boardId;
-		Events.register(EventType.selectBoard, this.selectedBoardId);
-	}
-
-	getBoardsGroupsList() {
-		let list = [];
-		this.boards.forEach((board) => {
-			//console.debug(board._group);
-			if (list.indexOf(board._group) < 0)
-				list.push(board._group);
-		});
-		return list;
-	}
-
 	deleteBoard(boardId) {
 		let board = this.getBoardById(boardId);
 		if (board != null) {
@@ -178,16 +127,58 @@ export class Flow {
 		}
 	}
 
+	//███████ Groups ███████████████████████████████████████████
+
+	addGroup(groupName) {
+		this.addBoard("New Board", groupName);
+		this._flowGroups.push(groupName);
+		this.selectedBoardGroup = groupName;
+		Events.register(EventType.addGroup, {groupName: groupName});
+	}
+	updateGroupName(oldName, newName) {
+		this.boards.forEach((board) => {
+			if (board._group === oldName) {
+				board._group = newName;
+			}
+		});
+		Events.register(EventType.updateGroupName, {newName: newName});
+	}
+	moveBoardToGroup(boardId, groupName) {
+		let board = this.getBoardById(boardId);
+		console.debug("Board", board._name)
+		board._group = groupName;
+	}
+	selectBoard(boardId) {
+
+		if(this.selectedBoardId === boardId)
+			return;
+
+		this.selectedBoardId = boardId;
+		Events.register(EventType.selectBoard, this.selectedBoardId);
+	}
+	getBoardsByGroup() {
+		let list = [];
+		this.boards.forEach((board) => {
+			//console.debug(board._group);
+			if (list.indexOf(board._group) < 0)
+				list.push(board._group);
+		});
+		return list;
+	}
+
+	// ███████ Locale ███████████████████████████████████████████
+
 	addLocale(locale, description) {
 		this._availableLocale.push(new Locale(locale, description))
 	}
-
 	deleteLocale(code) {
 		this._availableLocale.forEach((locale) => {
 			if (locale._code === code)
 				this._availableLocale.delete(locale);
 		})
 	}
+
+	// ███████ Actor ███████████████████████████████████████████
 
 	getActorById(actorId) {
 		let a = null;
@@ -197,19 +188,16 @@ export class Flow {
 		});
 		return a;
 	}
-
 	getDefaultActor() {
 		console.debug(this._actors);
 		return this._actors[0]
 	}
-
 	addActor() {
 		let actor = new Actor(null, new Avatar(AvatarDrawer.randomOptions()), Util.randomColor());
 		this._actors.unshift(actor);
 		window.flowApp.save(this._id);
 		return actor._id;
 	}
-
 	deleteActor(actorId) {
 
 		let actor = this.getActorById(actorId);

@@ -252,12 +252,19 @@
 
 
 <!-- JUMPTO NODE                   ----------------------->
-<template id="node-jumpToNode">
+<template id="node-jumptonode">
   <div id="node_{{nodeId}}" class="node anchorOut" data-type="jumpToNode" data-flow-id="{{flowId}}"
        data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
     <div class="menu">
-      <div class="node-button-bar"><i class="icon icon-code node-icon"></i></div>
+      <div class="node-button-bar"><i class="icon icon-arrow-circle-right node-icon"></i></div>
     </div>
-    <ol class="node-content">{{lines}}</ol>
+    <div class="node-content">
+      <select name="board-id" value="null" onchange="">
+        <option value="null">-- select board --</option>
+      </select>
+      <select name="node-id" value="null">
+        <option value="null">-- select node --</option>
+      </select>
+    </div>
   </div>
 </template>

@@ -77,10 +77,6 @@ class Board {
         }
 
         this._nodes.push(n);
-
-        // console.debug(n._actorId);
-        // console.debug(this._nodes);
-
         Events.register(EventType.addNode, n);
         return n;
     }

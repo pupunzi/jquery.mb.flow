@@ -22,36 +22,45 @@ import {Drawer} from "./Classes/Drawer.js";
 
 	$.flow = {
 
-		metaKeys        : [],
-		draggable       : [],
-		areaSize        : {},
-		selectedNodes   : [],
+		metaKeys: [],
+		draggable: [],
+		areaSize: {},
+		selectedNodes: [],
 		latMousePosition: {},
-		vars            : {},
+		vars: {},
 
-		contextualMenu: {
-			//███████ Menu ████████████████████████████████████████████████
+		flowApp: () => {
+			return flowApp;
+		},
+		selectedBoard: () => {
+			if (flowApp.flow)
+				return flowApp.flow.getBoardById(flowApp.flow._selectedBoardId)
+		},
+
+		menu: {
+
+			//███████ Menu ███████████████████████████████████████████
 
 			boardListElementMenu: (target) => {
 
 				let items = [
 					{
 						name: 'Rename',
-						fn  : function (target) {
+						fn: function (target) {
 							let boardId = $(target).parent().data("board-id");
 							$.flow.editBoardName(boardId);
 						}
 					},
 					{
 						name: 'Duplicate',
-						fn  : function (target) {
+						fn: function (target) {
 							let boardId = $(target).parent().data("board-id");
 							$.flow.duplicateBoard(boardId);
 						}
 					},
 					{
 						name: 'Export',
-						fn  : function (target) {
+						fn: function (target) {
 							flowApp.exportToFile();
 							//console.debug("Export board ", boardId);
 						}
@@ -60,12 +69,12 @@ import {Drawer} from "./Classes/Drawer.js";
 
 				let boardId = $(target).parent().data("board-id");
 				let board = flowApp.flow.getBoardById(boardId);
-				let groups = flowApp.flow.getBoardsGroupsList();
+				let groups = flowApp.flow.getBoardsByGroup();
 
 				if (groups.length > 1) {
 					items.push({});
 					items.push({
-						name     : "Move to: ",
+						name: "Move to: ",
 						className: ClassName.listTitle
 					});
 				}
@@ -74,9 +83,9 @@ import {Drawer} from "./Classes/Drawer.js";
 						return;
 
 					let group = {
-						name     : groupName,
+						name: groupName,
 						className: "listElement",
-						fn       : function (target) {
+						fn: function (target) {
 							$.flow.moveBoardToGroup(boardId, groupName);
 							let selectedGroup = flowApp.flow.selectedBoardGroup;
 							flowApp.drawer.drawBoardList();
@@ -87,9 +96,9 @@ import {Drawer} from "./Classes/Drawer.js";
 				});
 				items.push({});
 				items.push({
-					name     : 'Delete',
+					name: 'Delete',
 					className: ClassName.alert,
-					fn       : function (target) {
+					fn: function (target) {
 						let boardId = $(target).parent().data("board-id");
 						$.flow.deleteBoard(boardId, target);
 					}
@@ -97,26 +106,26 @@ import {Drawer} from "./Classes/Drawer.js";
 
 				return items;
 			},
-			flowsMenu           : (target) => {
+			flowsMenu: (target) => {
 				let flowId = $(target).parent().data("flow-id");
 				let items = [
 					{
 						name: 'Rename',
-						fn  : function (target) {
+						fn: function (target) {
 							console.debug(target, flowId);
 							$.flow.editFlowName(flowId);
 						}
 					},
 					{
 						name: 'Duplicate',
-						fn  : function (target) {
+						fn: function (target) {
 							console.log('Duplicate', $(target).parent().data("flow-id"));
 						}
 					},
 					{
 						name: 'New',
 						// className: "highlight",
-						fn  : function (target) {
+						fn: function (target) {
 							$.flow.addFlow();
 						}
 					},
@@ -124,37 +133,37 @@ import {Drawer} from "./Classes/Drawer.js";
 					{
 						name: 'Options',
 						icon: "icon-cog",
-						fn  : function (target) {
+						fn: function (target) {
 						}
 					},
 					{
 						name: 'Flows List',
 						icon: "icon-list-ul",
-						fn  : function (target) {
+						fn: function (target) {
 						}
 					},
 					{},
 					{
-						name     : 'Export',
+						name: 'Export',
 						className: ClassName.highlight,
-						icon     : "icon-download",
-						fn       : function (target) {
+						icon: "icon-download",
+						fn: function (target) {
 							flowApp.exportToFile()
 						}
 					},
 					{
-						name     : 'Import',
-						icon     : "icon-upload",
+						name: 'Import',
+						icon: "icon-upload",
 						className: ClassName.highlight,
-						fn       : function (target) {
+						fn: function (target) {
 							FlowApp.ImportFromFile()
 						}
 					},
 					{},
 					{
-						name     : 'Delete',
+						name: 'Delete',
 						className: ClassName.alert,
-						fn       : function (target) {
+						fn: function (target) {
 							$.flow.deleteFlow(flowId, target);
 						}
 					},
@@ -162,12 +171,12 @@ import {Drawer} from "./Classes/Drawer.js";
 
 				return items;
 			},
-			boardsGroupsMenu    : (target) => {
+			boardsGroupsMenu: (target) => {
 				let items = [];
 
 				let showAll = {
 					name: "Show All",
-					fn  : function (target) {
+					fn: function (target) {
 						flowApp.flow.selectedBoardGroup = "all";
 						$.flow.showBoardsByGroup("all");
 					}
@@ -176,12 +185,12 @@ import {Drawer} from "./Classes/Drawer.js";
 
 				items.push({});
 
-				let groups = flowApp.flow.getBoardsGroupsList();
+				let groups = flowApp.flow.getBoardsByGroup();
 				groups.forEach((groupName) => {
 					let group = {
-						name     : groupName,
+						name: groupName,
 						className: ClassName.listElement,
-						fn       : function (target) {
+						fn: function (target) {
 							//console.debug("filter by group:" + groupName);
 							flowApp.flow.selectedBoardGroup = groupName;
 							$.flow.showBoardsByGroup(groupName);
@@ -194,7 +203,7 @@ import {Drawer} from "./Classes/Drawer.js";
 
 				let renameGroup = {
 					name: "Rename Group",
-					fn  : function (target) {
+					fn: function (target) {
 						let editEl = $(target).parent().find(".name");
 
 						editEl.attr({contentEditable: true});
@@ -212,22 +221,22 @@ import {Drawer} from "./Classes/Drawer.js";
 					items.push(renameGroup);
 
 				let newGroup = {
-					name     : "New Group",
+					name: "New Group",
 					className: ClassName.highlight,
-					fn       : function (target) {
+					fn: function (target) {
 
 						let opt = {
-							title      : "Add a new Group for <br><b>" + flowApp.flow._name + "</b>",
-							text       : null,
-							inputId    : "groupName",
-							inputValue : null,
-							okLabel    : "Add",
+							title: "Add a new Group for <br><b>" + flowApp.flow._name + "</b>",
+							text: null,
+							inputId: "groupName",
+							inputValue: null,
+							okLabel: "Add",
 							cancelLabel: "Cancel",
-							action     : (name) => {
+							action: (name) => {
 								flowApp.flow.addGroup(name);
 								$.flow.showBoardsByGroup(name);
 							},
-							className  : ""
+							className: ""
 						};
 						UI.dialogue(opt);
 					}
@@ -236,14 +245,14 @@ import {Drawer} from "./Classes/Drawer.js";
 
 				return items;
 			},
-			nodeMenu            : (target) => {
+			nodeMenu: (target) => {
 				let board = $.flow.selectedBoard();
 				let nodeId = $(target).parents(".node").data("node-id");
 				let node = board.getNodeById(nodeId);
 				let items = [
 					{
 						name: 'Add Line',
-						fn  : function (target) {
+						fn: function (target) {
 							let nodeId = $(target).parents(".node").data("node-id");
 							let node = board.getNodeById(nodeId);
 							Events.register(EventType.addNodeElement, node);
@@ -252,16 +261,16 @@ import {Drawer} from "./Classes/Drawer.js";
 					{},
 					{
 						name: 'Clone',
-						fn  : function (target) {
+						fn: function (target) {
 							let nodeId = $(target).parents(".node").data("node-id");
 							let node = board.getNodeById(nodeId);
 							console.debug("Clone")
 						}
 					},
 					{
-						name     : 'Delete',
+						name: 'Delete',
 						className: ClassName.alert,
-						fn       : function (target, e) {
+						fn: function (target, e) {
 							let nodeId = $(target).parents(".node").data("node-id");
 							if (nodeId != null) {
 								let board = $.flow.selectedBoard();
@@ -274,7 +283,7 @@ import {Drawer} from "./Classes/Drawer.js";
 				if (node._connections.length) {
 					items.push({});
 					items.push({
-						name     : 'Remove Connections',
+						name: 'Remove Connections',
 						className: ClassName.listTitle
 					});
 				}
@@ -282,20 +291,20 @@ import {Drawer} from "./Classes/Drawer.js";
 					let connIdx = 0;
 					node._connections.forEach((connection) => {
 						items.push({
-							name     : 'Connection ' + ++connIdx,
+							name: 'Connection ' + ++connIdx,
 							className: ClassName.alert,
-							fn       : function (target, e) {
+							fn: function (target, e) {
 								//console.debug(connection);
 								connection._connectionLine.remove();
 								node._connections.delete(connection);
 								board._connections.delete(connection);
 								Events.register(EventType.updateBoard, board);
 							},
-							hoverFn  : function (target, e) {
+							hoverFn: function (target, e) {
 								connection._connectionLine.setOptions({color: "red"})
 								$(".contextual-menu").css({opacity: .5})
 							},
-							outFn    : function (target, e) {
+							outFn: function (target, e) {
 								let type = connection._type || 0;
 								let color = Drawer.getConnectionColorByConnectionType(type);
 								connection._connectionLine.setOptions({color: color})
@@ -308,26 +317,26 @@ import {Drawer} from "./Classes/Drawer.js";
 
 				return items;
 			},
-			cycleMenu           : (target) => {
+			cycleMenu: (target) => {
 				let board = $.flow.selectedBoard();
 				let nodeId = $(target).parents(".node").data("node-id");
 				let node = board.getNodeById(nodeId);
 				let items = [
 					{
-						name     : 'List',
-						icon     : 'icon-list-ol',
+						name: 'List',
+						icon: 'icon-list-ol',
 						className: node._cycleType === "List" ? ClassName.highlight : null,
-						fn       : function (target) {
+						fn: function (target) {
 							node._cycleType = "List";
 							$(target).attr("class", 'icon icon-list-ol');
 							Events.register(EventType.updateBoard, board);
 						}
 					},
 					{
-						name     : 'Loop',
-						icon     : 'icon-repeat',
+						name: 'Loop',
+						icon: 'icon-repeat',
 						className: node._cycleType === "Repeat" ? ClassName.highlight : null,
-						fn       : function (target) {
+						fn: function (target) {
 							let board = $.flow.selectedBoard();
 							let nodeId = $(target).parents(".node").data("node-id");
 							let node = board.getNodeById(nodeId);
@@ -337,10 +346,10 @@ import {Drawer} from "./Classes/Drawer.js";
 						}
 					},
 					{
-						name     : 'Random',
-						icon     : 'icon-random',
+						name: 'Random',
+						icon: 'icon-random',
 						className: node._cycleType === "Random" ? ClassName.highlight : null,
-						fn       : function (target) {
+						fn: function (target) {
 							let board = $.flow.selectedBoard();
 							let nodeId = $(target).parents(".node").data("node-id");
 							let node = board.getNodeById(nodeId);
@@ -353,21 +362,21 @@ import {Drawer} from "./Classes/Drawer.js";
 
 				return items;
 			},
-			actorMenu           : (target) => {
+			actorMenu: (target) => {
 				let board = $.flow.selectedBoard();
 				let nodeId = $(target).parents(".node").data("node-id");
 				let node = board.getNodeById(nodeId);
 				let items = [];
 				items.push({
-					name     : 'Actors',
+					name: 'Actors',
 					className: ClassName.listTitle
 				});
 				items.push({});
 				flowApp.flow._actors.forEach((actor) => {
 					items.push({
-						name     : actor._name,
+						name: actor._name,
 						className: actor._id === node._actorId ? ClassName.highlight : null,
-						fn       : function (target) {
+						fn: function (target) {
 							node._actorId = actor._id;
 							flowApp.drawer.drawBoard();
 						}
@@ -378,58 +387,65 @@ import {Drawer} from "./Classes/Drawer.js";
 
 			},
 
-			//███████ Contextual Menu ██████████████████████████████████████
+			//███████ Contextual Menu ████████████████████████████████
 
-			boardMenu      : (target) => {
+			boardMenu: (target) => {
 				let board = $.flow.selectedBoard();
 				let items = [
 					{
 						name: 'New Text Node',
 						icon: 'icon-commenting',
-						fn  : function (target, e) {
+						fn: function (target, e) {
 							board.addNode(Type.text, {_x: e.clientX, _y: e.clientY});
 						}
 					},
 					{
 						name: 'New Choice Node',
 						icon: 'icon-th-list',
-						fn  : function (target, e) {
+						fn: function (target, e) {
 							board.addNode(Type.choices, {_x: e.clientX, _y: e.clientY});
 						}
 					},
 					{
 						name: 'New Conditional Node',
 						icon: 'icon-sitemap',
-						fn  : function (target, e) {
+						fn: function (target, e) {
 							board.addNode(Type.condition, {_x: e.clientX, _y: e.clientY});
 						}
 					},
 					{
 						name: 'New Sequence Node',
 						icon: 'icon-tasks',
-						fn  : function (target, e) {
+						fn: function (target, e) {
 							board.addNode(Type.sequence, {_x: e.clientX, _y: e.clientY});
 						}
 					},
 					{
 						name: 'New Note node',
 						icon: 'icon-thumb-tack',
-						fn  : function (target, e) {
+						fn: function (target, e) {
 							board.addNode(Type.note, {_x: e.clientX, _y: e.clientY});
 						}
 					},
 					{
 						name: 'New Variables node',
 						icon: 'icon-code',
-						fn  : function (target, e) {
+						fn: function (target, e) {
 							board.addNode(Type.variables, {_x: e.clientX, _y: e.clientY});
 						}
 					},
 					{
 						name: 'New Random Node',
 						icon: 'icon-random',
-						fn  : function (target, e) {
+						fn: function (target, e) {
 							board.addNode(Type.random, {_x: e.clientX, _y: e.clientY});
+						}
+					},
+					{
+						name: 'New JumpTo Node',
+						icon: 'icon-arrow-circle-right',
+						fn: function (target, e) {
+							board.addNode(Type.jumpToNode, {_x: e.clientX, _y: e.clientY});
 						}
 					},
 				];
@@ -441,16 +457,16 @@ import {Drawer} from "./Classes/Drawer.js";
 				let caretPos = t.caret();
 				let items = [
 					{
-						name     : 'Delete Line',
-						icon     : "icon-remove",
+						name: 'Delete Line',
+						icon: "icon-remove",
 						className: ClassName.alert,
-						fn       : function (target, e) {
+						fn: function (target, e) {
 							let t = $(target).is(".node-content-line") ? $(target) : $(target).parents(".node-content-line")
 							let nodeId = t.data("node-id");
 							let nodeElementId = t.data("node-element-id");
 							//console.debug(t, nodeId, nodeElementId);
 							Events.register(EventType.deletetNodeElement, {
-								nodeId       : nodeId,
+								nodeId: nodeId,
 								nodeElementId: nodeElementId
 							});
 						}
@@ -462,15 +478,15 @@ import {Drawer} from "./Classes/Drawer.js";
 					items.push({
 						name: 'Add variables',
 						icon: "icon-code",
-						fn  : function (target, e) {
+						fn: function (target, e) {
 							let opt = {
-								title      : "Variables",
-								text       : null,
-								inputId    : "vars",
-								inputValue : null,
-								okLabel    : "Add",
+								title: "Variables",
+								text: null,
+								inputId: "vars",
+								inputValue: null,
+								okLabel: "Add",
 								cancelLabel: "Cancel",
-								action     : (content) => {
+								action: (content) => {
 									let variables = Util.findVariables(content);
 									variables.forEach((variable) => {
 										content = content.replace(variable, "<i>" + variable + "</i>");
@@ -481,7 +497,7 @@ import {Drawer} from "./Classes/Drawer.js";
 									pasteHtmlAtCaret(c);
 									Util.parseVariables("{" + $(c).text() + "}");
 								},
-								className  : null
+								className: null
 							};
 
 							UI.dialogue(opt);
@@ -490,7 +506,7 @@ import {Drawer} from "./Classes/Drawer.js";
 				}
 				return items;
 			},
-			variablesMenu  : (target) => {
+			variablesMenu: (target) => {
 				let t = $(target).is(".variables") ? $(target) : $(target).parents(".variables");
 				let parent = $(target).parents(".node-text");
 				let items = [];
@@ -498,15 +514,15 @@ import {Drawer} from "./Classes/Drawer.js";
 				let editVariables = {
 					name: 'Edit variables',
 					icon: "icon-code",
-					fn  : function (target, e) {
+					fn: function (target, e) {
 						let opt = {
-							title      : "Variables",
-							text       : null,
-							inputId    : "vars",
-							inputValue : t.text().replace(/{/g, "").replace(/}/g, ""),
-							okLabel    : "Update",
+							title: "Variables",
+							text: null,
+							inputId: "vars",
+							inputValue: t.text().replace(/{/g, "").replace(/}/g, ""),
+							okLabel: "Update",
 							cancelLabel: "Cancel",
-							action     : (content) => {
+							action: (content) => {
 								let variables = Util.findVariables(content);
 								variables.forEach((variable) => {
 									content = content.replace(variable, "<i>" + variable + "</i>");
@@ -519,7 +535,7 @@ import {Drawer} from "./Classes/Drawer.js";
 
 								parent.focus();
 							},
-							className  : null
+							className: null
 						};
 						UI.dialogue(opt);
 					}
@@ -527,14 +543,6 @@ import {Drawer} from "./Classes/Drawer.js";
 				items.push(editVariables);
 				return items;
 			},
-		},
-
-		flowApp      : () => {
-			return flowApp;
-		},
-		selectedBoard: () => {
-			if (flowApp.flow)
-				return flowApp.flow.getBoardById(flowApp.flow._selectedBoardId)
 		},
 
 		init: () => {
@@ -553,18 +561,18 @@ import {Drawer} from "./Classes/Drawer.js";
 				$.flow.addFlow();
 
 			//███████ Init Menu ██████████████████████████████████████████████████
-			w.flows_menu = new Menu(".flows-menu", $.flow.contextualMenu.flowsMenu, true);
-			w.board_list_element_menu = new Menu(".board-list-element-menu", $.flow.contextualMenu.boardListElementMenu, true);
-			w.boards_groups = new Menu(".boards-group-menu", $.flow.contextualMenu.boardsGroupsMenu, true);
-			w.node_menu = new Menu("[data-menu=\"node\"]", $.flow.contextualMenu.nodeMenu, true);
-			w.cycle_menu = new Menu("[data-menu=\"cycle\"]", $.flow.contextualMenu.cycleMenu, true);
-			w.actor_menu = new Menu("[data-menu=\"actor\"]", $.flow.contextualMenu.actorMenu, true);
+			w.flows_menu = new Menu(".flows-menu", $.flow.menu.flowsMenu, true);
+			w.board_list_element_menu = new Menu(".board-list-element-menu", $.flow.menu.boardListElementMenu, true);
+			w.boards_groups = new Menu(".boards-group-menu", $.flow.menu.boardsGroupsMenu, true);
+			w.node_menu = new Menu("[data-menu=\"node\"]", $.flow.menu.nodeMenu, true);
+			w.cycle_menu = new Menu("[data-menu=\"cycle\"]", $.flow.menu.cycleMenu, true);
+			w.actor_menu = new Menu("[data-menu=\"actor\"]", $.flow.menu.actorMenu, true);
 
 			//███████ Init Contextual menu ██████████████████████████████████████
-			w.board_contextual_menu = new ContextualMenu(flowApp.ui.placeholders.drawingArea, $.flow.contextualMenu.boardMenu, true);
-			w.node_contextual_menu = new ContextualMenu(".node", $.flow.contextualMenu.nodeMenu, false);
-			w.variables_contextual_menu = new ContextualMenu(".variables", $.flow.contextualMenu.variablesMenu, true);
-			w.nodeElement_contextual_menu = new ContextualMenu(".node-content-line", $.flow.contextualMenu.nodeElementMenu, true);
+			w.board_contextual_menu = new ContextualMenu(flowApp.ui.placeholders.drawingArea, $.flow.menu.boardMenu, true);
+			w.node_contextual_menu = new ContextualMenu(".node", $.flow.menu.nodeMenu, false);
+			w.variables_contextual_menu = new ContextualMenu(".variables", $.flow.menu.variablesMenu, true);
+			w.nodeElement_contextual_menu = new ContextualMenu(".node-content-line", $.flow.menu.nodeElementMenu, true);
 
 			//███████ Paste as Simple Text ██████████████████████████████████████
 			$(d).on('paste', "[contenteditable]", (e) => {
@@ -732,10 +740,10 @@ import {Drawer} from "./Classes/Drawer.js";
 					$("body").css("cursor", "grab");
 
 					pos = {
-						left   : boardArea.offset().left,
-						top    : boardArea.offset().top,
-						x      : e.pageX,
-						y      : e.pageY,
+						left: boardArea.offset().left,
+						top: boardArea.offset().top,
+						x: e.pageX,
+						y: e.pageY,
 						hasMove: true
 
 					};
@@ -787,6 +795,7 @@ import {Drawer} from "./Classes/Drawer.js";
 		},
 
 		//███████ Connections ████████████████████████████████████████
+
 		makeNodeDraggableAndLinkable: (nodeId) => {
 
 			let $node = $("#node_" + nodeId);
@@ -797,12 +806,12 @@ import {Drawer} from "./Classes/Drawer.js";
 
 			//███████ Make node draggable ██████████████████████████████████████
 			$node.draggable({
-				handle : $node.find(".menu").length ? ".menu" : null,
-				cursor : "grabbing",
+				handle: $node.find(".menu").length ? ".menu" : null,
+				cursor: "grabbing",
 				opacity: 0.7,
-				snap   : ".vline, .hline",
-				zIndex : 100,
-				start  : () => {
+				snap: ".vline, .hline",
+				zIndex: 100,
+				start: () => {
 					nodeEl.startX = $node.position().left;
 					nodeEl.startY = $node.position().top;
 
@@ -817,7 +826,7 @@ import {Drawer} from "./Classes/Drawer.js";
 						})
 					}
 				},
-				drag   : () => {
+				drag: () => {
 					nodeEl.distanceX = $node.position().left - nodeEl.startX;
 					nodeEl.distanceY = $node.position().top - nodeEl.startY;
 					if ($.flow.selectedNodes.length > 1) {
@@ -831,7 +840,7 @@ import {Drawer} from "./Classes/Drawer.js";
 					}
 					$.flow.updateConnections();
 				},
-				stop   : () => {
+				stop: () => {
 					node._x = $(nodeEl).position().left;
 					node._y = $(nodeEl).position().top;
 
@@ -865,13 +874,13 @@ import {Drawer} from "./Classes/Drawer.js";
 							startEl = $node;
 
 						let fakeEl = $("<div id='fakeEl'>").css({
-								position  : "absolute",
-								width     : 10,
-								height    : 10,
+								position: "absolute",
+								width: 10,
+								height: 10,
 								background: "transparent",
-								zIndex    : -100,
-								left      : e.clientX - drawingArea.position().left,
-								top       : e.clientY - drawingArea.position().top,
+								zIndex: -100,
+								left: e.clientX - drawingArea.position().left,
+								top: e.clientY - drawingArea.position().top,
 							}
 						);
 
@@ -879,13 +888,13 @@ import {Drawer} from "./Classes/Drawer.js";
 						let connColor = $.flow.metaKeys.indexOf(KeyType.shift) >= 0 && node._type === Type.condition ? "red" : "orange";
 						$(this).get(0).line = $.flow.LeaderLine(startEl.is(".anchorOut") || ($.flow.metaKeys.indexOf(KeyType.alt) >= 0 && node._type === Type.condition) ? startEl : startEl.find(".anchor"), fakeEl, {
 							color: connColor,
-							size : 3
+							size: 3
 						});
 
 						$(d).on("mousemove.line", (e) => {
 							fakeEl.css({
 								left: e.clientX - drawingArea.position().left,
-								top : e.clientY - drawingArea.position().top
+								top: e.clientY - drawingArea.position().top
 							});
 							$(this).get(0).line.position();
 
@@ -917,7 +926,6 @@ import {Drawer} from "./Classes/Drawer.js";
 				});
 			});
 		},
-
 		getConnectionTypeByNodeType(node, startEl = null) {
 			let connectionType = 0;
 			switch (node._type) {
@@ -955,21 +963,19 @@ import {Drawer} from "./Classes/Drawer.js";
 			};
 
 			let opt = {
-				title      : title,
-				text       : text,
-				inputId    : "flowName",
-				inputValue : null,
-				okLabel    : "Add",
+				title: title,
+				text: text,
+				inputId: "flowName",
+				inputValue: null,
+				okLabel: "Add",
 				cancelLabel: "Cancel",
-				action     : action,
-				className  : null
+				action: action,
+				className: null
 			};
 			UI.dialogue(opt);
 		},
-
 		openFlow: () => {
 		},
-
 		editFlowName: () => {
 			let editEl = $(flowApp.ui.placeholders.flowName).find("h1");
 			editEl.attr({contentEditable: true});
@@ -980,7 +986,6 @@ import {Drawer} from "./Classes/Drawer.js";
 				editEl.attr({contentEditable: false});
 			});
 		},
-
 		deleteFlow: (flowId, target) => {
 			let title = "Delete Flow";
 			let text = "Are you sure you want to delete<br><b>" + $(target).parent().find(".name").text() + "</b>?";
@@ -991,24 +996,24 @@ import {Drawer} from "./Classes/Drawer.js";
 			};
 
 			let opt = {
-				title      : title,
-				text       : text,
-				inputId    : null,
-				inputValue : null,
-				okLabel    : "Yes",
+				title: title,
+				text: text,
+				inputId: null,
+				inputValue: null,
+				okLabel: "Yes",
 				cancelLabel: "Cancel",
-				action     : action,
-				className  : "alert"
+				action: action,
+				className: "alert"
 			};
 
 			UI.dialogue(opt);
 		},
 
 		//███████ Boards Manager █████████████████████████████████████
+
 		getSelectedBoard: () => {
 			return flowApp.flow.getBoardById(flowApp.flow.selectedBoardId);
 		},
-
 		addBoard: () => {
 			let title = "Add a new Board";
 			let text = null;
@@ -1017,28 +1022,25 @@ import {Drawer} from "./Classes/Drawer.js";
 			};
 
 			let opt = {
-				title      : title,
-				text       : text,
-				inputId    : "boardName",
-				inputValue : null,
-				okLabel    : "Add",
+				title: title,
+				text: text,
+				inputId: "boardName",
+				inputValue: null,
+				okLabel: "Add",
 				cancelLabel: "Cancel",
-				action     : action,
-				className  : null
+				action: action,
+				className: null
 			};
 			UI.dialogue(opt);
 		},
-
 		duplicateBoard: (boardId) => {
 			flowApp.flow.duplicateBoard(boardId);
 		},
-
 		moveBoardToGroup: (boardId, groupName) => {
 			flowApp.flow.moveBoardToGroup(boardId, groupName);
 			let board = $.flow.getSelectedBoard();
 			Events.register(EventType.updateBoard, board);
 		},
-
 		editBoardName: (boardId) => {
 			let editEl = $(flowApp.ui.placeholders.boardList).find("#board_" + boardId + " .name");
 			editEl.attr({contentEditable: true});
@@ -1050,24 +1052,22 @@ import {Drawer} from "./Classes/Drawer.js";
 				flowApp.drawer.drawBoardList();
 			});
 		},
-
 		deleteBoard: (boardId, target) => {
 			let opt = {
-				title      : "Delete Board",
-				text       : "Are you sure you want to delete<br><b>" + $(target).parent().find(".name").text() + "</b>?",
-				inputId    : null,
-				inputValue : null,
-				okLabel    : "Yes",
+				title: "Delete Board",
+				text: "Are you sure you want to delete<br><b>" + $(target).parent().find(".name").text() + "</b>?",
+				inputId: null,
+				inputValue: null,
+				okLabel: "Yes",
 				cancelLabel: "Cancel",
-				action     : () => {
+				action: () => {
 					flowApp.flow.deleteBoard(boardId);
 					flowApp.drawer.drawBoardList();
 				},
-				className  : "alert"
+				className: "alert"
 			};
 			UI.dialogue(opt);
 		},
-
 		showBoardsByGroup: (groupName) => {
 			$(flowApp.ui.placeholders.boardList).find("li").hide();
 			if (groupName !== "all") {
@@ -1077,11 +1077,9 @@ import {Drawer} from "./Classes/Drawer.js";
 			}
 			$(flowApp.ui.placeholders.boardGroupName).html((groupName !== "all" ? groupName : "All Boards"));
 		},
-
 		LeaderLine: (from, to, opt) => {
 			return new LeaderLine(from.get(0), to.get(0), opt);
 		},
-
 		updateConnections: () => {
 			let board = $.flow.getSelectedBoard();
 			let connections = board._connections;
@@ -1097,7 +1095,6 @@ import {Drawer} from "./Classes/Drawer.js";
 					line.position();
 			})
 		},
-
 		autoShiftNodes: ($node) => {
 			let board = $.flow.getSelectedBoard();
 			let nodes = board._nodes;
@@ -1121,11 +1118,11 @@ import {Drawer} from "./Classes/Drawer.js";
 		},
 
 		//███████ Node ████████████████████████████████████████████████
+
 		getNodeById: (nodeId) => {
 			let board = $.flow.getSelectedBoard();
 			return board.getNodeById(nodeId);
 		},
-
 		addToSelectedNodes: (nodeId, multi = false) => {
 			if (multi) {
 				if ($.flow.selectedNodes.indexOf(nodeId) < 0) {
@@ -1139,7 +1136,6 @@ import {Drawer} from "./Classes/Drawer.js";
 
 			Events.register(EventType.selectNode, {selectedNodeId: nodeId});
 		},
-
 		removeFromSelectedNodes: (nodeId = null) => {
 			if (nodeId)
 				$.flow.selectedNodes.delete(nodeId);
@@ -1147,9 +1143,13 @@ import {Drawer} from "./Classes/Drawer.js";
 				$.flow.selectedNodes = [];
 		},
 
+		//███████ Actors Window ███████████████████████████████████████
+
 		drawActorsWindow: () => {
 			ActorsDrawer.openWindow()
 		},
+
+		//███████ Avatar Window ███████████████████████████████████████
 
 		drawAvatarWindow: (actorId) => {
 			AvatarDrawer.openWindow(actorId)
