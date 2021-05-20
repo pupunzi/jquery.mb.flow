@@ -29,6 +29,7 @@ import {Drawer} from "./Classes/Drawer.js";
         areaSize: {},
         selectedNodes: [],
         latMousePosition: {},
+        vars: {},
 
         contextualMenu: {
             //Menu
@@ -292,11 +293,14 @@ import {Drawer} from "./Classes/Drawer.js";
                             },
                             hoverFn: function (target, e) {
                                 connection._connectionLine.setOptions({color: "red"})
+                                $(".contextual-menu").css({opacity: .5})
                             },
                             outFn: function (target, e) {
                                 let type = connection._type || 0;
                                 let color = Drawer.getConnectionColorByConnectionType(type);
                                 connection._connectionLine.setOptions({color: color})
+                                $(".contextual-menu").css({opacity: 1})
+
                             }
                         })
                     })
@@ -534,7 +538,7 @@ import {Drawer} from "./Classes/Drawer.js";
                                     let c = " <span id='variable_" + Util.setUID() + "' class='variables' contenteditable='false'>{" + content + "}</span> ";
                                     t.caret(caretPos);
                                     pasteHtmlAtCaret(c);
-                                    Util.addVariables("{" + content + "}");
+                                    Util.parseVariables("{" + $(c).text() + "}");
                                 },
                                 className: null
                             };
@@ -568,8 +572,10 @@ import {Drawer} from "./Classes/Drawer.js";
                                 });
 
                                 let c = "{" + content + "}";
-                                Util.addVariables(c);
-                                parent.find("#" + t.attr("id")).html(c);
+                                let v = parent.find("#" + t.attr("id"));
+                                v.html(c);
+                                Util.parseVariables(v.text());
+
                                 parent.focus();
                             },
                             className: null
@@ -599,7 +605,8 @@ import {Drawer} from "./Classes/Drawer.js";
             return flowApp;
         },
         selectedBoard: () => {
-            return flowApp.flow.getBoardById(flowApp.flow._selectedBoardId)
+            if (flowApp.flow)
+                return flowApp.flow.getBoardById(flowApp.flow._selectedBoardId)
         },
 
         init: () => {
@@ -611,9 +618,9 @@ import {Drawer} from "./Classes/Drawer.js";
             w.flowApp = new FlowApp();
 
             // get last flow opened on previous session
-            let lastFlow = $.mbStorage.get("lastFlow");
-            if (lastFlow != null)
-                flowApp.load(lastFlow);
+            let selectedFlow = $.mbStorage.get("selectedFlow");
+            if (selectedFlow != null)
+                flowApp.load(selectedFlow);
             else
                 $.flow.addFlow();
             /**
@@ -660,6 +667,9 @@ import {Drawer} from "./Classes/Drawer.js";
                                 $(e.target).blur();
                             }
                             return;
+                        } else {
+                            e.preventDefault();
+                            $(e.target).blur();
                         }
                         break;
 
@@ -682,6 +692,12 @@ import {Drawer} from "./Classes/Drawer.js";
                     $.flow.autoShiftNodes($node);
                     $.flow.updateConnections();
                 }
+            });
+            $(d).on("click", "[contenteditable]", (e) => {
+                console.debug(e.target)
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
             });
 
             /**
@@ -931,7 +947,7 @@ import {Drawer} from "./Classes/Drawer.js";
             anchorOut.each(function () {
 
                 $(this).on("mousedown", function (e) {
-                    if ($.flow.metaKeys.indexOf(KeyType.meta) >= 0 && $.flow.metaKeys.indexOf(KeyType.alt) >= 0 ) {
+                    if ($.flow.metaKeys.indexOf(KeyType.meta) >= 0 && $.flow.metaKeys.indexOf(KeyType.alt) >= 0) {
                         e.stopPropagation();
                         e.preventDefault();
                         let drawingArea = $(flowApp.ui.placeholders.board);
@@ -995,7 +1011,7 @@ import {Drawer} from "./Classes/Drawer.js";
             });
         },
 
-        getConnectionTypeByNodeType(node, startEl = null){
+        getConnectionTypeByNodeType(node, startEl = null) {
             let connectionType = 0;
             switch (node._type) {
                 case Type.choices:
@@ -1028,7 +1044,7 @@ import {Drawer} from "./Classes/Drawer.js";
             let text = null;
             let action = function (name) {
                 flowApp.addFlow(name);
-                $.mbStorage.set("lastFlow", flowApp.flow.id);
+                $.mbStorage.set("selectedFlow", flowApp.flow.id);
                 let board = $.flow.getSelectedBoard();
                 Events.register(EventType.updateBoard, board);
             };

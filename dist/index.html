@@ -13,6 +13,8 @@
   <div id="logo"><img src="assets/images/logo.png"></div>
   <div id="flow-name-placeholder"><h1>Flow Name</h1></div>
   <div id="flows-button-bar">
+    <button class="round" id="search" onclick=""><i class="icon icon-search"></i></button>
+    <button class="round" id="info" onclick=""><i class="icon icon-star"></i></button>
     <!--<button class="" id="openFlow" onclick="$('#import-flow').trigger('click');"><i class="icon icon-folder"></i>Open</button>-->
     <!--<button class="main" id="newFlow" onclick="flowApp.exportToFile()"><i class="icon icon-plus"></i>Save</button>-->
     <!--<button class="main" id="newFlow" onclick="$.flow.addFlow()"><i class="icon icon-plus"></i>New</button>-->
@@ -294,4 +296,16 @@
   <li class="node-content-line line" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
     <div class="node-text" contenteditable="true" spellcheck=false>{{content}}</div>
   </li>
+</template>
+
+
+<!-- JUMPTO NODE                   ----------------------->
+<template id="node-jumpToNode">
+  <div id="node_{{nodeId}}" class="node anchorOut" data-type="jumpToNode" data-flow-id="{{flowId}}"
+       data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
+    <div class="menu">
+      <div class="node-button-bar"><i class="icon icon-code node-icon"></i></div>
+    </div>
+    <ol class="node-content">{{lines}}</ol>
+  </div>
 </template>

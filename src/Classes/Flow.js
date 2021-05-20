@@ -145,6 +145,10 @@ export class Flow {
 	}
 
 	selectBoard(boardId) {
+
+		if(this.selectedBoardId === boardId)
+			return;
+
 		this.selectedBoardId = boardId;
 		Events.register(EventType.selectBoard, this.selectedBoardId);
 	}

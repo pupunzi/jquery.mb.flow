@@ -673,6 +673,15 @@ html body #top-bar #flows-button-bar {
   right: 0;
   top: 20px;
 }
+html body #top-bar #flows-button-bar .round {
+  height: 35px;
+  width: 35px;
+  margin-top: -5px;
+}
+html body #top-bar #flows-button-bar .round .icon {
+  font-size: 130%;
+  line-height: 100%;
+}
 html body #wrapper {
   position: fixed;
   width: 100vw;
@@ -955,7 +964,7 @@ html body #wrapper #draw-area .node[data-type="note"] {
   min-height: 100px;
   background-color: #d0c400;
   transform: rotate(-4deg);
-  z-index: -1;
+  z-index: 0;
   top: 40px;
   left: 40px;
 }

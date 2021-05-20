@@ -10,7 +10,6 @@ import {Drawer} from "./Drawer.js";
 import {Type} from "./Node.js";
 import {NodeElement} from "./NodeElement.js";
 import {Content} from "./Content.js";
-import {Util} from "./Util.js";
 
 export class FlowApp {
 
@@ -64,7 +63,7 @@ export class FlowApp {
 			let flow = this.flows[0];
 			if (flow != null) {
 				this.load(flow.id);
-				$.mbStorage.set("lastFlow", flow.id);
+				$.mbStorage.set("selectedFlow", flow.id);
 			} else
 				this.addFlow();
 		});
@@ -78,9 +77,12 @@ export class FlowApp {
 		this.events.on(EventType.loadFlow, (e) => {
 			this.flow.selectedBoardGroup = "all";
 			this.drawer.updateFlowName();
+
 			for (const variable in this.flow._variables) {
-				this.flow._variables[variable] = null;
+				console.debug(variable)
+				$.flow.vars[variable] = this.flow._variables[variable]?this.flow._variables[variable]._value : null;
 			}
+
 
 			this.drawer.drawBoardList();
 		});
@@ -284,7 +286,7 @@ export class FlowApp {
 	addFlow(name = "New Flow") {
 		this.flow = new Flow(name);
 		this._flowsIds.unshift({id: this.flow.id, name: this.flow.name});
-		$.mbStorage.set("lastFlow", this.flow.id);
+		$.mbStorage.set("selectedFlow", this.flow.id);
 		let board = this.flow.addBoard("My Board");
 		this.flow.selectBoard(board._id);
 		Events.register(EventType.addFlow, this.flow);
