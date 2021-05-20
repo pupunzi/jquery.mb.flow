@@ -3,6 +3,7 @@
  * Description:
  *
  **/
+import {KeyType} from "./KeyboardListener.js";
 
 class UI {
     constructor() {
@@ -110,12 +111,12 @@ class UI {
                 dialogueInput.focus();
             }
             $(document).on("keydown.dialogue", (e) => {
-                if (e.key === "Enter") {
+                if (e.key === KeyType.enter) {
                     e.preventDefault();
                     let v = dialogueInput != null ? dialogueInput.val() : null;
                     if (v == null || (v && v.length > 0))
                         dialogueOkButton.click();
-                } else if (e.key === "Escape") {
+                } else if (e.key === KeyType.escape) {
                     closeDialogue();
                 }
             })

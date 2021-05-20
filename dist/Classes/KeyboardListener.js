@@ -28,6 +28,5 @@ export class KeyType {
     static enter = "Enter";
     static backspace = "Backspace";
     static control = "Control";
-    static alt = "Alt";
-
+    static escape = "Escape";
 }

@@ -19,5 +19,4 @@ export class VariableType {
     static string = "string";
     static int = "int";
     static float = "float"
-
 }
