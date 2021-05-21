@@ -1269,7 +1269,7 @@ $.flowApp = {
 				$.flowApp.selectedNodeId = startNode._id;
 				$.flowApp.node.next();
 			} else {
-				
+
 			}
 		},
 
@@ -1319,6 +1319,8 @@ $.flowApp = {
 
 			switch (nextNode._type) {
 				case Type.condition:
+					
+
 					break;
 				case Type.random:
 					break;
