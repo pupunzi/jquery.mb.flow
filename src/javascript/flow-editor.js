@@ -4,7 +4,7 @@ import {UI} from "./Classes/UI.js";
 import {ClassName, ContextualMenu, Menu} from "./Classes/Menu.js";
 import {KeyboardListener, KeyType} from "./Classes/KeyboardListener.js";
 import {Events, EventType} from "./Classes/Events.js";
-import {Type} from "./Classes/Node.js";
+import {Type, CycleType} from "./Classes/Node.js";
 import {Connection} from "./Classes/Connection.js";
 import {ActorsDrawer} from "./Classes/ActorsDrawer.js";
 import {AvatarDrawer} from "./Classes/AvatarDrawer.js";
@@ -329,21 +329,21 @@ import {PreviewDrawer} from "../Classes/PreviewDrawer.js";
 						icon: 'icon-list-ol',
 						className: node._cycleType === "List" ? ClassName.highlight : null,
 						fn: function (target) {
-							node._cycleType = "List";
+							node._cycleType = CycleType.list;
 							$(target).attr("class", 'icon icon-list-ol');
 							Events.register(EventType.updateBoard, board);
 						}
 					},
 					{
 						name: 'Loop',
-						icon: 'icon-repeat',
+						icon: 'icon-loop',
 						className: node._cycleType === "Repeat" ? ClassName.highlight : null,
 						fn: function (target) {
 							let board = $.flow.selectedBoard();
 							let nodeId = $(target).parents(".node").data("node-id");
 							let node = board.getNodeById(nodeId);
-							node._cycleType = "Repeat";
-							$(target).attr("class", 'icon icon-repeat');
+							node._cycleType = CycleType.loop;
+							$(target).attr("class", 'icon icon-loop');
 							Events.register(EventType.updateBoard, board);
 						}
 					},
@@ -355,7 +355,7 @@ import {PreviewDrawer} from "../Classes/PreviewDrawer.js";
 							let board = $.flow.selectedBoard();
 							let nodeId = $(target).parents(".node").data("node-id");
 							let node = board.getNodeById(nodeId);
-							node._cycleType = "Random";
+							node._cycleType = CycleType.random;
 							$(target).attr("class", 'icon icon-random');
 							Events.register(EventType.updateBoard, board);
 						}
@@ -498,6 +498,7 @@ import {PreviewDrawer} from "../Classes/PreviewDrawer.js";
 									t.caret(caretPos);
 									pasteHtmlAtCaret(c);
 									Util.parseVariables("{" + $(c).text() + "}");
+									flowApp.save(flowApp.flow._id);
 								},
 								className: null
 							};
@@ -534,6 +535,7 @@ import {PreviewDrawer} from "../Classes/PreviewDrawer.js";
 								let v = parent.find("#" + t.attr("id"));
 								v.html(c);
 								Util.parseVariables(v.text());
+								flowApp.save(flowApp.flow._id);
 
 								parent.focus();
 							},

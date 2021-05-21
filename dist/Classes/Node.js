@@ -136,7 +136,7 @@ export class Type {
 
 export class CycleType {
 	static list = "List";
-	static repeat = "Repeat";
+	static loop = "Loop";
 	static random = "Random";
 	static none = null;
 }

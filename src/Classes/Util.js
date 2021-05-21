@@ -41,7 +41,6 @@ class Util {
         let regExp = /[^{\{]+(?=})/gi;
         let variableBlocks = string.match(regExp);
         // string = string.replace(regExp,function(m){ return '<b>'+m+'</b>'})
-
         let str = string;
         if (variableBlocks)
             variableBlocks.forEach((v) => {
@@ -51,13 +50,12 @@ class Util {
                         str = str.replace(v, "$.flow.vars." + v.replace("$", ""));
                         v = v.replace("$", "");
                         if (!window.flowApp.flow._variables[v]) {
-                            let variable = new Variable(v, VariableType.int);
-                            window.flowApp.flow._variables[v] = variable;
+                            window.flowApp.flow._variables[v] = new Variable(v, VariableType.int);
                         }
                     });
                 console.debug(str);
                 console.debug(eval(str));
-                window.flowApp.save(window.flowApp.flow._id);
+                return str;
             });
     }
 

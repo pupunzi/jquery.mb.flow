@@ -4157,7 +4157,7 @@
       style: {
         backgroundImage: 'url(\'data:image/svg+xml;charset=utf-8;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ij48cG9seWdvbiBwb2ludHM9IjI0LDAgMCw4IDgsMTEgMCwxOSA1LDI0IDEzLDE2IDE2LDI0IiBmaWxsPSJjb3JhbCIvPjwvc3ZnPg==\')',
         backgroundSize: '', // It's set in init().
-        backgroundRepeat: 'no-repeat',
+        backgroundRepeat: 'no-loop',
         backgroundColor: '#f8f881',
         cursor: 'default'
       },

@@ -1590,7 +1590,7 @@ describe('attachment', function() {
         style: {backgroundColor: 'red', cursor: 'pointer', backgroundImage: null}});
       attachProps = window.insAttachProps[atc._id];
       ll.start = atc;
-      expect(attachProps.style.backgroundRepeat).toBe('no-repeat'); // default
+      expect(attachProps.style.backgroundRepeat).toBe('no-loop'); // default
       expect(attachProps.style.backgroundColor).toBe('red');
       expect(attachProps.style.cursor).toBe('pointer');
       expect('backgroundImage' in attachProps.style).toBe(false);

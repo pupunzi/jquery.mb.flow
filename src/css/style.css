@@ -1335,6 +1335,7 @@ html #preview-window .flow-dialogue {
   max-width: initial;
   max-height: initial;
   padding: 0;
+  background-color: #ffffff;
   color: #000000;
 }
 html #preview-window .flow-dialogue .flow-button-bar {
