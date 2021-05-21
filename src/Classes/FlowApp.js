@@ -57,13 +57,13 @@ export class FlowApp {
 	initEvents() {
 
 		//Add Flow
-		this.events.on(EventType.addFlow, (e) => {
+		Events.on(EventType.addFlow, (e) => {
 			this.drawer.updateFlowName();
 			this.drawer.drawBoardList();
 		});
 
 		//Remove Flow
-		this.events.on(EventType.deleteFlow, (e) => {
+		Events.on(EventType.deleteFlow, (e) => {
 			let flow = this.flows[0];
 			if (flow != null) {
 				this.load(flow.id);
@@ -73,17 +73,16 @@ export class FlowApp {
 		});
 
 		//Update Flow name
-		this.events.on(EventType.updateFlowName, (e) => {
+		Events.on(EventType.updateFlowName, (e) => {
 			this.drawer.drawBoardList();
 		});
 
 		//Load Flow
-		this.events.on(EventType.loadFlow, (e) => {
+		Events.on(EventType.loadFlow, (e) => {
 			this.flow.selectedBoardGroup = "all";
 			this.drawer.updateFlowName();
 
 			for (const variable in this.flow._variables) {
-				console.debug(variable)
 				$.flow.vars[variable] = this.flow._variables[variable]?this.flow._variables[variable]._value : null;
 			}
 
@@ -92,24 +91,24 @@ export class FlowApp {
 		});
 
 		//Add Group
-		this.events.on(EventType.addGroup, (e) => {
+		Events.on(EventType.addGroup, (e) => {
 			this.flow.selectedBoardGroup = e.detail.groupName;
 			this.drawer.drawBoardList();
 		});
 
 		//Edit Group Name
-		this.events.on(EventType.updateGroupName, (e) => {
+		Events.on(EventType.updateGroupName, (e) => {
 			this.flow.selectedBoardGroup = e.detail.newName;
 			this.drawer.drawBoardList();
 		});
 
 		//Add Board
-		this.events.on(EventType.addBoard, (e) => {
+		Events.on(EventType.addBoard, (e) => {
 			this.drawer.drawBoardList();
 		});
 
 		//Delete Board
-		this.events.on(EventType.deleteBoard, (e) => {
+		Events.on(EventType.deleteBoard, (e) => {
 			if (this.flow.boards.length > 0) {
 				let board = this.flow.boards[0];
 				this.flow.selectBoard(board._id);
@@ -118,50 +117,52 @@ export class FlowApp {
 		});
 
 		//Duplicated Board
-		this.events.on(EventType.duplicatedBoard, (e) => {
+		Events.on(EventType.duplicatedBoard, (e) => {
 			this.drawer.drawBoardList();
 		});
 
 		//Select Board
-		this.events.on(EventType.selectBoard, (e) => {
+		Events.on(EventType.selectBoard, (e) => {
 			this.drawer.drawBoardList();
 		});
 
 		//Update Board
-		this.events.on(EventType.updateBoard, (e) => {
+		Events.on(EventType.updateBoard, (e) => {
 			this.save(this.flow.id);
 		});
 
 		//Add Node
-		this.events.on(EventType.addNode, (e) => {
+		Events.on(EventType.addNode, (e) => {
 			this.drawer.drawBoard();
 		});
 
 		// Update Node
-		this.events.on(EventType.updateNode, (e) => {
+		Events.on(EventType.updateNode, (e) => {
 			this.save(this.flow.id);
 		});
 
 		//Delete Node
-		this.events.on(EventType.deleteNode, (e) => {
+		Events.on(EventType.deleteNode, (e) => {
 			this.drawer.drawBoard();
 		});
 
 		//Select Node
-		this.events.on(EventType.selectNode, (e) => {
+		Events.on(EventType.selectNode, (e) => {
+			let node = e.detail;
+
 			//this.drawer.focusOnSelectedNode();
 			//console.debug("selectNode", e.detail);
 		});
 
 		//Add NodeElement
-		this.events.on(EventType.addNodeElement, (e) => {
+		Events.on(EventType.addNodeElement, (e) => {
 			let node = e.detail;
 			this.addNodeElement(node);
 			this.drawer.drawBoard();
 		});
 
 		//Delete NodeElement
-		this.events.on(EventType.deletetNodeElement, (e) => {
+		Events.on(EventType.deletetNodeElement, (e) => {
 			let nodeId = e.detail.nodeId;
 			let nodeElementId = e.detail.nodeElementId;
 			let board = $.flow.selectedBoard();
@@ -171,8 +172,7 @@ export class FlowApp {
 		});
 
 		//Add Connection
-		this.events.on(EventType.addConnection, (e) => {
-
+		Events.on(EventType.addConnection, (e) => {
 			let connection = e.detail;
 			let board = this.flow.getBoardById(this.flow._selectedBoardId);
 			let $board = $(this.ui.placeholders.board);
@@ -195,7 +195,6 @@ export class FlowApp {
 				}
 
 				$board.find("#node_" + connection._from).attr("data-connections-count", node._connections.length);
-
 				Events.register(EventType.updateBoard, board);
 				// return;
 			}
@@ -238,7 +237,7 @@ export class FlowApp {
 		});
 
 		//Delete Connection
-		this.events.on(EventType.deleteConnection, (e) => {
+		Events.on(EventType.deleteConnection, (e) => {
 			console.debug("deleteConnection", e.detail);
 		});
 	}

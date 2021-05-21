@@ -50,6 +50,10 @@ export class FlowParser {
         } else {
 
         }
+    }
+
+    getNodesByType(type = Type.text){
+	    this._selectedBoard._nodes.forEach(()=>)
 
     }
 }

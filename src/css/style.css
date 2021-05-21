@@ -916,7 +916,7 @@ html body #wrapper #draw-area .node .node-content .node-content-line .variables 
   position: relative;
   display: inline-block;
   background-color: #222222;
-  font-family: monospace;
+  font-family: 'DM Mono', monospace;
   padding: 2px;
   color: #fff;
   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0.1);
@@ -1011,7 +1011,7 @@ html body #wrapper #draw-area .node[data-type="variables"] .node-content-line .n
 }
 html body #wrapper #draw-area .node[data-type="jumpToNode"] {
   min-height: 40px;
-  background-color: #222222;
+  background-color: #FFA500;
   top: 40px;
   left: 40px;
 }
@@ -1032,6 +1032,7 @@ html body #wrapper #draw-area .node[data-type="jumpToNode"] .node-content {
 }
 html body #wrapper #draw-area .node[data-type="jumpToNode"] .node-content select {
   background-color: #0c0c0c;
+  font-family: 'DM Mono', monospace;
   color: #ffffff;
   padding: 5px;
   width: 49%;
@@ -1276,7 +1277,8 @@ html #actors-window .flow-dialogue .actors-list .actors-line .actor-data .color 
 }
 html #avatar-window .flow-dialogue {
   text-align: left;
-  max-height: 60vh;
+  max-height: 70vh;
+  min-width: 700px;
   background-color: #001823;
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
@@ -1319,6 +1321,55 @@ html #avatar-window .flow-dialogue .options-editor input[type="color"] {
 html #avatar-window .flow-dialogue .options-editor button#randomize {
   vertical-align: baseline;
   float: right;
+}
+html #preview-window {
+  background-color: transparent;
+}
+html #preview-window .flow-dialogue {
+  width: 450px;
+  height: 100vh;
+  right: 0;
+  left: auto;
+  top: 0;
+  margin: initial;
+  max-width: initial;
+  max-height: initial;
+  padding: 0;
+  color: #000000;
+}
+html #preview-window .flow-dialogue .flow-button-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: auto;
+  width: 100%;
+  text-align: right;
+  z-index: 1000;
+}
+html #preview-window .flow-dialogue .cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+}
+html #preview-window .flow-dialogue .cover h1 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 60px;
+  margin: auto;
+}
+html #preview-window .flow-dialogue .cover button.play {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 30%;
+  margin: auto;
 }
 html .contextual-menu {
   min-width: 150px;

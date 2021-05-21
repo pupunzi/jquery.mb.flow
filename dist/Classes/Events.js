@@ -11,7 +11,7 @@ export class Events {
 		document.dispatchEvent(event);
 	}
 
-	on(eventName, action) {
+	static on(eventName, action) {
 		document.addEventListener(eventName, (e) => {
 			// console.debug("event", eventName);
 			action(e)

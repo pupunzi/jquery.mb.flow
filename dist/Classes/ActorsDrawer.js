@@ -20,7 +20,6 @@ export class ActorsDrawer {
             actorsLine += actorLine;
         });
 
-
         let actorsWindow = UI.fillTemplate("actors", {
             actorsLine: actorsLine
         });

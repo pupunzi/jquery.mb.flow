@@ -9,6 +9,7 @@ import {Connection} from "./Classes/Connection.js";
 import {ActorsDrawer} from "./Classes/ActorsDrawer.js";
 import {AvatarDrawer} from "./Classes/AvatarDrawer.js";
 import {Drawer} from "./Classes/Drawer.js";
+import {PreviewDrawer} from "../Classes/PreviewDrawer.js";
 
 (function ($, d, w) {
 
@@ -19,7 +20,7 @@ import {Drawer} from "./Classes/Drawer.js";
 // ████ FLOW    ████████████████████████████████████████████████████████████████████████████████████████████████████████
 // ███ EDITOR ██████████████████████████████████████████████████████████████████████████████████████████████████████████
 // ██████    PUPUNZI     ███████████████████████████████████████████████████████████████████████████████████████████████
-	
+
 	$.flow = {
 
 		metaKeys: [],
@@ -39,7 +40,7 @@ import {Drawer} from "./Classes/Drawer.js";
 
 		menu: {
 
-			//███████ Menu ███████████████████████████████████████████
+			// ███████ Menu ███████████████████████████████████████████
 
 			boardListElementMenu: (target) => {
 
@@ -298,6 +299,7 @@ import {Drawer} from "./Classes/Drawer.js";
 								connection._connectionLine.remove();
 								node._connections.delete(connection);
 								board._connections.delete(connection);
+								flowApp.drawer.drawBoard();
 								Events.register(EventType.updateBoard, board);
 							},
 							hoverFn: function (target, e) {
@@ -622,7 +624,6 @@ import {Drawer} from "./Classes/Drawer.js";
 				}
 			});
 			$(d).on("click", "[contenteditable]", (e) => {
-				console.debug(e.target)
 				e.preventDefault();
 				e.stopPropagation();
 				return false;
@@ -632,8 +633,10 @@ import {Drawer} from "./Classes/Drawer.js";
 			$(d).on("keydown", (e) => {
 
 				let board = $.flow.selectedBoard();
-				if ($.flow.metaKeys.indexOf(KeyType.meta) >= 0) {
+				if ($.flow.metaKeys.indexOf(KeyType.meta) >= 0 || $.flow.metaKeys.indexOf(KeyType.alt) >= 0) {
+
 					$(".node").draggable("disable");
+
 					e.stopPropagation();
 					switch (e.key) {
 						case "0":
@@ -794,7 +797,7 @@ import {Drawer} from "./Classes/Drawer.js";
 			});
 		},
 
-		//███████ Connections ████████████████████████████████████████
+		// ███████ Connections ████████████████████████████████████████
 
 		makeNodeDraggableAndLinkable: (nodeId) => {
 
@@ -863,11 +866,12 @@ import {Drawer} from "./Classes/Drawer.js";
 			anchorOut.each(function () {
 
 				$(this).on("mousedown", function (e) {
-					if ($.flow.metaKeys.indexOf(KeyType.meta) >= 0 && $.flow.metaKeys.indexOf(KeyType.alt) >= 0) {
+					if ($.flow.metaKeys.indexOf(KeyType.alt) >= 0) {
+
 						e.stopPropagation();
 						e.preventDefault();
-						let drawingArea = $(flowApp.ui.placeholders.board);
 
+						let drawingArea = $(flowApp.ui.placeholders.board);
 						let startEl = $node.is(".anchorOut") ? $node : $(this);
 
 						if ($.flow.metaKeys.indexOf(KeyType.shift) >= 0 && node._type === Type.condition)
@@ -951,7 +955,7 @@ import {Drawer} from "./Classes/Drawer.js";
 			return connectionType;
 		},
 
-		//███████ Flows Manager ██████████████████████████████████████
+		// ███████ Flows Manager ██████████████████████████████████████
 		addFlow: () => {
 			let title = "Add a new Flow";
 			let text = null;
@@ -1009,7 +1013,7 @@ import {Drawer} from "./Classes/Drawer.js";
 			UI.dialogue(opt);
 		},
 
-		//███████ Boards Manager █████████████████████████████████████
+		// ███████ Boards Manager █████████████████████████████████████
 
 		getSelectedBoard: () => {
 			return flowApp.flow.getBoardById(flowApp.flow.selectedBoardId);
@@ -1117,23 +1121,24 @@ import {Drawer} from "./Classes/Drawer.js";
 			}
 		},
 
-		//███████ Node ████████████████████████████████████████████████
+		// ███████ Node ████████████████████████████████████████████████
 
 		getNodeById: (nodeId) => {
 			let board = $.flow.getSelectedBoard();
 			return board.getNodeById(nodeId);
 		},
 		addToSelectedNodes: (nodeId, multi = false) => {
+			if ($.flow.selectedNodes.indexOf(nodeId) >= 0)
+				return;
+
 			if (multi) {
 				if ($.flow.selectedNodes.indexOf(nodeId) < 0) {
 					$.flow.selectedNodes.unshift(nodeId);
 				}
-
 			} else {
 				$.flow.selectedNodes = [];
 				$.flow.selectedNodes.unshift(nodeId);
 			}
-
 			Events.register(EventType.selectNode, {selectedNodeId: nodeId});
 		},
 		removeFromSelectedNodes: (nodeId = null) => {
@@ -1143,16 +1148,22 @@ import {Drawer} from "./Classes/Drawer.js";
 				$.flow.selectedNodes = [];
 		},
 
-		//███████ Actors Window ███████████████████████████████████████
+		// ███████ Actors Window ███████████████████████████████████████
 
 		drawActorsWindow: () => {
 			ActorsDrawer.openWindow()
 		},
 
-		//███████ Avatar Window ███████████████████████████████████████
+		// ███████ Avatar Window ███████████████████████████████████████
 
 		drawAvatarWindow: (actorId) => {
 			AvatarDrawer.openWindow(actorId)
+		},
+
+		// ███████ Preview Window ███████████████████████████████████████
+
+		openPreview: () => {
+			PreviewDrawer.OpenWindow(flowApp.flow, $.flow.getSelectedBoard());
 		}
 	};
 
@@ -1212,46 +1223,117 @@ import {Drawer} from "./Classes/Drawer.js";
  * Description:
  *  Flow Parser library
  **/
-import {FlowParser} from "./Classes/FlowParser.js";
 
 ;
+$.flow = $.flow || {};
+$.flow.parser = {};
+$.flowApp = $.flow.parser;
 
-$.flowApp = $.flow || {};
+//window.Avataaars = window.Avataaars || Avataaars;
 
 // ████ FLOW    ████████████████████████████████████████████████████████████████████████████████████████████████████████
 // ███ PARSER ██████████████████████████████████████████████████████████████████████████████████████████████████████████
 // ██████    PUPUNZI     ███████████████████████████████████████████████████████████████████████████████████████████████
 
-$.flow.parser = {
+$.flowApp = {
+
 	source: null,
 	boards: [],
+	vars  : {},
 
 	selectedBoardId: null,
 	selectedNodeId : null,
 
-	load: (sourceURL = null)=>{
-		$.flow.source = new FlowParser(sourceURL);
+	load: (flow = null, board = null) => {
+
+		if (typeof flow === "object") {
+			$.flowApp.source = flow;
+			$.flowApp.selectedBoardId = board._id;
+			for (const [key, variable] of Object.entries($.flowApp.source._variables)) {
+				$.flowApp.vars[variable._key] = variable._value;
+			}
+		}
 	},
 
+	play: () => {
+		PreviewDrawer.Play();
+
+	},
+
+	// ███████ Node █████████████████████████████████████
 	node: {
-		get    : (nodeId) => {
+		start: (nodeId = null) => {
+			let startNode = null;
+			if (nodeId === null) {
+				startNode = $.flowApp.node.getByType(Type.start)[0];
+				$.flowApp.selectedNodeId = startNode._id;
+				$.flowApp.node.next();
+			} else {
+				
+			}
 		},
+
+		get: (nodeId) => {
+			let board = $.flowApp.board.getSelected();
+			let n = null;
+			board._nodes.forEach((node) => {
+				if (node._id === nodeId)
+					n = node;
+			});
+			return n;
+		},
+
+		getByType: (type) => {
+			let nodes = [];
+			let board = $.flowApp.board.getSelected();
+			board._nodes.forEach((node) => {
+				if (node._type === type)
+					nodes.push(node);
+			});
+			return nodes;
+		},
+
 		getNext: () => {
 		},
 
 		getPrev: () => {
 		},
 
-		goTo:(nodeId)=>{
+		goTo: (nodeId) => {
 
 		},
 
-		goToNext: ()=>{
+		next: (line = 0) => {
+			let node = $.flowApp.node.get($.flowApp.selectedNodeId);
+			let connection = null;
+			if (node != null)
+				if (node._elements[line] != null) {
+					let lineId = node._elements[line]._id;
+					connection = $.flowApp.node.getConnectionByLineId(node, lineId);
+				} else {
+					connection = node._connections[0];
+				}
+			$.flowApp.selectedNodeId = connection._to;
+			let nextNode = $.flowApp.node.get($.flowApp.selectedNodeId);
+			nextNode._previousNodeId = node._id;
+
+			switch (nextNode._type) {
+				case Type.condition:
+					break;
+				case Type.random:
+					break;
+				case Type.jumpToNode:
+
+			}
+
 
 		},
 
-		goToPrev: ()=>{
-
+		prev: () => {
+			let node = $.flowApp.node.get($.flowApp.selectedNodeId);
+			let lineId = node._elements[line]._id;
+			let connection = $.flowApp.node.getConnectionByLineId(node, lineId);
+			$.flowApp.selectedNodeId = connection._to;
 		},
 
 		getType: (nodeId = null) => {
@@ -1264,11 +1346,40 @@ $.flow.parser = {
 
 		getActor: (nodeId = null) => {
 
+		},
+
+		getConnectionByLineId: (node, nodeElementId) => {
+			node._connections.forEach((connection) => {
+				if (connection._nodeElementId === nodeElementId)
+					return connection;
+			});
+			return null;
 		}
 	},
 
-	start: () => {}
-	
+	// ███████ Board █████████████████████████████████████
+	board: {
+		getSelected: () => {
+			let b = null;
+			$.flowApp.source._boards.forEach((board) => {
+				if (board._id === $.flowApp.selectedBoardId)
+					b = board;
+			});
+			return b;
+		}
+	},
+
+	// ███████ Actor █████████████████████████████████████
+	actor:{
+		get:(actorId)=>{
+			let a = null;
+			$.flowApp.source._actors.forEach((actor)=>{
+				if (actor._id === actorId)
+					a = actor;
+			})
+			return a;
+		}
+	}
 };
 
 const Avataaars = {

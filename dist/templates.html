@@ -1,8 +1,9 @@
-<!-----------------------------------------------------------------------------
----------------------------------- TEMPLATES ----------------------------------
------------------------------------------------------------------------------->
+<!--  █████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████-->
+<!--  █████████████████████████████████████████████████    TEMPLATES    ███████████████████████████████████████████████████████-->
+<!--  █████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████-->
 
-<!-- FLOW NAME                   ----------------------->
+
+<!--  ████ FLOW NAME   ████████████████████████████████████████████████████████████████████████████████████████████████████████-->
 <template id="flow-name">
   <div data-flow-id="{{id}}">
     <h1 id="flow_{{id}}" class="name">{{flowName}}</h1>
@@ -13,7 +14,7 @@
   </div>
 </template>
 
-<!-- BOARD LIST ELEMENT          ----------------------->
+<!--  ████ BOARD LIST ELEMENT   ██████████████████████████████████████████████████████████████████████████████████████████████-->
 <template id="board-list-element">
   <li id="board_{{id}}" class="board-list-element {{className}}" data-board-id="{{id}}"
       data-board-group="{{boardGroup}}">
@@ -23,7 +24,7 @@
   </li>
 </template>
 
-<!-- EDIT VARIABLES                 ----------------------->
+<!--  ████ EDIT VARIABLES   █████████████████████████████████████████████████████████████████████████████████████████████████-->
 <template id="edit-avatar">
   <div class="flow-overlay" style="">
     <div class="flow-dialogue" id="variables-window">
@@ -37,7 +38,7 @@
   </div>
 </template>
 
-<!-- ACTORS                 ----------------------->
+<!--  ████ ACTORS   ███████████████████████████████████████████████████████████████████████████████████████████████████████-->
 <template id="actors">
   <div class="flow-overlay" id="actors-window">
     <div class="flow-dialogue big">
@@ -53,7 +54,7 @@
   </div>
 </template>
 
-<!-- ACTORS LINE             ----------------------->
+<!--  ████ ACTORS LINE   ███-->
 <template id="actors-line">
   <div class="actors-line" data-actor-id="{{actorId}}">
     <div class="avatar" onclick="$.flow.drawAvatarWindow('{{actorId}}')">{{avatar}}</div>
@@ -68,7 +69,7 @@
   </div>
 </template>
 
-<!-- AVATAR                 ----------------------->
+<!--  ████ AVATAR   ███████████████████████████████████████████████████████████████████████████████████████████████████████-->
 <template id="avatar-editor">
   <div class="flow-overlay" id="avatar-window">
     <div class="flow-dialogue big" data-actor-id="{{actorId}}">
@@ -88,9 +89,8 @@
       </div>
     </div>
   </div>
-
 </template>
-<!-- AVATAR OPTIONS            ----------------------->
+<!--  ████ AVATAR OPTIONS   ███-->
 <template id="avatar-option-line">
   <div class="option">
     <label for="{{optionName}}">{{optionName}}</label>
@@ -98,14 +98,29 @@
   </div>
 </template>
 
+<!--  ████ PREVIEW   ███████████████████████████████████████████████████████████████████████████████████████████████████████-->
+<template id="preview-box">
+  <div class="flow-overlay" id="preview-window">
+    <div class="flow-dialogue big">
+      <h2 class="flow-dialogue-title">{{actorName}}</h2>
+      <div class="flow-button-bar">
+        <button class="close" onclick="">Close</button>
+      </div>
+      <div class="avatar">{{avatar}}</div>
+      <div class="content"></div>
+      <div class="cover">
+        <h1>{{title}}</h1>
+        <button class="main play" onclick="$.flowApp.play()">Play</button>
+      </div>
+    </div>
+  </div>
+</template>
 
-<!--     NODES    ------------------------------------------------------------------
-------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------
------------------------------------------------------------------------------------->
+<!--  ████████████████████████████████████████████████████████████████████████████████████████████████████████████████████-->
+<!--  ████ NODES   ███████████████████████████████████████████████████████████████████████████████████████████████████████-->
+<!--  ████████████████████████████████████████████████████████████████████████████████████████████████████████████████████-->
 
-
-<!-- START NODE                  ----------------------->
+<!--  ████ START NODE   ██████████████████████████████████████████████████████████████████████████████████████████████████-->
 <template id="node-start">
   <div id="node_{{nodeId}}" class="node anchorOut" data-type="start" data-flow-id="{{flowId}}"
        data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
@@ -113,7 +128,7 @@
   </div>
 </template>
 
-<!-- Random NODE                  ----------------------->
+<!--  ████ RANDOM NODE   ██████████████████████████████████████████████████████████████████████████████████████████████████-->
 <template id="node-random">
   <div id="node_{{nodeId}}" class="node anchorOut" data-type="random" data-flow-id="{{flowId}}"
        data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
@@ -121,7 +136,7 @@
   </div>
 </template>
 
-<!-- TEXT NODE                   ----------------------->
+<!--  ████ TEXT NODE   ███████████████████████████████████████████████████████████████████████████████████████████████████-->
 <template id="node-text">
   <div id="node_{{nodeId}}" class="node anchorOut" data-type="text" data-flow-id="{{flowId}}"
        data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}"
@@ -138,7 +153,8 @@
     <ol class="node-content">{{lines}}</ol>
   </div>
 </template>
-<!-- TEXT NODE LINE -->
+
+<!--  ████ TEXT NODE LINE   ███-->
 <template id="node-text-line">
   <li class="node-content-line line" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
     <div class="node-text" contenteditable="true" spellcheck=false>{{content}}</div>
@@ -146,7 +162,7 @@
   </li>
 </template>
 
-<!-- NOTE NODE                   ----------------------->
+<!--  ████ NOTE NODE   ███████████████████████████████████████████████████████████████████████████████████████████████████-->
 <template id="node-note">
   <div id="node_{{nodeId}}" class="node anchorOut" data-type="note" data-flow-id="{{flowId}}"
        data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
@@ -157,14 +173,14 @@
     <ol class="node-content">{{lines}}</ol>
   </div>
 </template>
-<!-- NOTE NODE LINE -->
+<!--  ████ NOTE NODE LINE   ███-->
 <template id="node-note-line">
   <li class="node-content-line line" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
     <div class="node-text" contenteditable="true" spellcheck=false>{{content}}</div>
   </li>
 </template>
 
-<!-- CHOICE NODE                ----------------------->
+<!--  ████ CHOICE NODE   ███████████████████████████████████████████████████████████████████████████████████████████████████-->
 <template id="node-choice">
   <div id="node_{{nodeId}}" class="node" data-type="choice" data-flow-id="{{flowId}}" data-board-id="{{boardId}}"
        data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
@@ -173,14 +189,13 @@
         <div class="actor-avatar">{{avatar}}</div>
         <i class="icon icon-user" data-menu="actor"></i>
         <span class="actor-name">{{actorName}}</span>
-        <!--<i class="icon icon-th-list node-icon"></i>-->
       </div>
       <i class="icon icon-ellipsis-v node-menu" data-menu="node"></i>
     </div>
     <ol class="node-content">{{lines}}</ol>
   </div>
 </template>
-<!-- CHOICE NODE LINE -->
+<!--  ████ CHOICE NODE LINE   ███-->
 <template id="node-choice-line">
   <li class="node-content-line line anchorOut" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
     <div class="node-text" contenteditable="true" spellcheck=false>{{content}}</div>
@@ -189,7 +204,7 @@
   </li>
 </template>
 
-<!-- CONDITIONAL NODE                   ----------------------->
+<!--  ████ CONDITIONAL NODE   ███████████████████████████████████████████████████████████████████████████████████████████████████-->
 <template id="node-condition">
   <div id="node_{{nodeId}}" class="node" data-type="condition" data-flow-id="{{flowId}}" data-board-id="{{boardId}}"
        data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}"
@@ -201,7 +216,7 @@
     <ol class="node-content">{{lines}}</ol>
   </div>
 </template>
-<!-- CONDITIONAL NODE LINE -->
+<!--  ████ CONDITIONAL NODE NODE LINE   ███-->
 <template id="node-condition-line">
   <li class="node-content-line line anchorOut" data-flow-id="{{flowId}}" data-board-id="{{boardId}}"
       data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}"
@@ -212,7 +227,7 @@
   </li>
 </template>
 
-<!-- SEQUENCE NODE                   ----------------------->
+<!--  ████ SEQUENCE NODE   ███████████████████████████████████████████████████████████████████████████████████████████████████-->
 <template id="node-sequence">
   <div id="node_{{nodeId}}" class="node" data-type="sequence" data-flow-id="{{flowId}}" data-board-id="{{boardId}}"
        data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}" >
@@ -223,7 +238,7 @@
     <ol class="node-content">{{lines}}</ol>
   </div>
 </template>
-<!-- SEQUENCE NODE LINE -->
+<!--  ████ SEQUENCE NODE NODE LINE   ███-->
 <template id="node-sequence-line">
   <li class="node-content-line line anchorOut" data-flow-id="{{flowId}}" data-board-id="{{boardId}}"
       data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}"
@@ -233,7 +248,7 @@
   </li>
 </template>
 
-<!-- VARIABLES NODE                   ----------------------->
+<!--  ████ VARIABLES NODE   ███████████████████████████████████████████████████████████████████████████████████████████████████-->
 <template id="node-variables">
   <div id="node_{{nodeId}}" class="node anchorOut" data-type="variables" data-flow-id="{{flowId}}"
        data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
@@ -243,19 +258,19 @@
     <ol class="node-content">{{lines}}</ol>
   </div>
 </template>
-<!-- VARIABLES NODE LINE -->
+<!--  ████ VARIABLES NODE NODE LINE   ███-->
 <template id="node-variables-line">
   <li class="node-content-line line" data-node-id="{{nodeId}}" data-node-element-id="{{nodeElementId}}">
     <div class="node-text" contenteditable="true" spellcheck=false>{{content}}</div>
   </li>
 </template>
 
-
-<!-- JUMPTO NODE                   ----------------------->
+<!--  ████ JUMPTO NODE   ███████████████████████████████████████████████████████████████████████████████████████████████████-->
 <template id="node-jumptonode">
   <div id="node_{{nodeId}}" class="node anchorOut" data-type="jumpToNode" data-flow-id="{{flowId}}"
        data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
     <div class="menu">
+      <i class="icon icon-ellipsis-v node-menu" data-menu="node"></i>
       <div class="node-button-bar"><i class="icon icon-arrow-circle-right node-icon"></i></div>
     </div>
     <div class="node-content">
