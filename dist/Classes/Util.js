@@ -42,7 +42,7 @@ class Util {
         let variableBlocks = string.match(regExp);
         // string = string.replace(regExp,function(m){ return '<b>'+m+'</b>'})
         let str = string;
-        if (variableBlocks)
+        if (variableBlocks) {
             variableBlocks.forEach((v) => {
                 let vs = Util.findVariables(v);
                 if (vs)
@@ -53,10 +53,10 @@ class Util {
                             window.flowApp.flow._variables[v] = new Variable(v, VariableType.int);
                         }
                     });
-                console.debug(str);
-                console.debug(eval(str));
-                return str;
             });
+            return str;
+        }
+        return null
     }
 
     static findVariables(string) {

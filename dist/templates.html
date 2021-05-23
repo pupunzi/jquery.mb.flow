@@ -104,13 +104,13 @@
     <div class="flow-dialogue big">
       <h2 class="flow-dialogue-title">{{actorName}}</h2>
       <div class="flow-button-bar">
-        <button class="close" onclick="">Close</button>
+        <button class="close" onclick="window.previewDrawer.CloseWindow()">Close</button>
       </div>
       <div class="avatar">{{avatar}}</div>
       <div class="content"></div>
       <div class="cover">
         <h1>{{title}}</h1>
-        <button class="main play" onclick="$.flowApp.play()">Play</button>
+        <button class="main play" onclick="window.previewDrawer.Play()">Play</button>
       </div>
     </div>
   </div>
@@ -254,6 +254,7 @@
        data-board-id="{{boardId}}" data-node-id="{{nodeId}}" data-connections-count="{{connectionsCount}}">
     <div class="menu">
       <div class="node-button-bar"><i class="icon icon-code node-icon"></i></div>
+      <i class="icon icon-ellipsis-v node-menu" data-menu="node"></i>
     </div>
     <ol class="node-content">{{lines}}</ol>
   </div>

@@ -1,109 +1,90 @@
 import {UI} from "./UI.js";
-import {CycleType, Type} from "./Node.js";
+import {Type} from "./Node.js";
+import {FlowApp} from "./FlowApp.js";
 
 export class PreviewDrawer {
-	static _window = null;
+    static _window = null;
 
-	static OpenWindow(flow, board) {
-		PreviewDrawer._window = UI.fillTemplate("preview-box", {title: flow._name});
-		$("body").append(PreviewDrawer._window);
-		PreviewDrawer._window = $("#preview-window");
-		$.flowApp.load(flow, board);
-	}
+    static OpenWindow(flow, board) {
 
-	static Play(nodeId = null) {
-		PreviewDrawer._window.find(".cover").fadeOut(300);
-		$.flowApp.node.start(nodeId);
-		console.debug($.flowApp.node.get($.flowApp.selectedNodeId));
-		PreviewDrawer.drawNode();
-	}
+        FlowApp._previewIsActive = true;
+        PreviewDrawer._window = UI.fillTemplate("preview-box", {title: flow._name});
+        $("body").append(PreviewDrawer._window);
+        PreviewDrawer._window = $("#preview-window");
+        $.flowApp.load(flow, board);
+    }
 
-	static next(lineId = null){
-		$.flowApp.node.next(lineId);
-		PreviewDrawer.drawNode();
-	}
+    static CloseWindow() {
+        FlowApp._previewIsActive = false;
+        PreviewDrawer._window.remove();
+        window.flowApp.drawer.drawBoard();
+    }
 
-	static drawNode(nodeId = null) {
-		nodeId = nodeId || $.flowApp.selectedNodeId;
-		let node = $.flowApp.node.get(nodeId);
-		let $node = $("#node_" + nodeId);
-		PreviewDrawer.drawActor();
-		PreviewDrawer.drawContent();
+    static Play(nodeId = null) {
+        PreviewDrawer._window.find(".cover").fadeOut(300);
+        $.flowApp.node.start(nodeId);
+        console.debug($.flowApp.node.get($.flowApp.selectedNodeId));
+        PreviewDrawer.drawNode();
+    }
 
-		$node.addClass("selected");
-		$.flow.addToSelectedNodes(node._id, false);
+    static next(lineId = null) {
+        $.flowApp.node.next(lineId);
+        PreviewDrawer.drawNode();
+    }
 
-		window.flowApp.drawer.focusOnSelectedNode()
-	}
+    static drawNode(nodeId = null) {
+        nodeId = nodeId || $.flowApp.selectedNodeId;
+        let node = $.flowApp.node.get(nodeId);
+        let $node = $("#node_" + nodeId);
+        PreviewDrawer.drawActor();
+        PreviewDrawer.drawContent();
 
-	static drawActor(nodeId = null) {
-		nodeId = nodeId || $.flowApp.selectedNodeId;
-		let node = $.flowApp.node.get(nodeId);
-		let actor = $.flowApp.actor.get(node._actorId);
-		let avatar = window.Avataaars.create(actor._avatar._options);
-		PreviewDrawer._window.find(".avatar").html(avatar);
-	}
+        $(".node").removeClass("selected");
+        $node.addClass("selected");
+        $.flow.addToSelectedNodes(node._id, false);
 
-	static drawContent(nodeId = null) {
-		nodeId = nodeId || $.flowApp.selectedNodeId;
-		let node = $.flowApp.node.get(nodeId);
-		let type = node._type;
-		let content = $("<div>").addClass("content-wrapper");
-		PreviewDrawer._window.find(".content").empty();
+        window.flowApp.drawer.focusOnSelectedNode()
+    }
 
-		switch (type) {
-			case Type.text:
-				let cycleType = node._cycleType;
-				let element = null;
-				let availableElements = [];
+    static drawActor(nodeId = null) {
+        nodeId = nodeId || $.flowApp.selectedNodeId;
+        let node = $.flowApp.node.get(nodeId);
+        let actor = $.flowApp.actor.get(node._actorId);
+        let avatar = window.Avataaars.create(actor._avatar._options);
+        PreviewDrawer._window.find(".avatar").html(avatar);
+    }
 
-				node._elements.forEach((element)=>{
-					if(!element._selected)
-						availableElements.push(element);
-				});
+    static drawContent(nodeId = null) {
+        nodeId = nodeId || $.flowApp.selectedNodeId;
+        let node = $.flowApp.node.get(nodeId);
+        let content = $("<div>").addClass("content-wrapper");
+        PreviewDrawer._window.find(".content").empty();
 
-				switch (cycleType) {
-					case CycleType.list:
-						element = availableElements.length ? availableElements[0] : node._elements[node._elements.length-1];
-						element._selected = true;
-						break;
+        switch (node._type) {
+            case Type.text:
+                let nodeText = $.flowApp.node.getParsedText();
+                let text = $("<div>").html(nodeText);
+                content.append(text);
+                let nextButton = $("<button>").addClass("preview-next").html("Next");
+                nextButton.on("click", () => {
+                    PreviewDrawer.next();
+                });
+                content.append(nextButton);
+                break;
 
-					case CycleType.random:
-						availableElements = availableElements.length ? availableElements : node._elements;
-						let rnd = availableElements.length > 1 ? Math.floor( Math.random() * (availableElements.length -1) ) : 0;
-						console.debug(availableElements, rnd);
-						element = availableElements[rnd];
-						element._selected = true;
-						break;
+            case Type.choices:
+                node._elements.forEach((element) => {
+                    let choiceText = window.flowApp.getText(element);
+                    let choiceButton = $("<button>").addClass("choice").html(choiceText);
+                    choiceButton.on("click", () => {
+                        PreviewDrawer.next(element._id);
+                    });
+                    content.append(choiceButton);
+                });
+                break;
+        }
 
-					case CycleType.loop:
-						availableElements = availableElements.length ? availableElements : node._elements;
-						element = availableElements[0];
-						break;
-				}
+        PreviewDrawer._window.find(".content").html(content);
 
-				let text = $("<div>").html(window.flowApp.getContentText(element));
-				content.append(text);
-				let nextButton = $("<button>").addClass("preview-next").html("Next");
-				nextButton.on("click", ()=>{
-					PreviewDrawer.next();
-				});
-				content.append(nextButton);
-				break;
-
-			case Type.choices:
-				node._elements.forEach((element)=>{
-					let choiceText = window.flowApp.getContentText(element);
-					let choiceButton = $("<button>").addClass("choice").html(choiceText);
-					choiceButton.on("click", ()=>{
-						PreviewDrawer.next(element._id);
-					});
-					content.append(choiceButton);
-				});
-				break;
-		}
-
-		PreviewDrawer._window.find(".content").html(content);
-
-	}
+    }
 }

@@ -200,10 +200,11 @@ export class Drawer {
             case Type.variables:
                 let counter = 0;
                 node._elements.forEach((element) => {
+                    element._selected = false;
                     lines += UI.fillTemplate("node-" + node._type.toLowerCase() + "-line", {
                         nodeId: node._id,
                         nodeElementId: element._id,
-                        content: node._type === Type.sequence ? ++counter : this.flowApp.getContentText(element)
+                        content: node._type === Type.sequence ? ++counter : this.flowApp.getText(element)
                     });
                 });
                 break;

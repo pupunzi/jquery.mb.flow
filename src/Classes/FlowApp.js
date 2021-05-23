@@ -10,8 +10,11 @@ import {Drawer} from "./Drawer.js";
 import {Type} from "./Node.js";
 import {NodeElement} from "./NodeElement.js";
 import {Content} from "./Content.js";
+import {Util} from "./Util.js";
 
 export class FlowApp {
+
+	static _previewIsActive;
 
 	constructor() {
 
@@ -277,8 +280,9 @@ export class FlowApp {
 		return content;
 	}
 
-	getContentText(nodeElement, localeCode = this.flow._locale) {
-		return this.getContent(nodeElement, localeCode)._text;
+	getText(nodeElement, localeCode = this.flow._locale) {
+		let text = this.getContent(nodeElement, localeCode)._text;
+		return text;
 	}
 
 	updateContent(nodeElement, text, localeCode = this.flow._locale) {
@@ -309,6 +313,9 @@ export class FlowApp {
 	}
 
 	save(id) {
+		if(FlowApp._previewIsActive)
+			return;
+
 		$.mbStorage.set("flows", this._flowsIds);
 		if (id != null)
 			$.mbStorage.set("flow_" + id, this.flow);

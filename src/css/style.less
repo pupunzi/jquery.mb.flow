@@ -479,18 +479,36 @@ html {
               .variables {
                 position: relative;
                 display: inline-block;
-                background-color: #222222;
+                background-color: rgba(255, 255, 255, 1);
                 font-family: 'DM Mono', monospace;
                 //margin: 3px;
                 padding: 2px;
-                color: #fff;
+                color: @main-color;
                 box-shadow: inset 2px 2px 5px rgba(31, 31, 31, .1);
                 border-radius: 4px;
-                font-size: 80%;
+                border: 1px solid #818181;
+                //font-size: 80%;
 
                 i {
                   font-style: normal;
-                  color: #f0ce1b;
+                  color: #e10608;
+                }
+              }
+
+              .eval-variable {
+                position: relative;
+                display: inline-block;
+                //background-color: rgba(255, 255, 255, 1);
+                color: #e10608;
+                font-family: 'DM Mono', monospace;
+                //margin: 3px;
+                padding: 4px;
+                box-shadow: inset 2px 2px 5px rgba(31, 31, 31, .1);
+                border-radius: 4px;
+                //border: 1px solid #818181;
+                font-size: 100%;
+                &:before{
+                  content: "$";
                 }
               }
             }
@@ -570,7 +588,7 @@ html {
           }
 
           &[data-type="variables"] {
-            min-height: 100px;
+            min-height: 30px;
             background-color: rgb(132, 146, 156);
             top: 40px;
             left: 40px;
@@ -587,7 +605,7 @@ html {
             .node-content-line {
               margin-top: 20px;
               height: calc(100% - 20px);
-              min-height: 90px;
+              min-height: 20px;
               padding: 5px;
               background-color: transparent;
               box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
@@ -595,7 +613,6 @@ html {
               .node-text {
                 color: #ffffff;
                 background-color: transparent;
-                min-height: 90px;
                 padding: 5px;
               }
             }
@@ -1057,6 +1074,12 @@ html {
         }
 
       }
+
+      .content-wrapper{
+        font-family: 'Patrick Hand SC', sans-serif;
+        font-size: 200%;
+        padding: 20px;
+      }
     }
 
   }
@@ -1114,8 +1137,9 @@ html {
         }
 
         &.listTitle {
-          color: lighten(@main-color, 20%);
+          color: #5096a7;
           cursor: default;
+
 
           &:hover {
             background-color: transparent;

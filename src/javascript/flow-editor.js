@@ -4,12 +4,12 @@ import {UI} from "./Classes/UI.js";
 import {ClassName, ContextualMenu, Menu} from "./Classes/Menu.js";
 import {KeyboardListener, KeyType} from "./Classes/KeyboardListener.js";
 import {Events, EventType} from "./Classes/Events.js";
-import {Type, CycleType} from "./Classes/Node.js";
+import {CycleType, Type} from "./Classes/Node.js";
 import {Connection} from "./Classes/Connection.js";
 import {ActorsDrawer} from "./Classes/ActorsDrawer.js";
 import {AvatarDrawer} from "./Classes/AvatarDrawer.js";
 import {Drawer} from "./Classes/Drawer.js";
-import {PreviewDrawer} from "../Classes/PreviewDrawer.js";
+import {PreviewDrawer} from "./Classes/PreviewDrawer.js";
 
 (function ($, d, w) {
 
@@ -336,14 +336,14 @@ import {PreviewDrawer} from "../Classes/PreviewDrawer.js";
 					},
 					{
 						name: 'Loop',
-						icon: 'icon-loop',
+						icon: 'icon-repeat',
 						className: node._cycleType === "Repeat" ? ClassName.highlight : null,
 						fn: function (target) {
 							let board = $.flow.selectedBoard();
 							let nodeId = $(target).parents(".node").data("node-id");
 							let node = board.getNodeById(nodeId);
 							node._cycleType = CycleType.loop;
-							$(target).attr("class", 'icon icon-loop');
+							$(target).attr("class", 'icon icon-repeat');
 							Events.register(EventType.updateBoard, board);
 						}
 					},
@@ -478,7 +478,7 @@ import {PreviewDrawer} from "../Classes/PreviewDrawer.js";
 				if (t.is("[contenteditable]")) {
 					items.push({});
 					items.push({
-						name: 'Add variables',
+						name: 'enter a calculation',
 						icon: "icon-code",
 						fn: function (target, e) {
 							let opt = {
@@ -493,7 +493,6 @@ import {PreviewDrawer} from "../Classes/PreviewDrawer.js";
 									variables.forEach((variable) => {
 										content = content.replace(variable, "<i>" + variable + "</i>");
 									});
-
 									let c = " <span id='variable_" + Util.setUID() + "' class='variables' contenteditable='false'>{" + content + "}</span> ";
 									t.caret(caretPos);
 									pasteHtmlAtCaret(c);
@@ -502,10 +501,34 @@ import {PreviewDrawer} from "../Classes/PreviewDrawer.js";
 								},
 								className: null
 							};
-
 							UI.dialogue(opt);
 						}
 					});
+
+					if (Object.keys(flowApp.flow._variables).length > 0) {
+						items.push({
+							name: 'Insert variable:',
+							className: ClassName.listTitle
+						});
+
+						for (const variable in flowApp.flow._variables) {
+							items.push({
+								name: variable,
+								icon: "icon-code",
+								fn: function (target, e) {
+									t.caret(caretPos);
+									let c = "<span class='eval-variable' contenteditable='false'>" + variable + " </span>&nbsp;";
+									pasteHtmlAtCaret(c);
+									flowApp.save(flowApp.flow._id);
+								}
+							});
+
+						}
+
+
+					}
+
+
 				}
 				return items;
 			},
@@ -515,7 +538,7 @@ import {PreviewDrawer} from "../Classes/PreviewDrawer.js";
 				let items = [];
 				target._variables = flowApp.flow._variables;
 				let editVariables = {
-					name: 'Edit variables',
+					name: 'Edit variable',
 					icon: "icon-code",
 					fn: function (target, e) {
 						let opt = {
@@ -536,7 +559,6 @@ import {PreviewDrawer} from "../Classes/PreviewDrawer.js";
 								v.html(c);
 								Util.parseVariables(v.text());
 								flowApp.save(flowApp.flow._id);
-
 								parent.focus();
 							},
 							className: null
