@@ -121,6 +121,14 @@ html {
     &.mini-map {
       pointer-events: none;
     }
+    &.preview-mode{
+      .node{
+        opacity: .5;
+        &.selected{
+          opacity: 1;
+        }
+      }
+    }
 
     ol {
       padding: 0;

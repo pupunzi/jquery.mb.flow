@@ -9,7 +9,8 @@ export class PreviewDrawer {
 
         FlowApp._previewIsActive = true;
         PreviewDrawer._window = UI.fillTemplate("preview-box", {title: flow._name});
-        $("body").append(PreviewDrawer._window);
+
+        $("body").addClass("preview-mode").append(PreviewDrawer._window);
         PreviewDrawer._window = $("#preview-window");
         $.flowParser.load(flow, board);
     }
@@ -17,6 +18,7 @@ export class PreviewDrawer {
     static CloseWindow() {
         FlowApp._previewIsActive = false;
         PreviewDrawer._window.remove();
+        $("body").removeClass("preview-mode");
         window.flowApp.drawer.drawBoard();
     }
 
@@ -29,6 +31,7 @@ export class PreviewDrawer {
 
     static next(lineId = null) {
         $.flowParser.node.next(lineId);
+
         PreviewDrawer.drawNode();
     }
 

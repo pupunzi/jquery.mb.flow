@@ -1358,7 +1358,14 @@ $.flowParser = {
             if (!connection || !connection._to)
                 return false;
 
-            connection._connectionLine.setOptions({color: "red"});
+            if (connection._connectionLine) {
+                let color = connection._connectionLine.color;
+                connection._connectionLine.setOptions({color: "red"});
+                setTimeout(()=>{
+                    connection._connectionLine.setOptions({color: color});
+                }, 3000)
+            }
+
             $.flowParser.selectedNodeId = connection._to;
             let nextNode = $.flowParser.node.get($.flowParser.selectedNodeId);
             nextNode._previousNodeId = node._id;
@@ -1373,7 +1380,9 @@ $.flowParser = {
                 nextNode._type === Type.variables ||
                 nextNode._type === Type.condition
             )
-                $.flowParser.node.next();
+
+            $.flowParser.node.next();
+            return connection;
         },
 
         getAvailableElement: (nodeId = null) => {
