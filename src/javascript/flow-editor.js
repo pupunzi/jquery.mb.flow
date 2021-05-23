@@ -250,36 +250,39 @@ import {PreviewDrawer} from "./Classes/PreviewDrawer.js";
 				let board = $.flow.selectedBoard();
 				let nodeId = $(target).parents(".node").data("node-id");
 				let node = board.getNodeById(nodeId);
-				let items = [
-					{
+				let items = [];
+
+				if (node._type !== Type.variables) {
+					items.push({
 						name: 'Add Line',
 						fn: function (target) {
 							let nodeId = $(target).parents(".node").data("node-id");
 							let node = board.getNodeById(nodeId);
 							Events.register(EventType.addNodeElement, node);
 						}
-					},
-					{},
-					{
-						name: 'Clone',
-						fn: function (target) {
-							let nodeId = $(target).parents(".node").data("node-id");
-							let node = board.getNodeById(nodeId);
-							console.debug("Clone")
+					});
+					items.push({});
+				}
+				items.push({
+					name: 'Clone',
+					fn: function (target) {
+						let nodeId = $(target).parents(".node").data("node-id");
+						let node = board.getNodeById(nodeId);
+						console.debug("Clone")
+					}
+				});
+				items.push({
+					name: 'Delete',
+					className: ClassName.alert,
+					fn: function (target, e) {
+						let nodeId = $(target).parents(".node").data("node-id");
+						if (nodeId != null) {
+							let board = $.flow.selectedBoard();
+							board.deleteNodeById(nodeId);
 						}
-					},
-					{
-						name: 'Delete',
-						className: ClassName.alert,
-						fn: function (target, e) {
-							let nodeId = $(target).parents(".node").data("node-id");
-							if (nodeId != null) {
-								let board = $.flow.selectedBoard();
-								board.deleteNodeById(nodeId);
-							}
-						}
-					},
-				];
+					}
+				});
+
 
 				if (node._connections.length) {
 					items.push({});
@@ -493,7 +496,7 @@ import {PreviewDrawer} from "./Classes/PreviewDrawer.js";
 									variables.forEach((variable) => {
 										content = content.replace(variable, "<i>" + variable + "</i>");
 									});
-									let c = " <span id='variable_" + Util.setUID() + "' class='variables' contenteditable='false'>{" + content + "}</span> ";
+									let c = " <span id='variable_" + Util.setUID() + "' class='variables' contenteditable='false'>{" + content + "}</span><br>";
 									t.caret(caretPos);
 									pasteHtmlAtCaret(c);
 									Util.parseVariables("{" + $(c).text() + "}");

@@ -11,7 +11,7 @@ export class PreviewDrawer {
         PreviewDrawer._window = UI.fillTemplate("preview-box", {title: flow._name});
         $("body").append(PreviewDrawer._window);
         PreviewDrawer._window = $("#preview-window");
-        $.flowApp.load(flow, board);
+        $.flowParser.load(flow, board);
     }
 
     static CloseWindow() {
@@ -22,19 +22,19 @@ export class PreviewDrawer {
 
     static Play(nodeId = null) {
         PreviewDrawer._window.find(".cover").fadeOut(300);
-        $.flowApp.node.start(nodeId);
-        console.debug($.flowApp.node.get($.flowApp.selectedNodeId));
+        $.flowParser.node.start(nodeId);
+        console.debug($.flowParser.node.get($.flowParser.selectedNodeId));
         PreviewDrawer.drawNode();
     }
 
     static next(lineId = null) {
-        $.flowApp.node.next(lineId);
+        $.flowParser.node.next(lineId);
         PreviewDrawer.drawNode();
     }
 
     static drawNode(nodeId = null) {
-        nodeId = nodeId || $.flowApp.selectedNodeId;
-        let node = $.flowApp.node.get(nodeId);
+        nodeId = nodeId || $.flowParser.selectedNodeId;
+        let node = $.flowParser.node.get(nodeId);
         let $node = $("#node_" + nodeId);
         PreviewDrawer.drawActor();
         PreviewDrawer.drawContent();
@@ -47,25 +47,25 @@ export class PreviewDrawer {
     }
 
     static drawActor(nodeId = null) {
-        nodeId = nodeId || $.flowApp.selectedNodeId;
-        let node = $.flowApp.node.get(nodeId);
-        let actor = $.flowApp.actor.get(node._actorId);
+        nodeId = nodeId || $.flowParser.selectedNodeId;
+        let node = $.flowParser.node.get(nodeId);
+        let actor = $.flowParser.actor.get(node._actorId);
         let avatar = window.Avataaars.create(actor._avatar._options);
         PreviewDrawer._window.find(".avatar").html(avatar);
     }
 
     static drawContent(nodeId = null) {
-        nodeId = nodeId || $.flowApp.selectedNodeId;
-        let node = $.flowApp.node.get(nodeId);
+        nodeId = nodeId || $.flowParser.selectedNodeId;
+        let node = $.flowParser.node.get(nodeId);
         let content = $("<div>").addClass("content-wrapper");
         PreviewDrawer._window.find(".content").empty();
 
         switch (node._type) {
             case Type.text:
-                let nodeText = $.flowApp.node.getParsedText();
+                let nodeText = $.flowParser.node.getParsedText();
                 let text = $("<div>").html(nodeText);
                 content.append(text);
-                let nextButton = $("<button>").addClass("preview-next").html("Next");
+                let nextButton = $("<button>").addClass("preview-next main").html("Next");
                 nextButton.on("click", () => {
                     PreviewDrawer.next();
                 });
@@ -74,7 +74,7 @@ export class PreviewDrawer {
 
             case Type.choices:
                 node._elements.forEach((element) => {
-                    let choiceText = window.flowApp.getText(element);
+                    let choiceText = $.flowParser.node.getParsedText(element);
                     let choiceButton = $("<button>").addClass("choice").html(choiceText);
                     choiceButton.on("click", () => {
                         PreviewDrawer.next(element._id);

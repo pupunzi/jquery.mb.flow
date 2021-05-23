@@ -915,6 +915,10 @@ html body #wrapper #draw-area .node .node-content .node-content-line .node-text 
 html body #wrapper #draw-area .node .node-content .node-content-line .variables {
   position: relative;
   display: inline-block;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   background-color: #ffffff;
   font-family: 'DM Mono', monospace;
   padding: 2px;
@@ -925,7 +929,7 @@ html body #wrapper #draw-area .node .node-content .node-content-line .variables 
 }
 html body #wrapper #draw-area .node .node-content .node-content-line .variables i {
   font-style: normal;
-  color: #e10608;
+  color: #6eb9ff;
 }
 html body #wrapper #draw-area .node .node-content .node-content-line .eval-variable {
   position: relative;

@@ -7,7 +7,7 @@
 ;
 $.flow = $.flow || {};
 $.flow.parser = {};
-$.flowApp = $.flow.parser;
+$.flowParser = $.flow.parser;
 
 window.previewDrawer = PreviewDrawer;
 
@@ -17,7 +17,7 @@ window.previewDrawer = PreviewDrawer;
 // ███ PARSER ██████████████████████████████████████████████████████████████████████████████████████████████████████████
 // ██████    PUPUNZI     ███████████████████████████████████████████████████████████████████████████████████████████████
 
-$.flowApp = {
+$.flowParser = {
 
     source: null,
     boards: [],
@@ -28,11 +28,11 @@ $.flowApp = {
 
     load: (flow = null, board = null) => {
         if (typeof flow === "object") {
-            // $.flowApp.source = JSON.parse(JSON.stringify(flow));
-            $.flowApp.source = Object.assign({}, flow);
-            $.flowApp.selectedBoardId = board._id;
-            for (const [key, variable] of Object.entries($.flowApp.source._variables)) {
-                $.flowApp.vars[variable._key] = variable._value;
+            // $.flowParser.source = JSON.parse(JSON.stringify(flow));
+            $.flowParser.source = Object.assign({}, flow);
+            $.flowParser.selectedBoardId = board._id;
+            for (const [key, variable] of Object.entries($.flowParser.source._variables)) {
+                $.flowParser.vars[variable._key] = variable._value;
             }
         }
     },
@@ -41,8 +41,8 @@ $.flowApp = {
     board: {
         getSelected: () => {
             let b = null;
-            $.flowApp.source._boards.forEach((board) => {
-                if (board._id === $.flowApp.selectedBoardId)
+            $.flowParser.source._boards.forEach((board) => {
+                if (board._id === $.flowParser.selectedBoardId)
                     b = board;
             });
             return b;
@@ -54,17 +54,17 @@ $.flowApp = {
         start: (nodeId = null) => {
             let startNode = null;
             if (nodeId === null) {
-                startNode = $.flowApp.node.getByType(Type.start)[0];
-                $.flowApp.selectedNodeId = startNode._id;
+                startNode = $.flowParser.node.getByType(Type.start)[0];
+                $.flowParser.selectedNodeId = startNode._id;
                 startNode._selected = true;
-                $.flowApp.node.next();
+                $.flowParser.node.next();
             } else {
 
             }
         },
 
         get: (nodeId) => {
-            let board = $.flowApp.board.getSelected();
+            let board = $.flowParser.board.getSelected();
             let n = null;
             board._nodes.forEach((node) => {
                 if (node._id === nodeId)
@@ -75,7 +75,7 @@ $.flowApp = {
 
         getByType: (type) => {
             let nodes = [];
-            let board = $.flowApp.board.getSelected();
+            let board = $.flowParser.board.getSelected();
             board._nodes.forEach((node) => {
                 if (node._type === type)
                     nodes.push(node);
@@ -93,21 +93,28 @@ $.flowApp = {
 
         },
 
-        next: (lineId = null) => {
+        next: (elementId = null) => {
+            let node = $.flowParser.node.get($.flowParser.selectedNodeId);
+            let element = $.flowParser.nodeElement.get(node._id, elementId);
+            let connection = $.flowParser.connection.getAvailable(elementId);
 
-            let node = $.flowApp.node.get($.flowApp.selectedNodeId);
-            let connection = $.flowApp.connection.getAvailable(lineId);
+            if (node._type === Type.choices) {
+                let text = $("<div class='temp-element'>").css({display: "none"}).html($.flowParser.node.getText(element));
+                let variables = text.find("span.variables");
+                variables.each(function () {
+                    let v = $(this).text().trim();
+                    let result = $.flowParser.parseVariables(v);
+                    $(this).remove();
+                });
+            }
 
             if (!connection || !connection._to)
                 return false;
 
             connection._connectionLine.setOptions({color: "red"});
-
-            $.flowApp.selectedNodeId = connection._to;
-            let nextNode = $.flowApp.node.get($.flowApp.selectedNodeId);
+            $.flowParser.selectedNodeId = connection._to;
+            let nextNode = $.flowParser.node.get($.flowParser.selectedNodeId);
             nextNode._previousNodeId = node._id;
-
-            let element = $.flowApp.nodeElement.get(node._id, connection._nodeElementId);
 
             if (element)
                 element._selected = true;
@@ -119,65 +126,74 @@ $.flowApp = {
                 nextNode._type === Type.variables ||
                 nextNode._type === Type.condition
             )
-                $.flowApp.node.next();
+                $.flowParser.node.next();
         },
 
-        getAvailableElement: (nodeId) => {
-            nodeId = nodeId || $.flowApp.selectedNodeId;
-            let node = $.flowApp.node.get(nodeId);
+        getAvailableElement: (nodeId = null) => {
+            nodeId = nodeId || $.flowParser.selectedNodeId;
+            let node = $.flowParser.node.get(nodeId);
             let cycleType = node._cycleType;
             let element = null;
-            let availableElements = node._elements.filter((element)=>{
+            let availableElements = node._elements.filter((element) => {
                 return !element._selected;
             });
 
-            switch (cycleType) {
-                case CycleType.list:
-                    element = availableElements.length ? availableElements[0] : node._elements[node._elements.length - 1];
-                    element._selected = true;
-                    break;
+            switch (node._type) {
 
-                case CycleType.random:
-                    availableElements = availableElements.length ? availableElements : node._elements;
-                    let rnd = availableElements.length > 1 ? Math.ceil(Math.random() * (availableElements.length - 1)) : 0;
-                    element = availableElements[rnd];
-                    element._selected = true;
-                    break;
+                case Type.text:
+                    switch (cycleType) {
+                        case CycleType.list:
+                            element = availableElements.length ? availableElements[0] : node._elements[node._elements.length - 1];
+                            element._selected = true;
+                            break;
 
-                case CycleType.loop:
-                    availableElements = availableElements.length ? availableElements : node._elements;
-                    element = availableElements[0];
+                        case CycleType.random:
+                            availableElements = availableElements.length ? availableElements : node._elements;
+                            let rnd = availableElements.length > 1 ? Math.ceil(Math.random() * (availableElements.length - 1)) : 0;
+                            element = availableElements[rnd];
+                            element._selected = true;
+                            break;
+
+                        case CycleType.loop:
+                            availableElements = availableElements.length ? availableElements : node._elements;
+                            element = availableElements[0];
+                            break;
+                    }
                     break;
+                case Type.choices:
+
+
             }
+
             return element;
         },
-        getText: ()=>{
-            let nodeElement = $.flowApp.node.getAvailableElement();
-            let text = window.flowApp.getContent(nodeElement, window.flowApp.flow._locale)._text;
-            return text;
+        getText: (element = null) => {
+            let nodeElement = element || $.flowParser.node.getAvailableElement();
+            console.debug(nodeElement);
+            return window.flowApp.getContent(nodeElement, window.flowApp.flow._locale)._text;
         },
 
-        getParsedText: ()=>{
-            let text = $("<div class='temp-element'>").css({display:"none"}).html($.flowApp.node.getText());
-            //$("body").append(text);
+        getParsedText: (element = null) => {
+            let nodeId = element ? element._nodeId : $.flowParser.selectedNodeId;
+            let node = $.flowParser.node.get(nodeId);
+            let t = $.flowParser.node.getText(element);
+            let text = $("<div class='temp-element'>").css({display: "none"}).html(t);
 
             let variables = text.find("span.variables");
-            variables.each(function(){
-                console.debug(this);
+            variables.each(function () {
                 let v = $(this).text().trim();
-                let result = $.flowApp.parseVariables(v);
-                console.debug(v + " -- " + result);
+
+                if (node._type === Type.text)
+                    $.flowParser.parseVariables(v);
+
                 $(this).remove();
             });
 
 
-
             let variablesToPrint = text.find("span.eval-variable");
-            variablesToPrint.each(function(){
-                console.debug(this);
+            variablesToPrint.each(function () {
                 let v = $(this).text().trim();
-                console.debug(v + " -- " + $.flowApp.vars[v]);
-                let val = $.flowApp.vars[v];
+                let val = $.flowParser.vars[v];
                 $(this).replaceWith("<span>" + val + "</span>");
             });
             return text.html();
@@ -188,10 +204,10 @@ $.flowApp = {
     // ███████ Node Element █████████████████████████████████████
     nodeElement: {
         get: (nodeId, elementId) => {
-            let node = $.flowApp.node.get(nodeId);
-            return node._elements.filter((el)=>{
+            let node = $.flowParser.node.get(nodeId);
+            return node._elements.filter((el) => {
                 return el._id === elementId;
-            });
+            })[0];
         }
     },
 
@@ -199,7 +215,7 @@ $.flowApp = {
     connection: {
 
         getAvailable: (lineId = null) => {
-            let node = $.flowApp.node.get($.flowApp.selectedNodeId);
+            let node = $.flowParser.node.get($.flowParser.selectedNodeId);
             let availableConnection = null;
 
             switch (node._type) {
@@ -211,7 +227,7 @@ $.flowApp = {
                     break;
 
                 case Type.choices:
-                    availableConnection = $.flowApp.connection.getByLineId(node, lineId);
+                    availableConnection = $.flowParser.connection.getByLineId(node, lineId);
                     break;
 
                 case Type.condition:
@@ -219,27 +235,27 @@ $.flowApp = {
                         let content = window.flowApp.getText(element);
                         let result = Util.parseVariables(content);
                         if (eval(result.toString()) && !availableConnection) {
-                            availableConnection = $.flowApp.connection.getByLineId(node, element._id);
+                            availableConnection = $.flowParser.connection.getByLineId(node, element._id);
                         }
                     });
 
                     if (!availableConnection)
-                        availableConnection = $.flowApp.connection.getFail(node);
+                        availableConnection = $.flowParser.connection.getFail(node);
                     break;
 
                 case Type.variables:
                     node._elements.forEach((element) => {
                         let content = window.flowApp.getText(element);
-                        let result = $.flowApp.parseVariables(content);
+                        let result = $.flowParser.parseVariables(content);
                         //let newValue = eval(result.toString());
-                        console.debug(result);
+                        //console.debug(result);
                     });
                     availableConnection = node._connections[0];
                     break;
 
                 case Type.random:
                     let rnd = Math.ceil(Math.random() * (node._connections.length - 1));
-                    console.debug(node._connections.length, rnd)
+                    //console.debug(node._connections.length, rnd)
                     availableConnection = node._connections[rnd];
                     break;
 
@@ -247,11 +263,11 @@ $.flowApp = {
                     let possibleElement = node._elements.filter(element => !element._selected)[0];
                     if (possibleElement) {
                         possibleElement._selected = true;
-                        availableConnection = $.flowApp.connection.getByLineId(node, possibleElement._id);
-                    }else {
+                        availableConnection = $.flowParser.connection.getByLineId(node, possibleElement._id);
+                    } else {
                         node._elements.forEach((element) => {
                             element._selected = false;
-                            availableConnection = $.flowApp.connection.getByLineId(node, node._elements[0]._id);
+                            availableConnection = $.flowParser.connection.getByLineId(node, node._elements[0]._id);
                         });
                     }
                     break;
@@ -287,7 +303,7 @@ $.flowApp = {
     actor: {
         get: (actorId) => {
             let a = null;
-            $.flowApp.source._actors.forEach((actor) => {
+            $.flowParser.source._actors.forEach((actor) => {
                 if (actor._id === actorId)
                     a = actor;
             });
@@ -300,19 +316,16 @@ $.flowApp = {
         let str = $("<div>").html(content).text();
         let regExp = /[^{\{]+(?=})/gi;
         let variableBlocks = str.match(regExp);
-        // string = string.replace(regExp,function(m){ return '<b>'+m+'</b>'})
         if (variableBlocks) {
             variableBlocks.forEach((block) => {
-                console.debug(block);
-                let vs = $.flowApp.findVariables(block);
+                let vs = $.flowParser.findVariables(block);
                 if (vs)
                     vs.forEach((v) => {
-                        str = str.replace(v, "$.flowApp.vars." + v.replace("$", ""));
+                        str = str.replace(v, "$.flowParser.vars." + v.replace("$", ""));
                         v = v.replace("$", "");
-                        if (!$.flowApp.vars[v]) {
-                            $.flowApp.vars[v] = null;
+                        if (!$.flowParser.vars[v]) {
+                            $.flowParser.vars[v] = null;
                         }
-                        console.debug("parseVariables",str);
                     });
             });
             eval(str);
