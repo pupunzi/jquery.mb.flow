@@ -659,13 +659,19 @@ import {PreviewDrawer} from "./Classes/PreviewDrawer.js";
 			//███████ General keydown behavior ██████████████████████████████████████
 			$(d).on("keydown", (e) => {
 
+				console.debug(e.key)
 				let board = $.flow.selectedBoard();
-				if ($.flow.metaKeys.indexOf(KeyType.meta) >= 0 || $.flow.metaKeys.indexOf(KeyType.alt) >= 0) {
+				if ($.flow.metaKeys.indexOf(KeyType.meta) >= 0 || $.flow.metaKeys.indexOf(KeyType.alt) >= 0 || $.flow.metaKeys.indexOf(KeyType.space) >= 0) {
 
 					$(".node").draggable("disable");
-
 					e.stopPropagation();
+
 					switch (e.key) {
+						case " ":
+							if(!$(e.target).is("[contenteditable=true]"))
+								e.preventDefault();
+
+							break;
 						case "0":
 							e.preventDefault();
 							break;
@@ -676,11 +682,13 @@ import {PreviewDrawer} from "./Classes/PreviewDrawer.js";
 							e.preventDefault();
 							break;
 						case "Backspace":
-							e.preventDefault();
-							$.flow.selectedNodes.forEach((id) => {
-								board.deleteNodeById(id);
-							});
-							$.flow.selectedNodes = [];
+							if($.flow.metaKeys.indexOf(KeyType.meta) >= 0 ) {
+								e.preventDefault();
+								$.flow.selectedNodes.forEach((id) => {
+									board.deleteNodeById(id);
+								});
+								$.flow.selectedNodes = [];
+							}
 							break;
 					}
 				}
@@ -755,6 +763,10 @@ import {PreviewDrawer} from "./Classes/PreviewDrawer.js";
 				flowApp.drawer.drawGrid();
 			});
 
+			$(w).on("blur", () => {
+				$(".node").draggable("enable");
+			});
+
 			//███████ Move drawing area by dragging ██████████████████████████████████████
 			let boardArea = $(flowApp.ui.placeholders.board);
 			boardArea[0].style.zoom = 1;
@@ -764,7 +776,7 @@ import {PreviewDrawer} from "./Classes/PreviewDrawer.js";
 				// if ($(e.target).parents(".node").length)
 				//     return;
 
-				if ($.flow.metaKeys.indexOf(KeyType.meta) >= 0) {
+				if ($.flow.metaKeys.indexOf(KeyType.space) >= 0) {
 					e.preventDefault();
 
 					$("body").css("cursor", "grab");
@@ -792,7 +804,7 @@ import {PreviewDrawer} from "./Classes/PreviewDrawer.js";
 					// if ($(e.target).parents(".node").length)
 					//     return;
 
-					if ($.flow.metaKeys.indexOf(KeyType.meta) >= 0) {
+					if ($.flow.metaKeys.indexOf(KeyType.space) >= 0) {
 						e.preventDefault();
 						$("body").css("cursor", "grabbing");
 
@@ -813,7 +825,7 @@ import {PreviewDrawer} from "./Classes/PreviewDrawer.js";
 					pos.hasMove = false;
 					$(d).off("mousemove.drag");
 					$("body").css("cursor", "default");
-					if ($.flow.metaKeys.indexOf(KeyType.meta) >= 0) {
+					if ($.flow.metaKeys.indexOf(KeyType.space) >= 0) {
 						$.flow.updateConnections();
 						let board = $.flow.getSelectedBoard();
 						board._x = parseFloat(boardArea.css("left"));
@@ -893,7 +905,7 @@ import {PreviewDrawer} from "./Classes/PreviewDrawer.js";
 			anchorOut.each(function () {
 
 				$(this).on("mousedown", function (e) {
-					if ($.flow.metaKeys.indexOf(KeyType.alt) >= 0) {
+					if ($.flow.metaKeys.indexOf(KeyType.meta) >= 0) {
 
 						e.stopPropagation();
 						e.preventDefault();
@@ -901,7 +913,7 @@ import {PreviewDrawer} from "./Classes/PreviewDrawer.js";
 						let drawingArea = $(flowApp.ui.placeholders.board);
 						let startEl = $node.is(".anchorOut") ? $node : $(this);
 
-						if ($.flow.metaKeys.indexOf(KeyType.shift) >= 0 && node._type === Type.condition)
+						if ($.flow.metaKeys.indexOf(KeyType.alt) >= 0 && node._type === Type.condition)
 							startEl = $node;
 
 						let fakeEl = $("<div id='fakeEl'>").css({
@@ -916,7 +928,7 @@ import {PreviewDrawer} from "./Classes/PreviewDrawer.js";
 						);
 
 						fakeEl.appendTo(flowApp.ui.placeholders.board);
-						let connColor = $.flow.metaKeys.indexOf(KeyType.shift) >= 0 && node._type === Type.condition ? "red" : "orange";
+						let connColor = $.flow.metaKeys.indexOf(KeyType.alt) >= 0 && node._type === Type.condition ? "red" : "orange";
 						$(this).get(0).line = $.flow.LeaderLine(startEl.is(".anchorOut") || ($.flow.metaKeys.indexOf(KeyType.alt) >= 0 && node._type === Type.condition) ? startEl : startEl.find(".anchor"), fakeEl, {
 							color: connColor,
 							size: 3

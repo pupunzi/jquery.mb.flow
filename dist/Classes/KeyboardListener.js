@@ -11,12 +11,12 @@ export class KeyboardListener {
     init() {
         $(document).on("keydown.keyboard", (e) => {
             $.flow.metaKeys.push(e.key);
+            // console.debug($.flow.metaKeys)
         }).on("keyup", () => {
             $.flow.metaKeys = [];
         });
         $(window).on("blur",()=>{
             $.flow.metaKeys = [];
-            $(".node").draggable("enable");
         });
     }
 }
@@ -29,4 +29,6 @@ export class KeyType {
     static backspace = "Backspace";
     static control = "Control";
     static escape = "Escape";
+    static space = " ";
+
 }
