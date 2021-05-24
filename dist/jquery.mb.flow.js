@@ -520,7 +520,7 @@ import {PreviewDrawer} from "./Classes/PreviewDrawer.js";
 								icon: "icon-code",
 								fn: function (target, e) {
 									t.caret(caretPos);
-									let c = "<span class='eval-variable' contenteditable='false'>" + variable + " </span>&nbsp;";
+									let c = "<span class='eval-variable' contenteditable='false'>" + variable + " </span>";
 									pasteHtmlAtCaret(c);
 									flowApp.save(flowApp.flow._id);
 								}

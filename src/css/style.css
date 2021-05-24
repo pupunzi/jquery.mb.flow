@@ -511,9 +511,6 @@ html {
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
   /**
-  Contextual flowMenu
-  */
-  /**
   Node Editor
    */
 }
@@ -1403,6 +1400,12 @@ html #preview-window .flow-dialogue .content-wrapper {
   font-family: 'Patrick Hand SC', sans-serif;
   font-size: 250%;
   padding: 20px;
+}
+html #preview-window .flow-dialogue .content-wrapper span {
+  color: #222222;
+  display: inline-block;
+  padding: 5px;
+  background-color: yellow;
 }
 html #preview-window .flow-dialogue .content-wrapper button {
   font-family: 'Patrick Hand SC', sans-serif;
