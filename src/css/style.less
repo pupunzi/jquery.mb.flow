@@ -123,7 +123,8 @@ html {
     }
     &.preview-mode{
       .node{
-        opacity: .5;
+        opacity: .2;
+
         &.selected{
           opacity: 1;
         }
@@ -778,12 +779,11 @@ html {
                 padding: 5px;
                 border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 
-
                 .node-text {
                   font-family: monospace;
                   height: 100%;
                   color: @alert-font-color;
-                  padding-left: 0;
+                  padding-left: 15px;
                   background-color: fade(#fff, 100%) !important;
                   box-shadow: inset 2px 2px 5px rgba(31, 31, 31, 0);
                   white-space: nowrap;
@@ -1087,10 +1087,21 @@ html {
 
       }
 
+      .avatar{
+        position: relative;
+        width: 50%;
+        margin: 100px auto;
+
+      }
+
       .content-wrapper{
         font-family: 'Patrick Hand SC', sans-serif;
-        font-size: 200%;
+        font-size: 250%;
         padding: 20px;
+
+        button{
+          font-family: 'Patrick Hand SC', sans-serif;
+        }
       }
     }
 

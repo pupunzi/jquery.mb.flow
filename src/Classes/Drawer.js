@@ -3,6 +3,7 @@ import {CycleType, Type} from "./Node.js";
 import {Util} from "./Util.js";
 import {Events, EventType} from "./Events.js";
 import {KeyType} from "./KeyboardListener.js";
+import {FlowApp} from "./FlowApp.js";
 
 /**
  *
@@ -369,13 +370,17 @@ export class Drawer {
 
     drawConnection(connection, opt = {}) {
 
+	    console.debug("drawConnection", FlowApp._previewIsActive);
+
         let type = connection._type || 0;
         let color = Drawer.getConnectionColorByConnectionType(type);
+
         let option = {
             element: $(this.flowApp.ui.placeholders.board).get(0),
-            color: color,
+	        color: FlowApp._previewIsActive ? color + "60" : color,
             size: 3,
             path: "fluid",
+            // path: "magnet",
             startPlug: 'square',
             dash: {animation: true}
         };

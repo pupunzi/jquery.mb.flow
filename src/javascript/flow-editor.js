@@ -812,9 +812,9 @@ import {PreviewDrawer} from "./Classes/PreviewDrawer.js";
 					flowApp.drawer.drawSelection(e);
 					pos.hasMove = false;
 					$(d).off("mousemove.drag");
+					$("body").css("cursor", "default");
 					if ($.flow.metaKeys.indexOf(KeyType.meta) >= 0) {
 						$.flow.updateConnections();
-						$("body").css("cursor", "default");
 						let board = $.flow.getSelectedBoard();
 						board._x = parseFloat(boardArea.css("left"));
 						board._y = parseFloat(boardArea.css("top"));
